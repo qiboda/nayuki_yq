@@ -5,6 +5,7 @@ add_requires("glfw 3.4", "glm 1.0.1", "stb 2024.06.01", "flecs v4.0.3", "spdlog 
 }})
 add_requires("vulkansdk", { system = true })
 
+
 target("NayukiYq")
     set_kind("shared")
 
