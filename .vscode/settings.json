@@ -1,0 +1,29 @@
+{
+    "cSpell.words": [
+        "flecs",
+        "glfw",
+        "includedirs",
+        "Nayuki",
+        "NAYUKIYQ",
+        "spdlog",
+        "vulkansdk",
+        "xmake",
+        "xmakever"
+    ],
+    "files.associations": {
+        "*.csv": "csv",
+        "*.tpl": "scriban-txt",
+        "list": "cpp",
+        "xtr1common": "cpp",
+        "memory": "cpp",
+        "xstring": "cpp",
+        "charconv": "cpp",
+        "tuple": "cpp",
+        "stop_token": "cpp",
+        "algorithm": "cpp",
+        "ios": "cpp",
+        "istream": "cpp",
+        "ostream": "cpp"
+    },
+    "C_Cpp.default.compilerPath": "cl.exe"
+}

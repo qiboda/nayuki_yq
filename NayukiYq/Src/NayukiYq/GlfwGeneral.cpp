@@ -1,0 +1,1 @@
+#include <NayukiYq/GlfwGeneral.h>
