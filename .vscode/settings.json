@@ -1,12 +1,22 @@
 {
     "cSpell.words": [
-        "flecs",
+        "declspec",
+        "dllexport",
+        "dllimport",
         "glfw",
+        "headerfiles",
+        "HRESULT",
+        "ifdef",
         "includedirs",
+        "ipairs",
+        "IRAII",
         "Nayuki",
         "NAYUKIYQ",
+        "projectdir",
         "spdlog",
         "SWAPCHAIN",
+        "TFSM",
+        "Tickable",
         "vulkansdk",
         "xmake",
         "xmakever"
@@ -14,6 +24,9 @@
     "files.associations": {
         "*.csv": "csv",
         "*.tpl": "scriban-txt",
+        "*.inc": "glsl",
+        "*.glsl": "glsl",
+        "*.template": "angelscript_snippet",
         "list": "cpp",
         "xtr1common": "cpp",
         "memory": "cpp",
@@ -24,7 +37,34 @@
         "algorithm": "cpp",
         "ios": "cpp",
         "istream": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "xlocale": "cpp"
     },
-    "C_Cpp.default.compilerPath": "cl.exe"
+    "clangd.arguments": [
+        "--clang-tidy",
+        "--compile-commands-dir=${workspaceFolder}/.vscode",
+        "--header-insertion=iwyu", // 自动插入头文件
+        "--background-index",
+        "--header-insertion-decorators", // 显示为插入建议
+        "--suggest-missing-includes",
+        // 同时开启的任务数量
+        "-j=12",
+        // 全局补全（会自动补充头文件）
+        "--all-scopes-completion",
+        // 更详细的补全内容
+        "--completion-style=detailed",
+        // pch优化的位置 disk memory
+        "--pch-storage=memory",
+        "--cross-file-rename",
+        "--enable-config",
+        // clang-format style to apply by default when no .clang-format file is found
+        "--fallback-style=WebKit",
+        "--pretty",
+        // "--query-driver=clang-cl",
+    ],
+    "clangd.checkUpdates": true,
+    "clangd.path": "clangd",
+    "xmake.compileCommandsBackend": "clangd",
+    "notebook.defaultFormatter": "xaver.clang-format",
+    "editor.defaultFormatter": "xaver.clang-format"
 }

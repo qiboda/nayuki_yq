@@ -2,7 +2,7 @@
 
 #include <NayukiYq/NayukiYq.h>
 
-#include <NayukiYq/Common/Delegate/Delegate.h>
+#include <Core/Delegate/Delegate.h>
 
 class DelegateTest
     : public ::testing::Test

@@ -9,23 +9,23 @@
 // ***************************************************************************************
 #include "NayukiYq/NayukiYq.h"
 
-#include "NayukiYq/Common/MathHelper.h"
-#include "NayukiYq/Common/UploadBuffer.h"
-#include "NayukiYq/Common/D3dApp.h"
+#include "Core/MathHelper.h"
+#include "Core/UploadBuffer.h"
+#include "Core/D3dApp.h"
 
 using Microsoft::WRL::ComPtr;
 using namespace DirectX;
-using namespace DirectX::PackedVector;
+using namespace PackedVector;
 
 struct Vertex
 {
-    XMFLOAT3 Pos;
+    glm::vec3 Pos;
     XMFLOAT4 Color;
 };
 
 struct VertexPos
 {
-    XMFLOAT3 Pos;
+    glm::vec3 Pos;
 };
 
 struct VertexColor
@@ -155,9 +155,9 @@ void BoxApp::Update( const GameTimer& gt )
     f32 y = mRadius * cosf( mPhi );
 
     // Build the view matrix.
-    XMVECTOR pos = XMVectorSet( x, y, z, 1.0f );
-    XMVECTOR target = XMVectorZero();
-    XMVECTOR up = XMVectorSet( 0.0f, 1.0f, 0.0f, 0.0f );
+    glm::vec3 pos = glm::vec3Set( x, y, z, 1.0f );
+    glm::vec3 target = glm::vec3Zero();
+    glm::vec3 up = glm::vec3Set( 0.0f, 1.0f, 0.0f, 0.0f );
 
     XMMATRIX view = XMMatrixLookAtLH( pos, target, up );
     XMStoreFloat4x4( &mView, view );
@@ -390,14 +390,14 @@ void BoxApp::BuildBoxGeometry(bool splitVertex)
     if (splitVertex)
     { 
         // DISABLE-FORMAT
-        verticesPoses[0].Pos = XMFLOAT3(-1.0f, -1.0f, -1.0f);
-        verticesPoses[1].Pos = XMFLOAT3(-1.0f, +1.0f, -1.0f);
-        verticesPoses[2].Pos = XMFLOAT3(+1.0f, +1.0f, -1.0f);
-        verticesPoses[3].Pos = XMFLOAT3(+1.0f, -1.0f, -1.0f);
-        verticesPoses[4].Pos = XMFLOAT3(-1.0f, -1.0f, +1.0f);
-        verticesPoses[5].Pos = XMFLOAT3(-1.0f, +1.0f, +1.0f);
-        verticesPoses[6].Pos = XMFLOAT3(+1.0f, +1.0f, +1.0f);
-        verticesPoses[7].Pos = XMFLOAT3(+1.0f, -1.0f, +1.0f);
+        verticesPoses[0].Pos = glm::vec3(-1.0f, -1.0f, -1.0f);
+        verticesPoses[1].Pos = glm::vec3(-1.0f, +1.0f, -1.0f);
+        verticesPoses[2].Pos = glm::vec3(+1.0f, +1.0f, -1.0f);
+        verticesPoses[3].Pos = glm::vec3(+1.0f, -1.0f, -1.0f);
+        verticesPoses[4].Pos = glm::vec3(-1.0f, -1.0f, +1.0f);
+        verticesPoses[5].Pos = glm::vec3(-1.0f, +1.0f, +1.0f);
+        verticesPoses[6].Pos = glm::vec3(+1.0f, +1.0f, +1.0f);
+        verticesPoses[7].Pos = glm::vec3(+1.0f, -1.0f, +1.0f);
         // ENABLE-FORMAT
 
             // DISABLE-FORMAT
@@ -414,14 +414,14 @@ void BoxApp::BuildBoxGeometry(bool splitVertex)
     else
     {
         // DISABLE-FORMAT
-        vertices[0] = Vertex({ XMFLOAT3(-1.0f, -1.0f, -1.0f), XMFLOAT4(Colors::White) });
-        vertices[1] = Vertex({ XMFLOAT3(-1.0f, +1.0f, -1.0f), XMFLOAT4(Colors::Black) });
-        vertices[2] = Vertex({ XMFLOAT3(+1.0f, +1.0f, -1.0f), XMFLOAT4(Colors::Red) });
-        vertices[3] = Vertex({ XMFLOAT3(+1.0f, -1.0f, -1.0f), XMFLOAT4(Colors::Green) });
-        vertices[4] = Vertex({ XMFLOAT3(-1.0f, -1.0f, +1.0f), XMFLOAT4(Colors::Blue) });
-        vertices[5] = Vertex({ XMFLOAT3(-1.0f, +1.0f, +1.0f), XMFLOAT4(Colors::Yellow) });
-        vertices[6] = Vertex({ XMFLOAT3(+1.0f, +1.0f, +1.0f), XMFLOAT4(Colors::Cyan) });
-        vertices[7] = Vertex({ XMFLOAT3(+1.0f, -1.0f, +1.0f), XMFLOAT4(Colors::Magenta) });
+        vertices[0] = Vertex({ glm::vec3(-1.0f, -1.0f, -1.0f), XMFLOAT4(Colors::White) });
+        vertices[1] = Vertex({ glm::vec3(-1.0f, +1.0f, -1.0f), XMFLOAT4(Colors::Black) });
+        vertices[2] = Vertex({ glm::vec3(+1.0f, +1.0f, -1.0f), XMFLOAT4(Colors::Red) });
+        vertices[3] = Vertex({ glm::vec3(+1.0f, -1.0f, -1.0f), XMFLOAT4(Colors::Green) });
+        vertices[4] = Vertex({ glm::vec3(-1.0f, -1.0f, +1.0f), XMFLOAT4(Colors::Blue) });
+        vertices[5] = Vertex({ glm::vec3(-1.0f, +1.0f, +1.0f), XMFLOAT4(Colors::Yellow) });
+        vertices[6] = Vertex({ glm::vec3(+1.0f, +1.0f, +1.0f), XMFLOAT4(Colors::Cyan) });
+        vertices[7] = Vertex({ glm::vec3(+1.0f, -1.0f, +1.0f), XMFLOAT4(Colors::Magenta) });
         // ENABLE-FORMAT
     }
 

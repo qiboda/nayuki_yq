@@ -2,13 +2,13 @@
 
 #include <NayukiYq/NayukiYq.h>
 
-#include <NayukiYq/Common/FSM/FSM.h>
-#include <NayukiYq/Common/FSM/FSMContext.h>
-#include <NayukiYq/Common/FSM/FSMInstance.h>
+#include <Core/FSM/FSM.h>
+#include <Core/FSM/FSMContext.h>
+#include <Core/FSM/FSMInstance.h>
 
-#include <NayukiYq/Common/FSM/State.h>
+#include <Core/FSM/State.h>
 
-#include <NayukiYq/Common/FSM/Transition.h>
+#include <Core/FSM/Transition.h>
 
 enum class SkillStateId
 : ui8
@@ -263,7 +263,7 @@ TEST_F( FSMTest, BuildAndExecFSM )
 {
     // todo: FSM add log to trace execution path and reflection.
     // todo: add event notify.
-    // todo: ÊÇ·ñÓ¦¸Ã×èÖ¹Ò»´ÎExec£¬Ö´ÐÐ¶à¸öTransition
+    // todo: ï¿½Ç·ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½Ö¹Ò»ï¿½ï¿½Execï¿½ï¿½Ö´ï¿½Ð¶ï¿½ï¿½Transition
     skillFSMInstance.Build();
     ASSERT_EQ( skillFSMInstance.GetFSMContext().lock()->mCurStateId, SkillStateId::Spell );
     skillFSMInstance.Exec();

@@ -2,7 +2,7 @@
 
 #include <NayukiYq/NayukiYq.h>
 
-#include <NayukiYq/Common/Container/Heap.h>
+#include <Core/Container/Heap.h>
 
 class HeapTest
     : public ::testing::Test

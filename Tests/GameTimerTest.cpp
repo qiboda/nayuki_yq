@@ -2,7 +2,7 @@
 
 #include <NayukiYq/NayukiYq.h>
 
-#include <NayukiYq/Common/GameTimer.h>
+#include <Core/GameTimer.h>
 
 #include <thread>
 

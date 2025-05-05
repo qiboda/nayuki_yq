@@ -5,15 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(Windows) 启动",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "../build/windows/x64/debug/Window.exe",
+            "name": "Launch Window",
+            "program": "${workspaceFolder}/build/windows/x64/debug/Window.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "",
+            "cwd": "${workspaceFolder}/build/windows/x64/debug/",
             "environment": [],
             "console": "externalTerminal"
-        }
+        },
     ]
 }

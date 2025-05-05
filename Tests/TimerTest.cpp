@@ -2,7 +2,7 @@
 
 #include <NayukiYq/NayukiYq.h>
 
-#include <NayukiYq/Common/Timer/TimerManager.h>
+#include <Core/Timer/TimerManager.h>
 
 class TimerTest
     : public ::testing::Test

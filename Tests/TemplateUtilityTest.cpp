@@ -2,7 +2,7 @@
 
 #include <NayukiYq/NayukiYq.h>
 
-#include <NayukiYq/Common/TemplateUtility.h>
+#include <Core/TemplateUtility.h>
 
 class TemplateUtilityTest
     : public ::testing::Test
