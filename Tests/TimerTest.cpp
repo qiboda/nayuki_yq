@@ -1,7 +1,5 @@
 #include <gtest/gtest.h>
 
-#include <NayukiYq/NayukiYq.h>
-
 #include <Core/Timer/TimerManager.h>
 
 class TimerTest

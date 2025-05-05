@@ -4,7 +4,7 @@
 
 #include <Core/FSM/FSM.h>
 
-class FSMBuilder : public Singleton<FSMBuilder> {
+class CORE_API FSMBuilder : public Singleton<FSMBuilder> {
   public:
     template <typename TFSM> std::weak_ptr<FSMInterface> FindOrCreateFSM() {
         std::weak_ptr<FSMInterface> fsmInterface = FindFSM(TFSM::GetFSMId_S());

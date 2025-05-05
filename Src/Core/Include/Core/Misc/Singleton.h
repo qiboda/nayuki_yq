@@ -2,7 +2,7 @@
 
 #include <Core/Core.h>
 
-template <typename T> class CORE_API Singleton {
+template <typename T> class Singleton {
   protected:
     Singleton() {}
     ~Singleton() {}

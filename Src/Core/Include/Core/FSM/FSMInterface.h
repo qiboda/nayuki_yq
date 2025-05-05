@@ -4,7 +4,7 @@
 
 #include <Core/Misc/NonCopyable.h>
 
-struct FSMId {
+struct CORE_API FSMId {
     FSMId() {}
     FSMId(const std::string &id) : id(id) {}
 
@@ -17,7 +17,7 @@ struct FSMId {
 
 static const FSMId NullFSMId;
 
-class FSMInterface {
+class CORE_API FSMInterface {
   public:
     template <typename T> static T Cast(FSMInterface *fsmInterface) {
         if (fsmInterface && fsmInterface->GetFSMId() == T::GetFSMId_S()) {
@@ -30,5 +30,5 @@ class FSMInterface {
     virtual FSMId GetFSMId() const = 0 { return GetFSMId_S(); }
 
   public:
-    virtual void Build() = 0 {}
+    virtual void Build() = 0;
 };

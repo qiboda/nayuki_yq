@@ -203,8 +203,8 @@ template <typename TReturnVal, typename... TArgs> class SingleDelegate {
     // function, static function, static memeber function and include lambda
     DelegateHandle
     Bind(typename DelegateFunInstance<TReturnVal, TArgs...>::TFunctor functor) {
-        NY_ASSERT_MSG(mDelegateInstance == nullptr,
-                      L"SingleDelegate only binds once");
+        NY_ASSERT(mDelegateInstance == nullptr,
+                  "SingleDelegate only binds once");
 
         DelegateHandle delegateHandle(
             DelegateHandle::GenerateNewHandleType::GenerateNewHandle);
