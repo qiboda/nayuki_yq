@@ -5,8 +5,6 @@
 // --------------------------------------------------------------------
 #include <Core/Core.h>
 
-#include <Core/Logger/Logger.h>
-#include <Core/Macro/Macro.h>
 #include <iostream>
 
 #pragma region LoggerCategory
@@ -124,6 +122,3 @@ Logger::CreateAsyncLogger(const LoggerCategory &loggerCategory) {
 }
 
 #pragma endregion Logger
-
-// Default Logger
-NY_LOG_CATEGORY_DEFINITION(LogNayukiYq);

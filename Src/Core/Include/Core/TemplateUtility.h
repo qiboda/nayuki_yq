@@ -1,8 +1,5 @@
 ﻿#pragma once
 
-#include <type_traits>
-
-#include <memory>
 
 #pragma region is_shared_ptr
 

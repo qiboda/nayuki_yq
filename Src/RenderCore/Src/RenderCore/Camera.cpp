@@ -1,2 +1,2 @@
 ﻿#include "RenderCore/Camera.h"
-#include <Core/MathHelper.h>
+#include <Core/Math/MathHelper.h>

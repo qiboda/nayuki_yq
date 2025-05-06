@@ -4,9 +4,11 @@ module_name_macro = "RENDER_CORE"
 target(module_name)
     set_kind("shared")
 
-    add_files("Src/" .. module_name .. "/**.cpp")
+    add_files("Src/" .. module_name .. "/**.cpp", { pch = true })
     add_includedirs("Include", { public = true })
     add_headerfiles("Include/**.h", { public = true })
+
+    set_pcxxheader("Include/" .. module_name .. "/" .. module_name .. ".h")
 
     -- 必须定义
     add_defines(module_name_macro .. "_EXPORTS")

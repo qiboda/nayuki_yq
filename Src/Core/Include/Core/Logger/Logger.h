@@ -14,9 +14,6 @@
 #    define SPDLOG_WCHAR_TO_UTF8_SUPPORT
 #endif // !SPDLOG_WCHAR_TO_UTF8_SUPPORT
 
-#include <Core/Core.h>
-#include <Core/Misc/Singleton.h>
-
 #include <spdlog/async.h>
 #include <spdlog/async_logger.h>
 #include <spdlog/sinks/ansicolor_sink.h>
@@ -31,10 +28,7 @@ class CORE_API LoggerCategory {
     friend class Logger;
 
   public:
-    enum class Type : ui8 {
-        Sync,
-        Async,
-    };
+    enum class Type : ui8 { Sync, Async };
 
   public:
     LoggerCategory(const Name &loggerName, Type loggerType);
@@ -86,7 +80,7 @@ class CORE_API Logger : public Singleton<Logger> {
 
 #ifndef NY_LOG_CATEGORY_DECLARED
 #    define NY_LOG_CATEGORY_DECLARED(LogCategory)                              \
-        extern const CORE_API LoggerCategory LogCategory;
+        extern const LoggerCategory LogCategory;
 #endif // !NY_LOG_CATEGORY_DECLARED
 
 #ifndef NY_LOG_CATEGORY_DEFINITION
@@ -97,7 +91,7 @@ class CORE_API Logger : public Singleton<Logger> {
 
 #ifndef NY_ALOG_CATEGORY_DECLARED
 #    define NY_ALOG_CATEGORY_DECLARED(LogCategory)                             \
-        extern const CORE_API LoggerCategory LogCategory;
+        extern const LoggerCategory LogCategory;
 #endif // !NY_ALOG_CATEGORY_DECLARED
 
 #ifndef NY_ALOG_CATEGORY_DEFINITION
@@ -161,5 +155,3 @@ namespace LoggerDetail {
 #endif // !NY_LOG_CRITICAL
 
 #pragma endregion HelperMacro
-
-NY_LOG_CATEGORY_DECLARED(LogNayukiYq);

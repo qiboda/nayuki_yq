@@ -2,11 +2,12 @@
 // MathHelper.cpp by Frank Luna (C) 2011 All Rights Reserved.
 // ***************************************************************************************
 
-#include "Core/MathHelper.h"
+#include "Core/Math/MathHelper.h"
 #include "glm/geometric.hpp"
 
 #include <cmath>
 #include <float.h>
+#include <random>
 
 const f32 MathHelper::Infinity = FLT_MAX;
 const f32 MathHelper::Pi = 3.1415926535f;
@@ -64,7 +65,8 @@ glm::vec3 MathHelper::RandUnitVec3() {
 //                                    MathHelper::RandF(-1.0f, 1.0f), 0.0f);
 
 //         // Ignore points outside the unit sphere in order to get an even
-//         // distribution over the unit sphere.  Otherwise points will clump more
+//         // distribution over the unit sphere.  Otherwise points will clump
+//         more
 //         // on the sphere near the corners of the cube.
 
 //         if (glm::vec33Greater(glm::vec33LengthSq(v), One)) {

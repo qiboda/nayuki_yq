@@ -64,7 +64,7 @@
     ],
     "clangd.checkUpdates": true,
     "clangd.path": "clangd",
-    "xmake.compileCommandsBackend": "clangd",
+    // "xmake.compileCommandsBackend": "clangd",
     "notebook.defaultFormatter": "xaver.clang-format",
-    "editor.defaultFormatter": "xaver.clang-format"
+    "editor.defaultFormatter": "xaver.clang-format",
 }

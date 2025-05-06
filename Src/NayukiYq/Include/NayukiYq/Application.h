@@ -46,7 +46,5 @@ class NAYUKI_YQ_API Application : public IRAII {
     }
 
   protected:
-    vk::UniqueInstance instance;
-
     Window *mWindow = nullptr;
 };

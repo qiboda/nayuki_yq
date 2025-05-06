@@ -1,11 +1,9 @@
 ﻿#pragma once
 
-#include <Core/Core.h>
-
 template <typename T> class Singleton {
   protected:
     Singleton() {}
-    ~Singleton() {}
+    virtual ~Singleton() {}
 
   private:
     // Even if declare a copy constructor (define it as deleted in the

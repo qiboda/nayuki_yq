@@ -1,8 +1,7 @@
 ﻿#pragma once
 
-#include <Core/Core.h>
-#include <vector>
 #include <algorithm>
+#include <vector>
 
 namespace HeapDetail {
 constexpr ui64 LeftElemIndex(ui64 index, ui64 size) {

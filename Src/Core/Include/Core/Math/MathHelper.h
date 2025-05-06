@@ -9,7 +9,6 @@
 #include "ModuleExport.h"
 #include <Core/TypeDef.h>
 #include <glm/glm.hpp>
-#include <random>
 
 class CORE_API MathHelper {
   public:
