@@ -10,6 +10,9 @@
 #endif
 #include <vulkan/vulkan.hpp>
 
+#define GLFW_INCLUDE_VULKAN // 让GLFW使用Vulkan的头文件
+#include <GLFW/glfw3.h>
+
 #include <RenderCore/Camera.h>
 #include <RenderCore/Instance.h>
 

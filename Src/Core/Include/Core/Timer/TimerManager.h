@@ -8,7 +8,7 @@
 
 DECL_SINGLE_DElEGATE_TYPE(TimerDelegate);
 
-enum class TimerState : ui8 { None, Active, Paused };
+enum class TimerState : u8 { None, Active, Paused };
 
 struct TimerData {
     constexpr TimerData() {}

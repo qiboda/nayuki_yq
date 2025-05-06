@@ -8,7 +8,7 @@
 
 #include <Core/FSM/Transition.h>
 
-enum class SkillStateId : ui8 { Spell, Cast, Max };
+enum class SkillStateId : u8 { Spell, Cast, Max };
 
 class SkillFSMContext : public FSMContext {
   public:
@@ -115,7 +115,7 @@ class SkillState_Cast : public SkillState {
   private:
 };
 
-enum class SkillTransitionId : ui8 {
+enum class SkillTransitionId : u8 {
     Spell2Cast,
     Cast2Spell,
     Max,

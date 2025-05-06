@@ -20,7 +20,7 @@ class CORE_API DelegateHandle {
     ~DelegateHandle() {}
 
   public:
-    ui64 GenerateNewId();
+    u64 GenerateNewId();
 
   public:
     operator bool() const { return IsValid(); }
@@ -42,5 +42,5 @@ class CORE_API DelegateHandle {
     }
 
   private:
-    ui64 mHandleId = 0u;
+    u64 mHandleId = 0u;
 };

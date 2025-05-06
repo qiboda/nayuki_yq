@@ -2,13 +2,10 @@
 #pragma once
 
 #include "Core/Misc/Tickable.h"
-#include <Core/Core.h>
+#include <RenderCore/RenderCore.h>
 #include <Core/Misc/RAII.h>
-#include <GLFW/glfw3.h>
-#include <NayukiYq/NayukiYq.h>
-#include <cstddef>
 
-class NAYUKI_YQ_API Window : public IRAII, public ITickable {
+class RENDER_CORE_API Window : public IRAII, public ITickable {
 
   public:
     static void Init() { glfwInit(); }
@@ -58,6 +55,11 @@ class NAYUKI_YQ_API Window : public IRAII, public ITickable {
     }
 
     bool ShouldClose() { return glfwWindowShouldClose(mWindow) == GLFW_TRUE; }
+
+  public:
+    const char **GetRenderInstanceExtensions(u32 *glfwExtensionCount) {
+        return glfwGetRequiredInstanceExtensions(glfwExtensionCount);
+    }
 
   protected:
     GLFWwindow *mWindow = nullptr;

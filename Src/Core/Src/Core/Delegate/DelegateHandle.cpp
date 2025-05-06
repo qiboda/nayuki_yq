@@ -4,10 +4,10 @@
 
 namespace DelegateDetail {
 // ensure thread safe
-std::atomic<ui64> gDelegateHandleId = 0u;
+std::atomic<u64> gDelegateHandleId = 0u;
 } // namespace DelegateDetail
 
-ui64 DelegateHandle::GenerateNewId() {
+u64 DelegateHandle::GenerateNewId() {
     mHandleId = DelegateDetail::gDelegateHandleId.fetch_add(1);
 
     // handle overflow

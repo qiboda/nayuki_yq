@@ -28,7 +28,7 @@ class CORE_API LoggerCategory {
     friend class Logger;
 
   public:
-    enum class Type : ui8 { Sync, Async };
+    enum class Type : u8 { Sync, Async };
 
   public:
     LoggerCategory(const Name &loggerName, Type loggerType);

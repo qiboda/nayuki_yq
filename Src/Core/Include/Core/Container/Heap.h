@@ -4,14 +4,14 @@
 #include <vector>
 
 namespace HeapDetail {
-constexpr ui64 LeftElemIndex(ui64 index, ui64 size) {
+constexpr u64 LeftElemIndex(u64 index, u64 size) {
     if (size > index * 2 + 1) {
         return index * 2 + 1;
     }
     return NONE_INDEX;
 }
 
-constexpr ui64 RightElemIndex(ui64 index, ui64 size) {
+constexpr u64 RightElemIndex(u64 index, u64 size) {
     if (size > index * 2 + 2) {
         return index * 2 + 2;
     }
@@ -71,7 +71,7 @@ class Heap {
 
     // TODO: change to remove_heap_elem() global function.
     bool Remove(const TElem &elem) {
-        ui64 index = GetElemIndex(elem);
+        u64 index = GetElemIndex(elem);
         if (index == NONE_INDEX) {
             return false;
         }
@@ -85,14 +85,14 @@ class Heap {
 
 #pragma endregion Operate
 
-    ui64 GetElemIndex(const TElem &elem) const {
+    u64 GetElemIndex(const TElem &elem) const {
         return GetElemIndexInternal(elem, 0u);
     }
 
-    ui64 Size() const { return mContainer.size(); }
+    u64 Size() const { return mContainer.size(); }
 
   private:
-    ui64 GetElemIndexInternal(const TElem &elem, const ui64 index) const {
+    u64 GetElemIndexInternal(const TElem &elem, const u64 index) const {
         if (index >= mContainer.size()) {
             return NONE_INDEX;
         }
@@ -104,22 +104,22 @@ class Heap {
             return NONE_INDEX;
         }
 
-        ui64 leftElemIndex =
+        u64 leftElemIndex =
             HeapDetail::LeftElemIndex(index, mContainer.size());
         if (leftElemIndex == NONE_INDEX) {
             return NONE_INDEX;
         }
-        ui64 leftIndex = GetElemIndexInternal(elem, leftElemIndex);
+        u64 leftIndex = GetElemIndexInternal(elem, leftElemIndex);
         if (leftIndex != NONE_INDEX) {
             return leftIndex;
         }
 
-        ui64 rightElemIndex =
+        u64 rightElemIndex =
             HeapDetail::LeftElemIndex(index, mContainer.size());
         if (rightElemIndex == NONE_INDEX) {
             return NONE_INDEX;
         }
-        ui64 rightIndex = GetElemIndexInternal(elem, rightElemIndex);
+        u64 rightIndex = GetElemIndexInternal(elem, rightElemIndex);
         if (rightIndex != NONE_INDEX) {
             return rightIndex;
         }
@@ -127,24 +127,24 @@ class Heap {
         return NONE_INDEX;
     }
 
-    void DownHeapElem(ui64 index) {
+    void DownHeapElem(u64 index) {
         if (index >= mContainer.size()) {
             return;
         }
 
-        ui64 leftElemIndex =
+        u64 leftElemIndex =
             HeapDetail::LeftElemIndex(index, mContainer.size());
         if (leftElemIndex == NONE_INDEX) {
             return;
         }
 
-        ui64 rightElemIndex =
+        u64 rightElemIndex =
             HeapDetail::RightElemIndex(index, mContainer.size());
         if (rightElemIndex == NONE_INDEX) {
             rightElemIndex = leftElemIndex;
         }
 
-        ui64 UpElemIndex = NONE_INDEX;
+        u64 UpElemIndex = NONE_INDEX;
         if (TCompPred()(mContainer[leftElemIndex],
                         mContainer[rightElemIndex])) {
             UpElemIndex = rightElemIndex;

@@ -3,7 +3,7 @@
 #include <Core/Core.h>
 #include <chrono>
 
-enum class GameTimerState : ui8 { Running, Paused };
+enum class GameTimerState : u8 { Running, Paused };
 
 class CORE_API GameTimer {
   public:

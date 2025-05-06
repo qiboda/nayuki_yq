@@ -1,10 +1,9 @@
 
 #pragma once
 
-#include <GLFW/glfw3.h>
 #include <NayukiYq/NayukiYq.h>
-#include <NayukiYq/Window.h>
-#include <cstddef>
+#include <RenderCore/Window.h>
+#include <RenderCore/Instance.h>
 
 class NAYUKI_YQ_API Application : public IRAII {
 
@@ -12,7 +11,13 @@ class NAYUKI_YQ_API Application : public IRAII {
     Application() {}
     virtual ~Application() {}
 
-    virtual void Initialize() override { initWindow(); }
+    virtual void Initialize() override {
+        initWindow();
+        if (mRenderInstance == nullptr) {
+            mRenderInstance = new RenderInstance();
+            mRenderInstance->CreateInstance(mAppInfo, mWindow);
+        }
+    }
 
     virtual void CleanUp() override {
         if (mWindow) {
@@ -34,6 +39,23 @@ class NAYUKI_YQ_API Application : public IRAII {
         }
     }
 
+  public:
+    void SetAppName(const std::string_view &name) {
+        mAppInfo.setPApplicationName(name.data());
+    }
+
+    void SetAppVersion(u32 major, u32 minor, u32 patch) {
+        mAppInfo.setApiVersion(VK_MAKE_VERSION(major, minor, patch));
+    }
+
+    void SetEngineName(const std::string_view &name) {
+        mAppInfo.setPEngineName(name.data());
+    }
+
+    void SetEngineVersion(u32 major, u32 minor, u32 patch) {
+        mAppInfo.setApiVersion(VK_MAKE_VERSION(major, minor, patch));
+    }
+
   protected:
     void initWindow() {
         Window::Init();
@@ -47,4 +69,10 @@ class NAYUKI_YQ_API Application : public IRAII {
 
   protected:
     Window *mWindow = nullptr;
+
+    RenderInstance *mRenderInstance = nullptr;
+
+    vk::ApplicationInfo mAppInfo = vk::ApplicationInfo(
+        "Hello World!", VK_MAKE_VERSION(0, 1, 0), "No Engine",
+        VK_MAKE_VERSION(0, 1, 0), VK_API_VERSION_1_0);
 };

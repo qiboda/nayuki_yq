@@ -130,7 +130,7 @@ bool BoxApp::Initialize()
     // Must close before execute commands.
     NY_ASSERT_HR( mCommandList->Close() );
     std::array<ID3D12CommandList*, 1> cmdsLists = { mCommandList.Get() };
-    mCommandQueue->ExecuteCommandLists( static_cast<ui32>( cmdsLists.size() ), cmdsLists.data() );
+    mCommandQueue->ExecuteCommandLists( static_cast<u32>( cmdsLists.size() ), cmdsLists.data() );
 
     // Wait until initialization is complete.
     FlushCommandQueue();
@@ -242,7 +242,7 @@ void BoxApp::Draw( const GameTimer& gt )
 
     // Add the command list to the queue for execution.
     std::array<ID3D12CommandList*, 1> cmdsLists { mCommandList.Get() };
-    mCommandQueue->ExecuteCommandLists( static_cast<ui32>( cmdsLists.size() ), cmdsLists.data() );
+    mCommandQueue->ExecuteCommandLists( static_cast<u32>( cmdsLists.size() ), cmdsLists.data() );
 
     // swap the back and front buffers
     NY_ASSERT_HR( mSwapChain->Present( 0, 0 ) );
@@ -441,10 +441,10 @@ void BoxApp::BuildBoxGeometry(bool splitVertex)
         4u, 0u, 3u, 4u, 3u, 7u,
     };
 
-    const ui32 vbByteSize = (ui32)vertices.size() * sizeof( Vertex );
-    const ui32 vbpByteSize = (ui32)verticesPoses.size() * sizeof( VertexPos );
-    const ui32 vbcByteSize = (ui32)verticesColors.size() * sizeof( VertexColor );
-    const ui32 ibByteSize = (ui32)indices.size() * sizeof( ui16 );
+    const u32 vbByteSize = (u32)vertices.size() * sizeof( Vertex );
+    const u32 vbpByteSize = (u32)verticesPoses.size() * sizeof( VertexPos );
+    const u32 vbcByteSize = (u32)verticesColors.size() * sizeof( VertexColor );
+    const u32 ibByteSize = (u32)indices.size() * sizeof( ui16 );
 
     if (mBoxGeo == nullptr)
     {
@@ -489,7 +489,7 @@ void BoxApp::BuildBoxGeometry(bool splitVertex)
     mBoxGeo->IndexBufferByteSize = ibByteSize;
 
     SubmeshGeometry submesh;
-    submesh.IndexCount = static_cast<ui32>( indices.size() );
+    submesh.IndexCount = static_cast<u32>( indices.size() );
     submesh.StartIndexLocation = 0;
     submesh.BaseVertexLocation = 0;
 
@@ -504,16 +504,16 @@ void BoxApp::BuildPSO()
     psoDesc.pRootSignature = mRootSignature.Get();  // TODO: what is this?
     psoDesc.VS =
     {
-        reinterpret_cast<ui8*>( mvsByteCode->GetBufferPointer() ), mvsByteCode->GetBufferSize()
+        reinterpret_cast<u8*>( mvsByteCode->GetBufferPointer() ), mvsByteCode->GetBufferSize()
     };
     psoDesc.PS =
     {
-        reinterpret_cast<ui8*>( mpsByteCode->GetBufferPointer() ), mpsByteCode->GetBufferSize()
+        reinterpret_cast<u8*>( mpsByteCode->GetBufferPointer() ), mpsByteCode->GetBufferSize()
     };
     psoDesc.RasterizerState = CD3DX12_RASTERIZER_DESC( D3D12_DEFAULT );
     psoDesc.BlendState = CD3DX12_BLEND_DESC( D3D12_DEFAULT );
     psoDesc.DepthStencilState = CD3DX12_DEPTH_STENCIL_DESC( D3D12_DEFAULT );
-    psoDesc.SampleMask = std::numeric_limits<ui32>::max();
+    psoDesc.SampleMask = std::numeric_limits<u32>::max();
     psoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
     psoDesc.NumRenderTargets = 1;
     psoDesc.RTVFormats[0] = mBackBufferFormat;

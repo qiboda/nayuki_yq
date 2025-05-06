@@ -4,7 +4,7 @@
 #include <Core/Macro/Macro.h>
 
 namespace TimerHandle_Detail {
-static ui64 gTimerHandleIndex = 0u;
+static u64 gTimerHandleIndex = 0u;
 }
 
 class TimerHandle {
@@ -38,7 +38,7 @@ class TimerHandle {
   private:
     void NextIndex() {
         if (TimerHandle_Detail::gTimerHandleIndex ==
-            std::numeric_limits<ui64>::max()) {
+            std::numeric_limits<u64>::max()) {
             TimerHandle_Detail::gTimerHandleIndex = 0u;
         }
         ++TimerHandle_Detail::gTimerHandleIndex;
