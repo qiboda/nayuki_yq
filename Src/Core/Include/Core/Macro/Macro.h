@@ -16,7 +16,7 @@
 #ifndef NY_PRE_CONDITION
 #    define NY_PRE_CONDITION(expr, msg, ...)                                   \
         {                                                                      \
-            if ((expr) == false) {                                             \
+            if (bool(expr) == false) {                                             \
                 std::cerr << msg << ##__VA_ARGS__ << std::endl;                \
                 assert(expr);                                                  \
             }                                                                  \
@@ -26,17 +26,27 @@
 #ifndef NY_POST_CONDITION
 #    define NY_POST_CONDITION(expr, msg, ...)                                  \
         {                                                                      \
-            if ((expr) == false) {                                             \
+            if (bool(expr) == false) {                                             \
                 std::cerr << msg << ##__VA_ARGS__ << std::endl;                \
                 assert(expr);                                                  \
             }                                                                  \
         }
 #endif // !NY_POST_CONDITION
 
+#ifndef NY_CHECK
+#    define NY_CHECK(expr)                                                     \
+        {                                                                      \
+            if (bool(expr) == false) {                                             \
+                std::cerr << "Check failed: " << #expr << std::endl;           \
+                assert(expr);                                                  \
+            }                                                                  \
+        }
+#endif // !NY_check
+
 #ifndef NY_ASSERT
 #    define NY_ASSERT(expr, msg, ...)                                          \
         {                                                                      \
-            if ((expr) == false) {                                             \
+            if (bool(expr) == false) {                                             \
                 std::cerr << msg << "[" << __FILE__ << ":" << __LINE__ << "] " \
                           << ""##__VA_ARGS__ << std::endl;                     \
                 assert(expr);                                                  \
@@ -100,11 +110,11 @@
 
 #ifndef NON_CONST_MEM_FUN
 #    define NON_CONST_MEM_FUN(function)                                        \
-        template <typename... TArgs_>                                           \
-        auto function(TArgs_ &&...args) ->                                      \
+        template <typename... TArgs_>                                          \
+        auto function(TArgs_ &&...args) ->                                     \
             typename std::remove_const_t<decltype(function(args...))> {        \
             return const_cast<decltype(function(args...))>(                    \
-                std::as_const(*this).function(std::forward<TArgs_>(args)...));  \
+                std::as_const(*this).function(std::forward<TArgs_>(args)...)); \
         }
 #endif // !NON_CONST_MEM_FUN
 
