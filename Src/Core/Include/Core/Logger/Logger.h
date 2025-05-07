@@ -5,10 +5,10 @@
  */
 #pragma once
 
-#ifdef _DEBUG
+#ifdef DEBUG
 #    define SPDLOG_DEBUG_ON
 #    define SPDLOG_TRACE_ON
-#endif // !_DEBUG
+#endif // !DEBUG
 
 #ifndef SPDLOG_WCHAR_TO_UTF8_SUPPORT
 #    define SPDLOG_WCHAR_TO_UTF8_SUPPORT

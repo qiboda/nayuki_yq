@@ -2,8 +2,11 @@
 #pragma once
 
 #include "Core/Misc/Tickable.h"
+#include "GLFW/glfw3.h"
 #include <RenderCore/RenderCore.h>
 #include <Core/Misc/RAII.h>
+#include <cstddef>
+#include <vector>
 
 class RENDER_CORE_API Window : public IRAII, public ITickable {
 
@@ -17,6 +20,8 @@ class RENDER_CORE_API Window : public IRAII, public ITickable {
 
   public:
     virtual void Initialize() override {
+        NY_ASSERT(glfwVulkanSupported(), "Vulkan is not supported on glfw.");
+
         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
@@ -57,8 +62,16 @@ class RENDER_CORE_API Window : public IRAII, public ITickable {
     bool ShouldClose() { return glfwWindowShouldClose(mWindow) == GLFW_TRUE; }
 
   public:
-    const char **GetRenderInstanceExtensions(u32 *glfwExtensionCount) {
-        return glfwGetRequiredInstanceExtensions(glfwExtensionCount);
+    std::vector<const char *> GetRenderInstanceExtensions() {
+        u32 glfwExtensionCount = 0;
+        const char **extensions =
+            glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
+
+        std::vector<const char *> extensionsVec;
+        for (u32 i = 0; i < glfwExtensionCount; i++) {
+            extensionsVec.push_back(extensions[i]);
+        }
+        return extensionsVec;
     }
 
   protected:

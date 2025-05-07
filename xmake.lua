@@ -8,6 +8,12 @@ add_rules("mode.debug", "mode.release")
 -- 自动更新 compile commands 文件
 add_rules("plugin.vsxmake.autoupdate")
 
+if is_mode("debug") then
+    add_defines("DEBUG")
+else
+    add_defines("NDEBUG")
+end
+
 -- add engine
 includes("Src")
 

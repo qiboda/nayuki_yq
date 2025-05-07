@@ -3,7 +3,7 @@
         {
             "name": "Win32",
             "defines": [
-                "_DEBUG",
+                "DEBUG",
                 "UNICODE",
                 "_UNICODE"
             ],
