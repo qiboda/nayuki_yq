@@ -13,7 +13,7 @@ class TimerHandle {
 
   public:
     struct Hash {
-        constexpr i64 operator()(const TimerHandle &timerHandle) const {
+        constexpr u64 operator()(const TimerHandle &timerHandle) const {
             return timerHandle.mDataIndex;
         }
     };
@@ -47,14 +47,14 @@ class TimerHandle {
 
     // Only access through the friend class.
     // Avoid modification by external classes.
-    void SetDataIndex(i64 dataIndex) {
-        NY_ASSERT(0 < dataIndex &&
-                      dataIndex <
-                          std::numeric_limits<decltype(mDataIndex)>::max(),
-                  "");
+    void SetDataIndex(u64 dataIndex) {
+        NY_PRE_CONDITION(
+            0u < dataIndex &&
+                dataIndex < std::numeric_limits<decltype(mDataIndex)>::max(),
+            "")
         mDataIndex = dataIndex;
     }
 
   private:
-    i64 mDataIndex;
+    u64 mDataIndex;
 };

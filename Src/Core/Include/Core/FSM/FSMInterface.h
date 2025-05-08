@@ -1,11 +1,9 @@
 #pragma once
 
-#include <utility>
-
 #include <Core/Misc/NonCopyable.h>
 
 struct CORE_API FSMId {
-    FSMId() {}
+    FSMId() : id() {}
     FSMId(const std::string &id) : id(id) {}
 
     bool operator==(const FSMId &fsmId) const { return fsmId.id == id; }
@@ -18,6 +16,14 @@ struct CORE_API FSMId {
 static const FSMId NullFSMId;
 
 class CORE_API FSMInterface {
+
+  public:
+    FSMInterface() = default;
+    virtual ~FSMInterface() = default;
+
+    FSMInterface(const FSMInterface &) = default;
+    FSMInterface &operator=(const FSMInterface &) = default;
+
   public:
     template <typename T> static T Cast(FSMInterface *fsmInterface) {
         if (fsmInterface && fsmInterface->GetFSMId() == T::GetFSMId_S()) {
@@ -27,7 +33,7 @@ class CORE_API FSMInterface {
 
   public:
     static FSMId GetFSMId_S() { return NullFSMId; }
-    virtual FSMId GetFSMId() const = 0 { return GetFSMId_S(); }
+    virtual FSMId GetFSMId() const { return GetFSMId_S(); }
 
   public:
     virtual void Build() = 0;

@@ -34,8 +34,9 @@ void TimerManager::Tick(f32 deltaSeconds) {
             if (timerData.bloop) {
                 // LastInternalTime -------------- expired time ----
                 // mInternalTime 0 1                  99.5
-                timerData.expireTime = timerData.expireTime +
-                                       executeCount * timerData.intervalTime;
+                timerData.expireTime =
+                    timerData.expireTime +
+                    static_cast<f32>(executeCount) * timerData.intervalTime;
 
                 mActiveTimerMinHeap.Push(executeTimerHandle);
             } else {

@@ -63,7 +63,5 @@ void GameTimer::Tick() {
         mPausedDuration += mDeltaDuration;
         break;
     }
-    default:
-        break;
     }
 }

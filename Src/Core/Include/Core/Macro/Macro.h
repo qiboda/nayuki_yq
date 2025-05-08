@@ -1,10 +1,11 @@
 ﻿#pragma once
 
-#include <Core/TemplateUtility.h>
+#include <Core/Core.h>
 
 #include <cassert>
 // 下方 宏中 std::cerr 使用
 #include <iostream>
+#include <format>
 
 #pragma region disable_warning
 
@@ -15,42 +16,34 @@
 
 #ifndef NY_PRE_CONDITION
 #    define NY_PRE_CONDITION(expr, msg, ...)                                   \
-        {                                                                      \
-            if (bool(expr) == false) {                                             \
-                std::cerr << msg << ##__VA_ARGS__ << std::endl;                \
-                assert(expr);                                                  \
-            }                                                                  \
+        if (bool(expr) == false) {                                             \
+            std::cerr << std::format(msg, __VA_ARGS__) << std::endl;           \
+            assert(expr);                                                      \
         }
 #endif // !NY_PRE_CONDITION
 
 #ifndef NY_POST_CONDITION
 #    define NY_POST_CONDITION(expr, msg, ...)                                  \
-        {                                                                      \
-            if (bool(expr) == false) {                                             \
-                std::cerr << msg << ##__VA_ARGS__ << std::endl;                \
-                assert(expr);                                                  \
-            }                                                                  \
+        if (bool(expr) == false) {                                             \
+            std::cerr << std::format(msg, __VA_ARGS__) << std::endl;           \
+            assert(expr);                                                      \
         }
 #endif // !NY_POST_CONDITION
 
 #ifndef NY_CHECK
 #    define NY_CHECK(expr)                                                     \
-        {                                                                      \
-            if (bool(expr) == false) {                                             \
-                std::cerr << "Check failed: " << #expr << std::endl;           \
-                assert(expr);                                                  \
-            }                                                                  \
+        if (bool(expr) == false) {                                             \
+            std::cerr << "Check failed: " << #expr << std::endl;               \
+            assert(expr);                                                      \
         }
 #endif // !NY_check
 
 #ifndef NY_ASSERT
 #    define NY_ASSERT(expr, msg, ...)                                          \
-        {                                                                      \
-            if (bool(expr) == false) {                                             \
-                std::cerr << msg << "[" << __FILE__ << ":" << __LINE__ << "] " \
-                          << ""##__VA_ARGS__ << std::endl;                     \
-                assert(expr);                                                  \
-            }                                                                  \
+        if (bool(expr) == false) {                                             \
+            std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] "            \
+                      << std::format(msg, __VA_ARGS__) << std::endl;           \
+            assert(expr);                                                      \
         }
 #endif // !NY_ASSERT_MSG
 
@@ -60,18 +53,14 @@
 
 #ifndef NY_DELETE
 #    define NY_DELETE(pointer)                                                 \
-        {                                                                      \
-            delete pointer;                                                    \
-            pointer = nullptr;                                                 \
-        }
+        delete pointer;                                                        \
+        pointer = nullptr
 #endif // !NY_DELETE
 
 #ifndef NY_DELETE_ARRAY
 #    define NY_DELETE_ARRAY(array_pointer)                                     \
-        {                                                                      \
-            delete[] pointer;                                                  \
-            pointer = nullptr;                                                 \
-        }
+        delete[] pointer;                                                      \
+        pointer = nullptr
 #endif // !NY_DELETE_ARRAY
 
 #pragma endregion memory
@@ -80,27 +69,21 @@
 
 #ifndef NY_ASSERT_HR
 #    define NY_ASSERT_HR(x)                                                    \
-        {                                                                      \
-            HRESULT hr__ = (x);                                                \
-            NY_ASSERT(SUCCEEDED(hr__));                                        \
-        }
+        HRESULT hr__ = (x);                                                    \
+        NY_ASSERT(SUCCEEDED(hr__))
 #endif // NY_ASSERT_HR
 
 #ifndef NY_ASSERT_HR_MSG
 #    define NY_ASSERT_HR_MSG(x, msg, ...)                                      \
-        {                                                                      \
-            HRESULT hr__ = (x);                                                \
-            NY_ASSERT_MSG(SUCCEEDED(hr__), msg, __VA_ARGS__);                  \
-        }
+        HRESULT hr__ = (x);                                                    \
+        NY_ASSERT_MSG(SUCCEEDED(hr__), msg, __VA_ARGS__)
 #endif // NY_ASSERT_HR_MSG
 
 #ifndef NY_RELEASE_COM
 #    define NY_RELEASE_COM(x)                                                  \
-        {                                                                      \
-            if (x) {                                                           \
-                x->Release();                                                  \
-                x = nullptr;                                                   \
-            }                                                                  \
+        if (x) {                                                               \
+            x->Release();                                                      \
+            x = nullptr;                                                       \
         }
 #endif // NY_RELEASE_COM
 

@@ -18,7 +18,9 @@
         "SWAPCHAIN",
         "TFSM",
         "Tickable",
+        "VKAPI",
         "vulkansdk",
+        "Wunsafe",
         "xmake",
         "xmakever"
     ],
@@ -143,4 +145,6 @@
     "C_Cpp.autocompleteAddParentheses": false,
     "C_Cpp.autocomplete": "Disabled",
     "C_Cpp.errorSquiggles": "Disabled",
+    "xmake.buildLevel": "normal",
+    "xmake.runMode": "buildRun",
 }

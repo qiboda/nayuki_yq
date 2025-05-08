@@ -4,7 +4,7 @@
 
 namespace DelegateDetail {
 // ensure thread safe
-std::atomic<u64> gDelegateHandleId = 0u;
+static std::atomic<u64> gDelegateHandleId = 0u;
 } // namespace DelegateDetail
 
 u64 DelegateHandle::GenerateNewId() {

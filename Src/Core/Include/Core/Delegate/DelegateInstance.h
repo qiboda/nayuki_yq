@@ -20,7 +20,7 @@ template <typename TReturnVal, typename... TArgs> class DelegateInstance {
 
   public:
     const DelegateHandle &GetHandle() const { return mDelegateHandle; }
-    NON_CONST_MEM_FUN(GetHandle);
+    NON_CONST_MEM_FUN(GetHandle)
     void SetHandle(DelegateHandle delegateHandle) {
         mDelegateHandle = delegateHandle;
     }
@@ -43,7 +43,7 @@ class DelegateFunInstance : public DelegateInstance<TReturnVal, TArgs...> {
         : DelegateInstance<TReturnVal, TArgs...>(delegateHandle),
           mFunctor(functor) {}
 
-    virtual ~DelegateFunInstance() {}
+    virtual ~DelegateFunInstance() override {}
 
   public:
     virtual TReturnVal operator()(TArgs... args) const override {

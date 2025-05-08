@@ -10,7 +10,7 @@ target("test")
     -- 默认情况下不编译
     set_default(false)
 
-    add_packages("gtest")
+    add_packages("spdlog",  "glm", "gtest")
 
     -- 添加本地target依赖
     add_deps("Core")

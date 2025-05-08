@@ -1,15 +1,16 @@
 
 #pragma once
 
+#include "Core/Misc/NonCopyable.h"
 #include <NayukiYq/NayukiYq.h>
 #include <RenderCore/Window.h>
 #include <RenderCore/Instance.h>
 
-class NAYUKI_YQ_API Application : public IRAII {
+class NAYUKI_YQ_API Application : public IRAII, public NonCopyable {
 
   public:
     Application() {}
-    virtual ~Application() {}
+    virtual ~Application() override {}
 
     virtual void Initialize() override {
         initWindow();

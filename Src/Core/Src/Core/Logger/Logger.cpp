@@ -13,10 +13,10 @@ LoggerCategory::LoggerCategory(const Name &loggerName, Type loggerType)
     : mLoggerName(loggerName), mLoggerType(loggerType) {
     if (mLoggerType == Type::Sync) {
         NY_ASSERT(mLoggerName.substr(0, 3) == "Log",
-                  "Sync Logger Name prefix must be 'Log'!");
+                  "Sync Logger Name prefix must be 'Log'!")
     } else if (mLoggerType == Type::Async) {
         NY_ASSERT(mLoggerName.substr(0, 4) == "ALog",
-                  "Async Logger Name prefix must be 'ALog'!");
+                  "Async Logger Name prefix must be 'ALog'!")
     }
     Logger::GetInstance().RegisterCategory(*this);
 }
@@ -56,8 +56,6 @@ void Logger::RegisterCategory(const LoggerCategory &loggerCategory) {
         }
         break;
     }
-    default:
-        break;
     }
 }
 

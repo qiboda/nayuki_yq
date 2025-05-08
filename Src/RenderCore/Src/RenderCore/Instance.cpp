@@ -3,8 +3,8 @@
 #include <RenderCore/Instance.h>
 #include <vector>
 
-PFN_vkCreateDebugUtilsMessengerEXT pfnVkCreateDebugUtilsMessengerEXT;
-PFN_vkDestroyDebugUtilsMessengerEXT pfnVkDestroyDebugUtilsMessengerEXT;
+static PFN_vkCreateDebugUtilsMessengerEXT pfnVkCreateDebugUtilsMessengerEXT;
+static PFN_vkDestroyDebugUtilsMessengerEXT pfnVkDestroyDebugUtilsMessengerEXT;
 
 VKAPI_ATTR VkResult VKAPI_CALL vkCreateDebugUtilsMessengerEXT(
     VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo,
@@ -13,8 +13,7 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateDebugUtilsMessengerEXT(
     return pfnVkCreateDebugUtilsMessengerEXT(instance, pCreateInfo, pAllocator,
                                              pMessenger);
 }
-VKAPI_ATTR
-void VKAPI_CALL vkDestroyDebugUtilsMessengerEXT(
+VKAPI_ATTR void VKAPI_CALL vkDestroyDebugUtilsMessengerEXT(
     VkInstance instance, VkDebugUtilsMessengerEXT messenger,
     VkAllocationCallbacks const *pAllocator) {
     return pfnVkDestroyDebugUtilsMessengerEXT(instance, messenger, pAllocator);
@@ -40,19 +39,27 @@ debugMessageFunc(vk::DebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
     if (0 < pCallbackData->queueLabelCount) {
         message += std::string("\t") + "Queue Labels:\n";
         for (uint32_t i = 0; i < pCallbackData->queueLabelCount; i++) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
             message += std::string("\t\t") + "labelName = <" +
                        pCallbackData->pQueueLabels[i].pLabelName + ">\n";
+#pragma clang diagnostic pop
         }
     }
     if (0 < pCallbackData->cmdBufLabelCount) {
         message += std::string("\t") + "CommandBuffer Labels:\n";
         for (uint32_t i = 0; i < pCallbackData->cmdBufLabelCount; i++) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
             message += std::string("\t\t") + "labelName = <" +
                        pCallbackData->pCmdBufLabels[i].pLabelName + ">\n";
+#pragma clang diagnostic pop
         }
     }
     if (0 < pCallbackData->objectCount) {
         for (uint32_t i = 0; i < pCallbackData->objectCount; i++) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
             message += std::string("\t") + "Object " + std::to_string(i) + "\n";
             message += std::string("\t\t") + "objectType   = " +
                        vk::to_string(pCallbackData->pObjects[i].objectType) +
@@ -63,14 +70,12 @@ debugMessageFunc(vk::DebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
             if (pCallbackData->pObjects[i].pObjectName) {
                 message += std::string("\t\t") + "objectName   = <" +
                            pCallbackData->pObjects[i].pObjectName + ">\n";
+#pragma clang diagnostic pop
             }
         }
     }
 
     NY_LOG_WARN(LogRenderCore, "Vulkan debug message: {}", message);
-#ifdef _WIN32
-    MessageBox(NULL, message.c_str(), "Alert", MB_OK);
-#endif
 
     return false;
 }
@@ -79,7 +84,7 @@ void RenderInstance::CreateInstance(vk::ApplicationInfo &appInfo,
                                     Window *window) {
     NY_LOG_INFO(LogRenderCore, "Creating Render Instance.");
 
-    NY_CHECK(!this->instance);
+    NY_CHECK(!this->instance)
 
     appInfo.setApiVersion(vk_api_version);
 
@@ -89,10 +94,10 @@ void RenderInstance::CreateInstance(vk::ApplicationInfo &appInfo,
     std::vector<const char *> renderInstanceLayers;
     renderInstanceLayers.push_back("VK_LAYER_KHRONOS_validation");
 
-#if (VULKAN_HPP_DISPATCH_LOADER_DYNAMIC == 1)
-    // initialize the DipatchLoaderDynamic to use
-    VULKAN_HPP_DEFAULT_DISPATCHER.init();
-#endif
+    // #if (VULKAN_HPP_DISPATCH_LOADER_DYNAMIC == 1)
+    //     // initialize the DipatchLoaderDynamic to use
+    //     VULKAN_HPP_DEFAULT_DISPATCHER.init();
+    // #endif
 
 #ifdef DEBUG
     renderInstanceExtensions.push_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
@@ -120,12 +125,23 @@ void RenderInstance::CreateInstance(vk::ApplicationInfo &appInfo,
         NY_LOG_INFO(LogRenderCore, "\t {}", extension.extensionName.data());
     }
 
-#if (VULKAN_HPP_DISPATCH_LOADER_DYNAMIC == 1)
-    // initialize the DipatchLoaderDynamic to use
-    VULKAN_HPP_DEFAULT_DISPATCHER.init(instance);
-#endif
+    // #if (VULKAN_HPP_DISPATCH_LOADER_DYNAMIC == 1)
+    //     // initialize the DipatchLoaderDynamic to use
+    //     VULKAN_HPP_DEFAULT_DISPATCHER.init(instance);
+    // #endif
+
+    CreateDebugUtilsMessengerEXT();
+}
+
+vk::Result RenderInstance::CreateDebugUtilsMessengerEXT() {
 
 #ifdef DEBUG
+    NY_LOG_INFO(LogRenderCore, "Creating debug utils messenger.");
+
+    NY_CHECK(!debugUtilsMessenger)
+
+#    pragma clang diagnostic push
+#    pragma clang diagnostic ignored "-Wcast-function-type"
     pfnVkCreateDebugUtilsMessengerEXT =
         reinterpret_cast<PFN_vkCreateDebugUtilsMessengerEXT>(
             instance->getProcAddr("vkCreateDebugUtilsMessengerEXT"));
@@ -145,16 +161,7 @@ void RenderInstance::CreateInstance(vk::ApplicationInfo &appInfo,
                   << std::endl;
         exit(1);
     }
-
-    CreateDebugUtilsMessengerEXT();
-#endif
-}
-
-vk::Result RenderInstance::CreateDebugUtilsMessengerEXT() {
-
-    NY_LOG_INFO(LogRenderCore, "Creating debug utils messenger.");
-
-    NY_CHECK(!debugUtilsMessenger);
+#    pragma clang diagnostic pop
 
     vk::DebugUtilsMessageSeverityFlagsEXT severityFlags(
         vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning |
@@ -172,7 +179,8 @@ vk::Result RenderInstance::CreateDebugUtilsMessengerEXT() {
     debugUtilsMessenger =
         instance->createDebugUtilsMessengerEXTUnique(createInfo);
 
-    NY_CHECK(debugUtilsMessenger);
+    NY_CHECK(debugUtilsMessenger)
+#endif
 
     return vk::Result::eSuccess;
 }

@@ -204,7 +204,7 @@ template <typename TReturnVal, typename... TArgs> class SingleDelegate {
     DelegateHandle
     Bind(typename DelegateFunInstance<TReturnVal, TArgs...>::TFunctor functor) {
         NY_ASSERT(mDelegateInstance == nullptr,
-                  "SingleDelegate only binds once");
+                  "SingleDelegate only binds once")
 
         DelegateHandle delegateHandle(
             DelegateHandle::GenerateNewHandleType::GenerateNewHandle);
@@ -277,7 +277,7 @@ template <typename TReturnVal, typename... TArgs> class SingleDelegate {
 
     TReturnVal Execute(TArgs... args) {
         NY_ASSERT(mDelegateInstance != nullptr,
-                  "SingleDelegate must bind a function");
+                  "SingleDelegate must bind a function")
         return (*mDelegateInstance)(args...);
     }
 

@@ -6,7 +6,6 @@
 #include <Core/FSM/FSMInterface.h>
 
 #include <memory>
-#include <vector>
 
 template <typename TFSMContext, typename TFSM>
 class FSMInstance : public NonCopyable {

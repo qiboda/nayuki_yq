@@ -1,14 +1,17 @@
 
 #pragma once
 
+#include "Core/Macro/Macro.h"
 #include "Core/Misc/Tickable.h"
 #include "GLFW/glfw3.h"
 #include <RenderCore/RenderCore.h>
 #include <Core/Misc/RAII.h>
-#include <cstddef>
+#include <format>
 #include <vector>
 
-class RENDER_CORE_API Window : public IRAII, public ITickable {
+class RENDER_CORE_API Window : public IRAII,
+                               public ITickable,
+                               public NonCopyable {
 
   public:
     static void Init() { glfwInit(); }
@@ -16,16 +19,16 @@ class RENDER_CORE_API Window : public IRAII, public ITickable {
 
   public:
     Window() {}
-    virtual ~Window() {}
+    virtual ~Window() override {}
 
   public:
     virtual void Initialize() override {
-        NY_ASSERT(glfwVulkanSupported(), "Vulkan is not supported on glfw.");
+        NY_ASSERT(glfwVulkanSupported(), "Vulkan is not supported on glfw.")
 
         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
-        NY_ASSERT(mWindow == nullptr, "Window is already initialized.");
+        NY_ASSERT(mWindow == nullptr, "Window is already initialized.")
         mWindow =
             glfwCreateWindow(mWidth, mHeight, mTitle.c_str(), nullptr, nullptr);
     }
@@ -33,6 +36,7 @@ class RENDER_CORE_API Window : public IRAII, public ITickable {
     virtual void CleanUp() override { glfwDestroyWindow(mWindow); }
 
     virtual void Tick(float deltaTime) override {
+        UNUSED_VAR(deltaTime);
         if (mWindow) {
             glfwPollEvents();
         }
@@ -69,7 +73,10 @@ class RENDER_CORE_API Window : public IRAII, public ITickable {
 
         std::vector<const char *> extensionsVec;
         for (u32 i = 0; i < glfwExtensionCount; i++) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
             extensionsVec.push_back(extensions[i]);
+#pragma clang diagnostic pop
         }
         return extensionsVec;
     }

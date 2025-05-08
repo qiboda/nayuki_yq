@@ -1,7 +1,8 @@
 
-add_requires("glfw", "glm", "stb", "spdlog", "tracy", { config = {
+
+add_requires("glfw", "glm", "stb", "spdlog", "tracy", {
     debug = true
-}})
+})
 add_requires("vulkansdk", { system = true })
 
 -- 定义导出模块名列表

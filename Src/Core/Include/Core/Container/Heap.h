@@ -67,7 +67,7 @@ class Heap {
     }
 
     const TElem &Top() const { return mContainer.front(); }
-    NON_CONST_MEM_FUN(Top);
+    NON_CONST_MEM_FUN(Top)
 
     // TODO: change to remove_heap_elem() global function.
     bool Remove(const TElem &elem) {
