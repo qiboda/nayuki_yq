@@ -116,6 +116,7 @@
         "--background-index",
         "--header-insertion-decorators", // 显示为插入建议
         "--suggest-missing-includes",
+        "--std=c++20",
         // 同时开启的任务数量
         "-j=12",
         // 全局补全（会自动补充头文件）
