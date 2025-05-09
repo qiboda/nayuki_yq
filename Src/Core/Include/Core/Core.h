@@ -8,8 +8,6 @@
 #include <string>      // IWYU pragma: keep
 #include <string_view> // IWYU pragma: keep
 #include <functional>  // IWYU pragma: keep
-// 可以使用 not, or, and 等关键字
-#include <ciso646> // IWYU pragma: keep
 
 // GLM
 //  GLM本为是OpenGL设计的，在OpenGL中，NDC（标准化设备坐标系）的深度范围为[-1,
@@ -26,6 +24,6 @@
 #include <Core/Macro/Macro.h>
 #include <Core/TypeDef.h>
 #include <Core/Misc/Singleton.h>
-#include <Core/Logger/Logger.h>
+#include <Core/Logger/Logger.h> // IWYU pragma: keep
 
 CORE_API NY_LOG_CATEGORY_DECLARED( LogCore )

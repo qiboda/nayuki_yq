@@ -2,6 +2,8 @@
 
 #pragma region is_shared_ptr
 
+#include <memory>
+
 template <typename T> struct is_shared_ptr : std::false_type
 {
 };

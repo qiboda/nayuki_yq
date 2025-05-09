@@ -4,8 +4,8 @@
 // See the LICENSE file in the repo root for full license information.
 // --------------------------------------------------------------------
 #include <Core/Core.h>
-
-#include <iostream>
+#include <Core/Logger/Logger.h>
+#include <iostream> // IWYU pragma: keep
 
 #pragma region LoggerCategory
 

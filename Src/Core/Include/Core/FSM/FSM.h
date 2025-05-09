@@ -14,11 +14,11 @@ class FSM : public FSMInterface, public NonCopyable
 {
   public:
     FSM() {}
-    virtual ~FSM() {}
+    virtual ~FSM() override {}
 
   public:
     static FSMId GetFSMId_S() { return FSMId( STRINGIFY( FSM ) ); }
-    virtual FSMId GetFSMId() const { return GetFSMId_S(); }
+    virtual FSMId GetFSMId() const override { return GetFSMId_S(); }
 
   public:
     virtual bool Exec( std::shared_ptr<TFSMContext> &fsmContext )

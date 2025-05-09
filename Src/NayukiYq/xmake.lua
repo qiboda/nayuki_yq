@@ -9,7 +9,7 @@ target(module_name)
     add_includedirs("Include", { public = true })
     add_headerfiles("Include/**.h", { public = true })
 
-    set_pcxxheader("Include/".. module_name .. "/" .. module_name .. ".h")
+    -- set_pcxxheader("Include/".. module_name .. "/" .. module_name .. ".h")
 
     -- 必须定义
     add_defines(module_name_macro .. "_EXPORTS")

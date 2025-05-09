@@ -72,7 +72,7 @@ class DelegateMemFunInstance : public DelegateInstance<TReturnVal, TArgs...>
     {
     }
 
-    virtual ~DelegateMemFunInstance()
+    virtual ~DelegateMemFunInstance() override
     {
         mFunctor = nullptr;
         mObject = nullptr;
@@ -115,7 +115,7 @@ class DelegateSPMemFunInstance : public DelegateInstance<TReturnVal, TArgs...>
     {
     }
 
-    virtual ~DelegateSPMemFunInstance()
+    virtual ~DelegateSPMemFunInstance() override
     {
         mFunctor = nullptr;
         mWPObject.reset();

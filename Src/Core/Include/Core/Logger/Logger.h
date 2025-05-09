@@ -14,11 +14,17 @@
 #    define SPDLOG_WCHAR_TO_UTF8_SUPPORT
 #endif // !SPDLOG_WCHAR_TO_UTF8_SUPPORT
 
+// #include <functional> // IWYU pragma: keep
+
 #include <spdlog/async.h>
 #include <spdlog/async_logger.h>
 #include <spdlog/sinks/ansicolor_sink.h>
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
+
+#include <ModuleExport.h>
+#include <Core/Misc/Singleton.h>
+#include <Core/TypeDef.h>
 
 class CORE_API LoggerCategory
 {
@@ -45,6 +51,7 @@ class CORE_API LoggerCategory
   private:
     friend bool operator==( const LoggerCategory &LHS, const LoggerCategory &RHS )
     {
+        std::function<void()>();
         return LHS.GetName() == RHS.GetName() && LHS.GetType() == RHS.GetType();
     }
 

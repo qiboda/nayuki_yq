@@ -28,6 +28,8 @@ if is_host("windows") then
     -- 为了使用 #pragma system_header
     add_cxxflags("-Wno-pragma-system-header-outside-header")
     add_cxxflags("-Wno-newline-eof")
+    -- 允许没有使用的宏
+    add_cxxflags("-Wno-unused-macros")
     -- 由于使用了vulkan等依赖库, 允许使用旧风格的类型转换
     add_cxxflags("-Wno-old-style-cast")
     -- 允许没有default分支

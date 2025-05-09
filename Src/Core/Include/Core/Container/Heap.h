@@ -1,28 +1,7 @@
 ﻿#pragma once
 
-#include <algorithm>
-#include <vector>
-
-namespace HeapDetail
-{
-constexpr u64 LeftElemIndex( u64 index, u64 size )
-{
-    if ( size > index * 2 + 1 )
-    {
-        return index * 2 + 1;
-    }
-    return NONE_INDEX;
-}
-
-constexpr u64 RightElemIndex( u64 index, u64 size )
-{
-    if ( size > index * 2 + 2 )
-    {
-        return index * 2 + 2;
-    }
-    return NONE_INDEX;
-}
-} // namespace HeapDetail
+#include "Core/TypeDef.h"
+#include <Core/Core.h>
 
 /**
  * Heap: Implemented using std heap algorithm.
@@ -44,7 +23,31 @@ template <typename TElem, typename TCompPred = std::less<TElem>, typename TConta
 #pragma region TypeAlias
     using Iterator = typename TContainer::iterator;
     using ConstIterator = typename TContainer::const_iterator;
+    using NoneIndex = NoneIndex<u64>;
 #pragma endregion TypeAlias
+
+    static constexpr NoneIndex NONE_INDEX = NoneIndex();
+
+    struct HeapDetail
+    {
+        static constexpr u64 LeftElemIndex( u64 index, u64 size )
+        {
+            if ( size > index * 2 + 1 )
+            {
+                return index * 2 + 1;
+            }
+            return Heap::NONE_INDEX;
+        }
+
+        static constexpr u64 RightElemIndex( u64 index, u64 size )
+        {
+            if ( size > index * 2 + 2 )
+            {
+                return index * 2 + 2;
+            }
+            return Heap::NONE_INDEX;
+        }
+    };
 
   public:
 #pragma region Constructor

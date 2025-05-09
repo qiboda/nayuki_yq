@@ -10,7 +10,7 @@ target(module_name)
     add_headerfiles("Include/**.h", { public = true })
 
     -- 预编译头文件
-    set_pcxxheader("Include/".. module_name .. "/" .. module_name .. ".h")
+    -- set_pcxxheader("Include/".. module_name .. "/" .. module_name .. ".h")
 
     -- 启用dll export
     add_defines(module_name_macro .. "_EXPORTS")

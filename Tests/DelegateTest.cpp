@@ -84,7 +84,7 @@ TEST_F( DelegateTest, SingleDelegateReturnVal )
             return 0;
         } );
     ASSERT_EQ( delegate.Execute( 3 ), 10 );
-    ASSERT_EQ( delegate.Execute( -1.0f ), 0 );
+    ASSERT_EQ( delegate.Execute( -1.0 ), 0 );
 }
 
 TEST_F( DelegateTest, SingleDelegateBindOnlyOnce )

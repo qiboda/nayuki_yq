@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Core/Core.h>
 #include <Core/Macro/Macro.h>
+#include <Core/TypeDef.h>
 
 namespace TimerHandle_Detail
 {
@@ -12,6 +12,11 @@ class TimerHandle
 {
   public:
     friend class TimerManager;
+
+  public:
+    using NoneIndex = NoneIndex<u64>;
+
+    static constexpr NoneIndex NONE_INDEX = NoneIndex();
 
   public:
     struct Hash

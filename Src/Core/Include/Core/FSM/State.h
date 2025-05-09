@@ -4,6 +4,10 @@
 
 template <typename TStateId, typename TFSMContext> class State : public NonCopyable
 {
+
+  public:
+    virtual ~State() {}
+
   public:
     static TStateId GetStateId_S() { return TStateId{}; }
     virtual TStateId GetStateId() const { return GetStateId_S(); }

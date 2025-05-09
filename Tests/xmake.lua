@@ -16,3 +16,6 @@ target("test")
     add_deps("Core")
     add_deps("RenderCore")
     add_deps("NayukiYq")
+
+    -- 方便使用gtest的宏
+    add_cxxflags("-Wno-unsafe-buffer-usage-in-libc-call")

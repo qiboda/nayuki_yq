@@ -1,10 +1,11 @@
 #pragma once
 
-#include <RenderCore/RenderCore.h>
 #include "Core/Macro/Macro.h"
 #include "Core/Misc/Tickable.h"
 #include <Core/Misc/RAII.h>
 #include <Core/Misc/NonCopyable.h>
+
+#include <RenderCore/RenderCore.h>
 
 class RENDER_CORE_API Window : public IRAII, public ITickable, public NonCopyable
 {
