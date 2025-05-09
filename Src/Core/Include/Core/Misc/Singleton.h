@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+/// \brief Singleton template class
+/// \note: 需要friend声明以及前置声明，具体例子见 `Logger` class
 template <typename T> class Singleton
 {
   protected:
