@@ -2,4 +2,6 @@
 
 #include <Core/Core.h>
 
-class CORE_API FSMContext {};
+class CORE_API FSMContext
+{
+};

@@ -4,4 +4,4 @@
 #include <Core/Core.h>
 #include <RenderCore/RenderCore.h>
 
-NAYUKI_YQ_API NY_LOG_CATEGORY_DECLARED(LogNayukiYq)
+NAYUKI_YQ_API NY_LOG_CATEGORY_DECLARED( LogNayukiYq )

@@ -3,11 +3,16 @@
 #include <Core/Core.h>
 #include <chrono>
 
-enum class GameTimerState : u8 { Running, Paused };
+enum class GameTimerState : u8
+{
+    Running,
+    Paused
+};
 
-class CORE_API GameTimer {
+class CORE_API GameTimer
+{
   public:
-    explicit GameTimer(GameTimerState GameTimerState = GameTimerState::Running);
+    explicit GameTimer( GameTimerState GameTimerState = GameTimerState::Running );
 
     f32 TotalTime() const;        // in seconds
     f32 RunningTotalTime() const; // in seconds
@@ -24,7 +29,7 @@ class CORE_API GameTimer {
     using TimePoint = std::chrono::time_point<Clock>;
     using Duration = std::chrono::duration<f32>;
 
-#pragma warning(disable : 4251)
+#pragma warning( disable : 4251 )
     // variable order is important.
     TimePoint mPrevTimePoint;
     TimePoint mCurrTimePoint;
@@ -35,7 +40,7 @@ class CORE_API GameTimer {
 
     Duration mPausedDuration;
     TimePoint mPausedTimePoint;
-#pragma warning(default : 4251)
+#pragma warning( default : 4251 )
     // variable order is important.
 
     Clock mClock;

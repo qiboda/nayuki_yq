@@ -6,34 +6,42 @@
 #include <RenderCore/Window.h>
 #include <RenderCore/Instance.h>
 
-class NAYUKI_YQ_API Application : public IRAII, public NonCopyable {
-
+class NAYUKI_YQ_API Application : public IRAII, public NonCopyable
+{
   public:
     Application() {}
     virtual ~Application() override {}
 
-    virtual void Initialize() override {
+    virtual void Initialize() override
+    {
         initWindow();
-        if (mRenderInstance == nullptr) {
+        if ( mRenderInstance == nullptr )
+        {
             mRenderInstance = new RenderInstance();
-            mRenderInstance->CreateInstance(mAppInfo, mWindow);
+            mRenderInstance->CreateInstance( mAppInfo, mWindow );
         }
     }
 
-    virtual void CleanUp() override {
-        if (mWindow) {
+    virtual void CleanUp() override
+    {
+        if ( mWindow )
+        {
             mWindow->CleanUp();
-            NY_DELETE(mWindow);
+            NY_DELETE( mWindow );
         }
 
         Window::Terminate();
     }
 
-    virtual void Update() {
-        while (true) {
-            if (mWindow) {
-                mWindow->Tick(1.0);
-                if (mWindow->ShouldClose()) {
+    virtual void Update()
+    {
+        while ( true )
+        {
+            if ( mWindow )
+            {
+                mWindow->Tick( 1.0 );
+                if ( mWindow->ShouldClose() )
+                {
                     break;
                 }
             }
@@ -41,29 +49,29 @@ class NAYUKI_YQ_API Application : public IRAII, public NonCopyable {
     }
 
   public:
-    void SetAppName(const std::string_view &name) {
-        mAppInfo.setPApplicationName(name.data());
+    void SetAppName( const std::string_view &name ) { mAppInfo.setPApplicationName( name.data() ); }
+
+    void SetAppVersion( u32 major, u32 minor, u32 patch )
+    {
+        mAppInfo.setApiVersion( VK_MAKE_VERSION( major, minor, patch ) );
     }
 
-    void SetAppVersion(u32 major, u32 minor, u32 patch) {
-        mAppInfo.setApiVersion(VK_MAKE_VERSION(major, minor, patch));
-    }
+    void SetEngineName( const std::string_view &name ) { mAppInfo.setPEngineName( name.data() ); }
 
-    void SetEngineName(const std::string_view &name) {
-        mAppInfo.setPEngineName(name.data());
-    }
-
-    void SetEngineVersion(u32 major, u32 minor, u32 patch) {
-        mAppInfo.setApiVersion(VK_MAKE_VERSION(major, minor, patch));
+    void SetEngineVersion( u32 major, u32 minor, u32 patch )
+    {
+        mAppInfo.setApiVersion( VK_MAKE_VERSION( major, minor, patch ) );
     }
 
   protected:
-    void initWindow() {
+    void initWindow()
+    {
         Window::Init();
 
-        if (mWindow == nullptr) {
+        if ( mWindow == nullptr )
+        {
             mWindow = new Window();
-            mWindow->SetWindowSize(1280, 720);
+            mWindow->SetWindowSize( 1280, 720 );
             mWindow->Initialize();
         }
     }
@@ -74,6 +82,5 @@ class NAYUKI_YQ_API Application : public IRAII, public NonCopyable {
     RenderInstance *mRenderInstance = nullptr;
 
     vk::ApplicationInfo mAppInfo = vk::ApplicationInfo(
-        "Hello World!", VK_MAKE_VERSION(0, 1, 0), "No Engine",
-        VK_MAKE_VERSION(0, 1, 0), VK_API_VERSION_1_0);
+        "Hello World!", VK_MAKE_VERSION( 0, 1, 0 ), "No Engine", VK_MAKE_VERSION( 0, 1, 0 ), VK_API_VERSION_1_0 );
 };

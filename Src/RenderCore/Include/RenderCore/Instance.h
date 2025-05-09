@@ -6,12 +6,13 @@
 
 using VkApiVersion = u32;
 
-class RENDER_CORE_API RenderInstance final : public NonCopyable {
+class RENDER_CORE_API RenderInstance final : public NonCopyable
+{
   public:
-    void SetVkApiVersion(VkApiVersion version) { vk_api_version = version; }
+    void SetVkApiVersion( VkApiVersion version ) { vk_api_version = version; }
 
     /// @brief 创建 vulkan instance
-    void CreateInstance(vk::ApplicationInfo &appInfo, Window *window);
+    void CreateInstance( vk::ApplicationInfo &appInfo, Window *window );
 
     vk::Result CreateDebugUtilsMessengerEXT();
 

@@ -1,13 +1,13 @@
 #pragma once
 
-class IRAII {
+class IRAII
+{
   public:
-
     IRAII() = default;
     virtual ~IRAII() = default;
 
-    IRAII(const IRAII &) = default;
-    IRAII &operator=(const IRAII &) = default;
+    IRAII( const IRAII & ) = default;
+    IRAII &operator=( const IRAII & ) = default;
 
     virtual void Initialize() = 0;
 

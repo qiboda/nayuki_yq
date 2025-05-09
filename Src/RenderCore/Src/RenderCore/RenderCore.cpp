@@ -1,3 +1,3 @@
 #include <RenderCore/RenderCore.h>
 
-NY_LOG_CATEGORY_DEFINITION(LogRenderCore)
+NY_LOG_CATEGORY_DEFINITION( LogRenderCore )

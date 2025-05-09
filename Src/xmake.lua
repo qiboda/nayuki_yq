@@ -1,7 +1,8 @@
 
 
 add_requires("glfw", "glm", "stb", "spdlog", "tracy", {
-    debug = true
+    debug = true,
+    external = true,
 })
 add_requires("vulkansdk", { system = true })
 

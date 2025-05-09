@@ -1,13 +1,14 @@
 #pragma once
 
-class ITickable {
+class ITickable
+{
   public:
     ITickable() = default;
     virtual ~ITickable() = default;
 
-    ITickable(const ITickable &) = default;
-    ITickable &operator=(const ITickable &) = default;
+    ITickable( const ITickable & ) = default;
+    ITickable &operator=( const ITickable & ) = default;
 
     // Called every frame
-    virtual void Tick(float deltaTime) = 0;
+    virtual void Tick( float deltaTime ) = 0;
 };

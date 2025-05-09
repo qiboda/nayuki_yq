@@ -5,12 +5,14 @@
 #include <Core/FSM/State.h>
 
 // TODO: add transiiton interval and transition priority.
-template <typename TTransitionId, typename TStateId, typename TFSMContext>
-class Transition : public NonCopyable {
+template <typename TTransitionId, typename TStateId, typename TFSMContext> class Transition : public NonCopyable
+{
   public:
     Transition() : mEnterStateId{}, mLeaveStateId{} {}
-    Transition(TStateId enterStateId, TStateId leaveStateId)
-        : mEnterStateId(enterStateId), mLeaveStateId(leaveStateId) {}
+    Transition( TStateId enterStateId, TStateId leaveStateId )
+        : mEnterStateId( enterStateId ), mLeaveStateId( leaveStateId )
+    {
+    }
 
     virtual ~Transition() {}
 
@@ -22,11 +24,11 @@ class Transition : public NonCopyable {
     TStateId GetLeaveStateId() const { return mLeaveStateId; }
 
   public:
-    virtual void StartTransition(std::shared_ptr<TFSMContext> &fsmContext) = 0;
-    virtual void EndTransition(std::shared_ptr<TFSMContext> &fsmContext) = 0;
+    virtual void StartTransition( std::shared_ptr<TFSMContext> &fsmContext ) = 0;
+    virtual void EndTransition( std::shared_ptr<TFSMContext> &fsmContext ) = 0;
 
   public:
-    virtual bool CanTransition(std::shared_ptr<TFSMContext> &fsmContext) = 0;
+    virtual bool CanTransition( std::shared_ptr<TFSMContext> &fsmContext ) = 0;
 
   protected:
     TStateId mEnterStateId;

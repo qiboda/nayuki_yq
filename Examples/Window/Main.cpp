@@ -1,6 +1,7 @@
 #include "NayukiYq/Application.h"
 
-int main() {
+int main()
+{
 
     Application app = Application();
 

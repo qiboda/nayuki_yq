@@ -1,13 +1,15 @@
 #pragma once
 
-#include <vector>
-#include <algorithm>
-#include <functional>
-#include <memory>
-#include <utility>
-#include <type_traits>
-#include <string>
-#include <string_view>
+#include <vector>      // IWYU pragma: keep
+#include <algorithm>   // IWYU pragma: keep
+#include <memory>      // IWYU pragma: keep
+#include <utility>     // IWYU pragma: keep
+#include <type_traits> // IWYU pragma: keep
+#include <string>      // IWYU pragma: keep
+#include <string_view> // IWYU pragma: keep
+#include <functional>  // IWYU pragma: keep
+// 可以使用 not, or, and 等关键字
+#include <ciso646> // IWYU pragma: keep
 
 // GLM
 //  GLM本为是OpenGL设计的，在OpenGL中，NDC（标准化设备坐标系）的深度范围为[-1,
@@ -26,4 +28,4 @@
 #include <Core/Misc/Singleton.h>
 #include <Core/Logger/Logger.h>
 
-CORE_API NY_LOG_CATEGORY_DECLARED(LogCore)
+CORE_API NY_LOG_CATEGORY_DECLARED( LogCore )

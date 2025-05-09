@@ -7,28 +7,32 @@
 
 #include <memory>
 
-template <typename TFSMContext, typename TFSM>
-class FSMInstance : public NonCopyable {
+template <typename TFSMContext, typename TFSM> class FSMInstance : public NonCopyable
+{
   public:
-    void Build() {
-        if (mFSM.expired()) {
-            auto fsmInterface =
-                FSMBuilder::GetInstance().FindOrCreateFSM<TFSM>();
-            if (fsmInterface.expired() == false) {
-                mFSM = std::dynamic_pointer_cast<TFSM, FSMInterface>(
-                    fsmInterface.lock());
+    void Build()
+    {
+        if ( mFSM.expired() )
+        {
+            auto fsmInterface = FSMBuilder::GetInstance().FindOrCreateFSM<TFSM>();
+            if ( fsmInterface.expired() == false )
+            {
+                mFSM = std::dynamic_pointer_cast<TFSM, FSMInterface>( fsmInterface.lock() );
             }
         }
 
-        if (mFSMContext == nullptr) {
+        if ( mFSMContext == nullptr )
+        {
             mFSMContext = std::make_shared<TFSMContext>();
         }
     }
 
   public:
-    bool Exec() {
-        if (mFSM.expired() == false) {
-            return mFSM.lock()->Exec(mFSMContext);
+    bool Exec()
+    {
+        if ( mFSM.expired() == false )
+        {
+            return mFSM.lock()->Exec( mFSMContext );
         }
         return false;
     }

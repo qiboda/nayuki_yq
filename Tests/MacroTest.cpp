@@ -15,11 +15,11 @@ class MacroTest : public ::testing::Test {
 
 TEST_F(MacroTest, AssertPrint) {
     ASSERT_EXIT(
-        NY_ASSERT((3 == 4), "error: "),
+        NY_ASSERT_MSG((3 == 4), "error: "),
         [](i32 code) -> bool {
             UNUSED_VAR(code);
             return true;
         },
         "");
-    ASSERT_DEATH(NY_ASSERT((3 == 4), "error: "), "");
+    ASSERT_DEATH(NY_ASSERT_MSG((3 == 4), "error: "), "");
 }
