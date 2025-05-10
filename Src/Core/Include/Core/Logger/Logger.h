@@ -22,9 +22,9 @@
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
 
-#include <ModuleExport.h>
-#include <Core/Misc/Singleton.h>
-#include <Core/TypeDef.h>
+// #include <ModuleExport.h>
+// #include <Core/Misc/Singleton.h>
+// #include <Core/TypeDef.h>
 
 class CORE_API LoggerCategory
 {

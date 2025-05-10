@@ -1,12 +1,9 @@
 ﻿#pragma once
 
-#include "Core/TypeDef.h"
-#include <Core/Core.h>
-
 /**
  * Heap: Implemented using std heap algorithm.
  *
- * TCompPred: std::less is the laggest heap and the std::greater is the smallest
+ * TCompPred: std::less is the largest heap and the std::greater is the smallest
  * heap.
  *
  * Heap layout:
@@ -17,8 +14,11 @@
  * Inner data layout:
  *      0 7 2 3 4 8 9
  */
+#include <type_traits>
 template <typename TElem, typename TCompPred = std::less<TElem>, typename TContainer = std::vector<TElem>> class Heap
 {
+    static_assert(std::is_floating_point_v<TElem> == false);
+
   public:
 #pragma region TypeAlias
     using Iterator = typename TContainer::iterator;

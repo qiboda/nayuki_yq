@@ -24,6 +24,9 @@
 #include <Core/Macro/Macro.h>
 #include <Core/TypeDef.h>
 #include <Core/Misc/Singleton.h>
-#include <Core/Logger/Logger.h> // IWYU pragma: keep
+#include <Core/Misc/NonCopyable.h>
+#include <Core/Misc/RAII.h>
+#include <Core/Misc/Tickable.h>
+#include <Core/Logger/Logger.h>
 
 CORE_API NY_LOG_CATEGORY_DECLARED( LogCore )

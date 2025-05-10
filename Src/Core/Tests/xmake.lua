@@ -3,9 +3,11 @@
     add_requires("gtest", { configs = { gtest_build_tests = false } })
 -- end
 
-target("test")
+target("tests")
     set_kind("binary")
     add_files("**.cpp")
+
+    add_tests("Core")
 
     -- 默认情况下不编译
     set_default(false)
@@ -14,8 +16,6 @@ target("test")
 
     -- 添加本地target依赖
     add_deps("Core")
-    add_deps("RenderCore")
-    add_deps("NayukiYq")
 
     -- 方便使用gtest的宏
     add_cxxflags("-Wno-unsafe-buffer-usage-in-libc-call")

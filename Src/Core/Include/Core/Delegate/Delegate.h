@@ -83,7 +83,7 @@ template <typename TReturnVal, typename... TArgs> class MultipleDelegate
   public:
 #pragma region Add
 
-    // function, static function, static memeber function and include lambda
+    // function, static function, static member function and include lambda
     DelegateHandle Add( typename DelegateFunInstance<TReturnVal, TArgs...>::TFunctor functor )
     {
         DelegateHandle delegateHandle( DelegateHandle::GenerateNewHandleType::GenerateNewHandle );
@@ -96,10 +96,10 @@ template <typename TReturnVal, typename... TArgs> class MultipleDelegate
     // member function, intrusive
     template <typename TClass>
     DelegateHandle AddMem( typename DelegateMemFunInstance<TClass, TReturnVal, TArgs...>::TFunctor functor,
-                           TClass *obejct )
+                           TClass *object )
     {
         DelegateHandle delegateHandle( DelegateHandle::GenerateNewHandleType::GenerateNewHandle );
-        DelegateInstanceType Instance = new DelegateMemFunInstance<TClass, TReturnVal, TArgs...>( functor, obejct );
+        DelegateInstanceType Instance = new DelegateMemFunInstance<TClass, TReturnVal, TArgs...>( functor, object );
         Instance->SetHandle( delegateHandle );
         mDelegateInstances.push_back( Instance );
         return delegateHandle;
@@ -108,10 +108,10 @@ template <typename TReturnVal, typename... TArgs> class MultipleDelegate
     // member function, shared member
     template <typename TClass>
     DelegateHandle AddSP( typename DelegateSPMemFunInstance<TClass, TReturnVal, TArgs...>::TFunctor functor,
-                          std::shared_ptr<TClass> SPObejct )
+                          std::shared_ptr<TClass> SPObject )
     {
         DelegateHandle delegateHandle( DelegateHandle::GenerateNewHandleType::GenerateNewHandle );
-        DelegateInstanceType Instance = new DelegateSPMemFunInstance<TClass, TReturnVal, TArgs...>( functor, SPObejct );
+        DelegateInstanceType Instance = new DelegateSPMemFunInstance<TClass, TReturnVal, TArgs...>( functor, SPObject );
         Instance->SetHandle( delegateHandle );
         mDelegateInstances.push_back( Instance );
         return delegateHandle;
@@ -222,7 +222,7 @@ template <typename TReturnVal, typename... TArgs> class SingleDelegate
   public:
 #pragma region Bind
 
-    // function, static function, static memeber function and include lambda
+    // function, static function, static member function and include lambda
     DelegateHandle Bind( typename DelegateFunInstance<TReturnVal, TArgs...>::TFunctor functor )
     {
         NY_ASSERT_MSG( mDelegateInstance == nullptr, "SingleDelegate only binds once" )
@@ -236,12 +236,12 @@ template <typename TReturnVal, typename... TArgs> class SingleDelegate
     // member function, intrusive
     template <typename TClass>
     DelegateHandle BindMem( typename DelegateMemFunInstance<TClass, TReturnVal, TArgs...>::TFunctor functor,
-                            TClass *obejct )
+                            TClass *object )
     {
         NY_ASSERT_MSG_MSG( mDelegateInstance == nullptr, L"SingleDelegate only binds once" );
 
         DelegateHandle delegateHandle( DelegateHandle::GenerateNewHandleType::GenerateNewHandle );
-        mDelegateInstance = new DelegateMemFunInstance<TClass, TReturnVal, TArgs...>( functor, obejct );
+        mDelegateInstance = new DelegateMemFunInstance<TClass, TReturnVal, TArgs...>( functor, object );
         mDelegateInstance->SetHandle( delegateHandle );
         return mDelegateInstance->GetHandle();
     }
@@ -249,12 +249,12 @@ template <typename TReturnVal, typename... TArgs> class SingleDelegate
     // member function, shared member
     template <typename TClass>
     DelegateHandle BindSP( typename DelegateSPMemFunInstance<TClass, TReturnVal, TArgs...>::TFunctor functor,
-                           std::shared_ptr<TClass> SPObejct )
+                           std::shared_ptr<TClass> SPObject )
     {
         NY_ASSERT_MSG_MSG( mDelegateInstance == nullptr, L"SingleDelegate only binds once" );
 
         DelegateHandle delegateHandle( DelegateHandle::GenerateNewHandleType::GenerateNewHandle );
-        mDelegateInstance = new DelegateSPMemFunInstance<TClass, TReturnVal, TArgs...>( functor, SPObejct );
+        mDelegateInstance = new DelegateSPMemFunInstance<TClass, TReturnVal, TArgs...>( functor, SPObject );
         mDelegateInstance->SetHandle( delegateHandle );
         return mDelegateInstance->GetHandle();
     }

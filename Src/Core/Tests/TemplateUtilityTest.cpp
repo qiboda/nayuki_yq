@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+#include <Core/Core.h>
 #include <Core/TemplateUtility.h>
 
 class TemplateUtilityTest

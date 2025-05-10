@@ -1,8 +1,6 @@
 #pragma once
 
-#include <Core/Core.h>
-
-class CORE_API NonCopyable
+class NonCopyable
 {
   protected:
     NonCopyable() {}

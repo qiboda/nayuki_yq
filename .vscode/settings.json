@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
+        "ansicolor",
         "autoupdate",
         "clangd",
         "cxxflags",
@@ -19,6 +20,7 @@
         "ipairs",
         "IRAII",
         "IWYU",
+        "libc",
         "LUNARG",
         "Msaa",
         "Nayuki",
@@ -26,6 +28,7 @@
         "NDEBUG",
         "Noexcept",
         "pcxxheader",
+        "pheader",
         "projectdir",
         "spdlog",
         "STRINGIZE",

@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+#include <Core/Core.h>
 #include <Core/Macro/Macro.h>
 #include <Core/TypeDef.h>
 

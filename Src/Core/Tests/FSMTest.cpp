@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 
+#include <Core/Core.h>
+
 #include <Core/FSM/FSM.h>
 #include <Core/FSM/FSMContext.h>
 #include <Core/FSM/FSMInstance.h>

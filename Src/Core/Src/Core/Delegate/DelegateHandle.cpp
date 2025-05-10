@@ -1,3 +1,5 @@
+
+#include <Core/Core.h>
 #include "Core/Delegate/DelegateHandle.h"
 
 #include <atomic>

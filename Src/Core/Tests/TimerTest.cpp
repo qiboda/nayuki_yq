@@ -1,11 +1,11 @@
 #include <gtest/gtest.h>
 
+#include <Core/Core.h>
 #include <Core/Timer/TimerManager.h>
 
-class TimerTest
-    : public ::testing::Test
+class TimerTest : public ::testing::Test
 {
-protected:
+  protected:
     TimerTest() {}
     ~TimerTest() override {}
 

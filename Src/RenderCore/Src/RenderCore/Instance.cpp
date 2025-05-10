@@ -1,4 +1,5 @@
 #include <RenderCore/RenderCore.h>
+
 #include "Core/Macro/Macro.h"
 #include <RenderCore/Instance.h>
 #include <vector>

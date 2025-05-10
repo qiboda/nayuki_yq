@@ -20,6 +20,7 @@ add_cxxflags("-Wall", "-Werror")
 add_cxxflags("-ferror-limit=0")
 
 if is_host("windows") then
+
     -- 允许在构造函数中覆盖成员变量
     add_cxxflags("-Wno-shadow-field-in-constructor")
     -- 允许使用static 全局变量
@@ -55,9 +56,6 @@ end
 
 -- add engine
 includes("Src")
-
--- add tests
-includes("Tests")
 
 -- add examples
 includes("Examples")

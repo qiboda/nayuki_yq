@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include <Core/Core.h>
-
 #include <cassert>
 // 下方 宏中 std::cerr 使用
 #include <iostream> // IWYU pragma: keep

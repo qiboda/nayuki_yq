@@ -2,7 +2,6 @@
 
 #include <concepts>
 #include <cstdint>
-#include <type_traits>
 
 using i8 = int8_t;
 using i16 = int16_t;

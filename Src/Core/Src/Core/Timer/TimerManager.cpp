@@ -1,3 +1,5 @@
+#include <Core/Core.h>
+
 #include "Core/Timer/TimerManager.h"
 
 void TimerManager::Tick( f32 deltaSeconds )

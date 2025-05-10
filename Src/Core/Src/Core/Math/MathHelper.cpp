@@ -2,6 +2,7 @@
 // MathHelper.cpp by Frank Luna (C) 2011 All Rights Reserved.
 // ***************************************************************************************
 
+
 #include <Core/Core.h>
 #include "Core/Math/MathHelper.h"
 

@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include <Core/Core.h>
 #include <chrono>
 
 enum class GameTimerState : u8
