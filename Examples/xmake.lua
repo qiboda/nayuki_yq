@@ -1,7 +1,7 @@
 
 local examples = {
     "Window",
-    "BoxApp"
+    "box_app"
 }
 
 for _, example in ipairs(examples) do

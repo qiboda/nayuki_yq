@@ -13,7 +13,7 @@
             "cppStandard": "c++20",
             "intelliSenseMode": "clang-x64",
             "compileCommands": [
-                ".vscode/compile_commands.json"
+                "compile_commands.json"
             ]
         }
     ],

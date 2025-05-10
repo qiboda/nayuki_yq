@@ -1,4 +1,4 @@
-set_project("NayukiYq")
+set_project("nayuki_yq")
 
 set_xmakever("2.9.2")
 
@@ -13,11 +13,15 @@ end
 set_languages("c++20")
 
 add_rules("mode.debug", "mode.release")
+
 -- 自动更新 compile commands 文件
 add_rules("plugin.vsxmake.autoupdate")
+add_plugindirs("plugins")
 
-add_cxxflags("-Wall", "-Werror")
+add_cxxflags("-Wall", "-Werror") -- "-Werror"
 add_cxxflags("-ferror-limit=0")
+-- 强制区分大小写
+add_cxxflags("-Wnonportable-include-path")
 
 if is_host("windows") then
 
@@ -55,7 +59,7 @@ else
 end
 
 -- add engine
-includes("Src")
+includes("src")
 
 -- add examples
 includes("Examples")

@@ -5,8 +5,12 @@
 template <typename T> class Singleton
 {
   protected:
-    Singleton() {}
-    virtual ~Singleton() {}
+    Singleton()
+    {
+    }
+    virtual ~Singleton()
+    {
+    }
 
   private:
     // Even if declare a copy constructor (define it as deleted in the
@@ -24,5 +28,8 @@ template <typename T> class Singleton
         return instance;
     }
 
-    static inline T *GetInstancePtr() { return &GetInstance(); }
+    static inline T *GetInstancePtr()
+    {
+        return &GetInstance();
+    }
 };

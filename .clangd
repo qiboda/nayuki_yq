@@ -9,4 +9,5 @@ Completion:
   ArgumentLists: FullPlaceholders
 
 Diagnostics:
+  UnusedIncludes: Strict
   Suppress: ["-Wc++98-compat", "-Wpre-c++17-compat", "-Wpre-c++14-compat", "-Wpre-c++11-compat" ]

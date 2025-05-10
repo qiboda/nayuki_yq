@@ -1,5 +1,11 @@
 ﻿#pragma once
 
+#include <vector>
+#include <algorithm>
+#include <functional>
+#include <core/type_def.h>
+#include <core/macro/macro.h>
+
 /**
  * Heap: Implemented using std heap algorithm.
  *
@@ -17,7 +23,7 @@
 #include <type_traits>
 template <typename TElem, typename TCompPred = std::less<TElem>, typename TContainer = std::vector<TElem>> class Heap
 {
-    static_assert(std::is_floating_point_v<TElem> == false);
+    static_assert( std::is_floating_point_v<TElem> == false );
 
   public:
 #pragma region TypeAlias
@@ -51,7 +57,9 @@ template <typename TElem, typename TCompPred = std::less<TElem>, typename TConta
 
   public:
 #pragma region Constructor
-    Heap() : mContainer() {}
+    Heap() : mContainer()
+    {
+    }
 
     Heap( Iterator begin, Iterator end ) : mContainer( begin, end )
     {
@@ -76,7 +84,10 @@ template <typename TElem, typename TCompPred = std::less<TElem>, typename TConta
         return pop_value;
     }
 
-    const TElem &Top() const { return mContainer.front(); }
+    const TElem &Top() const
+    {
+        return mContainer.front();
+    }
     NON_CONST_MEM_FUN( Top )
 
     // TODO: change to remove_heap_elem() global function.
@@ -97,9 +108,15 @@ template <typename TElem, typename TCompPred = std::less<TElem>, typename TConta
 
 #pragma endregion Operate
 
-    u64 GetElemIndex( const TElem &elem ) const { return GetElemIndexInternal( elem, 0u ); }
+    u64 GetElemIndex( const TElem &elem ) const
+    {
+        return GetElemIndexInternal( elem, 0u );
+    }
 
-    u64 Size() const { return mContainer.size(); }
+    u64 Size() const
+    {
+        return mContainer.size();
+    }
 
   private:
     u64 GetElemIndexInternal( const TElem &elem, const u64 index ) const

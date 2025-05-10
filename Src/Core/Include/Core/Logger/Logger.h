@@ -22,9 +22,9 @@
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
 
-// #include <ModuleExport.h>
-// #include <Core/Misc/Singleton.h>
-// #include <Core/TypeDef.h>
+// #include <module_export.h>
+// #include <core/misc/singleton.h>
+// #include <core/type_def.h>
 
 class CORE_API LoggerCategory
 {
@@ -55,7 +55,10 @@ class CORE_API LoggerCategory
         return LHS.GetName() == RHS.GetName() && LHS.GetType() == RHS.GetType();
     }
 
-    friend bool operator!=( const LoggerCategory &LHS, const LoggerCategory &RHS ) { return !( LHS == RHS ); }
+    friend bool operator!=( const LoggerCategory &LHS, const LoggerCategory &RHS )
+    {
+        return !( LHS == RHS );
+    }
 
   private:
     // #pragma warning(disable : 4251)
@@ -74,7 +77,9 @@ class CORE_API Logger : public Singleton<Logger>
     friend class Singleton<Logger>;
 
   protected:
-    Logger() : Singleton<Logger>() {}
+    Logger() : Singleton<Logger>()
+    {
+    }
 
   public:
     // Register and create a logger.

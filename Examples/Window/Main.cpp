@@ -1,4 +1,4 @@
-#include "NayukiYq/Application.h"
+#include "nayuki_yq/application.h"
 
 int main()
 {

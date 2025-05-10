@@ -1,8 +1,8 @@
 ﻿#pragma once
 
-#include <Core/Delegate/DelegateHandle.h>
-#include <Core/Delegate/DelegateInstance.h>
-#include <Core/Macro/Macro.h>
+#include <core/delegate/delegate_handle.h>
+#include <core/delegate/delegate_instance.h>
+#include <core/macro/macro.h>
 
 // To bind function: only need to same parameters and return value;
 // TReturnVal should be always void type.
@@ -14,7 +14,9 @@ template <typename TReturnVal, typename... TArgs> class MultipleDelegate
   public:
 #pragma region ThreeFive
 
-    constexpr MultipleDelegate() {}
+    constexpr MultipleDelegate()
+    {
+    }
 
     ~MultipleDelegate()
     {
@@ -181,9 +183,14 @@ template <typename TReturnVal, typename... TArgs> class SingleDelegate
   public:
 #pragma region ThreeFive
 
-    constexpr SingleDelegate() : mDelegateInstance( nullptr ) {}
+    constexpr SingleDelegate() : mDelegateInstance( nullptr )
+    {
+    }
 
-    ~SingleDelegate() { NY_DELETE( mDelegateInstance ); }
+    ~SingleDelegate()
+    {
+        NY_DELETE( mDelegateInstance );
+    }
 
     SingleDelegate( const SingleDelegate &singleDelegate ) noexcept
         : mDelegateInstance( singleDelegate.mDelegateInstance == nullptr ? nullptr

@@ -7,7 +7,7 @@ target("tests")
     set_kind("binary")
     add_files("**.cpp")
 
-    add_tests("Core")
+    add_tests("core")
 
     -- 默认情况下不编译
     set_default(false)
@@ -15,7 +15,7 @@ target("tests")
     add_packages("spdlog",  "glm", "gtest")
 
     -- 添加本地target依赖
-    add_deps("Core")
+    add_deps("core")
 
     -- 方便使用gtest的宏
     add_cxxflags("-Wno-unsafe-buffer-usage-in-libc-call")

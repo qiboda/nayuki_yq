@@ -8,9 +8,9 @@ add_requires("vulkansdk", { system = true })
 
 -- 定义导出模块名列表
 local modules = {
-    "Core",
-    "RenderCore",
-    "NayukiYq"
+    "core",
+    "render_core",
+    "nayuki_yq"
 }
 
 -- 引入其他模块。
@@ -53,6 +53,6 @@ before_build(function ()
 ]], name, flag, macro, macro)
     end
 
-    local file_path = path.join(gen_dir, "ModuleExport.h")
+    local file_path = path.join(gen_dir, "module_export.h")
     io.writefile(file_path, content)
 end)

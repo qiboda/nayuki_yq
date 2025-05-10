@@ -1,20 +1,33 @@
 #pragma once
 
-#include <Core/Misc/NonCopyable.h>
+#include <core/misc/non_copyable.h>
+#include <core/type_def.h>
+#include <memory>
 
 template <typename TStateId, typename TFSMContext> class State : public NonCopyable
 {
 
   public:
-    virtual ~State() {}
+    virtual ~State()
+    {
+    }
 
   public:
-    static TStateId GetStateId_S() { return TStateId{}; }
-    virtual TStateId GetStateId() const { return GetStateId_S(); }
+    static TStateId GetStateId_S()
+    {
+        return TStateId{};
+    }
+    virtual TStateId GetStateId() const
+    {
+        return GetStateId_S();
+    }
 
 #pragma region update
   public:
-    void Update( std::shared_ptr<TFSMContext> &fsmContext, f32 DeltaSeconds ) { OnUpdate( fsmContext, DeltaSeconds ); }
+    void Update( std::shared_ptr<TFSMContext> &fsmContext, f32 DeltaSeconds )
+    {
+        OnUpdate( fsmContext, DeltaSeconds );
+    }
 
   public:
     virtual void OnUpdate( std::shared_ptr<TFSMContext> &fsmContext, f32 DeltaSeconds ) = 0;

@@ -1,16 +1,16 @@
-module_name = "Core"
+module_name = "core"
 module_name_macro = "CORE"
 
 target(module_name)
     set_kind("shared")
 
-    add_files("Src/" .. module_name .. "/**.cpp")
+    add_files("src/**.cpp")
     -- public 意味着依赖这个 target 的其他 target 也会使用这个 includedirs。
-    add_includedirs("Include", { public = true })
-    add_headerfiles("Include/**.h", { public = true })
+    add_includedirs("include", { public = true })
+    add_headerfiles("include/**.h", { public = true })
 
     -- 预编译头文件
-    set_pcxxheader("Include/".. module_name .. "/" .. module_name .. ".h")
+    -- set_pcxxheader("include/".. module_name .. "/" .. module_name .. ".h")
 
     -- 启用dll export
     add_defines(module_name_macro .. "_EXPORTS")

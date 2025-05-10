@@ -1,13 +1,11 @@
 #pragma once
 
-class IRAII
+#include "core/misc/non_copyable.h"
+
+class IRAII : public NonCopyable
 {
   public:
-    IRAII() = default;
     virtual ~IRAII() = default;
-
-    IRAII( const IRAII & ) = default;
-    IRAII &operator=( const IRAII & ) = default;
 
     virtual void Initialize() = 0;
 
