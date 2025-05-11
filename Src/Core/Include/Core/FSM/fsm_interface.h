@@ -8,6 +8,7 @@ struct CORE_API FSMId
     FSMId() : id()
     {
     }
+
     FSMId( const std::string &id ) : id( id )
     {
     }
@@ -51,6 +52,7 @@ class CORE_API FSMInterface
     {
         return NullFSMId;
     }
+
     virtual FSMId GetFSMId() const
     {
         return GetFSMId_S();

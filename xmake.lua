@@ -2,6 +2,8 @@ set_project("nayuki_yq")
 
 set_xmakever("2.9.2")
 
+set_version("0.1.0")
+
 if is_host("windows") then
     set_toolchains("clang-cl")
 elseif is_host("linux") then

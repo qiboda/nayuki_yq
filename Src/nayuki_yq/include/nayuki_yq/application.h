@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include <memory>
 #include <nayuki_yq/nayuki_yq.h>
 #include <render_core/window.h>
 #include <render_core/instance.h>
@@ -8,48 +9,17 @@
 class NAYUKI_YQ_API Application : public IRAII
 {
   public:
-    Application()
-    {
-    }
+    Application();
+
     virtual ~Application() override
     {
     }
 
-    virtual void Initialize() override
-    {
-        initWindow();
-        if ( mRenderInstance == nullptr )
-        {
-            mRenderInstance = new RenderInstance();
-            mRenderInstance->CreateInstance( mAppInfo, mWindow );
-        }
-    }
+    virtual void Initialize() override;
 
-    virtual void CleanUp() override
-    {
-        if ( mWindow )
-        {
-            mWindow->CleanUp();
-            NY_DELETE( mWindow );
-        }
+    virtual void CleanUp() override;
 
-        Window::Terminate();
-    }
-
-    virtual void Update()
-    {
-        while ( true )
-        {
-            if ( mWindow )
-            {
-                mWindow->Tick( 1.0 );
-                if ( mWindow->ShouldClose() )
-                {
-                    break;
-                }
-            }
-        }
-    }
+    virtual void Update();
 
   public:
     void SetAppName( const std::string_view &name )
@@ -73,22 +43,12 @@ class NAYUKI_YQ_API Application : public IRAII
     }
 
   protected:
-    void initWindow()
-    {
-        Window::Init();
-
-        if ( mWindow == nullptr )
-        {
-            mWindow = new Window();
-            mWindow->SetWindowSize( 1280, 720 );
-            mWindow->Initialize();
-        }
-    }
+    void initWindow();
 
   protected:
-    Window *mWindow = nullptr;
+    std::shared_ptr<Window> mWindow = nullptr;
 
-    RenderInstance *mRenderInstance = nullptr;
+    std::shared_ptr<RenderInstance> mRenderInstance = nullptr;
 
     vk::ApplicationInfo mAppInfo = vk::ApplicationInfo(
         "Hello World!", VK_MAKE_VERSION( 0, 1, 0 ), "No Engine", VK_MAKE_VERSION( 0, 1, 0 ), VK_API_VERSION_1_0 );

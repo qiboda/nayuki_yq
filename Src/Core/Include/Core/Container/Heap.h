@@ -21,6 +21,7 @@
  *      0 7 2 3 4 8 9
  */
 #include <type_traits>
+
 template <typename TElem, typename TCompPred = std::less<TElem>, typename TContainer = std::vector<TElem>> class Heap
 {
     static_assert( std::is_floating_point_v<TElem> == false );
@@ -57,6 +58,7 @@ template <typename TElem, typename TCompPred = std::less<TElem>, typename TConta
 
   public:
 #pragma region Constructor
+
     Heap() : mContainer()
     {
     }
@@ -70,6 +72,7 @@ template <typename TElem, typename TCompPred = std::less<TElem>, typename TConta
 
   public:
 #pragma region Operate
+
     void Push( const TElem &elem )
     {
         mContainer.push_back( elem );

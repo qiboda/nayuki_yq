@@ -5,6 +5,8 @@ module_name_macro = "NAYUKI_YQ"
 target(module_name)
     set_kind("shared")
 
+    set_group("libraries")
+
     add_files("src/**.cpp")
     add_includedirs("include", { public = true })
     add_headerfiles("include/**.h", { public = true })

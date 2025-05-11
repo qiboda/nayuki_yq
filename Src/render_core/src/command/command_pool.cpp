@@ -1,5 +1,5 @@
 #include <render_core/render_core.h>
-#include <render_core/commands/command_pool.h>
+#include <render_core/command/command_pool.h>
 
 void CommandPool::Initialize()
 {

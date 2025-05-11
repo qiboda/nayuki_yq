@@ -177,4 +177,8 @@
     ],
     "xmake.buildLevel": "normal",
     "xmake.runMode": "buildRun",
+    "editor.defaultFoldingRangeProvider": "ms-vscode.cpptools",
+    "[lua]": {
+        "editor.defaultFormatter": "sumneko.lua"
+    },
 }

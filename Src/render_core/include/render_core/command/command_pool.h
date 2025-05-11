@@ -11,6 +11,7 @@ class RENDER_CORE_API CommandPool : public IRAII
 
   public:
     void SetDevice( vk::SharedDevice device );
+
     void SetGraphicsQueueFamilyIndex( u32 index )
     {
         graphicsQueueFamilyIndex = index;

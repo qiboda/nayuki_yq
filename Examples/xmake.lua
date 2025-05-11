@@ -1,6 +1,6 @@
 
 local examples = {
-    "Window",
+    "window",
     "box_app"
 }
 

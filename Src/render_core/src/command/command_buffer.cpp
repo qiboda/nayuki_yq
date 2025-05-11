@@ -1,5 +1,5 @@
 #include <render_core/render_core.h>
-#include <render_core/commands/command_buffer.h>
+#include <render_core/command/command_buffer.h>
 
 CommandBuffer::CommandBuffer()
 {

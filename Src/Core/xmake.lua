@@ -4,6 +4,8 @@ module_name_macro = "CORE"
 target(module_name)
     set_kind("shared")
 
+    set_group("libraries")
+
     add_files("src/**.cpp")
     -- public 意味着依赖这个 target 的其他 target 也会使用这个 includedirs。
     add_includedirs("include", { public = true })

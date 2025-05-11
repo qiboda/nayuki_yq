@@ -68,16 +68,12 @@
 
 #pragma region com
 
-#ifndef NY_ASSERT_MSG_HR
-#    define NY_ASSERT_MSG_HR( x )                                                                                      \
-        HRESULT hr__ = ( x );                                                                                          \
-        NY_ASSERT_MSG( SUCCEEDED( hr__ ) )
+#ifndef NY_ASSERT_HR
+#    define NY_ASSERT_HR( x ) NY_ASSERT( SUCCEEDED( ( x ) ) )
 #endif // NY_ASSERT_MSG_HR
 
-#ifndef NY_ASSERT_MSG_HR_MSG
-#    define NY_ASSERT_MSG_HR_MSG( x, msg, ... )                                                                        \
-        HRESULT hr__ = ( x );                                                                                          \
-        NY_ASSERT_MSG_MSG( SUCCEEDED( hr__ ), msg, __VA_ARGS__ )
+#ifndef NY_ASSERT_HR_MSG
+#    define NY_ASSERT_HR_MSG( x, msg, ... ) NY_ASSERT_MSG( SUCCEEDED( ( x ) ), msg, __VA_ARGS__ )
 #endif // NY_ASSERT_MSG_HR_MSG
 
 #ifndef NY_RELEASE_COM

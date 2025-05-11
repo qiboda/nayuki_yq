@@ -8,6 +8,7 @@ template <typename T> class Singleton
     Singleton()
     {
     }
+
     virtual ~Singleton()
     {
     }

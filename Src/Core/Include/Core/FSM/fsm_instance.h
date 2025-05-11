@@ -42,6 +42,7 @@ template <typename TFSMContext, typename TFSM> class FSMInstance : public NonCop
     {
         return mFSMContext;
     }
+
     std::weak_ptr<TFSM> GetFSM()
     {
         return mFSM;

@@ -17,6 +17,7 @@ class FSM : public FSMInterface, public NonCopyable
     FSM()
     {
     }
+
     virtual ~FSM() override
     {
     }
@@ -26,6 +27,7 @@ class FSM : public FSMInterface, public NonCopyable
     {
         return FSMId( STRINGIFY( FSM ) );
     }
+
     virtual FSMId GetFSMId() const override
     {
         return GetFSMId_S();

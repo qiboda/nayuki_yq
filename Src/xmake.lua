@@ -28,7 +28,6 @@ local function camelToUpperUnderscore(name)
     return underscored:upper()
 end
 
-
 before_build(function ()
     local gen_dir = path.join(os.projectdir(), "build", "generated")
     os.mkdir(gen_dir)

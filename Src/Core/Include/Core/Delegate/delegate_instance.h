@@ -15,9 +15,11 @@ template <typename TReturnVal, typename... TArgs> class DelegateInstance
     DelegateInstance()
     {
     }
+
     explicit DelegateInstance( const DelegateHandle &delegateHandle ) : mDelegateHandle( delegateHandle )
     {
     }
+
     virtual ~DelegateInstance()
     {
     }
@@ -31,6 +33,7 @@ template <typename TReturnVal, typename... TArgs> class DelegateInstance
         return mDelegateHandle;
     }
     NON_CONST_MEM_FUN( GetHandle )
+
     void SetHandle( DelegateHandle delegateHandle )
     {
         mDelegateHandle = delegateHandle;

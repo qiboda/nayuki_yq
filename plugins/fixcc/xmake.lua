@@ -13,7 +13,6 @@ task("fixcc")
             }
 
     on_run(function ()
-        os.exec("xmake project -k compile_commands")
         local cc_file = os.projectdir() .. "/.vscode/compile_commands.json";
         local cc_target_file = os.projectdir() .. "/compile_commands.json";
         local f = io.readfile(cc_file)

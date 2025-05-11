@@ -1,3 +1,4 @@
+#include <memory>
 #include <render_core/render_core.h>
 
 #include "core/macro/macro.h"
@@ -16,6 +17,7 @@ VKAPI_ATTR VkResult VKAPI_CALL vkCreateDebugUtilsMessengerEXT( VkInstance instan
 {
     return pfnVkCreateDebugUtilsMessengerEXT( instance, pCreateInfo, pAllocator, pMessenger );
 }
+
 VKAPI_ATTR void VKAPI_CALL vkDestroyDebugUtilsMessengerEXT( VkInstance instance,
                                                             VkDebugUtilsMessengerEXT messenger,
                                                             VkAllocationCallbacks const *pAllocator )
@@ -83,7 +85,7 @@ static VKAPI_ATTR vk::Bool32 VKAPI_CALL debugMessageFunc( vk::DebugUtilsMessageS
 }
 #endif // DEBUG
 
-void RenderInstance::CreateInstance( vk::ApplicationInfo &appInfo, Window *window )
+void RenderInstance::CreateInstance( vk::ApplicationInfo &appInfo, std::shared_ptr<Window> window )
 {
     NY_LOG_INFO( LogRenderCore, "Creating Render Instance." );
 
@@ -114,7 +116,8 @@ void RenderInstance::CreateInstance( vk::ApplicationInfo &appInfo, Window *windo
 
     try
     {
-        mInstance = vk::createInstanceUnique( createInfo, nullptr );
+        auto instance = vk::createInstance( createInfo, nullptr );
+        mInstance = vk::SharedInstance( instance );
     }
     catch ( vk::SystemError err )
     {
@@ -138,6 +141,7 @@ void RenderInstance::CreateInstance( vk::ApplicationInfo &appInfo, Window *windo
 vk::Result RenderInstance::DestroyDebugUtilsMessengerEXT()
 {
     mInstance->destroyDebugUtilsMessengerEXT( mDebugUtilsMessenger.get() );
+    mDebugUtilsMessenger.reset();
     return vk::Result::eSuccess;
 }
 

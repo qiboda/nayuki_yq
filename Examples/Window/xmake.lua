@@ -1,7 +1,10 @@
 
-target("Window")
+target("window")
     set_kind("binary")
     add_files("**.cpp")
+
+    set_default(false)
+    set_group("examples")
 
     -- 这两个选项同时使用，生成独立的debug符号信息。
     set_symbols("debug")

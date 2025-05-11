@@ -6,7 +6,8 @@ class NonCopyable
     NonCopyable()
     {
     }
-    ~NonCopyable()
+
+    virtual ~NonCopyable()
     {
     }
 

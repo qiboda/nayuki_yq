@@ -3,11 +3,12 @@
     add_requires("gtest", { configs = { gtest_build_tests = false } })
 -- end
 
-target("tests")
+target("core_tests")
     set_kind("binary")
     add_files("**.cpp")
 
-    add_tests("core")
+    add_tests("default")
+    set_group("tests")
 
     -- 默认情况下不编译
     set_default(false)

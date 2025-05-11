@@ -2,7 +2,6 @@
 
 int main()
 {
-
     Application app = Application();
 
     app.Initialize();

@@ -1,9 +1,11 @@
 #pragma once
 
 #include "core/macro/macro.h"
+#include "core/math/math.h"
 #include "core/misc/tickable.h"
-#include "GLFW/glfw3.h"
-#include <core/core.h>
+
+#include <core/minimal.h>
+#include <render_core/minimal.h>
 
 class RENDER_CORE_API Window : public IRAII, public ITickable
 {
@@ -13,17 +15,18 @@ class RENDER_CORE_API Window : public IRAII, public ITickable
     {
         glfwInit();
     }
+
     static void Terminate()
     {
         glfwTerminate();
     }
 
   public:
-    Window()
-    {
-    }
+    Window();
+
     virtual ~Window() override
     {
+        CleanUp();
     }
 
   public:
@@ -35,12 +38,17 @@ class RENDER_CORE_API Window : public IRAII, public ITickable
         glfwWindowHint( GLFW_RESIZABLE, GLFW_FALSE );
 
         NY_ASSERT_MSG( mWindow == nullptr, "Window is already initialized." )
-        mWindow = glfwCreateWindow( mWidth, mHeight, mTitle.c_str(), nullptr, nullptr );
+        mWindow = glfwCreateWindow( static_cast<i32>( mExtent2D.width ),
+                                    static_cast<i32>( mExtent2D.height ),
+                                    mTitle.c_str(),
+                                    nullptr,
+                                    nullptr );
     }
 
     virtual void CleanUp() override
     {
         glfwDestroyWindow( mWindow );
+        mWindow = nullptr;
     }
 
     virtual void Tick( float deltaTime ) override
@@ -52,13 +60,14 @@ class RENDER_CORE_API Window : public IRAII, public ITickable
         }
     }
 
-    void SetWindowSize( i32 width, i32 height )
+  public:
+    void SetWindowSize( u32 width, u32 height )
     {
-        mWidth = width;
-        mHeight = height;
+        mExtent2D.width = width;
+        mExtent2D.height = height;
         if ( mWindow )
         {
-            glfwSetWindowSize( mWindow, width, height );
+            glfwSetWindowSize( mWindow, static_cast<i32>( width ), static_cast<i32>( height ) );
         }
     }
 
@@ -71,6 +80,24 @@ class RENDER_CORE_API Window : public IRAII, public ITickable
         }
     }
 
+    // Get Unique Surface
+    const vk::UniqueSurfaceKHR &GetUniqueSurface() const
+    {
+        return mSharedSurfaceKHR;
+    }
+
+    vk::SharedSurfaceKHR &GetSurface()
+    {
+        return mSharedSurfaceKHR;
+    }
+
+    /// get window size
+    Extent2D GetWindowSize() const
+    {
+        return mExtent2D;
+    }
+
+  public:
     void CloseWindow()
     {
         if ( mWindow )
@@ -84,31 +111,16 @@ class RENDER_CORE_API Window : public IRAII, public ITickable
         return glfwWindowShouldClose( mWindow ) == GLFW_TRUE;
     }
 
-    void GetSurface()
-    {
-    }
-
   public:
-    std::vector<const char *> GetRenderInstanceExtensions()
-    {
-        u32 glfwExtensionCount = 0;
-        const char **extensions = glfwGetRequiredInstanceExtensions( &glfwExtensionCount );
+    void CreateSurface( std::shared_ptr<class RenderInstance> instance );
 
-        std::vector<const char *> extensionsVec;
-        for ( u32 i = 0; i < glfwExtensionCount; i++ )
-        {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
-            extensionsVec.push_back( extensions[i] );
-#pragma clang diagnostic pop
-        }
-        return extensionsVec;
-    }
+    std::vector<const char *> GetRenderInstanceExtensions();
 
   protected:
     GLFWwindow *mWindow = nullptr;
 
-    i32 mWidth = 1280;
-    i32 mHeight = 720;
+    vk::SharedSurfaceKHR mSharedSurfaceKHR;
+
+    Extent2D mExtent2D = { 1280, 720 };
     std::string mTitle = "NayukiYq";
 };

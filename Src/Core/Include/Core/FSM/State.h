@@ -17,6 +17,7 @@ template <typename TStateId, typename TFSMContext> class State : public NonCopya
     {
         return TStateId{};
     }
+
     virtual TStateId GetStateId() const
     {
         return GetStateId_S();

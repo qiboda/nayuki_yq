@@ -1,12 +1,13 @@
 #pragma once
 
+#include <memory>
 #include <render_core/window.h>
 #include <core/minimal.h>
 #include <render_core/minimal.h>
 
 using VkApiVersion = u32;
 
-class RENDER_CORE_API RenderInstance final : public NonCopyable
+class RENDER_CORE_API RenderInstance final : public IRAII
 {
   public:
     void SetVkApiVersion( VkApiVersion version )
@@ -14,10 +15,32 @@ class RENDER_CORE_API RenderInstance final : public NonCopyable
         mVkAapiVersion = version;
     }
 
+    virtual void Initialize() override
+    {
+        // CreateInstance( mAppInfo, mWindow );
+    }
+
+    virtual void CleanUp() override
+    {
+        DestroyDebugUtilsMessengerEXT();
+        mInstance.reset();
+    }
+
     /// @brief 创建 vulkan instance
-    void CreateInstance( vk::ApplicationInfo &appInfo, Window *window );
+    void CreateInstance( vk::ApplicationInfo &appInfo, std::shared_ptr<Window> window );
 
     void CreatePhysicalDevice();
+
+  public:
+    vk::SharedInstance &GetRaw()
+    {
+        return mInstance;
+    }
+
+    const vk::SharedInstance &GetRaw() const
+    {
+        return mInstance;
+    }
 
 #pragma region DebugUtils
   protected:
@@ -26,7 +49,7 @@ class RENDER_CORE_API RenderInstance final : public NonCopyable
 #pragma endregion DebugUtils
 
   protected:
-    vk::UniqueInstance mInstance;
+    vk::SharedInstance mInstance;
 
     VkApiVersion mVkAapiVersion = VK_API_VERSION_1_4;
 

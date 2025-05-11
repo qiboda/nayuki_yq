@@ -11,6 +11,7 @@ template <typename TTransitionId, typename TStateId, typename TFSMContext> class
     Transition() : mEnterStateId{}, mLeaveStateId{}
     {
     }
+
     Transition( TStateId enterStateId, TStateId leaveStateId )
         : mEnterStateId( enterStateId ), mLeaveStateId( leaveStateId )
     {
@@ -28,6 +29,7 @@ template <typename TTransitionId, typename TStateId, typename TFSMContext> class
     {
         return mEnterStateId;
     }
+
     TStateId GetLeaveStateId() const
     {
         return mLeaveStateId;
