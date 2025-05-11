@@ -3,15 +3,15 @@
 #include <core/minimal.h>
 #include <render_core/minimal.h>
 
-class DescriptorSetLayout : public IRAII
+class RENDER_CORE_API DescriptorSetLayout : public IRAII
 {
   public:
     DescriptorSetLayout();
     virtual ~DescriptorSetLayout() override;
 
   public:
-    virtual void Initialize() override;
-    virtual void CleanUp() override;
+    virtual void Initialize() override {}
+    virtual void CleanUp() override {}
 
   public:
     void CreateDescriptorLayout( const vk::DescriptorSetLayoutCreateInfo &layoutInfo )

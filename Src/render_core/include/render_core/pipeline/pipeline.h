@@ -6,7 +6,7 @@
 #include <core/minimal.h>
 #include <render_core/minimal.h>
 
-class Pipeline : public IRAII
+class RENDER_CORE_API Pipeline : public IRAII
 {
   public:
     Pipeline();

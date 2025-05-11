@@ -1,6 +1,5 @@
 #pragma once
 
-#include "core/Macro/macro.h"
 #include <core/minimal.h>
 #include <render_core/minimal.h>
 

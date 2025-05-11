@@ -3,7 +3,7 @@
 #include <core/minimal.h>
 #include <render_core/minimal.h>
 
-class ImageView : public IRAII
+class RENDER_CORE_API ImageView : public IRAII
 {
   public:
     ImageView();

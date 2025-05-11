@@ -3,7 +3,7 @@
 #include <core/minimal.h>
 #include <render_core/minimal.h>
 
-class PipelineCache : public IRAII
+class RENDER_CORE_API PipelineCache : public IRAII
 {
   public:
     PipelineCache();

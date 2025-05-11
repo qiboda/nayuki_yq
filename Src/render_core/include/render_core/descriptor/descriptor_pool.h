@@ -1,10 +1,11 @@
 #pragma once
 
 #include "core/macro/macro.h"
+#include "module_export.h"
 #include <core/minimal.h>
 #include <render_core/minimal.h>
 
-class DescriptorPool : public IRAII
+class RENDER_CORE_API DescriptorPool : public IRAII
 {
   public:
     DescriptorPool();

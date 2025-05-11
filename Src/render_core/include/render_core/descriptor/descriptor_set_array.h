@@ -7,7 +7,7 @@
 #include <render_core/minimal.h>
 #include <vector>
 
-class DescriptorSetArray : public IRAII
+class RENDER_CORE_API DescriptorSetArray : public IRAII
 {
   public:
     DescriptorSetArray();

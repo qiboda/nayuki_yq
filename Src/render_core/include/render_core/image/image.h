@@ -4,7 +4,7 @@
 #include <core/minimal.h>
 #include <render_core/minimal.h>
 
-class Image : public IRAII
+class RENDER_CORE_API Image : public IRAII
 {
   public:
     Image();

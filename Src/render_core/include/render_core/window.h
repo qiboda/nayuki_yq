@@ -80,12 +80,6 @@ class RENDER_CORE_API Window : public IRAII, public ITickable
         }
     }
 
-    // Get Unique Surface
-    const vk::UniqueSurfaceKHR &GetUniqueSurface() const
-    {
-        return mSharedSurfaceKHR;
-    }
-
     vk::SharedSurfaceKHR &GetSurface()
     {
         return mSharedSurfaceKHR;

@@ -1,9 +1,10 @@
 #pragma once
 
+#include "module_export.h"
 #include <core/minimal.h>
 #include <render_core/minimal.h>
 
-class FrameBuffer : public IRAII
+class RENDER_CORE_API FrameBuffer : public IRAII
 {
   public:
     FrameBuffer();

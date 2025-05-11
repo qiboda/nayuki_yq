@@ -3,7 +3,7 @@
 #include <core/minimal.h>
 #include <render_core/minimal.h>
 
-class Buffer : public IRAII
+class RENDER_CORE_API Buffer : public IRAII
 {
   public:
     Buffer();

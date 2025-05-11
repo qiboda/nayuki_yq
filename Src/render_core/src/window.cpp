@@ -1,4 +1,4 @@
-#include "core/Macro/macro.h"
+#include "core/macro/macro.h"
 #include "render_core/instance.h"
 #include <memory>
 #include <render_core/render_core.h>
@@ -24,7 +24,7 @@ void Window::CreateSurface( std::shared_ptr<RenderInstance> instance )
     VkResult result = glfwCreateWindowSurface( instance->GetRaw().get(), mWindow, nullptr, &vkSurface );
     if ( result != VK_SUCCESS )
     {
-        NY_LOG_CRITICAL( LogRenderCore, "Failed to create window surface: {}", result );
+        NY_LOG_CRITICAL( LogRenderCore, "Failed to create window surface: {}", vk::to_string( vk::Result( result ) ) );
     }
     mSharedSurfaceKHR = vk::SharedSurfaceKHR( vkSurface, instance->GetRaw() );
 }

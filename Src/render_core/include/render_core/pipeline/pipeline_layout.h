@@ -3,7 +3,7 @@
 #include <core/minimal.h>
 #include <render_core/minimal.h>
 
-class PipelineLayout : public IRAII
+class RENDER_CORE_API PipelineLayout : public IRAII
 {
   public:
     PipelineLayout();

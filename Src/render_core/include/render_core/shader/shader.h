@@ -3,7 +3,7 @@
 #include <core/minimal.h>
 #include <render_core/minimal.h>
 
-class Shader : public IRAII
+class RENDER_CORE_API Shader : public IRAII
 {
   public:
     Shader();

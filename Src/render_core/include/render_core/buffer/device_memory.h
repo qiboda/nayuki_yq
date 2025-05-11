@@ -4,7 +4,7 @@
 #include <core/minimal.h>
 #include <render_core/minimal.h>
 
-class DeviceMemory : public IRAII
+class RENDER_CORE_API DeviceMemory : public IRAII
 {
   public:
     DeviceMemory();

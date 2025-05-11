@@ -3,7 +3,7 @@
 #include <core/minimal.h>
 #include <render_core/minimal.h>
 
-class RenderPass : public IRAII
+class RENDER_CORE_API RenderPass : public IRAII
 {
   public:
     RenderPass();

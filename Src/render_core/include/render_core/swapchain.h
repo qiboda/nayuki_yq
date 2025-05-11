@@ -8,8 +8,8 @@
 #include <render_core/swapchain.h>
 #include <render_core/window.h>
 
-#include <render_core/commands/command_pool.h>
-#include <render_core/commands/command_buffer.h>
+#include <render_core/command/command_pool.h>
+#include <render_core/command/command_buffer.h>
 
 class RENDER_CORE_API Swapchain : public IRAII
 {
