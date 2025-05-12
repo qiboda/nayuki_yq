@@ -9,8 +9,12 @@ jobs:
         uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: latest
+      - name: Check out repository code
+        uses: actions/checkout@v4
       - name: Run project
         run: |
-          xmake --version
+          pwd
+          ls ${{ github.workspace }}
+          cd ${{ github.workspace }}
           pwd
           xmake -y -vD
