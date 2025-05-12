@@ -27,3 +27,5 @@ class RENDER_CORE_API CommandPool : public IRAII
 
     u32 graphicsQueueFamilyIndex = 0;
 };
+
+RENDER_TYPE_WRAPPER( CommandPool )

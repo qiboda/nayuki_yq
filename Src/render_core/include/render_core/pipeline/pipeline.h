@@ -51,7 +51,7 @@ class RENDER_CORE_API Pipeline : public IRAII
         return mPipeline.get();
     }
 
-    vk::SharedPipeline GetShared()
+    vk::SharedPipeline &GetShared()
     {
         return mPipeline;
     }
@@ -63,3 +63,5 @@ class RENDER_CORE_API Pipeline : public IRAII
 
     PipelineLayout mPipelineLayout;
 };
+
+RENDER_TYPE_WRAPPER( Pipeline )

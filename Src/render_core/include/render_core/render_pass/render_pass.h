@@ -46,7 +46,7 @@ class RENDER_CORE_API RenderPass : public IRAII
         return mRenderPass.get();
     }
 
-    vk::SharedRenderPass GetShared()
+    vk::SharedRenderPass &GetShared()
     {
         return mRenderPass;
     }
@@ -57,3 +57,5 @@ class RENDER_CORE_API RenderPass : public IRAII
     vk::SharedRenderPass mRenderPass;
     vk::RenderPassCreateInfo mRenderPassInfo;
 };
+
+RENDER_TYPE_WRAPPER( RenderPass )

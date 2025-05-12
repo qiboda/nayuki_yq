@@ -41,7 +41,7 @@ class RENDER_CORE_API ImageView : public IRAII
         return mImageView.get();
     }
 
-    vk::SharedImageView GetShared()
+    vk::SharedImageView &GetShared()
     {
         return mImageView;
     }
@@ -52,5 +52,4 @@ class RENDER_CORE_API ImageView : public IRAII
     vk::ImageViewCreateInfo mImageViewInfo;
 };
 
-using SharedImageView = std::shared_ptr<ImageView>;
-using UniqueImageView = std::unique_ptr<ImageView>;
+RENDER_TYPE_WRAPPER( ImageView )

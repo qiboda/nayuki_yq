@@ -24,3 +24,4 @@ class RENDER_CORE_API PipelineLayout : public IRAII
     vk::SharedPipelineLayout mPipelineLayout;
 };
 
+RENDER_TYPE_WRAPPER( PipelineLayout )

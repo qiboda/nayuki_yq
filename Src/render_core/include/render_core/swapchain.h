@@ -36,3 +36,5 @@ class RENDER_CORE_API Swapchain : public IRAII
     vk::SharedDevice mDevice;
     vk::SharedCommandPool mCommandPool;
 };
+
+RENDER_TYPE_WRAPPER( Swapchain )

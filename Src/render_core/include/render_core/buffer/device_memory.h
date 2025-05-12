@@ -65,3 +65,5 @@ class RENDER_CORE_API DeviceMemory : public IRAII
     vk::SharedDevice mDevice;
     vk::SharedDeviceMemory mDeviceMemory;
 };
+
+RENDER_TYPE_WRAPPER( DeviceMemory )

@@ -54,7 +54,7 @@ class RENDER_CORE_API DescriptorSet : public IRAII
         return mDescriptorSet.get();
     }
 
-    vk::SharedDescriptorSet GetShared()
+    vk::SharedDescriptorSet &GetShared()
     {
         return mDescriptorSet;
     }
@@ -63,3 +63,5 @@ class RENDER_CORE_API DescriptorSet : public IRAII
     vk::SharedDevice mDevice;
     vk::SharedDescriptorSet mDescriptorSet;
 };
+
+RENDER_TYPE_WRAPPER( DescriptorSet )

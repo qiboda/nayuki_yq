@@ -32,14 +32,14 @@ class RENDER_CORE_API RenderInstance final : public IRAII
     void CreatePhysicalDevice();
 
   public:
-    vk::SharedInstance &GetRaw()
+    vk::SharedInstance &GetShared()
     {
         return mInstance;
     }
 
-    const vk::SharedInstance &GetRaw() const
+    vk::Instance GetRaw()
     {
-        return mInstance;
+        return mInstance.get();
     }
 
 #pragma region DebugUtils
@@ -57,3 +57,5 @@ class RENDER_CORE_API RenderInstance final : public IRAII
     vk::UniqueDebugUtilsMessengerEXT mDebugUtilsMessenger;
 #endif
 };
+
+RENDER_TYPE_WRAPPER( RenderInstance )

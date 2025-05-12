@@ -38,3 +38,5 @@ class RENDER_CORE_API CommandBuffer : public IRAII
     vk::SharedDevice mDevice;
     vk::SharedCommandBuffer mCommandBuffer;
 };
+
+RENDER_TYPE_WRAPPER( CommandBuffer )

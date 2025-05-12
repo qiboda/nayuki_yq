@@ -60,3 +60,5 @@ class RENDER_CORE_API DescriptorSetArray : public IRAII
     std::vector<DescriptorSet> mDescriptorSets;
     vk::SharedDescriptorPool mDescriptorPool;
 };
+
+RENDER_TYPE_WRAPPER( DescriptorSetArray )

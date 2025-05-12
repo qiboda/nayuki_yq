@@ -41,7 +41,7 @@ class RENDER_CORE_API PipelineCache : public IRAII
         return mPipelineCache.get();
     }
 
-    vk::SharedPipelineCache GetShared()
+    vk::SharedPipelineCache &GetShared()
     {
         return mPipelineCache;
     }
@@ -50,3 +50,5 @@ class RENDER_CORE_API PipelineCache : public IRAII
     vk::SharedDevice mDevice;
     vk::SharedPipelineCache mPipelineCache;
 };
+
+RENDER_TYPE_WRAPPER( PipelineCache )

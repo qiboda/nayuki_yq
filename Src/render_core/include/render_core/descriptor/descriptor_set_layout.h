@@ -10,8 +10,13 @@ class RENDER_CORE_API DescriptorSetLayout : public IRAII
     virtual ~DescriptorSetLayout() override;
 
   public:
-    virtual void Initialize() override {}
-    virtual void CleanUp() override {}
+    virtual void Initialize() override
+    {
+    }
+
+    virtual void CleanUp() override
+    {
+    }
 
   public:
     void CreateDescriptorLayout( const vk::DescriptorSetLayoutCreateInfo &layoutInfo )
@@ -39,8 +44,15 @@ class RENDER_CORE_API DescriptorSetLayout : public IRAII
         return mDescriptorSetLayout.get();
     }
 
+    vk::SharedDescriptorSetLayout &GetShared()
+    {
+        return mDescriptorSetLayout;
+    }
+
   protected:
     vk::SharedDevice mDevice;
     vk::SharedDescriptorSetLayout mDescriptorSetLayout;
     vk::DescriptorSetLayoutCreateInfo mLayoutInfo;
 };
+
+RENDER_TYPE_WRAPPER( DescriptorSetLayout )

@@ -43,7 +43,7 @@ class RENDER_CORE_API Image : public IRAII
         return mImage.get();
     }
 
-    vk::SharedImage GetShared()
+    vk::SharedImage &GetShared()
     {
         return mImage;
     }
@@ -71,3 +71,5 @@ class RENDER_CORE_API Image : public IRAII
 
     SharedImageView mImageView;
 };
+
+RENDER_TYPE_WRAPPER( Image )

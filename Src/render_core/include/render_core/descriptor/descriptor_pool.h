@@ -21,7 +21,7 @@ class RENDER_CORE_API DescriptorPool : public IRAII
         return mDescriptorPool.get();
     }
 
-    vk::SharedDescriptorPool GetShared()
+    vk::SharedDescriptorPool &GetShared()
     {
         return mDescriptorPool;
     }
@@ -52,3 +52,5 @@ class RENDER_CORE_API DescriptorPool : public IRAII
     vk::SharedDescriptorPool mDescriptorPool;
     vk::DescriptorPoolCreateInfo mPoolInfo;
 };
+
+RENDER_TYPE_WRAPPER( DescriptorPool )

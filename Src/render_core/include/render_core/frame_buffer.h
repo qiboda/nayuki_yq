@@ -42,7 +42,7 @@ class RENDER_CORE_API FrameBuffer : public IRAII
         return mFrameBuffer.get();
     }
 
-    vk::SharedFramebuffer GetShared()
+    vk::SharedFramebuffer &GetShared()
     {
         return mFrameBuffer;
     }
@@ -51,3 +51,5 @@ class RENDER_CORE_API FrameBuffer : public IRAII
     vk::SharedDevice mDevice;
     vk::SharedFramebuffer mFrameBuffer;
 };
+
+RENDER_TYPE_WRAPPER( FrameBuffer )

@@ -41,7 +41,7 @@ class RENDER_CORE_API Shader : public IRAII
         return mShaderModule.get();
     }
 
-    vk::SharedShaderModule GetShared()
+    vk::SharedShaderModule &GetShared()
     {
         return mShaderModule;
     }
@@ -51,3 +51,5 @@ class RENDER_CORE_API Shader : public IRAII
     vk::SharedShaderModule mShaderModule;
     vk::ShaderModuleCreateInfo mShaderInfo;
 };
+
+RENDER_TYPE_WRAPPER( Shader )

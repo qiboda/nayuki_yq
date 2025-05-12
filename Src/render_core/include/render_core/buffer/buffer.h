@@ -42,3 +42,5 @@ class RENDER_CORE_API Buffer : public IRAII
     vk::SharedDevice mDevice;
     vk::SharedBuffer mBuffer;
 };
+
+RENDER_TYPE_WRAPPER( Buffer )

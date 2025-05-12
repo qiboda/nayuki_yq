@@ -21,12 +21,12 @@ void Window::CreateSurface( std::shared_ptr<RenderInstance> instance )
 
     // Create a Vulkan surface using GLFW
     VkSurfaceKHR vkSurface;
-    VkResult result = glfwCreateWindowSurface( instance->GetRaw().get(), mWindow, nullptr, &vkSurface );
+    VkResult result = glfwCreateWindowSurface( instance->GetRaw(), mWindow, nullptr, &vkSurface );
     if ( result != VK_SUCCESS )
     {
         NY_LOG_CRITICAL( LogRenderCore, "Failed to create window surface: {}", vk::to_string( vk::Result( result ) ) );
     }
-    mSharedSurfaceKHR = vk::SharedSurfaceKHR( vkSurface, instance->GetRaw() );
+    mSharedSurfaceKHR = vk::SharedSurfaceKHR( vkSurface, instance->GetShared() );
 }
 
 std::vector<const char *> Window::GetRenderInstanceExtensions()
