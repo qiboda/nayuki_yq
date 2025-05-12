@@ -1,6 +1,6 @@
 
 
-add_requires("glfw", "glm", "stb", "spdlog", "tracy", {
+add_requires("glfw", "glm", "stb", "spdlog", "tracy", "shaderc", {
     debug = true,
     external = true,
 })
