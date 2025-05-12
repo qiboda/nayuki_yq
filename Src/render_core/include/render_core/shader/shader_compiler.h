@@ -1,12 +1,9 @@
 #pragma once
 
-#include <map>
 #include <render_core/minimal.h>
 #include <core/minimal.h>
 
 #include <shaderc/shaderc.hpp>
-#include <utility>
-#include <vector>
 
 class RENDER_CORE_API ShaderCompiler : public Singleton<ShaderCompiler>, public IRAII
 {
@@ -46,13 +43,13 @@ class RENDER_CORE_API ShaderCompiler : public Singleton<ShaderCompiler>, public 
     // Adds a macro definition to the compiler options.
     void AddMacroDefinition( const std::string &name, const std::string &value )
     {
-        mMacroDefinition.insert( name, value );
+        mMacroDefinition.insert_or_assign( name, value );
     }
 
     // Adds a macro definition to the compiler options.
     void AddMacroDefinition( const std::string &name )
     {
-        mMacroDefinition.insert( name, std::string( "" ) );
+        mMacroDefinition.insert_or_assign( name, "" );
     }
 
     void ClearMacroDefinition()
