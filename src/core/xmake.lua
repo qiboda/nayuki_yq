@@ -27,4 +27,4 @@ target(module_name)
 
     add_packages("spdlog", "tracy", "glm")
 
-includes("Tests")
+includes("tests")
