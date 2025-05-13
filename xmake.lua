@@ -64,4 +64,4 @@ end
 includes("src")
 
 -- add examples
-includes("Examples")
+includes("examples")

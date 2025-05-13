@@ -17,7 +17,7 @@ template <typename TTransitionId, typename TStateId, typename TFSMContext> class
     {
     }
 
-    virtual ~Transition()
+    virtual ~Transition() override
     {
     }
 

@@ -8,7 +8,7 @@ template <typename TStateId, typename TFSMContext> class State : public NonCopya
 {
 
   public:
-    virtual ~State()
+    virtual ~State() override
     {
     }
 
