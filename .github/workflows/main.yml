@@ -17,7 +17,17 @@ jobs:
         with:
          version: 1.4.309.0
          cache: true
-      - name: Run project
+      - name: Run project Debug Mode
         run: |
-          pwd
-          xmake -y -vD
+          xmake f -m debug
+          xmake build -y
+          xmake build -y window
+          xmake test
+      - name: Run project Release Mode
+        run: |
+          xmake f -m release
+          xmake build -y
+          xmake build -y window
+          xmake test
+    
+
