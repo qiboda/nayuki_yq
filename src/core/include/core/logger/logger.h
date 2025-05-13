@@ -10,11 +10,11 @@
 #    define SPDLOG_TRACE_ON
 #endif // !DEBUG
 
-#ifndef SPDLOG_WCHAR_TO_UTF8_SUPPORT
-#    define SPDLOG_WCHAR_TO_UTF8_SUPPORT
-#endif // !SPDLOG_WCHAR_TO_UTF8_SUPPORT
-
-// #include <functional> // IWYU pragma: keep
+#ifdef _WIN32
+#    ifndef SPDLOG_WCHAR_TO_UTF8_SUPPORT
+#        define SPDLOG_WCHAR_TO_UTF8_SUPPORT
+#    endif // !SPDLOG_WCHAR_TO_UTF8_SUPPORT
+#endif
 
 #include <spdlog/async.h>
 #include <spdlog/async_logger.h>
