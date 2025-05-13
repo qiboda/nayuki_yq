@@ -43,17 +43,32 @@ class RENDER_CORE_API DeviceMemory : public IRAII
     }
 
   public:
-    virtual void *GetMemory() const = 0;
+    virtual void *GetMemory() const
+    {
+        return nullptr;
+    }
 
-    virtual size_t GetSize() const = 0;
+    virtual usize GetSize() const
+    {
+        return 0u;
+    }
 
-    virtual void *MapMemory() = 0;
+    virtual void *MapMemory()
+    {
+        return nullptr;
+    }
 
-    virtual void UnmapMemory() = 0;
+    virtual void UnmapMemory()
+    {
+    }
 
-    virtual void Flush() = 0;
+    virtual void Flush()
+    {
+    }
 
-    virtual void Invalidate() = 0;
+    virtual void Invalidate()
+    {
+    }
 
   public:
     void SetDevice( vk::SharedDevice device )
