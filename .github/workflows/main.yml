@@ -9,7 +9,10 @@ jobs:
         uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: latest
-          cache: true
+          actions-cache-folder: '.xmake-cache'
+          package-cache: true
+          package-cache-key: 'ubuntu-latest-ci'
+          project-path: 'nayuki_yq'
       - name: Check out self repository code
         uses: actions/checkout@v4
       - name: Install Vulkan SDK
