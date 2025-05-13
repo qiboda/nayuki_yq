@@ -16,7 +16,14 @@
 #    define NY_PRE_CONDITION( expr, msg, ... )                                                                         \
         if ( bool( expr ) == false )                                                                                   \
         {                                                                                                              \
-            std::cerr << std::format( msg, __VA_ARGS__ ) << std::endl;                                                 \
+            if constexpr ( sizeof( #__VA_ARGS__ ) > 1 )                                                                \
+            {                                                                                                          \
+                std::cerr << std::format( msg, __VA_ARGS__ ) << std::endl;                                             \
+            }                                                                                                          \
+            else                                                                                                       \
+            {                                                                                                          \
+                std::cerr << msg << std::endl;                                                                         \
+            }                                                                                                          \
             assert( expr );                                                                                            \
         }
 #endif // !NY_PRE_CONDITION
@@ -25,7 +32,14 @@
 #    define NY_POST_CONDITION( expr, msg, ... )                                                                        \
         if ( bool( expr ) == false )                                                                                   \
         {                                                                                                              \
-            std::cerr << std::format( msg, __VA_ARGS__ ) << std::endl;                                                 \
+            if constexpr ( sizeof( #__VA_ARGS__ ) > 1 )                                                                \
+            {                                                                                                          \
+                std::cerr << std::format( msg, __VA_ARGS__ ) << std::endl;                                             \
+            }                                                                                                          \
+            else                                                                                                       \
+            {                                                                                                          \
+                std::cerr << msg << std::endl;                                                                         \
+            }                                                                                                          \
             assert( expr );                                                                                            \
         }
 #endif // !NY_POST_CONDITION
@@ -39,11 +53,20 @@
         }
 #endif // !NY_ASSERT
 
+// 因为#__VA_ARGS__在没有传入参数时，是一个空字符串，sizeof为1
 #ifndef NY_ASSERT_MSG
 #    define NY_ASSERT_MSG( expr, msg, ... )                                                                            \
         if ( bool( expr ) == false )                                                                                   \
         {                                                                                                              \
-            std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " << std::format( msg, __VA_ARGS__ ) << std::endl;   \
+            if constexpr ( sizeof( #__VA_ARGS__ ) > 1 )                                                                \
+            {                                                                                                          \
+                std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " << std::format( msg, __VA_ARGS__ )             \
+                          << std::endl;                                                                                \
+            }                                                                                                          \
+            else                                                                                                       \
+            {                                                                                                          \
+                std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " msg << std::endl;                              \
+            }                                                                                                          \
             assert( expr );                                                                                            \
         }
 #endif // !NY_ASSERT_MSG_MSG
