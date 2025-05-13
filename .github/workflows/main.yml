@@ -9,11 +9,14 @@ jobs:
         uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: latest
+          cache: true
       - name: Check out self repository code
         uses: actions/checkout@v4
-      - name: Install vulkan-sdk
-        run: |
-          sudo apt-get install vulkan-sdk
+      - name: Install Vulkan SDK
+        uses: humbletim/install-vulkan-sdk@v1.2
+        with:
+         version: 1.4.309.0
+         cache: true
       - name: Run project
         run: |
           pwd
