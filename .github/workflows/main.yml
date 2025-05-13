@@ -9,12 +9,25 @@ jobs:
         uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: latest
+          cache: true
       - name: Check out self repository code
         uses: actions/checkout@v4
-      - name: Install vulkan-sdk
+      - name: Install Vulkan SDK
+        uses: humbletim/install-vulkan-sdk@v1.2
+        with:
+         version: 1.4.309.0
+         cache: true
+      - name: Run project Debug Mode
         run: |
-          sudo apt-get install vulkan-sdk
-      - name: Run project
+          xmake f -m debug
+          xmake build -y
+          xmake build -y window
+          xmake test
+      - name: Run project Release Mode
         run: |
-          pwd
-          xmake -y -vD
+          xmake f -m release
+          xmake build -y
+          xmake build -y window
+          xmake test
+    
+
