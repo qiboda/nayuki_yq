@@ -5,16 +5,16 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
+      - name: Check out xmake repository code
         uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: latest
-      - name: Check out repository code
+      - name: Check out self repository code
         uses: actions/checkout@v4
+      - name: Install vulkan-sdk
+        run: |
+          sudo apt-get install vulkan-sdk
       - name: Run project
         run: |
-          pwd
-          ls ${{ github.workspace }}
-          cd ${{ github.workspace }}
           pwd
           xmake -y -vD
