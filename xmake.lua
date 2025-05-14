@@ -57,6 +57,7 @@ end
 if is_mode("debug") then
     add_defines("DEBUG")
 else
+    -- 发行版模式 asset 不会执行
     add_defines("NDEBUG")
 end
 
