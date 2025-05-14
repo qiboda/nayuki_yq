@@ -32,5 +32,35 @@ jobs:
           xmake build -y
           xmake build -y window
           xmake test
+  Explore-GitHub-Actions-With-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Check out xmake repository code
+        uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: latest
+          # actions-cache-folder: '.xmake-cache'
+          package-cache: true
+          package-cache-key: 'windows-latest-ci'
+          project-path: 'nayuki_yq'
+      - name: Check out self repository code
+        uses: actions/checkout@v4
+      - name: Install Vulkan SDK
+        uses: humbletim/install-vulkan-sdk@v1.2
+        with:
+         version: 1.4.309.0
+         cache: true
+      - name: Run project Debug Mode
+        run: |
+          xmake f -m debug -y
+          xmake build -y
+          xmake build -y window
+          xmake test
+      - name: Run project Release Mode
+        run: |
+          xmake f -m release -y
+          xmake build -y
+          xmake build -y window
+          xmake test
     
 

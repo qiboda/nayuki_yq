@@ -85,11 +85,9 @@ class CORE_API TimerManager : public Singleton<TimerManager>
     TimerData &GetTimerData( const TimerHandle &timerHandle );
 
   private:
-#pragma warning( disable : 4251 )
     TimerDataHashMap mTimerDataHashMap;
     TimerHandleMinHeap mActiveTimerMinHeap;
     TimerHashSet mPausedTimerHashSet;
-#pragma warning( default : 4251 )
 
     f32 mInternalTime;
 };

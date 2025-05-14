@@ -140,8 +140,10 @@ void RenderInstance::CreateInstance( vk::ApplicationInfo &appInfo, std::shared_p
 
 vk::Result RenderInstance::DestroyDebugUtilsMessengerEXT()
 {
+#ifdef DEBUG
     mInstance->destroyDebugUtilsMessengerEXT( mDebugUtilsMessenger.get() );
     mDebugUtilsMessenger.reset();
+#endif
     return vk::Result::eSuccess;
 }
 

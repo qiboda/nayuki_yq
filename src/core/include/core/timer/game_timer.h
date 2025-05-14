@@ -31,7 +31,6 @@ class CORE_API GameTimer
     using TimePoint = std::chrono::time_point<Clock>;
     using Duration = std::chrono::duration<f32>;
 
-#pragma warning( disable : 4251 )
     // variable order is important.
     TimePoint mPrevTimePoint;
     TimePoint mCurrTimePoint;
@@ -42,7 +41,6 @@ class CORE_API GameTimer
 
     Duration mPausedDuration;
     TimePoint mPausedTimePoint;
-#pragma warning( default : 4251 )
     // variable order is important.
 
     Clock mClock;

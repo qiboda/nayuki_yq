@@ -19,4 +19,4 @@ target("core_tests")
     add_deps("core")
 
     -- 方便使用gtest的宏
-    add_cxxflags("-Wno-unsafe-buffer-usage-in-libc-call")
+    -- add_cxxflags("-Wno-unsafe-buffer-usage-in-libc-call")

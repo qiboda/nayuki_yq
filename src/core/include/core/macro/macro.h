@@ -18,7 +18,7 @@
         {                                                                                                              \
             if constexpr ( sizeof( #__VA_ARGS__ ) > 1 )                                                                \
             {                                                                                                          \
-                std::cerr << std::format( msg, __VA_ARGS__ ) << std::endl;                                             \
+                std::cerr << std::format( msg, ##__VA_ARGS__ ) << std::endl;                                             \
             }                                                                                                          \
             else                                                                                                       \
             {                                                                                                          \
@@ -34,7 +34,7 @@
         {                                                                                                              \
             if constexpr ( sizeof( #__VA_ARGS__ ) > 1 )                                                                \
             {                                                                                                          \
-                std::cerr << std::format( msg, __VA_ARGS__ ) << std::endl;                                             \
+                std::cerr << std::format( msg, ##__VA_ARGS__ ) << std::endl;                                             \
             }                                                                                                          \
             else                                                                                                       \
             {                                                                                                          \
@@ -60,7 +60,7 @@
         {                                                                                                              \
             if constexpr ( sizeof( #__VA_ARGS__ ) > 1 )                                                                \
             {                                                                                                          \
-                std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " << std::format( msg, __VA_ARGS__ )             \
+                std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " << std::format( msg, ##__VA_ARGS__ )             \
                           << std::endl;                                                                                \
             }                                                                                                          \
             else                                                                                                       \
