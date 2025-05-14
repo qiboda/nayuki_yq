@@ -1,6 +1,7 @@
 #pragma once
 
 #include "render_core/instance.h"
+#include "render_core/window.h"
 #include <core/minimal.h>
 #include <render_core/minimal.h>
 
@@ -22,6 +23,10 @@ class RENDER_CORE_API PhysicalDevice : public IRAII
 
     void DestroyPhysicalDevice();
 
+  public:
+    std::pair<u32, u32> findGraphicsAndPresentQueueFamilyIndex( Window *window );
+
+  public:
     void SetInstance( SharedRenderInstance instance )
     {
         mInstance = instance;

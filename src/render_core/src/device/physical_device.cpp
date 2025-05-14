@@ -43,3 +43,23 @@ void PhysicalDevice::DestroyPhysicalDevice()
 {
     mPhysicalDevice.reset();
 }
+
+std::pair<u32, u32> PhysicalDevice::findGraphicsAndPresentQueueFamilyIndex( Window *window )
+{
+    auto surface = window->GetSurface();
+
+    std::vector<vk::QueueFamilyProperties> queueFamilyProperties = mPhysicalDevice->getQueueFamilyProperties();
+    NY_ASSERT( queueFamilyProperties.size() < std::numeric_limits<u32>::max() )
+
+    u32 index = 0;
+    // look for a queueFamilyIndex that supports graphics and present
+    auto combinedIt = std::find_if( queueFamilyProperties.begin(),
+                                    queueFamilyProperties.end(),
+                                    [this, &surface, &index]( vk::QueueFamilyProperties const &qfp )
+                                    {
+                                        return ( qfp.queueFlags & vk::QueueFlagBits::eGraphics ) &&
+                                               mPhysicalDevice->getSurfaceSupportKHR( index++, surface.get() );
+                                    } );
+    UNUSED_VAR( combinedIt );
+    return { index, index }; // the first index that supports graphics and present
+}

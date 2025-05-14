@@ -18,5 +18,7 @@ target("core_tests")
     -- 添加本地target依赖
     add_deps("core")
 
-    -- 方便使用gtest的宏
-    -- add_cxxflags("-Wno-unsafe-buffer-usage-in-libc-call")
+    if is_host("windows") then
+        -- 使用gtest的宏在windows中会报错
+        add_cxxflags("-Wno-unsafe-buffer-usage-in-libc-call")
+    end 

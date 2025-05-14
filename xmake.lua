@@ -26,7 +26,7 @@ add_cxxflags("-ferror-limit=0")
 add_cxxflags("-Wnonportable-include-path")
 
 if is_host("windows") then
-
+    add_cxxflags("-Wno-gnu-zero-variadic-macro-arguments")
     -- 允许在构造函数中覆盖成员变量
     add_cxxflags("-Wno-shadow-field-in-constructor")
     -- 允许使用static 全局变量
