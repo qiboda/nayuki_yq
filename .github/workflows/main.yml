@@ -26,9 +26,9 @@ jobs:
           # actions-cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}
           cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}
           build-cache: true
-          build-cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}
+          build-cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}-build
           package-cache: true
-          package-cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}
+          package-cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}-packages
           project-path: 'nayuki_yq'
 
       - name: Check out self repository code
@@ -43,7 +43,7 @@ jobs:
       # Fetch xmake dephash, 存储到 steps.dep_hash.outputs.hash
       - name: Retrieve dependencies hash
         id: dep_hash
-        run: echo "hash=$(.xmake-cache/xmake l utils.ci.packageskey)" >> $GITHUB_OUTPUT
+        run: echo "hash=$(xmake l utils.ci.packageskey)" >> $GITHUB_OUTPUT
 
       # Cache xmake dependencies
       - name: Restore cached xmake dependencies
@@ -55,10 +55,10 @@ jobs:
 
       - name: Build Project
         run: |
-          .xmake-cache/xmake f -m ${{matrix.build-mode}} -y
-          .xmake-cache/xmake build -y
-          .xmake-cache/xmake build -y window
-          .xmake-cache/xmake test
+          xmake f -m ${{matrix.build-mode}} -y
+          xmake build -y
+          xmake build -y window
+          xmake test
 
       # 保存依赖包缓存
       - name: Save cached xmake dependencies
