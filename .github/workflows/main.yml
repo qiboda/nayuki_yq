@@ -22,19 +22,14 @@ jobs:
         uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: latest
-          actions-cache-folder: .xmake-cache
-          actions-cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}
+          # actions-cache-folder: .xmake-cache
+          # actions-cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}
           cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}
           build-cache: true
           build-cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}
           package-cache: true
           package-cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}
           project-path: 'nayuki_yq'
-
-      - name: List Files
-        run: |
-          echo "=== List tree ==="
-          tree
 
       - name: Check out self repository code
         uses: actions/checkout@v4
