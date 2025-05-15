@@ -1,66 +1,66 @@
 name: xmake build
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+run-name: xmake build project
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
-    runs-on: ubuntu-latest
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        build-mode: [debug, release]
+    runs-on: ${{ matrix.os }}
     steps:
-      - name: Check out xmake repository code
-        uses: xmake-io/github-action-setup-xmake@v1
-        with:
-          xmake-version: latest
-          # actions-cache-folder: '.xmake-cache'
-          package-cache: true
-          package-cache-key: 'ubuntu-latest-ci'
-          project-path: 'nayuki_yq'
-      - name: Check out self repository code
-        uses: actions/checkout@v4
-      - name: Install Vulkan SDK
-        uses: humbletim/install-vulkan-sdk@v1.2
-        with:
-         version: 1.4.309.0
-         cache: true
-      - name: Run project Debug Mode
-        run: |
-          xmake f -m debug -y
-          xmake build -y
-          xmake build -y window
-          xmake test
-      - name: Run project Release Mode
-        run: |
-          xmake f -m release -y
-          xmake build -y
-          xmake build -y window
-          xmake test
-  Explore-GitHub-Actions-With-windows:
-    runs-on: windows-latest
-    steps:
-      - name: Check out xmake repository code
-        uses: xmake-io/github-action-setup-xmake@v1
-        with:
-          xmake-version: latest
-          # actions-cache-folder: '.xmake-cache'
-          package-cache: true
-          package-cache-key: 'windows-latest-ci'
-          project-path: 'nayuki_yq'
-      - name: Check out self repository code
-        uses: actions/checkout@v4
-      - name: Install Vulkan SDK
-        uses: humbletim/install-vulkan-sdk@v1.2
-        with:
-         version: 1.4.309.0
-         cache: true
-      - name: Run project Debug Mode
-        run: |
-          xmake f -m debug -y
-          xmake build -y
-          xmake build -y window
-          xmake test
-      - name: Run project Release Mode
-        run: |
-          xmake f -m release -y
-          xmake build -y
-          xmake build -y window
-          xmake test
-    
+      # 存储到 steps.cache_key.outputs.key
+      - name: Get current date as package key
+        id: cache_key
+        run: echo "key=$(date +'%W')" >> $GITHUB_OUTPUT  
 
+      # Force xmake to a specific folder (for cache)
+      - name: Set xmake env
+        run: echo "XMAKE_GLOBALDIR=${{ runner.workspace }}/xmake-global" >> $GITHUB_ENV
+
+      - name: Check out xmake repository code
+        uses: xmake-io/github-action-setup-xmake@v1
+        with:
+          xmake-version: latest
+          actions-cache-folder: .xmake-cache-W${{ steps.cache_key.outputs.key }}
+          cache-key: ${{ matrix.os }}-{{ steps.cache_key.outputs.key }}-ci
+          package-cache: true
+          package-cache-key: '${{ matrix.os }}-{{ steps.cache_key.outputs.key }}-ci'
+          project-path: 'nayuki_yq'
+
+      - name: Check out self repository code
+        uses: actions/checkout@v4
+
+      - name: Install Vulkan SDK
+        uses: humbletim/install-vulkan-sdk@v1.2
+        with:
+         version: 1.4.309.0
+         cache: true
+
+      # Fetch xmake dephash, 存储到 steps.dep_hash.outputs.hash
+      - name: Retrieve dependencies hash
+        id: dep_hash
+        run: echo "hash=$(xmake l utils.ci.packageskey)" >> $GITHUB_OUTPUT
+
+      # Cache xmake dependencies
+      - name: Restore cached xmake dependencies
+        id: restore-depcache
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
+          key: ${{matrix.os}}-${{matrix.build-mode}}-${{ steps.dep_hash.outputs.hash }}-W${{ steps.cache_key.outputs.key }}
+
+      - name: Build Project
+        run: |
+          xmake f -m ${{matrix.build-mode}} -y
+          xmake build -y
+          xmake build -y window
+          xmake test
+
+      # 保存依赖包缓存
+      - name: Save cached xmake dependencies
+        if: ${{ !steps.restore-depcache.outputs.cache-hit }}
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
+          key: ${{ steps.restore-depcache.outputs.cache-primary-key }}
