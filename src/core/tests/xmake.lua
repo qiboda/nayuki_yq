@@ -20,5 +20,5 @@ target("core_tests")
 
     if is_host("windows") then
         -- 使用gtest的宏在windows中会报错
-        add_cxxflags("-Wno-unsafe-buffer-usage-in-libc-call")
+        add_cxxflags("-Wno-unsafe-buffer-usage")
     end 
