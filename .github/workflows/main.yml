@@ -31,6 +31,19 @@ jobs:
           package-cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}
           project-path: 'nayuki_yq'
 
+      - name: List Files
+        run: |
+          echo "=== List tree ==="
+          tree -L 100
+          echo "=== List Files ==="
+          ls -al
+          echo "=== List xmake cache ==="
+          ls -al .xmake-cache
+          echo "=== List xmake global dir ==="
+          ls -al ${{ env.XMAKE_GLOBALDIR }}
+          echo "=== List xmake packages ==="
+          ls -al ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
+
       - name: Check out self repository code
         uses: actions/checkout@v4
 
