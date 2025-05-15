@@ -34,15 +34,7 @@ jobs:
       - name: List Files
         run: |
           echo "=== List tree ==="
-          tree -L 100
-          echo "=== List Files ==="
-          ls -al
-          echo "=== List xmake cache ==="
-          ls -al .xmake-cache
-          echo "=== List xmake global dir ==="
-          ls -al ${{ env.XMAKE_GLOBALDIR }}
-          echo "=== List xmake packages ==="
-          ls -al ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
+          tree
 
       - name: Check out self repository code
         uses: actions/checkout@v4
