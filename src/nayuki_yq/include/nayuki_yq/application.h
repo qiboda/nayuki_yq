@@ -48,7 +48,7 @@ class NAYUKI_YQ_API Application : public IRAII
   protected:
     std::shared_ptr<Window> mWindow = nullptr;
 
-    std::shared_ptr<RenderInstance> mRenderInstance = nullptr;
+    SharedRenderInstance mRenderInstance = nullptr;
 
     vk::ApplicationInfo mAppInfo = vk::ApplicationInfo(
         "Hello World!", VK_MAKE_VERSION( 0, 1, 0 ), "No Engine", VK_MAKE_VERSION( 0, 1, 0 ), VK_API_VERSION_1_0 );

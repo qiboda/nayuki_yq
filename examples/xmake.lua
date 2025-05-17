@@ -1,9 +1,4 @@
 
-local examples = {
-    "window",
-    "box_app"
-}
+includes(os.projectdir() .. "/xmake/utils.lua")
 
-for _, example in ipairs(examples) do
-    includes(example)
-end
+includes_cur_dirs()

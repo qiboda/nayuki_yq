@@ -1,6 +1,6 @@
 
-module_name = "render"
-module_name_macro = "RENDER"
+module_name = "ecs"
+module_name_macro = "ECS"
 
 target(module_name)
     set_kind("shared")
@@ -21,9 +21,7 @@ target(module_name)
     set_symbols("debug")
     set_strip("all")
 
-    add_packages("glfw", "glm", "stb", "spdlog", "tracy", "stdexec")
+    add_packages("glfw", "glm", "stb", "spdlog", "tracy")
     add_packages("vulkansdk")
 
     add_deps("core")
-    add_deps("render_core")
-

@@ -18,7 +18,7 @@ add_rules("mode.debug", "mode.release")
 
 -- 自动更新 compile commands 文件
 add_rules("plugin.vsxmake.autoupdate")
-add_plugindirs("plugins")
+add_plugindirs("xmake/plugins")
 
 add_cxxflags("-Wall", "-Werror") -- "-Werror"
 add_cxxflags("-ferror-limit=0")
