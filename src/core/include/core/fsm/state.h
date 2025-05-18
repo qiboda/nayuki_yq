@@ -4,7 +4,8 @@
 #include <core/type_def.h>
 #include <memory>
 
-template <typename TStateId, typename TFSMContext> class State : public NonCopyable
+template <typename TStateId, typename TFSMContext>
+class State : public NonCopyable
 {
 
   public:

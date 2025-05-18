@@ -1,5 +1,5 @@
 
-#include <core/core.h>
+#include <core/minimal.h>
 #include "core/delegate/delegate_handle.h"
 
 #include <atomic>

@@ -16,6 +16,8 @@ set_languages("c++20")
 
 add_rules("mode.debug", "mode.release")
 
+set_installdir("install")
+
 -- 自动更新 compile commands 文件
 add_rules("plugin.vsxmake.autoupdate")
 add_plugindirs("xmake/plugins")

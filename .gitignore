@@ -12,3 +12,4 @@ vsxmake2022/
 .cache
 .nayuki
 compile_commands.json
+install/

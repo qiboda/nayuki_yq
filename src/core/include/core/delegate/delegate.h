@@ -6,7 +6,8 @@
 
 // To bind function: only need to same parameters and return value;
 // TReturnVal should be always void type.
-template <typename TReturnVal, typename... TArgs> class MultipleDelegate
+template <typename TReturnVal, typename... TArgs>
+class MultipleDelegate
 {
   public:
     typedef DelegateInstance<TReturnVal, TArgs...> *DelegateInstanceType;
@@ -175,7 +176,8 @@ template <typename TReturnVal, typename... TArgs> class MultipleDelegate
 };
 
 // To bind function: only need to same parameters and return value;
-template <typename TReturnVal, typename... TArgs> class SingleDelegate
+template <typename TReturnVal, typename... TArgs>
+class SingleDelegate
 {
   public:
     using DelegateInstanceType = DelegateInstance<TReturnVal, TArgs...> *;

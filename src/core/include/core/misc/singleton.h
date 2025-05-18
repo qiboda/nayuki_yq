@@ -2,7 +2,8 @@
 
 /// \brief Singleton template class
 /// \note: 需要friend声明以及前置声明，具体例子见 `Logger` class
-template <typename T> class Singleton
+template <typename T>
+class Singleton
 {
   protected:
     Singleton()
@@ -25,7 +26,9 @@ template <typename T> class Singleton
     static inline T &GetInstance()
     {
         // 使用局部静态变量优点：相对于动态申请，保证程序结束时会执行单例的析构函数，且代码更加简洁
-        static T instance;
+        // 但有一些缺点，初始化时机和结束时机不易控制。
+        // 使用全局的则可以在在函数调用前初始化和函数调用结束后析构。
+        // static T instance;
         return instance;
     }
 
@@ -33,4 +36,9 @@ template <typename T> class Singleton
     {
         return &GetInstance();
     }
+
+    static T instance;
 };
+
+template <typename T>
+T Singleton<T>::instance;

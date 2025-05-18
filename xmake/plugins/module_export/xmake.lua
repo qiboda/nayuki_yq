@@ -65,4 +65,6 @@ task("module_export")
 
         local file_path = path.join(gen_dir, "module_export.h")
         io.writefile(file_path, content)
+
+        print("Module export header file generated at: " .. file_path)
     end)

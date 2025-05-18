@@ -8,7 +8,8 @@
 class CORE_API FSMBuilder : public Singleton<FSMBuilder>
 {
   public:
-    template <typename TFSM> std::weak_ptr<FSMInterface> FindOrCreateFSM()
+    template <typename TFSM>
+    std::weak_ptr<FSMInterface> FindOrCreateFSM()
     {
         std::weak_ptr<FSMInterface> fsmInterface = FindFSM( TFSM::GetFSMId_S() );
         if ( fsmInterface.expired() == false )
@@ -45,7 +46,8 @@ class CORE_API FSMBuilder : public Singleton<FSMBuilder>
         return *it;
     }
 
-    template <typename TFSM> std::weak_ptr<FSMInterface> CreateFSM()
+    template <typename TFSM>
+    std::weak_ptr<FSMInterface> CreateFSM()
     {
         std::shared_ptr<FSMInterface> fsmInterface = std::make_shared<TFSM>();
         if ( fsmInterface->GetFSMId() != TFSM::GetFSMId_S() )

@@ -9,6 +9,7 @@ target(module_name)
     add_files("src/**.cpp")
     -- public 意味着依赖这个 target 的其他 target 也会使用这个 includedirs。
     add_includedirs("include", { public = true })
+    -- 文件会显示在 vs项目中的头文件目录下。并且install的时候会被安装到 include 目录下。
     add_headerfiles("include/**.h", { public = true })
 
     -- 预编译头文件
@@ -25,6 +26,20 @@ target(module_name)
     set_symbols("debug")
     set_strip("all")
 
-    add_packages("spdlog", "tracy", "glm")
+    add_packages("spdlog", "tracy", "glm", "rpmalloc", "tbb")
 
-includes("tests")
+    after_build(function (target)
+        for _, pkg in pairs(target:pkgs()) do
+            local installdir = pkg:installdir()
+            if installdir then
+                -- 查找并拷贝所有 DLL/SO/DYLIB 文件
+                local files = os.files(path.join(installdir, "bin/*"))
+                for _, f in ipairs(files) do
+                    if f:endswith(".dll") or f:endswith(".so") or f:endswith(".dylib") then
+                        os.cp(f, target:targetdir())
+                        print("on package <" .. pkg:name() .. "> copy " .. f .. " to " .. target:targetdir())
+                    end
+                end
+            end
+        end
+    end)

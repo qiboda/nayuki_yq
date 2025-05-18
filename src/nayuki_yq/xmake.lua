@@ -20,7 +20,7 @@ target(module_name)
     set_symbols("debug")
     set_strip("all")
 
-    add_packages("glfw", "glm", "stb", "spdlog", "tracy")
+    add_packages("glfw", "glm", "stb", "spdlog", "tracy", "rpmalloc", "tbb")
     add_packages("vulkansdk")
 
     -- 添加本地target依赖

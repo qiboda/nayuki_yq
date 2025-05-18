@@ -19,7 +19,8 @@ using usize = size_t;
 
 #pragma region NONE_INDEX
 
-template <std::integral TIntegral> struct NoneIndex
+template <std::integral TIntegral>
+struct NoneIndex
 {
     constexpr operator TIntegral() const
     {

@@ -30,22 +30,26 @@ class CORE_API MathHelper
         return a + rand() % ( ( b - a ) + 1 );
     }
 
-    template <typename T> static T Min( const T &a, const T &b )
+    template <typename T>
+    static T Min( const T &a, const T &b )
     {
         return a < b ? a : b;
     }
 
-    template <typename T> static T Max( const T &a, const T &b )
+    template <typename T>
+    static T Max( const T &a, const T &b )
     {
         return a > b ? a : b;
     }
 
-    template <typename T> static T Lerp( const T &a, const T &b, f32 t )
+    template <typename T>
+    static T Lerp( const T &a, const T &b, f32 t )
     {
         return a + ( b - a ) * t;
     }
 
-    template <typename T> static T Clamp( const T &x, const T &low, const T &high )
+    template <typename T>
+    static T Clamp( const T &x, const T &low, const T &high )
     {
         return x < low ? low : ( x > high ? high : x );
     }

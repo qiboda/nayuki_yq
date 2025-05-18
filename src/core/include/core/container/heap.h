@@ -22,7 +22,8 @@
  */
 #include <type_traits>
 
-template <typename TElem, typename TCompPred = std::less<TElem>, typename TContainer = std::vector<TElem>> class Heap
+template <typename TElem, typename TCompPred = std::less<TElem>, typename TContainer = std::vector<TElem>>
+class Heap
 {
     static_assert( std::is_floating_point_v<TElem> == false );
 

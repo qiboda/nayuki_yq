@@ -1,17 +1,25 @@
 includes(os.projectdir() .. "/xmake/utils.lua")
 
--- add_requires("stdexec", {configs= { toolchains = "clang" }})
+-- , {configs= { toolchains = "clang" }}
 add_requires("stdexec")
 
 -- external = true -> /external:I to refer to the header file path 
-add_requires("glfw", "glm", "stb", "spdlog", "tracy", "shaderc", "entt", {
+add_requires("glfw", "glm", "stb", "spdlog", "tracy", "shaderc", "rpmalloc", {
     debug = true,
     external = true,
 })
+add_requires("tbb", { configs = { shared = true }, debug = true, external = true })
 add_requires("vulkansdk", { system = true })
+
+-- if has_config("test") then
+add_requires("gtest", { configs = { main = false, shared = false, gmock = true } })
+-- end
 
 includes_cur_dirs()
 
--- before_build(function ()
+-- 递归的包含所有的tests 模块
+includes("**/tests/xmake.lua")
 
--- end)
+before_build(function ()
+    import("core.project.task").run("module_export")
+end)

@@ -7,7 +7,8 @@
 
 #include <memory>
 
-template <typename TFSMContext, typename TFSM> class FSMInstance : public NonCopyable
+template <typename TFSMContext, typename TFSM>
+class FSMInstance : public NonCopyable
 {
   public:
     void Build()

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <core/core.h>
+#include <core/minimal.h>
 
 #include <core/timer/game_timer.h>
 

@@ -66,7 +66,8 @@ class CORE_API LoggerCategory
 };
 
 // 添加这个前置声明，避免 clangd 警告报错
-template <typename T> class Singleton;
+template <typename T>
+class Singleton;
 
 // TODO: Output to console or debugger at the same time.
 class CORE_API Logger : public Singleton<Logger>

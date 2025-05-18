@@ -17,11 +17,13 @@
         "HRESULT",
         "ifdef",
         "includedirs",
+        "intrin",
         "ipairs",
         "IRAII",
         "IWYU",
         "libc",
         "LUNARG",
+        "MESI",
         "Msaa",
         "msvc",
         "Nayuki",
@@ -32,6 +34,10 @@
         "pheader",
         "plugindirs",
         "projectdir",
+        "rpaligned",
+        "rpfree",
+        "rpmalloc",
+        "rprealloc",
         "shaderc",
         "spdlog",
         "SPIR",
@@ -45,6 +51,7 @@
         "vsxmake",
         "vulkansdk",
         "Werror",
+        "Wnonportable",
         "Wpre",
         "Wunsafe",
         "Wunused",
@@ -187,4 +194,47 @@
     "[cpp]": {
         "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
     },
+    "editor.tokenColorCustomizations": {
+        "[*Light*]": {
+            "textMateRules": [
+                {
+                    "scope": "ref.matchtext",
+                    "settings": {
+                        "foreground": "#000"
+                    }
+                }
+            ]
+        },
+        "[*Dark*]": {
+            "textMateRules": [
+                {
+                    "scope": "ref.matchtext",
+                    "settings": {
+                        "foreground": "#fff"
+                    }
+                }
+            ]
+        },
+        "textMateRules": [
+            {
+                "scope": "googletest.failed",
+                "settings": {
+                    "foreground": "#f00"
+                }
+            },
+            {
+                "scope": "googletest.passed",
+                "settings": {
+                    "foreground": "#0f0"
+                }
+            },
+            {
+                "scope": "googletest.run",
+                "settings": {
+                    "foreground": "#0f0"
+                }
+            }
+        ]
+    },
+    "testMate.cpp.test.executables": "{build,Build,BUILD,out,Out,OUT}/**/*{test,Test,TEST,tests}*"
 }

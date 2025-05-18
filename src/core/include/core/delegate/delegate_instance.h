@@ -6,7 +6,8 @@
 #include <functional>
 #include <memory>
 
-template <typename TReturnVal, typename... TArgs> class DelegateInstance
+template <typename TReturnVal, typename... TArgs>
+class DelegateInstance
 {
   public:
     using Type = TReturnVal ( * )( TArgs... );

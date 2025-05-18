@@ -5,7 +5,8 @@
 #include <core/fsm/state.h>
 
 // TODO: add transiiton interval and transition priority.
-template <typename TTransitionId, typename TStateId, typename TFSMContext> class Transition : public NonCopyable
+template <typename TTransitionId, typename TStateId, typename TFSMContext>
+class Transition : public NonCopyable
 {
   public:
     Transition() : mEnterStateId{}, mLeaveStateId{}

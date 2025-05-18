@@ -39,7 +39,8 @@ class CORE_API FSMInterface
     FSMInterface &operator=( const FSMInterface & ) = default;
 
   public:
-    template <typename T> static T Cast( FSMInterface *fsmInterface )
+    template <typename T>
+    static T Cast( FSMInterface *fsmInterface )
     {
         if ( fsmInterface && fsmInterface->GetFSMId() == T::GetFSMId_S() )
         {
