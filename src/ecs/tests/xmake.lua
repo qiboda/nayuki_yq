@@ -6,10 +6,6 @@ target("ecs_tests")
     add_tests("default")
     set_group("tests")
 
-    -- 这两个选项同时使用，生成独立的debug符号信息。
-    set_symbols("debug")
-    set_strip("all")
-
     --默认情况下不编译
     set_default(false)
 
@@ -23,3 +19,5 @@ target("ecs_tests")
         --使用gtest的宏在windows中会报错
         add_cxxflags("-Wno-unsafe-buffer-usage")
     end
+
+    -- set_toolchains("mingw@llvm-mingw")

@@ -4,11 +4,12 @@ includes(os.projectdir() .. "/xmake/utils.lua")
 add_requires("stdexec")
 
 -- external = true -> /external:I to refer to the header file path 
-add_requires("glfw", "glm", "stb", "spdlog", "tracy", "shaderc", "rpmalloc", {
+add_requires("glfw", "glm", "stb", "spdlog", "tracy", "rpmalloc", {
     debug = true,
     external = true,
 })
-add_requires("tbb", { configs = { shared = true }, debug = true, external = true })
+add_requires("shaderc", { configs = { shared = false, toolchains = "clang-cl" }, debug = true })
+add_requires("tbb", { configs = { shared = true, toolchains = "clang-cl" }, debug = true})
 add_requires("vulkansdk", { system = true })
 
 -- if has_config("test") then

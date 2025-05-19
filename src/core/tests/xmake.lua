@@ -17,6 +17,4 @@ target("core_tests")
         add_cxxflags("-Wno-unsafe-buffer-usage")
     end 
 
-    -- 这两个选项同时使用，生成独立的debug符号信息。
-    set_symbols("debug")
-    set_strip("debug")
+    -- set_toolchains("mingw@llvm-mingw")

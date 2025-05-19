@@ -17,11 +17,9 @@ target(module_name)
     -- 必须定义
     add_defines(module_name_macro .. "_EXPORTS")
 
-    -- 这两个选项同时使用，生成独立的debug符号信息。
-    set_symbols("debug")
-    set_strip("all")
-
     add_packages("glm","spdlog", "tracy", "rpmalloc", "tbb")
     add_packages("vulkansdk")
 
     add_deps("core")
+
+    -- set_toolchains("mingw@llvm-mingw")

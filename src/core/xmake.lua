@@ -6,6 +6,8 @@ target(module_name)
 
     set_group("libraries")
 
+    -- set_toolchains("mingw@llvm-mingw")
+
     add_files("src/**.cpp")
     -- public 意味着依赖这个 target 的其他 target 也会使用这个 includedirs。
     add_includedirs("include", { public = true })
@@ -23,8 +25,9 @@ target(module_name)
     add_includedirs(gen_dir, { public = true })
 
     -- 这两个选项同时使用，生成独立的debug符号信息。
-    set_symbols("debug")
-    set_strip("all")
+    -- 使用这个 "mode.releasedbg"，不需要这些配置
+    -- set_symbols("debug")
+    -- set_strip("all")
 
     add_packages("spdlog", "tracy", "glm", "rpmalloc", "tbb")
 
