@@ -26,12 +26,15 @@ set_installdir("install")
 add_rules("plugin.vsxmake.autoupdate")
 add_plugindirs("xmake/plugins")
 
+set_warnings("all", "error")
+
 -- 检查toolchains是msvc还是clang
 if is_host("windows") then
-    add_cxxflags("-Wall", "-Werror") -- "-Werror"
-    add_cxxflags("-ferror-limit=0")
+    -- add_cxxflags("-Wall", "-Werror") -- "-Werror"
     -- 强制区分大小写
-    add_cxxflags("-Wnonportable-include-path")
+    -- add_cxxflags("-Wnonportable-include-path")
+    -- set_policy("check.auto_ignore_flags", false)
+    add_cxflags("/wd4251")
 else
     add_cxxflags("-Wall", "-Werror") -- "-Werror"
     add_cxxflags("-ferror-limit=0")

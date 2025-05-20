@@ -2,6 +2,7 @@
 
 #if defined( _WIN32 )
 #    include <Windows.h>
+#include <core/compiler/diagnostic.h>
 
 usize Memory::GetCacheLineSize()
 {
@@ -13,9 +14,8 @@ usize Memory::GetCacheLineSize()
     GetLogicalProcessorInformation( nullptr, &buffer_size );
     buffer = ( SYSTEM_LOGICAL_PROCESSOR_INFORMATION * )malloc( buffer_size );
     GetLogicalProcessorInformation( &buffer[0], &buffer_size );
-
-#    pragma clang diagnostic push
-#    pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
+ 
+    SUPPRESS_UNSAFE_BUFFER_USAGE_BEGIN
     for ( i = 0; i <= buffer_size / sizeof( SYSTEM_LOGICAL_PROCESSOR_INFORMATION ); ++i )
     {
         if ( buffer[i].Relationship == RelationCache && buffer[i].Cache.Level == 2 )
@@ -24,7 +24,7 @@ usize Memory::GetCacheLineSize()
             break;
         }
     }
-#    pragma clang diagnostic pop
+    SUPPRESS_UNSAFE_BUFFER_USAGE_END
 
     free( buffer );
     return line_size;

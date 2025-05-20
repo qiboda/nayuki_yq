@@ -1,4 +1,4 @@
-/*
+﻿/*
  * TODO: add custom format and custom header, add custom thread id?
  *      add a default nayukiyq category to logger.
  *      check log category prefix to log.
@@ -93,8 +93,7 @@ class CORE_API Logger : public Singleton<Logger>
 
 #pragma region HelperMacro
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-macros"
+SUPPRESS_UNUSED_MACROS_BEGIN
 
 #ifndef NY_LOG_CATEGORY_DECLARED
 #    define NY_LOG_CATEGORY_DECLARED( LogCategory ) extern const LoggerCategory LogCategory;
@@ -146,6 +145,6 @@ namespace LoggerDetail
 #    define NY_LOG_CRITICAL( LogCategory, LogInfo, ... ) NY_LOG( LogCategory, critical, LogInfo, ##__VA_ARGS__ )
 #endif // !NY_LOG_CRITICAL
 
-#pragma clang diagnostic pop
+SUPPRESS_UNUSED_MACROS_END
 
 #pragma endregion HelperMacro

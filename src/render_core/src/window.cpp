@@ -37,10 +37,9 @@ std::vector<const char *> Window::GetRenderInstanceExtensions()
     std::vector<const char *> extensionsVec;
     for ( u32 i = 0; i < glfwExtensionCount; i++ )
     {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
+        SUPPRESS_UNSAFE_BUFFER_USAGE_BEGIN
         extensionsVec.push_back( extensions[i] );
-#pragma clang diagnostic pop
+        SUPPRESS_UNSAFE_BUFFER_USAGE_END
     }
     return extensionsVec;
 }

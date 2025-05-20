@@ -2,7 +2,7 @@
 
 #include "core/misc/non_copyable.h"
 
-class IRAII : public NonCopyable
+class CORE_API IRAII : public NonCopyable
 {
   public:
     virtual ~IRAII() override = default;

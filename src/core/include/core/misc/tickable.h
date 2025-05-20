@@ -1,6 +1,6 @@
 #pragma once
 
-class ITickable
+class CORE_API ITickable
 {
   public:
     ITickable() = default;

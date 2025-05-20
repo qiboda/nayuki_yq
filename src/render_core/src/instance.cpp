@@ -43,10 +43,9 @@ static VKAPI_ATTR vk::Bool32 VKAPI_CALL debugMessageFunc( vk::DebugUtilsMessageS
         message += std::string( "\t" ) + "Queue Labels:\n";
         for ( uint32_t i = 0; i < pCallbackData->queueLabelCount; i++ )
         {
-#    pragma clang diagnostic push
-#    pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
+            SUPPRESS_UNSAFE_BUFFER_USAGE_BEGIN
             message += std::string( "\t\t" ) + "labelName = <" + pCallbackData->pQueueLabels[i].pLabelName + ">\n";
-#    pragma clang diagnostic pop
+            SUPPRESS_UNSAFE_BUFFER_USAGE_END
         }
     }
     if ( 0 < pCallbackData->cmdBufLabelCount )
@@ -54,18 +53,16 @@ static VKAPI_ATTR vk::Bool32 VKAPI_CALL debugMessageFunc( vk::DebugUtilsMessageS
         message += std::string( "\t" ) + "CommandBuffer Labels:\n";
         for ( uint32_t i = 0; i < pCallbackData->cmdBufLabelCount; i++ )
         {
-#    pragma clang diagnostic push
-#    pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
+            SUPPRESS_UNSAFE_BUFFER_USAGE_BEGIN
             message += std::string( "\t\t" ) + "labelName = <" + pCallbackData->pCmdBufLabels[i].pLabelName + ">\n";
-#    pragma clang diagnostic pop
+            SUPPRESS_UNSAFE_BUFFER_USAGE_END
         }
     }
     if ( 0 < pCallbackData->objectCount )
     {
         for ( uint32_t i = 0; i < pCallbackData->objectCount; i++ )
         {
-#    pragma clang diagnostic push
-#    pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
+            SUPPRESS_UNSAFE_BUFFER_USAGE_BEGIN
             message += std::string( "\t" ) + "Object " + std::to_string( i ) + "\n";
             message += std::string( "\t\t" ) +
                        "objectType   = " + vk::to_string( pCallbackData->pObjects[i].objectType ) + "\n";
@@ -74,8 +71,8 @@ static VKAPI_ATTR vk::Bool32 VKAPI_CALL debugMessageFunc( vk::DebugUtilsMessageS
             if ( pCallbackData->pObjects[i].pObjectName )
             {
                 message += std::string( "\t\t" ) + "objectName   = <" + pCallbackData->pObjects[i].pObjectName + ">\n";
-#    pragma clang diagnostic pop
             }
+            SUPPRESS_UNSAFE_BUFFER_USAGE_END
         }
     }
 
@@ -154,8 +151,7 @@ vk::Result RenderInstance::CreateDebugUtilsMessengerEXT()
 
     NY_ASSERT( !mDebugUtilsMessenger )
 
-#    pragma clang diagnostic push
-#    pragma clang diagnostic ignored "-Wcast-function-type"
+    SUPPRESS_CAST_FUNCTION_TYPE_BEGIN
     pfnVkCreateDebugUtilsMessengerEXT = reinterpret_cast<PFN_vkCreateDebugUtilsMessengerEXT>(
         mInstance->getProcAddr( "vkCreateDebugUtilsMessengerEXT" ) );
     if ( !pfnVkCreateDebugUtilsMessengerEXT )
@@ -171,7 +167,8 @@ vk::Result RenderInstance::CreateDebugUtilsMessengerEXT()
         NY_LOG_CRITICAL( LogRenderCore,
                          "GetInstanceProcAddr: Unable to find pfnVkDestroyDebugUtilsMessengerEXT function." );
     }
-#    pragma clang diagnostic pop
+
+    SUPPRESS_CAST_FUNCTION_TYPE_END
 
     vk::DebugUtilsMessageSeverityFlagsEXT severityFlags( vk::DebugUtilsMessageSeverityFlagBitsEXT::eWarning |
                                                          vk::DebugUtilsMessageSeverityFlagBitsEXT::eError );

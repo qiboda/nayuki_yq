@@ -1,6 +1,8 @@
 #pragma once
 
-class NonCopyable
+#include "core/minimal.h"
+
+class CORE_API NonCopyable
 {
   protected:
     NonCopyable()
