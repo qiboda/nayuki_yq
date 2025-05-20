@@ -4,16 +4,13 @@ set_xmakever("2.9.2")
 
 set_version("0.1.0")
 
-add_requires("llvm-mingw")
-
--- if is_host("windows") then
---     set_toolchains("mingw@llvm-mingw")
--- elseif is_host("linux") then
---     set_toolchains("mingw@llvm-mingw")
--- elseif is_host("macosx") then
---     set_toolchains("mingw@llvm-mingw")
--- end
--- 
+if is_host("windows") then
+    set_toolchains("msvc")
+elseif is_host("linux") then
+    set_toolchains("clang")
+elseif is_host("macosx") then
+    set_toolchains("clang")
+end
 
 set_languages("c++20")
 
@@ -31,7 +28,10 @@ add_plugindirs("xmake/plugins")
 
 -- 检查toolchains是msvc还是clang
 if is_host("windows") then
-
+    add_cxxflags("-Wall", "-Werror") -- "-Werror"
+    add_cxxflags("-ferror-limit=0")
+    -- 强制区分大小写
+    add_cxxflags("-Wnonportable-include-path")
 else
     add_cxxflags("-Wall", "-Werror") -- "-Werror"
     add_cxxflags("-ferror-limit=0")

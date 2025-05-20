@@ -1,4 +1,4 @@
-﻿/*
+/*
  * TODO: add custom format and custom header, add custom thread id?
  *      add a default nayukiyq category to logger.
  *      check log category prefix to log.

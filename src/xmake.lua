@@ -8,8 +8,8 @@ add_requires("glfw", "glm", "stb", "spdlog", "tracy", "rpmalloc", {
     debug = true,
     external = true,
 })
-add_requires("shaderc", { configs = { shared = false, toolchains = "clang-cl" }, debug = true })
-add_requires("tbb", { configs = { shared = true, toolchains = "clang-cl" }, debug = true})
+add_requires("shaderc", { configs = { shared = false }, debug = true })
+add_requires("tbb", { configs = { shared = true }, debug = true})
 add_requires("vulkansdk", { system = true })
 
 -- if has_config("test") then

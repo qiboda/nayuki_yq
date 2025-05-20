@@ -36,8 +36,18 @@ target(module_name)
             local installdir = pkg:installdir()
             if installdir then
                 -- 查找并拷贝所有 DLL/SO/DYLIB 文件
-                local files = os.files(path.join(installdir, "bin/*"))
+                local lib_path = nil;
+                if is_plat("windows") then
+                    lib_path = path.join(installdir, "bin")
+                elseif is_plat("macosx") then
+                    lib_path = path.join(installdir, "lib")
+                elseif is_plat("linux") then
+                    lib_path = path.join(installdir, "lib")
+                end
+                print("on package <" .. pkg:name() .. "> lib_path: " .. lib_path)
+                local files = os.files(lib_path)
                 for _, f in ipairs(files) do
+                    print("on package <" .. pkg:name() .. "> file: " .. f)
                     if f:endswith(".dll") or f:endswith(".so") or f:endswith(".dylib") then
                         os.cp(f, target:targetdir())
                         print("on package <" .. pkg:name() .. "> copy " .. f .. " to " .. target:targetdir())

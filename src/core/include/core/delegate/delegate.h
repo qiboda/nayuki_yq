@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <core/delegate/delegate_handle.h>
 #include <core/delegate/delegate_instance.h>

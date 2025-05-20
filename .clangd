@@ -6,7 +6,6 @@ InlayHints:
 
 Completion:
   AllScopes: true
-  ArgumentLists: FullPlaceholders
 
 Diagnostics:
   UnusedIncludes: Strict
