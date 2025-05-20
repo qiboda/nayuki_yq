@@ -3,9 +3,9 @@ rule("mode.llvm.coverage")
         -- 使用 -fprofile-arcs 和 -ftest-coverage
         -- target:add("cxxflags", "-fprofile-arcs", "-ftest-coverage")
         -- target:add("ldflags", "-fprofile-arcs", "-ftest-coverage")
-        target:add("cxxflags", "--coverage")
-        target:add("ldflags", "--coverage")
-        target:add("mxflags", "--coverage")
+        -- target:add("cxxflags", "--coverage")
+        -- target:add("ldflags", "--coverage")
+        -- target:add("mxflags", "--coverage")
     end)
 
     on_run("coverage", function(target)

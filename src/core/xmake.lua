@@ -38,17 +38,15 @@ target(module_name)
                 -- 查找并拷贝所有 DLL/SO/DYLIB 文件
                 local lib_path = nil;
                 if is_plat("windows") then
-                    lib_path = path.join(installdir, "bin")
+                    lib_path = path.join(installdir, "bin/*.dll")
                 elseif is_plat("macosx") then
-                    lib_path = path.join(installdir, "lib")
+                    lib_path = path.join(installdir, "lib/*.so.*")
                 elseif is_plat("linux") then
-                    lib_path = path.join(installdir, "lib")
+                    lib_path = path.join(installdir, "lib/*.so.*")
                 end
-                print("on package <" .. pkg:name() .. "> lib_path: " .. lib_path)
                 local files = os.files(lib_path)
                 for _, f in ipairs(files) do
-                    print("on package <" .. pkg:name() .. "> file: " .. f)
-                    if f:endswith(".dll") or f:endswith(".so") or f:endswith(".dylib") then
+                    if f then
                         os.cp(f, target:targetdir())
                         print("on package <" .. pkg:name() .. "> copy " .. f .. " to " .. target:targetdir())
                     end
