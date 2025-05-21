@@ -16,5 +16,3 @@ target("core_tests")
         -- 使用gtest的宏在windows中会报错
         add_cxxflags("-Wno-unsafe-buffer-usage")
     end 
-
-    -- set_toolchains("mingw@llvm-mingw")

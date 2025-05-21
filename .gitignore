@@ -13,3 +13,4 @@ vsxmake2022/
 .nayuki
 compile_commands.json
 install/
+/coverage/
