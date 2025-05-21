@@ -2,15 +2,18 @@
 
 #include <core/minimal.h>
 
+
 // Suppress -Wunsafe-buffer-usage only on Clang
 #if defined( __clang__ )
+#    define DO_PRAGMA(X) _Pragma(#X)
 #    define SUPPRESS_WARNING_BEGIN( warning )                                                                          \
-        _Pragma( "clang diagnostic push" ) _Pragma( "clang diagnostic ignored " #warning )
+        DO_PRAGMA( clang diagnostic push ) \
+        DO_PRAGMA( clang diagnostic ignored warning )
 
-#    define SUPPRESS_WARNING_END _Pragma( "clang diagnostic pop" )
+#    define SUPPRESS_WARNING_END DO_PRAGMA( clang diagnostic pop )
 #else
 // No-op on other compilers
-#    define SUPPRESS_WARNING_BEGIN
+#    define SUPPRESS_WARNING_BEGIN()
 #    define SUPPRESS_WARNING_END
 #endif
 
