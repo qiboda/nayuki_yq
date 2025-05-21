@@ -15,7 +15,7 @@ target("ecs_tests")
     add_deps("core")
     add_deps("ecs")
 
-    if is_host("windows") then
+    if get_config("toolchain") == "clang" then
         --使用gtest的宏在windows中会报错
         add_cxxflags("-Wno-unsafe-buffer-usage")
     end

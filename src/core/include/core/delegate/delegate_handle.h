@@ -55,11 +55,6 @@ class CORE_API DelegateHandle
         return Lhs.mHandleId == Rhs.mHandleId;
     }
 
-    friend bool operator!=( const DelegateHandle &Lhs, const DelegateHandle &Rhs )
-    {
-        return !( Lhs == Rhs );
-    }
-
   private:
     u64 mHandleId = 0u;
 };

@@ -5,9 +5,7 @@
 class CORE_API NonCopyable
 {
   protected:
-    NonCopyable()
-    {
-    }
+    NonCopyable() = default;
 
     virtual ~NonCopyable()
     {

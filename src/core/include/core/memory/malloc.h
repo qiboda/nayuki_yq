@@ -58,7 +58,7 @@ class CORE_API MallocAllocator
 
     static bool IsThreadInitted()
     {
-        return rpmalloc_is_thread_initialized();
+        return rpmalloc_is_thread_initialized() > 0 ? true : false;
     }
 
   public:

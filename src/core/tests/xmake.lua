@@ -12,7 +12,7 @@ target("core_tests")
     add_packages("spdlog",  "glm", "gtest", "tbb", "rpmalloc")    -- 添加本地target依赖
     add_deps("core")
 
-    if is_host("windows") then
+    if get_config("toolchain") == "clang" then
         -- 使用gtest的宏在windows中会报错
         add_cxxflags("-Wno-unsafe-buffer-usage")
     end 
