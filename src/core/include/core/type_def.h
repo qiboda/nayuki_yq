@@ -15,7 +15,11 @@ using u64 = uint64_t;
 
 using f32 = float;
 using f64 = double;
-using usize = size_t;
+#ifdef __clang__
+    using usize = std::size_t;
+#else 
+    using usize = size_t;
+#endif
 
 #pragma region NONE_INDEX
 
