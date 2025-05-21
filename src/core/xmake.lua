@@ -40,9 +40,9 @@ target(module_name)
                 if is_plat("windows") then
                     lib_path = path.join(installdir, "bin/*.dll")
                 elseif is_plat("macosx") then
-                    lib_path = path.join(installdir, "lib/*.so.*")
+                    lib_path = path.join(installdir, "lib/*.so*")
                 elseif is_plat("linux") then
-                    lib_path = path.join(installdir, "lib/*.so.*")
+                    lib_path = path.join(installdir, "lib/*.so*")
                 end
                 local files = os.files(lib_path)
                 for _, f in ipairs(files) do
