@@ -21,5 +21,3 @@ target(module_name)
     add_packages("vulkansdk")
 
     add_deps("core")
-
-    -- set_toolchains("mingw@llvm-mingw")

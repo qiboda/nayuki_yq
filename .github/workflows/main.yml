@@ -17,6 +17,7 @@ jobs:
       - name: Check out self repository code
         uses: actions/checkout@v4
 
+      # 需要在检出自己仓库之后运行
       - name: Check out xmake repository code
         uses: xmake-io/github-action-setup-xmake@master
         with:
@@ -37,18 +38,7 @@ jobs:
 
       - name: Build Project
         run: |
-          # output env variable windows platform
-          echo $env:PATH
-          echo $env:VULKAN_SDK
-          echo $env:XMAKE_ROOT
-          echo $env:XMAKE_GLOBAL
-          echo $env:XMAKE_BUILD
-          echo "cur path"
-          pwd
-          echo "ls"
-          ls 
-
           xmake f -m ${{matrix.build-mode}} -y
           xmake build -y
           xmake build -y window
-          xmake test
+          xmake test -v
