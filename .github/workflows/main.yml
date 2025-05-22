@@ -35,18 +35,9 @@ jobs:
          version: 1.4.309.0
          cache: true
 
-      - name: List files
-        run: |
-          echo "Current directory:"
-          pwd
-          echo "List of files:"
-          ls -al
-          echo "List of files in .xmake-cache:"
-          tree
-
       - name: Build Project
         run: |
-          xmake f -m ${{matrix.build-mode}} -y
-          xmake build -y
-          xmake build -y window
-          xmake test
+          .xmake_cache/xmake f -m ${{matrix.build-mode}} -y
+          .xmake_cache/xmake build -y
+          .xmake_cache/xmake build -y window
+          .xmake_cache/xmake test
