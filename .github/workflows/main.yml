@@ -20,11 +20,11 @@ jobs:
           xmake-version: latest
           actions-cache-folder: .xmake-cache
           actions-cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}-action
-          build-cache: true
-          build-cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}-build
+          # build-cache: true
+          # build-cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}-build
           package-cache: true
           package-cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}-packages
-          project-path: 'nayuki_yq'
+          project-path: ''
 
       - name: Check out self repository code
         uses: actions/checkout@v4
@@ -37,6 +37,23 @@ jobs:
 
       - name: Build Project
         run: |
+          # output env variable windows platform
+          if [ $RUNNER_OS == 'Windows' ]; then
+            echo $env:PATH
+            echo $env:VULKAN_SDK
+            echo $env:XMAKE_ROOT
+            echo $env:XMAKE_GLOBAL
+            echo $env:XMAKE_BUILD
+          fi
+          echo "cur path"
+          pwd
+          echo "ls"
+          ls 
+          echo ".xmake-cache"
+          ls .xmake-cache
+          echo ".xmake-cache/bin"
+          ls .xmake-cache/bin
+
           xmake f -m ${{matrix.build-mode}} -y
           xmake build -y
           xmake build -y window
