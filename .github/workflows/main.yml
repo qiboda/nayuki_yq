@@ -14,16 +14,12 @@ jobs:
         id: cache_key
         run: echo "key=$(date +'%W')" >> $GITHUB_OUTPUT  
 
-      # Force xmake to a specific folder (for cache)
-      - name: Set xmake env
-        run: echo "XMAKE_GLOBALDIR=${{ runner.workspace }}/xmake-global" >> $GITHUB_ENV
-
       - name: Check out xmake repository code
         uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: latest
-          # actions-cache-folder: .xmake-cache
-          # actions-cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}
+          actions-cache-folder: .xmake-cache
+          actions-cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}-action
           build-cache: true
           build-cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}-build
           package-cache: true
@@ -39,18 +35,14 @@ jobs:
          version: 1.4.309.0
          cache: true
 
-      # Fetch xmake dephash, 存储到 steps.dep_hash.outputs.hash
-      - name: Retrieve dependencies hash
-        id: dep_hash
-        run: echo "hash=$(xmake l utils.ci.packageskey)" >> $GITHUB_OUTPUT
-
-      # Cache xmake dependencies
-      - name: Restore cached xmake dependencies
-        id: restore-depcache
-        uses: actions/cache/restore@v4
-        with:
-          path: ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
-          key: ${{matrix.os}}-${{matrix.build-mode}}-${{ steps.dep_hash.outputs.hash }}-W${{ steps.cache_key.outputs.key }}
+      - name: List files
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "List of files:"
+          ls -al
+          echo "List of files in .xmake-cache:"
+          tree
 
       - name: Build Project
         run: |
@@ -58,11 +50,3 @@ jobs:
           xmake build -y
           xmake build -y window
           xmake test
-
-      # 保存依赖包缓存
-      - name: Save cached xmake dependencies
-        if: ${{ !steps.restore-depcache.outputs.cache-hit }}
-        uses: actions/cache/save@v4
-        with:
-          path: ${{ env.XMAKE_GLOBALDIR }}/.xmake/packages
-          key: ${{ steps.restore-depcache.outputs.cache-primary-key }}
