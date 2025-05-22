@@ -38,13 +38,11 @@ jobs:
       - name: Build Project
         run: |
           # output env variable windows platform
-          if [ $RUNNER_OS == 'Windows' ]; then
-            echo $env:PATH
-            echo $env:VULKAN_SDK
-            echo $env:XMAKE_ROOT
-            echo $env:XMAKE_GLOBAL
-            echo $env:XMAKE_BUILD
-          fi
+          echo $env:PATH
+          echo $env:VULKAN_SDK
+          echo $env:XMAKE_ROOT
+          echo $env:XMAKE_GLOBAL
+          echo $env:XMAKE_BUILD
           echo "cur path"
           pwd
           echo "ls"
