@@ -37,7 +37,7 @@ jobs:
 
       - name: Build Project
         run: |
-          .xmake_cache/xmake f -m ${{matrix.build-mode}} -y
-          .xmake_cache/xmake build -y
-          .xmake_cache/xmake build -y window
-          .xmake_cache/xmake test
+          xmake f -m ${{matrix.build-mode}} -y
+          xmake build -y
+          xmake build -y window
+          xmake test
