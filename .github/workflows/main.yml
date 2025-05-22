@@ -35,12 +35,6 @@ jobs:
          version: 1.4.309.0
          cache: true
 
-      - name: list project-path
-        run: |
-          pwd
-          tree
-          ls -l
-
       - name: Build Project
         run: |
           xmake f -m ${{matrix.build-mode}} -y
