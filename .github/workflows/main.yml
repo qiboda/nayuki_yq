@@ -20,11 +20,11 @@ jobs:
           xmake-version: latest
           actions-cache-folder: .xmake-cache
           actions-cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}-action
-          # build-cache: true
-          # build-cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}-build
+          build-cache: true
+          build-cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}-build
           package-cache: true
           package-cache-key: ${{ matrix.os }}-${{ steps.cache_key.outputs.key }}-packages
-          project-path: ''
+          project-path: 'nayuki_yq'
 
       - name: Check out self repository code
         uses: actions/checkout@v4
