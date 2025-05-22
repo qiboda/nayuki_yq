@@ -15,7 +15,7 @@ jobs:
         run: echo "key=$(date +'%W')" >> $GITHUB_OUTPUT  
 
       - name: Check out xmake repository code
-        uses: xmake-io/github-action-setup-xmake@v1
+        uses: xmake-io/github-action-setup-xmake@master
         with:
           xmake-version: latest
           actions-cache-folder: .xmake-cache
