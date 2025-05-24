@@ -9,12 +9,15 @@ template <typename TTransitionId, typename TStateId, typename TFSMContext>
 class Transition : public NonCopyable
 {
   public:
-    Transition() : mEnterStateId{}, mLeaveStateId{}
+    Transition()
+        : mEnterStateId{}
+        , mLeaveStateId{}
     {
     }
 
     Transition( TStateId enterStateId, TStateId leaveStateId )
-        : mEnterStateId( enterStateId ), mLeaveStateId( leaveStateId )
+        : mEnterStateId( enterStateId )
+        , mLeaveStateId( leaveStateId )
     {
     }
 

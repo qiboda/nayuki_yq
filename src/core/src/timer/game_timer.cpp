@@ -6,9 +6,14 @@
 #include "core/timer/game_timer.h"
 
 GameTimer::GameTimer( GameTimerState GameTimerState /* = GameTimerState::Running */ )
-    : mPrevTimePoint( mClock.now() ), mCurrTimePoint( mPrevTimePoint ), mDeltaDuration( 0 ), mRunningDuration( 0 ),
-      mRunningTimePoint( mCurrTimePoint ), mPausedDuration( 0 ), mPausedTimePoint( mCurrTimePoint ),
-      mTimerState( GameTimerState )
+    : mPrevTimePoint( mClock.now() )
+    , mCurrTimePoint( mPrevTimePoint )
+    , mDeltaDuration( 0 )
+    , mRunningDuration( 0 )
+    , mRunningTimePoint( mCurrTimePoint )
+    , mPausedDuration( 0 )
+    , mPausedTimePoint( mCurrTimePoint )
+    , mTimerState( GameTimerState )
 {
 }
 

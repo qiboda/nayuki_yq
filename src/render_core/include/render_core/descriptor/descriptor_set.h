@@ -8,7 +8,8 @@ class RENDER_CORE_API DescriptorSet : public IRAII
   public:
     DescriptorSet();
 
-    DescriptorSet( vk::SharedDescriptorSet &&descriptorSet ) : mDescriptorSet( std::move( descriptorSet ) )
+    DescriptorSet( vk::SharedDescriptorSet &&descriptorSet )
+        : mDescriptorSet( std::move( descriptorSet ) )
     {
     }
 

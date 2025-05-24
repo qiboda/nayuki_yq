@@ -88,20 +88,6 @@
 
 #pragma endregion com
 
-#pragma region NonConstMemFun Make member variable returned to can modify
-
-#ifndef NON_CONST_MEM_FUN
-#    define NON_CONST_MEM_FUN( function )                                                                              \
-        template <typename... TArgs_>                                                                                  \
-        auto function( TArgs_ &&...args ) -> typename std::remove_const_t<decltype( function( args... ) )>             \
-        {                                                                                                              \
-            return const_cast<decltype( function( args... ) )>(                                                        \
-                std::as_const( *this ).function( std::forward<TArgs_>( args )... ) );                                  \
-        }
-#endif // !NON_CONST_MEM_FUN
-
-#pragma endregion NonConstMemFun
-
 #pragma region stringify
 
 #ifndef STRINGIFY_INNER

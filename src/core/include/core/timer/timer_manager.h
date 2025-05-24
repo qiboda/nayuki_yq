@@ -66,7 +66,9 @@ class CORE_API TimerManager : public Singleton<TimerManager>
     using TimerHashSet = std::unordered_set<TimerHandle, TimerHandle::Hash>;
 
   protected:
-    TimerManager() : Singleton(), mInternalTime( 0.0f )
+    TimerManager()
+        : Singleton()
+        , mInternalTime( 0.0f )
     {
     }
 

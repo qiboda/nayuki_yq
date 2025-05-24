@@ -7,11 +7,15 @@ struct CORE_API Extent2D
     u32 width;
     u32 height;
 
-    Extent2D( u32 w, u32 h ) : width( w ), height( h )
+    Extent2D( u32 w, u32 h )
+        : width( w )
+        , height( h )
     {
     }
 
-    Extent2D() : width( 0 ), height( 0 )
+    Extent2D()
+        : width( 0 )
+        , height( 0 )
     {
     }
 

@@ -4,11 +4,11 @@
 #include <core/minimal.h>
 #include <render_core/minimal.h>
 
-class RENDER_CORE_API CommandBuffer : public IRAII
+class RENDER_CORE_API CommandBufferBase : public IRAII
 {
   public:
-    CommandBuffer();
-    virtual ~CommandBuffer() override;
+    CommandBufferBase();
+    virtual ~CommandBufferBase() override;
 
   public:
     virtual void Initialize() override;
@@ -39,4 +39,4 @@ class RENDER_CORE_API CommandBuffer : public IRAII
     vk::SharedCommandBuffer mCommandBuffer;
 };
 
-RENDER_TYPE_WRAPPER( CommandBuffer )
+RENDER_TYPE_WRAPPER( CommandBufferBase )

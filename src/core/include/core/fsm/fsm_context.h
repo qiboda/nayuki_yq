@@ -2,6 +2,4 @@
 
 #include <module_export.h>
 
-class CORE_API FSMContext
-{
-};
+class CORE_API FSMContext{};

@@ -185,7 +185,8 @@ class SingleDelegate
   public:
 #pragma region ThreeFive
 
-    constexpr SingleDelegate() : mDelegateInstance( nullptr )
+    constexpr SingleDelegate()
+        : mDelegateInstance( nullptr )
     {
     }
 

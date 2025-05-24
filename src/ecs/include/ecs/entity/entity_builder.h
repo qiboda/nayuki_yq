@@ -1,6 +1,7 @@
 #pragma once
 
-#include "ecs/entity.h"
+#include "core/macro/macro.h"
+#include "ecs/entity/entity.h"
 #include "ecs/registry.h"
 #include <core/minimal.h>
 #include <ecs/minimal.h>
@@ -14,13 +15,15 @@ struct EntityBuilder
     // 添加组件
     void add( Component *component )
     {
-        registry->AddComponent( entity, component );
+        UNUSED_VAR( component );
+        // registry->AddComponent( entity, component );
     }
 
     // 移除组件
     void remove( Component *component )
     {
-        registry->RemoveComponent( entity, component );
+        UNUSED_VAR( component );
+        // registry->RemoveComponent( entity, component );
     }
 
     // 销毁组件

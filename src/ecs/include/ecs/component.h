@@ -18,6 +18,13 @@ struct ECS_API ComponentId
 {
     friend class ComponentTypeRegistry;
 
+  public:
+    ComponentId( u32 id )
+        : id( id )
+    {
+    }
+
+  private:
     u32 id = 0;
 
     // 会隐式生成 != 比较操作。
@@ -38,12 +45,12 @@ class ECS_API ComponentTypeRegistry
     template <typename T>
     static ComponentId Get()
     {
-        static const ComponentId sId = ComponentId{ .id = sCounter.GenNext() };
+        static const ComponentId sId = ComponentId( sCounter.GenNext() );
         return sId;
     }
 
   private:
-    static inline ComponentId sCounter;
+    static inline ComponentId sCounter = ComponentId( 0 );
 };
 
 template <typename T>
@@ -54,4 +61,11 @@ struct ComponentTrait
 {
     static constexpr size_t Size = sizeof( T );
     static constexpr size_t Align = alignof( T );
+};
+
+struct ECS_API ComponentInfo
+{
+    ComponentId id;
+    size_t size;
+    size_t align;
 };

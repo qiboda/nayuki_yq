@@ -76,7 +76,8 @@ class CORE_API Logger : public Singleton<Logger>
     friend class Singleton<Logger>;
 
   protected:
-    Logger() : Singleton<Logger>()
+    Logger()
+        : Singleton<Logger>()
     {
     }
 

@@ -1,35 +1,35 @@
 #include <render_core/render_core.h>
 #include <render_core/command/command_buffer.h>
 
-CommandBuffer::CommandBuffer()
+CommandBufferBase::CommandBufferBase()
 {
 }
 
-CommandBuffer::~CommandBuffer()
+CommandBufferBase::~CommandBufferBase()
 {
 }
 
-void CommandBuffer::Initialize()
+void CommandBufferBase::Initialize()
 {
     CreateCommandBuffer();
 }
 
-void CommandBuffer::CleanUp()
+void CommandBufferBase::CleanUp()
 {
     DestroyCommandBuffer();
 }
 
-void CommandBuffer::BeginCommandBuffer( const vk::CommandBufferBeginInfo &beginInfo )
+void CommandBufferBase::BeginCommandBuffer( const vk::CommandBufferBeginInfo &beginInfo )
 {
     mCommandBuffer->begin( beginInfo );
 }
 
-void CommandBuffer::EndCommandBuffer()
+void CommandBufferBase::EndCommandBuffer()
 {
     mCommandBuffer->end();
 }
 
-void CommandBuffer::CreateCommandBuffer()
+void CommandBufferBase::CreateCommandBuffer()
 {
     NY_PRE_CONDITION( mDevice, "" )
     NY_PRE_CONDITION( mCommandBuffer, "" )
@@ -42,7 +42,7 @@ void CommandBuffer::CreateCommandBuffer()
     mCommandBuffer = vk::SharedCommandBuffer( commandBuffer, mDevice, mCommandPool );
 }
 
-void CommandBuffer::DestroyCommandBuffer()
+void CommandBufferBase::DestroyCommandBuffer()
 {
     mDevice->freeCommandBuffers( mCommandPool.get(), mCommandBuffer.get() );
 }

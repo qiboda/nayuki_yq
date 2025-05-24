@@ -5,11 +5,13 @@
 
 struct CORE_API FSMId
 {
-    FSMId() : id()
+    FSMId()
+        : id()
     {
     }
 
-    FSMId( const std::string &id ) : id( id )
+    FSMId( const std::string &id )
+        : id( id )
     {
     }
 

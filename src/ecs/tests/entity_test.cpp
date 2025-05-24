@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <ecs/entity.h>
+#include <ecs/entity/entity.h>
 
 class EntityTest : public ::testing::Test
 {
@@ -25,7 +25,7 @@ TEST_F( EntityTest, DefaultConstructor )
 
 TEST_F( EntityTest, ParameterizedConstructor )
 {
-    BasicEntity<u32> entity( ( 12345u << 12u ) + 1234u );
+    BasicEntity<u32> entity( 12345u, 1234u );
     EXPECT_EQ( entity.GetId(), 12345 );
     EXPECT_EQ( entity.GetVersion(), 1234 );
 }

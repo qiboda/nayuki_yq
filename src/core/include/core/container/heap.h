@@ -1,5 +1,6 @@
 #pragma once
 
+#include <utility>
 #include <vector>
 #include <algorithm>
 #include <functional>
@@ -60,11 +61,13 @@ class Heap
   public:
 #pragma region Constructor
 
-    Heap() : mContainer()
+    Heap()
+        : mContainer()
     {
     }
 
-    Heap( Iterator begin, Iterator end ) : mContainer( begin, end )
+    Heap( Iterator begin, Iterator end )
+        : mContainer( begin, end )
     {
         std::make_heap( mContainer.begin(), mContainer.end(), TCompPred() );
     }
@@ -92,7 +95,11 @@ class Heap
     {
         return mContainer.front();
     }
-    NON_CONST_MEM_FUN( Top )
+
+    TElem &Top()
+    {
+        return mContainer.front();
+    }
 
     // TODO: change to remove_heap_elem() global function.
     bool Remove( const TElem &elem )

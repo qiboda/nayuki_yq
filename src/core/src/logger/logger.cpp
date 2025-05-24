@@ -10,7 +10,8 @@
 #pragma region LoggerCategory
 
 LoggerCategory::LoggerCategory( const Name &loggerName, Type loggerType )
-    : mLoggerName( loggerName ), mLoggerType( loggerType )
+    : mLoggerName( loggerName )
+    , mLoggerType( loggerType )
 {
     if ( mLoggerType == Type::Sync )
     {

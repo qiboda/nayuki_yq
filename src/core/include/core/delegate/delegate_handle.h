@@ -12,7 +12,8 @@ class CORE_API DelegateHandle
     };
 
   public:
-    DelegateHandle() : mHandleId( 0u )
+    DelegateHandle()
+        : mHandleId( 0u )
     {
     }
 
@@ -21,7 +22,8 @@ class CORE_API DelegateHandle
     DelegateHandle &operator=( const DelegateHandle & ) = default;
     DelegateHandle &operator=( DelegateHandle && ) = default;
 
-    explicit DelegateHandle( GenerateNewHandleType ) : mHandleId( GenerateNewId() )
+    explicit DelegateHandle( GenerateNewHandleType )
+        : mHandleId( GenerateNewId() )
     {
     }
 

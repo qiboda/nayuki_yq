@@ -28,7 +28,8 @@ class TimerHandle
     };
 
   public:
-    constexpr TimerHandle() : mDataIndex( NONE_INDEX )
+    constexpr TimerHandle()
+        : mDataIndex( NONE_INDEX )
     {
     }
 

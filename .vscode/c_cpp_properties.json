@@ -19,9 +19,6 @@
         },
         {
             "name": "Linux",
-            "includePath": [
-                "${workspaceFolder}/**"
-            ],
             "defines": [],
             "cStandard": "c23",
             "cppStandard": "c++20",
@@ -29,9 +26,17 @@
             "compilerPath": "/usr/sbin/clang++",
             "browse": {},
             "compileCommands": [
-                "${workspaceFolder}/.vscode/compile_commands.json",
-                "${workspaceFolder}/compile_commands.json"
-            ]
+                "${workspaceFolder}/.vscode/compile_commands.json"
+            ],
+            "includePath": [
+                "${workspaceFolder}/src/core/include/**",
+                "${workspaceFolder}/src/ecs/include/**",
+                "${workspaceFolder}/src/render_core/include/**",
+                "${workspaceFolder}/src/render/include/**",
+                "${workspaceFolder}/src/nayuki_yq/include/**",
+                "${workspaceFolder}/build/generated"
+            ],
+            "mergeConfigurations": false
         }
     ],
     "version": 4

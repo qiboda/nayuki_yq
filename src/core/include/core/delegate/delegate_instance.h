@@ -17,7 +17,8 @@ class DelegateInstance
     {
     }
 
-    explicit DelegateInstance( const DelegateHandle &delegateHandle ) : mDelegateHandle( delegateHandle )
+    explicit DelegateInstance( const DelegateHandle &delegateHandle )
+        : mDelegateHandle( delegateHandle )
     {
     }
 
@@ -33,7 +34,11 @@ class DelegateInstance
     {
         return mDelegateHandle;
     }
-    NON_CONST_MEM_FUN( GetHandle )
+
+    DelegateHandle &GetHandle()
+    {
+        return mDelegateHandle;
+    }
 
     void SetHandle( DelegateHandle delegateHandle )
     {
@@ -51,12 +56,15 @@ class DelegateFunInstance : public DelegateInstance<TReturnVal, TArgs...>
     using TFunctor = std::function<TReturnVal( TArgs... )>;
 
   public:
-    DelegateFunInstance( const TFunctor &functor ) : DelegateInstance<TReturnVal, TArgs...>(), mFunctor( functor )
+    DelegateFunInstance( const TFunctor &functor )
+        : DelegateInstance<TReturnVal, TArgs...>()
+        , mFunctor( functor )
     {
     }
 
     DelegateFunInstance( const TFunctor &functor, const DelegateHandle &delegateHandle )
-        : DelegateInstance<TReturnVal, TArgs...>( delegateHandle ), mFunctor( functor )
+        : DelegateInstance<TReturnVal, TArgs...>( delegateHandle )
+        , mFunctor( functor )
     {
     }
 
@@ -87,12 +95,16 @@ class DelegateMemFunInstance : public DelegateInstance<TReturnVal, TArgs...>
 
   public:
     DelegateMemFunInstance( TFunctor functor, TClass *object )
-        : DelegateInstance<TReturnVal, TArgs...>(), mFunctor( functor ), mObject( object )
+        : DelegateInstance<TReturnVal, TArgs...>()
+        , mFunctor( functor )
+        , mObject( object )
     {
     }
 
     DelegateMemFunInstance( TFunctor functor, TClass *object, const DelegateHandle &delegateHandle )
-        : DelegateInstance<TReturnVal, TArgs...>( delegateHandle ), mFunctor( functor ), mObject( object )
+        : DelegateInstance<TReturnVal, TArgs...>( delegateHandle )
+        , mFunctor( functor )
+        , mObject( object )
     {
     }
 
@@ -130,12 +142,16 @@ class DelegateSPMemFunInstance : public DelegateInstance<TReturnVal, TArgs...>
 
   public:
     DelegateSPMemFunInstance( TFunctor functor, std::shared_ptr<TClass> SPObject )
-        : DelegateInstance<TReturnVal, TArgs...>(), mFunctor( functor ), mWPObject( SPObject )
+        : DelegateInstance<TReturnVal, TArgs...>()
+        , mFunctor( functor )
+        , mWPObject( SPObject )
     {
     }
 
     DelegateSPMemFunInstance( TFunctor functor, std::shared_ptr<TClass> SPObject, const DelegateHandle &delegateHandle )
-        : DelegateInstance<TReturnVal, TArgs...>( delegateHandle ), mFunctor( functor ), mWPObject( SPObject )
+        : DelegateInstance<TReturnVal, TArgs...>( delegateHandle )
+        , mFunctor( functor )
+        , mWPObject( SPObject )
     {
     }
 
