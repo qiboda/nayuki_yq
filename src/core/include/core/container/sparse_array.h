@@ -9,7 +9,7 @@
 
 /// TKey 决定了 TValue的最大数量。
 template <std::unsigned_integral TKey, typename TValue>
-class CORE_API SparseArray
+class SparseArray
 {
   public:
     SparseArray() = default;

@@ -30,7 +30,7 @@ class ECS_API EntityManager : public NonCopyable
         if ( mUnactiveEntities.empty() )
         {
             usize capacity = mActiveEntities.Capacity();
-            Entity entity = Entity( capacity, 0 );
+            Entity entity = Entity( static_cast<Entity::IdType>(capacity), 0 );
             return entity;
         }
         else
@@ -40,7 +40,6 @@ class ECS_API EntityManager : public NonCopyable
             entity.UpgradeVersion();
             return entity;
         }
-        return Entity();
     }
 
   public:
