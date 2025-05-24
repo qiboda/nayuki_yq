@@ -37,3 +37,4 @@
 #include <core/misc/raii.h>
 #include <core/misc/tickable.h>
 #include <core/compiler/diagnostic.h>
+#include <core/compiler/optimize.h>

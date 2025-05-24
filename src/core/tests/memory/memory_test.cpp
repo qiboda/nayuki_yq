@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
 #include <core/core.h>
+#include "core/compiler/optimize.h"
 #include "core/memory/memory_tracker.h"
 #include "core/memory/memory.h"
 
@@ -35,6 +36,8 @@ TEST_F( MemoryTest, DefaultConstructor )
     EXPECT_FALSE( Memory::IsInitted() );
 }
 
+NO_OPTIMIZE_BEGIN
+
 TEST_F( MemoryTest, TestCount )
 {
     Memory::Init();
@@ -57,3 +60,5 @@ TEST_F( MemoryTest, TestCount )
     Memory::ThreadShutdown();
     Memory::Shutdown();
 }
+
+NO_OPTIMIZE_END
