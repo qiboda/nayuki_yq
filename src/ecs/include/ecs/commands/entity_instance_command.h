@@ -10,22 +10,23 @@
 #include <utility>
 #include <ecs/commands/command_manager.h>
 
-template <IsComponentConcept T>
+template <IsComponentConcept... T>
 class AddComponentCommandBuffer : public CommandBufferBase
 {
   public:
-    AddComponentCommandBuffer( Entity entity, T &&component )
+    AddComponentCommandBuffer( Entity entity, T &&...component )
         : CommandBufferBase()
         , mEntity( entity )
-        , mComponent( std::forward<T>( component ) )
+        , mComponents{ std::forward<T>( component )... }
     {
     }
 
   public:
     virtual void Execute( Registry *registry ) override
     {
-        UNUSED_VAR( registry );
-        // registry->AddComponent( mEntity, &mComponent );
+        std::apply( [&]( auto &&...comps )
+                    { registry->mArchetypeManager->AddComponentData( mEntity, std::forward<T>( comps )... ); },
+                    std::forward<std::tuple<T...>>( mComponents ) );
     }
 
     virtual usize GetSize() const override
@@ -35,25 +36,26 @@ class AddComponentCommandBuffer : public CommandBufferBase
 
   public:
     Entity mEntity;
-    T mComponent;
+    std::tuple<T...> mComponents;
 };
 
-template <IsComponentConcept T>
+template <IsComponentConcept... T>
 class RemoveComponentCommandBuffer : public CommandBufferBase
 {
   public:
-    RemoveComponentCommandBuffer( Entity entity, T &&component )
+    RemoveComponentCommandBuffer( Entity entity, T &&...component )
         : CommandBufferBase()
         , mEntity( entity )
-        , mComponent( std::forward<T>( component ) )
+        , mComponents( std::forward<T>( component )... )
     {
     }
 
   public:
     virtual void Execute( Registry *registry ) override
     {
-        UNUSED_VAR( registry );
-        // registry->RemoveComponent( mEntity, &mComponent );
+        std::apply( [&]( auto &&...comps )
+                    { registry->mArchetypeManager->RemoveComponentData( mEntity, std::forward<T>( comps )... ); },
+                    std::forward<std::tuple<T...>>( mComponents ) );
     }
 
     virtual usize GetSize() const override
@@ -63,25 +65,26 @@ class RemoveComponentCommandBuffer : public CommandBufferBase
 
   public:
     Entity mEntity;
-    T mComponent;
+    std::tuple<T...> mComponents;
 };
 
-template <IsComponentConcept T>
+template <IsComponentConcept... T>
 class ReplaceComponentCommandBuffer : public CommandBufferBase
 {
   public:
-    ReplaceComponentCommandBuffer( Entity entity, T &&component )
+    ReplaceComponentCommandBuffer( Entity entity, T &&...component )
         : CommandBufferBase()
         , mEntity( entity )
-        , mComponent( std::forward<T>( component ) )
+        , mComponents( std::forward<T>( component )... )
     {
     }
 
   public:
     virtual void Execute( Registry *registry ) override
     {
-        UNUSED_VAR( registry );
-        // registry->RemoveComponent( mEntity, &mComponent );
+        std::apply( [&]( auto &&...comps )
+                    { registry->mArchetypeManager->ReplaceComponentData( mEntity, std::forward<T>( comps )... ); },
+                    std::forward<std::tuple<T...>>( mComponents ) );
     }
 
     virtual usize GetSize() const override
@@ -91,7 +94,7 @@ class ReplaceComponentCommandBuffer : public CommandBufferBase
 
   public:
     Entity mEntity;
-    T mComponent;
+    std::tuple<T...> mComponents;
 };
 
 class ECS_API EntityInstanceCommand : public CommandBase
@@ -104,27 +107,27 @@ class ECS_API EntityInstanceCommand : public CommandBase
     }
 
   public:
-    template <IsComponentConcept T>
-    std::shared_ptr<EntityInstanceCommand> AddComponent( T &&component )
+    template <IsComponentConcept... T>
+    std::shared_ptr<EntityInstanceCommand> AddComponent( T &&...components )
     {
         GetRegistry()->mCommandManager->QueueCommand_AnyThread(
-            AddComponentCommandBuffer<T>( mEntity, std::forward<T>( component ) ) );
+            AddComponentCommandBuffer<T...>( mEntity, std::forward<T>( components )... ) );
         return std::static_pointer_cast<EntityInstanceCommand>( shared_from_this() );
     }
 
-    template <IsComponentConcept T>
-    std::shared_ptr<EntityInstanceCommand> ReplaceComponent( T &&component )
+    template <IsComponentConcept... T>
+    std::shared_ptr<EntityInstanceCommand> ReplaceComponent( T &&...component )
     {
         GetRegistry()->mCommandManager->QueueCommand_AnyThread(
-            ReplaceComponentCommandBuffer<T>( mEntity, std::forward<T>( component ) ) );
+            ReplaceComponentCommandBuffer<T...>( mEntity, std::forward<T>( component )... ) );
         return std::static_pointer_cast<EntityInstanceCommand>( shared_from_this() );
     }
 
-    template <IsComponentConcept T>
-    std::shared_ptr<EntityInstanceCommand> RemoveComponent( T &&component )
+    template <IsComponentConcept... T>
+    std::shared_ptr<EntityInstanceCommand> RemoveComponent( T &&...component )
     {
         GetRegistry()->mCommandManager->QueueCommand_AnyThread(
-            RemoveComponentCommandBuffer<T>( mEntity, std::forward<T>( component ) ) );
+            RemoveComponentCommandBuffer<T...>( mEntity, std::forward<T>( component )... ) );
         return std::static_pointer_cast<EntityInstanceCommand>( shared_from_this() );
     }
 

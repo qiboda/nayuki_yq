@@ -75,7 +75,7 @@ class ECS_API Archetype
 
   public:
     template <IsComponentConcept... T>
-    void AddEntityComponents( Entity entity, const T &&...components )
+    void AddEntityComponents( Entity entity, T &&...components )
     {
         AddEntityComponentsWithIndex( entity,
                                       std::make_index_sequence<sizeof...( T )>{},
@@ -83,21 +83,19 @@ class ECS_API Archetype
     }
 
     template <IsComponentConcept... T, usize... I>
-    void AddEntityComponentsWithIndex( Entity entity, std::index_sequence<I...> index, const T &&...components )
+    void AddEntityComponentsWithIndex( Entity entity, std::index_sequence<I...>, T &&...components )
     {
         ArchetypeChunk *curArchetypeChunk = GetEntityArchetypeChunk( entity );
         if ( curArchetypeChunk )
         {
-            ( curArchetypeChunk->AddComponentData( entity,
-                                                   GetComponentMemoryInfo( index ),
-                                                   std::forward<T>( components ) ),
+            ( curArchetypeChunk->AddComponentData( entity, GetComponentMemoryInfo( I ), std::forward<T>( components ) ),
               ... );
         }
     }
 
   public:
     template <IsComponentConcept... T>
-    void ReplaceEntityComponents( Entity entity, const T &&...components )
+    void ReplaceEntityComponents( Entity entity, T &&...components )
     {
         ReplaceEntityComponentsWithIndex( entity,
                                           std::make_index_sequence<sizeof...( T )>{},
@@ -105,7 +103,7 @@ class ECS_API Archetype
     }
 
     template <IsComponentConcept... T, usize... I>
-    void ReplaceEntityComponentsWithIndex( Entity entity, std::index_sequence<I...> index, const T &&...components )
+    void ReplaceEntityComponentsWithIndex( Entity entity, std::index_sequence<I...> index, T &&...components )
     {
         ArchetypeChunk *curArchetypeChunk = GetEntityArchetypeChunk( entity );
         if ( curArchetypeChunk )

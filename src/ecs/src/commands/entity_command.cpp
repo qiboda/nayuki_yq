@@ -9,11 +9,13 @@
 void CreateEntityCommandBuffer::Execute( Registry *registry )
 {
     registry->mEntityManager->AddEntity( mEntity );
+    registry->mArchetypeManager->CreateEntity( mEntity );
 }
 
 void DestroyEntityCommandBuffer::Execute( Registry *registry )
 {
     registry->mEntityManager->RemoveEntity( mEntity );
+    registry->mArchetypeManager->DestroyEntity( mEntity );
 }
 
 std::shared_ptr<EntityInstanceCommand> EntityCommand::Create()
