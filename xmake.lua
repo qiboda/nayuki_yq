@@ -68,6 +68,13 @@ add_cxxflags(
     "clang::-Wno-c++17-compat",
     "clang::-Wno-c++17-compat-pedantic"
 )
+-- 禁止隐式转换
+add_cxxflags(
+    "clang::-Wconversion",
+    "clang::-Wimplicit-int-conversion",
+    "clang::-Wfloat-conversion",
+    "clang::-Wnarrowing"
+)
 
 if is_mode("debug") then
     add_defines("DEBUG")

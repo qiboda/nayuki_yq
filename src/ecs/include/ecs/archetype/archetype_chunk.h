@@ -47,7 +47,7 @@ class ECS_API ArchetypeChunk
         if ( it != mEntities.end() )
         {
             *it = std::move( mEntities.back() ); // 用最后一个元素覆盖它
-            usize entityIndex = std::distance( mEntities.begin(), it );
+            usize entityIndex = static_cast<usize>(std::distance( mEntities.begin(), it ));
             usize entityNum = mEntities.size();
             mEntities.pop_back(); // 移除最后一个
 
@@ -81,7 +81,7 @@ class ECS_API ArchetypeChunk
 
         auto it = std::find( mEntities.begin(), mEntities.end(), entity );
         NY_ASSERT( it != mEntities.end() );
-        usize entityIndex = std::distance( mEntities.begin(), it );
+        usize entityIndex = static_cast<usize>(std::distance( mEntities.begin(), it ));
 
         u8 *componentData = mArchetypeComponentData + memoryInfo.mTotalOffset + entityIndex * memoryInfo.mComponentSize;
         new ( componentData ) T( std::forward<T>( component ) );
@@ -92,7 +92,7 @@ class ECS_API ArchetypeChunk
     {
         auto it = std::find( mEntities.begin(), mEntities.end(), entity );
         NY_ASSERT( it != mEntities.end() );
-        usize entityIndex = std::distance( mEntities.begin(), it );
+        usize entityIndex = static_cast<usize>(std::distance( mEntities.begin(), it ));
 
         u8 *componentData = mArchetypeComponentData + memoryInfo.mTotalOffset + entityIndex * memoryInfo.mComponentSize;
 
@@ -120,7 +120,7 @@ class ECS_API ArchetypeChunk
             return {};
         }
 
-        size_t entityIndex = std::distance( mEntities.begin(), it );
+        size_t entityIndex = static_cast<usize>(std::distance( mEntities.begin(), it ));
 
         *it = std::move( mEntities.back() );
         mEntities.pop_back();
@@ -150,7 +150,7 @@ class ECS_API ArchetypeChunk
         u8 *srcComponentData = srcComponents[srcIndex];
 
         auto it = std::find( mEntities.begin(), mEntities.end(), entity );
-        usize entityIndex = std::distance( mEntities.begin(), it );
+        usize entityIndex = static_cast<usize>(std::distance( mEntities.begin(), it ));
         u8 *destComponentData = mArchetypeComponentData + memoryInfos[destIndex].mTotalOffset +
                                 entityIndex * memoryInfos[destIndex].mComponentSize;
 

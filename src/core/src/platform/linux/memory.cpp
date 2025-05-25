@@ -5,12 +5,12 @@
 
 usize PlatformMemory::GetCacheLineSize()
 {
-    return sysconf( _SC_LEVEL1_DCACHE_LINESIZE );
+    return static_cast<usize>( sysconf( _SC_LEVEL1_DCACHE_LINESIZE ) );
 }
 
 usize PlatformMemory::GetPageSize()
 {
-    return sysconf( _SC_PAGESIZE );
+    return static_cast<usize>( sysconf( _SC_PAGESIZE ) );
 }
 
 #endif

@@ -24,17 +24,17 @@ class BasicEntity : public Component
     template <>
     struct IdOffset<u32>
     {
-        static constexpr size_t value = 12;
+        static constexpr usize value = 12;
     };
 
     template <>
     struct IdOffset<u64>
     {
-        static constexpr size_t value = 24;
+        static constexpr usize value = 24;
     };
 
   public:
-    static constexpr size_t id_offset = IdOffset<T>::value;
+    static constexpr usize id_offset = IdOffset<T>::value;
 #pragma endregion // IdOffset
 
   public:
@@ -49,19 +49,19 @@ class BasicEntity : public Component
     }
 
   public:
-    T GetId() const
+    IdType GetId() const
     {
         return entity >> id_offset;
     }
 
-    T GetVersion() const
+    VersionType GetVersion() const
     {
-        return entity & ( ( 1 << id_offset ) - 1 );
+        return entity & ( ( 1u << id_offset ) - 1u );
     }
 
     void UpgradeVersion()
     {
-        entity = ( entity & ~( ( 1 << id_offset ) - 1 ) ) | ( GetVersion() + 1 );
+        entity = ( entity & ~( ( 1u << id_offset ) - 1u ) ) | ( GetVersion() + 1u );
     }
 
     bool IsValid() const

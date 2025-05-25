@@ -19,7 +19,7 @@ class ArchetypeChunkTest : public ::testing::Test
     struct ComponentA : public Component
     {
         i32 a = 0;
-        f32 b = 3.3;
+        f32 b = 3.3f;
         std::string c = "hello";
         i32 k;
 
@@ -39,7 +39,7 @@ class ArchetypeChunkTest : public ::testing::Test
     struct ComponentB : public Component
     {
         i32 a = 0;
-        f32 b = 3.3;
+        f32 b = 3.3f;
         std::string c = "hello";
         i32 &k;
 
@@ -92,19 +92,19 @@ TEST_F( ArchetypeChunkTest, AddComponnetWithOffset )
     info.mTotalOffset = 0;
 
     ArchetypeChunk archetypeChunk( 100, 10 * 1024 );
-    for ( i32 i = 0; i < 12; ++i )
+    for ( Entity::IdType i = 0u; i < 12u; ++i )
     {
         Entity entity( i, 1 );
         archetypeChunk.AddEntity( entity );
     }
 
-    usize entityIndex = 11;
+    Entity::IdType entityIndex = 11u;
 
     ComponentA component = ComponentA();
     component.a = 23;
     component.b = 3.3f;
 
-    archetypeChunk.AddComponentData( Entity( entityIndex, 1 ), info, std::move( component ) );
+    archetypeChunk.AddComponentData( Entity( entityIndex, 1u ), info, std::move( component ) );
 
     ComponentA *componentA = archetypeChunk.GetComponents<ComponentA>( info );
 
