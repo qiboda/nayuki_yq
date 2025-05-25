@@ -113,6 +113,35 @@ TEST_F( ArchetypeChunkTest, AddComponnetWithOffset )
     EXPECT_EQ( componentA->b, 3.3f );
 }
 
+TEST_F( ArchetypeChunkTest, ReplaceComponnet )
+{
+    ArchetypeChunk archetypeChunk( 100 );
+
+    ArchetypeComponentMemoryInfo info;
+    auto componentInfo = ComponentTypeRegistry::GetComponentInfo<ComponentB>();
+    info.mComponentSize = componentInfo.size;
+    info.mTotalSize = 0;
+    info.mTotalOffset = 0;
+
+    i32 k = 12;
+    auto component = ComponentB( k );
+    component.a = 23;
+    component.b = 3.3f;
+
+    Entity entity( 1, 1 );
+    archetypeChunk.AddEntity( entity );
+    archetypeChunk.AddComponentData( entity, info, std::move( component ) );
+
+    i32 j = 0;
+    auto componentb = ComponentB( j );
+    componentb.a = 23;
+    componentb.b = 3.3f;
+    archetypeChunk.ReplaceComponentData( entity, info, std::move( componentb ) );
+
+    ComponentB *componentBSeq = archetypeChunk.GetComponents<ComponentB>( info );
+    ASSERT_EQ( componentBSeq->k, j );
+}
+
 TEST_F( ArchetypeChunkTest, DeconstructorComponnet )
 {
     ArchetypeChunk archetypeChunk( 100 );

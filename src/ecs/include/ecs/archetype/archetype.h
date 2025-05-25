@@ -1,5 +1,6 @@
 #pragma once
 
+#include "core/macro/macro.h"
 #include "ecs/archetype/archetype_chunk.h"
 #include "ecs/archetype/define.h"
 #include "ecs/components/component.h"
@@ -75,6 +76,18 @@ class ECS_API Archetype
 
   public:
     template <IsComponentConcept... T>
+    void AddEntityComponents( Archetype *oldArchetype, Entity entity, T &&...components )
+    {
+        ArchetypeChunk *newArchetypeChunk = GetEntityArchetypeChunk( entity );
+        NY_ASSERT( newArchetypeChunk != nullptr )
+
+        oldArchetype->MoveEntity( entity, this, newArchetypeChunk );
+        AddEntityComponentsWithIndex( entity,
+                                      std::make_index_sequence<sizeof...( T )>{},
+                                      std::forward<T>( components )... );
+    }
+
+    template <IsComponentConcept... T>
     void AddEntityComponents( Entity entity, T &&...components )
     {
         AddEntityComponentsWithIndex( entity,
@@ -82,6 +95,7 @@ class ECS_API Archetype
                                       std::forward<T>( components )... );
     }
 
+  protected:
     template <IsComponentConcept... T, usize... I>
     void AddEntityComponentsWithIndex( Entity entity, std::index_sequence<I...>, T &&...components )
     {
@@ -102,6 +116,7 @@ class ECS_API Archetype
                                           std::forward<T>( components )... );
     }
 
+  protected:
     template <IsComponentConcept... T, usize... I>
     void ReplaceEntityComponentsWithIndex( Entity entity, std::index_sequence<I...> index, T &&...components )
     {
@@ -113,6 +128,18 @@ class ECS_API Archetype
                                                        std::forward<T>( components ) ),
               ... );
         }
+    }
+
+  public:
+    template <IsComponentConcept... T>
+    void RemoveEntityComponents( Archetype *oldArchetype, Entity entity, T &&...components )
+    {
+        ( UNUSED_VAR( components ), ... );
+
+        ArchetypeChunk *newArchetypeChunk = this->GetEntityArchetypeChunk( entity );
+        NY_ASSERT( newArchetypeChunk != nullptr )
+
+        oldArchetype->MoveEntity( entity, this, newArchetypeChunk );
     }
 
   public:
@@ -129,6 +156,12 @@ class ECS_API Archetype
         {
             auto componentInfo = ComponentTypeRegistry::GetComponentInfo( mComponentIdSet.Get()[i] );
             cumulativeSize += componentInfo.size;
+        }
+
+        if ( cumulativeSize == 0 )
+        {
+            MaxEntityNum = 0;
+            return;
         }
 
         usize totalSize = GetArchetypeChunkDataSize();
@@ -165,6 +198,12 @@ class ECS_API Archetype
     }
 
   public:
+    inline const ComponentIdSet &GetComponentIdSet() const
+    {
+        return mComponentIdSet;
+    }
+
+  protected:
     ComponentIdSet mComponentIdSet;
     // memory offset and size
     std::vector<ArchetypeComponentMemoryInfo> mComponentMemoryInfo;

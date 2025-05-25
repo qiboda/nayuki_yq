@@ -2,7 +2,6 @@
 
 #include "core/macro/macro.h"
 #include "ecs/archetype/archetype.h"
-#include "ecs/archetype/archetype_chunk.h"
 #include "ecs/components/component.h"
 #include "ecs/entity/entity.h"
 #include <core/minimal.h>
@@ -64,8 +63,8 @@ class ECS_API ArchetypeManager
         {
             usize archetypeIndex = it->second;
             Archetype &archetype = mArchetypes[archetypeIndex];
-            ComponentIdSet componentIdSet = archetype.mComponentIdSet;
 
+            ComponentIdSet componentIdSet = archetype.GetComponentIdSet();
             componentIdSet.Merge( ComponentTypeRegistry::GetComponentIdSet<T...>() );
 
             auto it2 = mComponentIdsArchetypeMap.find( componentIdSet );
@@ -74,11 +73,7 @@ class ECS_API ArchetypeManager
                 usize newArchetypeIndex = it2->second;
                 Archetype &newArchetype = mArchetypes[newArchetypeIndex];
 
-                ArchetypeChunk *newArchetypeChunk = newArchetype.GetEntityArchetypeChunk( entity );
-                NY_ASSERT( newArchetypeChunk != nullptr )
-
-                archetype.MoveEntity( entity, &newArchetype, newArchetypeChunk );
-                newArchetype.AddEntityComponents( entity, std::forward<T>( component )... );
+                newArchetype.AddEntityComponents( &archetype, entity, std::forward<T>( component )... );
 
                 mEntityArchetypeMap.insert_or_assign( entity, newArchetypeIndex );
             }
@@ -88,11 +83,7 @@ class ECS_API ArchetypeManager
                 newArchetype.Init( componentIdSet.Clone() );
                 newArchetype.AddEntity( entity );
 
-                ArchetypeChunk *newArchetypeChunk = newArchetype.GetEntityArchetypeChunk( entity );
-                NY_ASSERT( newArchetypeChunk != nullptr )
-
-                archetype.MoveEntity( entity, &newArchetype, newArchetypeChunk );
-                newArchetype.AddEntityComponents( entity, std::forward<T>( component )... );
+                newArchetype.AddEntityComponents( &archetype, entity, std::forward<T>( component )... );
 
                 mArchetypes.push_back( newArchetype );
                 mEntityArchetypeMap.emplace( entity, archetypeIndex );
@@ -113,8 +104,8 @@ class ECS_API ArchetypeManager
         {
             usize archetypeIndex = it->second;
             Archetype &archetype = mArchetypes[archetypeIndex];
-            ComponentIdSet componentIdSet = archetype.mComponentIdSet;
 
+            ComponentIdSet componentIdSet = archetype.GetComponentIdSet();
             componentIdSet.Exclusvie( ComponentTypeRegistry::GetComponentIdSet<T...>() );
 
             auto it2 = mComponentIdsArchetypeMap.find( componentIdSet );
@@ -122,11 +113,7 @@ class ECS_API ArchetypeManager
             {
                 usize newArchetypeIndex = it2->second;
                 Archetype &newArchetype = mArchetypes[newArchetypeIndex];
-
-                ArchetypeChunk *newArchetypeChunk = newArchetype.GetEntityArchetypeChunk( entity );
-                NY_ASSERT( newArchetypeChunk != nullptr )
-
-                archetype.MoveEntity( entity, &newArchetype, newArchetypeChunk );
+                newArchetype.RemoveEntityComponents( &archetype, entity, component... );
 
                 mEntityArchetypeMap.insert_or_assign( entity, newArchetypeIndex );
             }
@@ -136,10 +123,7 @@ class ECS_API ArchetypeManager
                 newArchetype.Init( componentIdSet.Clone() );
                 newArchetype.AddEntity( entity );
 
-                ArchetypeChunk *newArchetypeChunk = newArchetype.GetEntityArchetypeChunk( entity );
-                NY_ASSERT( newArchetypeChunk != nullptr )
-
-                archetype.MoveEntity( entity, &newArchetype, newArchetypeChunk );
+                newArchetype.RemoveEntityComponents( &archetype, entity, component... );
 
                 mArchetypes.push_back( newArchetype );
                 mEntityArchetypeMap.emplace( entity, archetypeIndex );

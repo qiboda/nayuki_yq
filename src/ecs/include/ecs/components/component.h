@@ -1,5 +1,6 @@
 #pragma once
 
+#include "core/macro/macro.h"
 #include "module_export.h"
 #include <algorithm>
 #include <core/minimal.h>
@@ -96,6 +97,7 @@ struct ECS_API ComponentIdSet
     void Add( ComponentId id )
     {
         auto it = std::lower_bound( ids.begin(), ids.end(), id );
+        NY_ASSERT( it == ids.end() || *it != id );
         ids.insert( it, id );
     }
 
