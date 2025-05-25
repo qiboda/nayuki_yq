@@ -3,7 +3,7 @@
 #if defined( __APPLE__ )
 #    include <sys/sysctl.h>
 
-usize Memory::GetCacheLineSize()
+usize PlatformMemory::GetCacheLineSize()
 {
     size_t lineSize = 0;
     size_t size = sizeof( lineSize );
@@ -11,7 +11,7 @@ usize Memory::GetCacheLineSize()
     return lineSize;
 }
 
-usize Memory::GetPageSize()
+usize PlatformMemory::GetPageSize()
 {
     return 4096; // fallback
 }

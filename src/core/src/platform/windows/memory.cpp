@@ -4,7 +4,7 @@
 #    include <Windows.h>
 #    include <core/compiler/diagnostic.h>
 
-usize Memory::GetCacheLineSize()
+usize PlatformMemory::GetCacheLineSize()
 {
     size_t line_size = 0;
     DWORD buffer_size = 0;
@@ -30,7 +30,7 @@ usize Memory::GetCacheLineSize()
     return line_size;
 }
 
-usize Memory::GetPageSize()
+usize PlatformMemory::GetPageSize()
 {
     SYSTEM_INFO sysInfo;
     GetSystemInfo( &sysInfo );

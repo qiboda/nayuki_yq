@@ -2,21 +2,24 @@
 /// 只包含了Core模块中没有cpp的一部分头文件，和外部库的核心头文件，
 #pragma once
 
-#include <vector>      // IWYU pragma: keep
-#include <algorithm>   // IWYU pragma: keep
-#include <memory>      // IWYU pragma: keep
-#include <utility>     // IWYU pragma: keep
-#include <type_traits> // IWYU pragma: keep
-#include <string>      // IWYU pragma: keep
-#include <string_view> // IWYU pragma: keep
-#include <functional>  // IWYU pragma: keep
-#include <concepts>    // IWYU pragma: keep
-#include <map>         // IWYU pragma: keep
-#include <atomic>      // IWYU pragma: keep
-#include <format>      // IWYU pragma: keep
-#include <thread>      // IWYU pragma: keep
-#include <mutex>       // IWYU pragma: keep
-#include <atomic>      // IWYU pragma: keep
+#include <vector>        // IWYU pragma: keep
+#include <algorithm>     // IWYU pragma: keep
+#include <memory>        // IWYU pragma: keep
+#include <utility>       // IWYU pragma: keep
+#include <type_traits>   // IWYU pragma: keep
+#include <string>        // IWYU pragma: keep
+#include <string_view>   // IWYU pragma: keep
+#include <functional>    // IWYU pragma: keep
+#include <concepts>      // IWYU pragma: keep
+#include <map>           // IWYU pragma: keep
+#include <unordered_map> // IWYU pragma: keep
+#include <set>           // IWYU pragma: keep
+#include <unordered_set> // IWYU pragma: keep
+#include <atomic>        // IWYU pragma: keep
+#include <format>        // IWYU pragma: keep
+#include <thread>        // IWYU pragma: keep
+#include <mutex>         // IWYU pragma: keep
+#include <atomic>        // IWYU pragma: keep
 
 // GLM
 //  GLM本为是OpenGL设计的，在OpenGL中，NDC（标准化设备坐标系）的深度范围为[-1,

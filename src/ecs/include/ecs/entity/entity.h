@@ -1,11 +1,14 @@
 #pragma once
 
+#include "ecs/components/component.h"
 #include <core/minimal.h>
 #include <ecs/minimal.h>
+#include <type_traits>
 
+/// 实体也是一个组件
 template <typename T>
-    requires std::integral<T>
-class BasicEntity
+    requires std::unsigned_integral<T>
+class BasicEntity : public Component
 {
   public:
     using ValueType = T;
@@ -68,6 +71,24 @@ class BasicEntity
 
   public:
     T entity;
+};
+
+template <typename T>
+    requires std::unsigned_integral<T>
+bool operator==( const BasicEntity<T> &lhs, const BasicEntity<T> &rhs )
+{
+    return lhs.entity == rhs.entity;
+}
+
+/// std::unordered_map 的 Key 需要重载hash函数
+template <typename T>
+    requires std::unsigned_integral<T>
+struct std::hash<BasicEntity<T>>
+{
+    size_t operator()( const BasicEntity<T> &entity ) const
+    {
+        return std::hash<T>()( entity.entity );
+    }
 };
 
 template <typename T>

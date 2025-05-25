@@ -3,12 +3,12 @@
 #if defined( __linux__ )
 #    include <unistd.h>
 
-usize Memory::GetCacheLineSize()
+usize PlatformMemory::GetCacheLineSize()
 {
     return sysconf( _SC_LEVEL1_DCACHE_LINESIZE );
 }
 
-usize Memory::GetPageSize()
+usize PlatformMemory::GetPageSize()
 {
     return sysconf( _SC_PAGESIZE );
 }

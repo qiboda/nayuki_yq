@@ -2,7 +2,7 @@
 
 #include "ecs/commands/command.h"
 #include "ecs/commands/entity_command.h"
-#include "ecs/component.h"
+#include "ecs/components/component.h"
 #include "ecs/entity/entity.h"
 #include <core/minimal.h>
 #include <ecs/minimal.h>

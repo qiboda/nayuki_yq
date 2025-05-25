@@ -2,7 +2,6 @@
 
 #include <core/minimal.h>
 #include <ecs/minimal.h>
-#include <ecs/registry.h>
 #include <memory>
 #include <stack>
 
@@ -18,7 +17,7 @@ class ECS_API CommandBufferBase
     virtual ~CommandBufferBase() = default;
 
   public:
-    virtual void Execute( Registry *registry ) = 0;
+    virtual void Execute( class Registry *registry ) = 0;
     virtual usize GetSize() const = 0;
 };
 

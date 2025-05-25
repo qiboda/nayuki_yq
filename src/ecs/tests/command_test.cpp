@@ -10,7 +10,7 @@
 #include <ecs/registry.h>
 #include <ecs/entity/entity_manager.h>
 #include <ecs/entity/entity.h>
-#include <ecs/component.h>
+#include <ecs/components/component.h>
 
 class CommandTest : public ::testing::Test
 {
@@ -26,16 +26,18 @@ class CommandTest : public ::testing::Test
     }
 
     Registry *mRegistry = nullptr;
-};
 
-struct ComponentA : public Component
-{
-    i32 a = 0;
+    struct ComponentC : public Component
+    {
+        i32 a = 0;
+    };
 };
 
 TEST_F( CommandTest, CreateEntity )
 {
-    ComponentA k = ComponentA{ .a = 0 };
+    ComponentC k = ComponentC();
+    k.a = 0;
+
     // clang-format off
     RegistryCommand::Get( mRegistry )
         ->Entity()

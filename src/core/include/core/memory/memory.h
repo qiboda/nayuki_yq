@@ -1,60 +1,74 @@
 #pragma once
 
 #include "core/memory/malloc.h"
-#include "module_export.h"
+#include "core/platform/memory.h"
+#include <cstring>
 
-class CORE_API Memory{ public : static void Init(){ MallocAllocator::Init();
-}
-
-static void Shutdown()
+class Memory
 {
-    MallocAllocator::Shutdown();
-}
+  public:
+    static void Init()
+    {
+        MallocAllocator::Init();
+    }
 
-static void ThreadInit()
-{
-    MallocAllocator::ThreadInit();
-}
+    static void Shutdown()
+    {
+        MallocAllocator::Shutdown();
+    }
 
-static void ThreadShutdown()
-{
-    MallocAllocator::ThreadShutdown();
-}
+    static void ThreadInit()
+    {
+        MallocAllocator::ThreadInit();
+    }
 
-static bool IsThreadInitted()
-{
-    return MallocAllocator::IsThreadInitted();
-}
+    static void ThreadShutdown()
+    {
+        MallocAllocator::ThreadShutdown();
+    }
 
-static bool IsInitted()
-{
-    return MallocAllocator::IsInitted();
-}
+    static bool IsThreadInitted()
+    {
+        return MallocAllocator::IsThreadInitted();
+    }
 
-public:
-static void *Malloc( usize size )
-{
-    return MallocAllocator::Malloc( size );
-}
+    static bool IsInitted()
+    {
+        return MallocAllocator::IsInitted();
+    }
 
-static void Free( void *ptr )
-{
-    MallocAllocator::Free( ptr );
-}
+  public:
+    static void *Malloc( usize size )
+    {
+        return MallocAllocator::Malloc( size );
+    }
 
-static void *Realloc( void *ptr, usize size )
-{
-    return MallocAllocator::Realloc( ptr, size );
-}
+    static void Free( void *ptr )
+    {
+        MallocAllocator::Free( ptr );
+    }
 
-static void *Calloc( usize num, usize size )
-{
-    return MallocAllocator::Calloc( num, size );
-}
+    static void *Realloc( void *ptr, usize size )
+    {
+        return MallocAllocator::Realloc( ptr, size );
+    }
 
-static void *AlignedAlloc( usize size, usize alignment )
-{
-    return MallocAllocator::AlignedAlloc( size, alignment );
-}
-}
-;
+    static void *Calloc( usize num, usize size )
+    {
+        return MallocAllocator::Calloc( num, size );
+    }
+
+    static void *AlignedAlloc( usize size, usize alignment )
+    {
+        return MallocAllocator::AlignedAlloc( size, alignment );
+    }
+
+  public:
+    static void Swap( void *dest, void *src, usize size )
+    {
+        u8 *temp = PlatformMemory::Alloca<u8>( size );
+        std::memcpy( temp, dest, size );
+        std::memcpy( dest, src, size );
+        std::memcpy( src, temp, size );
+    }
+};

@@ -18,6 +18,6 @@ class PlatformMemoryTest : public ::testing::Test
 
 TEST_F( PlatformMemoryTest, DefaultConstructor )
 {
-    Memory Memory;
+    PlatformMemory Memory;
     EXPECT_EQ( Memory.GetCacheLineSize(), 64 );
 }
