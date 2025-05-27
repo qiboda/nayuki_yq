@@ -96,13 +96,16 @@ struct IsEntity : std::false_type
 {
 };
 
-template <typename T>
-struct IsEntity<BasicEntity<T>> : std::true_type
+template <typename U>
+struct IsEntity<BasicEntity<U>> : std::true_type
 {
 };
 
 template <typename T>
-concept IsEntityConcept = IsEntity<T>::value;
+inline constexpr bool IsEntityValue = IsEntity<T>::value;
+
+template <typename T>
+concept IsEntityConcept = IsEntityValue<T>;
 
 using Entity = BasicEntity<u32>;
 
