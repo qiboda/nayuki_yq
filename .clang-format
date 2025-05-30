@@ -79,6 +79,11 @@ AlwaysBreakAfterDefinitionReturnType: None
 AlwaysBreakBeforeMultilineStrings: false
 AttributeMacros:
   - __capability
+  - ECS_API
+  - CORE_API
+  - RENDER_API
+  - RENDER_CORE_API
+  - NAYUKI_YQ_API
 BinPackArguments: false
 BinPackParameters: false
 BitFieldColonSpacing: Both
@@ -97,7 +102,7 @@ BraceWrapping:
   BeforeElse:      true
   BeforeLambdaBody: true
   BeforeWhile:     true
-  IndentBraces:    false
+  IndentBraces:    true
   SplitEmptyFunction: true
   SplitEmptyRecord: true
   SplitEmptyNamespace: true
@@ -108,7 +113,7 @@ BreakAfterReturnType: None
 BreakArrays:     true
 BreakBeforeBinaryOperators: None
 BreakBeforeConceptDeclarations: Always
-BreakBeforeBraces: Custom
+BreakBeforeBraces: Allman
 BreakBeforeInlineASMColon: OnlyMultiline
 BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: BeforeComma

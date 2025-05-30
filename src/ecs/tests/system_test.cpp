@@ -2,7 +2,8 @@
 #include <tuple>
 
 #include "core/macro/macro.h"
-#include "ecs/systems/system.h"
+#include "ecs/systems/local.h"
+#include "ecs/systems/system_manager.h"
 #include "ecs/systems/system_param.h"
 
 int32_t Add( const int32_t a, const int32_t b )
@@ -11,13 +12,13 @@ int32_t Add( const int32_t a, const int32_t b )
 }
 
 template <IsFnTrait AddFuncTrait>
-void TestAddFuncTrait( FuncType func_type )
+void TestAddFuncTrait( FuncKind func_kind )
 {
-    using Arg0 = std::tuple_element_t<0, typename AddFuncTrait::ArgsTypeList>;
-    using Arg1 = std::tuple_element_t<1, typename AddFuncTrait::ArgsTypeList>;
+    using Arg0 = std::tuple_element_t<0, typename AddFuncTrait::ArgsTypeTuple>;
+    using Arg1 = std::tuple_element_t<1, typename AddFuncTrait::ArgsTypeTuple>;
 
     constexpr bool ret = std::same_as<typename AddFuncTrait::ReturnType, i32>;
-    constexpr size_t args_size = std::tuple_size_v<typename AddFuncTrait::ArgsTypeList>;
+    constexpr size_t args_size = std::tuple_size_v<typename AddFuncTrait::ArgsTypeTuple>;
 
     // Note: The const declaration of parameters that are passed by value will be
     // implicitly removed in its signature.
@@ -28,14 +29,14 @@ void TestAddFuncTrait( FuncType func_type )
     EXPECT_EQ( args_size, 2 );
     EXPECT_TRUE( arg0 );
     EXPECT_TRUE( arg1 );
-    EXPECT_EQ( AddFuncTrait::FuncType, func_type );
+    EXPECT_EQ( AddFuncTrait::FuncKind, func_kind );
 }
 
 TEST( FuncTraitTests, TestAddFuncTrait )
 {
-    TestAddFuncTrait<FnTrait<decltype( Add )>>( FuncType::Func );
-    TestAddFuncTrait<FnTrait<decltype( &Add )>>( FuncType::FuncPtr );
-    TestAddFuncTrait<FnTrait<decltype( Add ) &>>( FuncType::FuncRef );
+    TestAddFuncTrait<FnTrait<decltype( Add )>>( FuncKind::Func );
+    TestAddFuncTrait<FnTrait<decltype( &Add )>>( FuncKind::FuncPtr );
+    TestAddFuncTrait<FnTrait<decltype( Add ) &>>( FuncKind::FuncRef );
 }
 
 class SystemTest : public ::testing::Test
@@ -64,16 +65,52 @@ class SystemTest : public ::testing::Test
     {
         return 0;
     }
+
+    static void test_local( Local<i32> &a )
+    {
+        a.mValue++;
+    }
 };
 
-TEST_F( SystemTest, SystemTest )
+TEST_F( SystemTest, IsSystemTest )
 {
     bool system1 = IsSystem<decltype( &SystemTest::add )>;
     EXPECT_FALSE( system1 );
     bool system2 = IsSystem<decltype( &SystemTest::addvoid )>;
     EXPECT_TRUE( system2 );
-    bool system3 = IsSystemParamSetConcept<>;
+    bool system3 = AllSystemParamsConcept<>;
     EXPECT_TRUE( system3 );
     bool system4 = IsSystem<decltype( &SystemTest::addvoidreturn )>;
     EXPECT_FALSE( system4 );
+    bool localSystemParam = IsSystemParamConcept<Local<i32>>;
+    EXPECT_TRUE( localSystemParam );
+    bool localSystemParams = AllSystemParamsConcept<Local<i32>>;
+    EXPECT_TRUE( localSystemParams );
+    bool system5 = IsSystem<decltype( &SystemTest::test_local )>;
+    EXPECT_TRUE( system5 );
+}
+
+TEST_F( SystemTest, LocalParamTest )
+{
+    Registry registry;
+    auto sm = SystemManager();
+    SystemId id = sm.AddSystem( &SystemTest::test_local );
+
+    {
+        sm.RunSystem( &registry );
+        const auto &system = sm.GetSystem( id );
+        const auto &systemDc = system->Downcast( &SystemTest::test_local );
+        const auto &systemState = systemDc->GetSystemState();
+        auto paramState = systemState.GetParamState<0>();
+        EXPECT_EQ( paramState.value, 1 );
+    }
+
+    {
+        sm.RunSystem( &registry );
+        const auto &system = sm.GetSystem( id );
+        const auto &systemDc = system->Downcast( &SystemTest::test_local );
+        const auto &systemState = systemDc->GetSystemState();
+        auto paramState = systemState.GetParamState<0>();
+        EXPECT_EQ( paramState.value, 2 );
+    }
 }

@@ -14,6 +14,18 @@ class ECS_API QueryParam
     QueryParam();
 };
 
+template <typename T>
+constexpr inline bool IsQueryParam = std::is_same_v<T, QueryParam>;
+
+template <typename T>
+concept IsQueryParamConcept = IsQueryParam<T>;
+
+template <IsQueryParamConcept T>
+inline constexpr bool IsReadOnlyQueryParam = std::is_const_v<T>;
+
+template <IsQueryParamConcept T>
+inline constexpr bool IsReadWriteQueryParam = ( std::is_const_v<T> == false );
+
 template <typename... T>
 struct Contains : std::false_type
 {
