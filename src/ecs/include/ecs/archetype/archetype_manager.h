@@ -2,7 +2,7 @@
 
 #include "core/macro/macro.h"
 #include "ecs/archetype/archetype.h"
-#include "ecs/components/component.h"
+#include "ecs/components/component_info.h"
 #include "ecs/entity/entity.h"
 #include <core/minimal.h>
 #include <ecs/minimal.h>
@@ -19,11 +19,11 @@ class ECS_API ArchetypeManager
     void CreateEntity( Entity entity )
     {
         // 发现空组件的archetype。或者创建一个新的。
-        auto it = mComponentIdsArchetypeMap.find( ComponentIdSet() );
+        auto it = mComponentIdsArchetypeMap.find( ComponentTypeRegistry::GetComponentIdSet<Entity>() );
         if ( it != mComponentIdsArchetypeMap.end() )
         {
             usize archetypeIndex = it->second;
-            Archetype &archetype = mArchetypes[archetypeIndex];
+            Archetype& archetype = mArchetypes[archetypeIndex];
             archetype.AddEntity( entity );
 
             mEntityArchetypeMap.emplace( entity, archetypeIndex );
@@ -33,7 +33,7 @@ class ECS_API ArchetypeManager
             usize archetypeIndex = mArchetypes.size();
 
             Archetype archetype;
-            archetype.Init( ComponentIdSet() );
+            archetype.Init( ComponentTypeRegistry::GetComponentIdSet<Entity>() );
             archetype.AddEntity( entity );
             mArchetypes.push_back( archetype );
             mEntityArchetypeMap.emplace( entity, archetypeIndex );
@@ -56,13 +56,13 @@ class ECS_API ArchetypeManager
   public:
     // 添加一个全新的component，并且将旧的component数据移动到新的archetype中。
     template <IsComponentConcept... T>
-    void AddComponentData( Entity entity, T &&...component )
+    void AddComponentData( Entity entity, T&&... component )
     {
         auto it = mEntityArchetypeMap.find( entity );
         if ( it != mEntityArchetypeMap.end() )
         {
             usize archetypeIndex = it->second;
-            Archetype &archetype = mArchetypes[archetypeIndex];
+            Archetype& archetype = mArchetypes[archetypeIndex];
 
             ComponentIdSet componentIdSet = archetype.GetComponentIdSet();
             componentIdSet.Merge( ComponentTypeRegistry::GetComponentIdSet<T...>() );
@@ -71,7 +71,7 @@ class ECS_API ArchetypeManager
             if ( it2 != mComponentIdsArchetypeMap.end() )
             {
                 usize newArchetypeIndex = it2->second;
-                Archetype &newArchetype = mArchetypes[newArchetypeIndex];
+                Archetype& newArchetype = mArchetypes[newArchetypeIndex];
 
                 newArchetype.AddEntityComponents( &archetype, entity, std::forward<T>( component )... );
 
@@ -95,7 +95,7 @@ class ECS_API ArchetypeManager
     // TODO: 和AddComponentData相似，是否可以合并成一个函数。
     // 移除一个component，并且将旧的component数据移动到新的archetype中。
     template <IsComponentConcept... T>
-    void RemoveComponentData( Entity entity, T &&...component )
+    void RemoveComponentData( Entity entity, T&&... component )
     {
         ( UNUSED_VAR( component ), ... );
 
@@ -103,16 +103,16 @@ class ECS_API ArchetypeManager
         if ( it != mEntityArchetypeMap.end() )
         {
             usize archetypeIndex = it->second;
-            Archetype &archetype = mArchetypes[archetypeIndex];
+            Archetype& archetype = mArchetypes[archetypeIndex];
 
             ComponentIdSet componentIdSet = archetype.GetComponentIdSet();
-            componentIdSet.Exclusvie( ComponentTypeRegistry::GetComponentIdSet<T...>() );
+            componentIdSet.Subtract( ComponentTypeRegistry::GetComponentIdSet<T...>() );
 
             auto it2 = mComponentIdsArchetypeMap.find( componentIdSet );
             if ( it2 != mComponentIdsArchetypeMap.end() )
             {
                 usize newArchetypeIndex = it2->second;
-                Archetype &newArchetype = mArchetypes[newArchetypeIndex];
+                Archetype& newArchetype = mArchetypes[newArchetypeIndex];
                 newArchetype.RemoveEntityComponents( &archetype, entity, component... );
 
                 mEntityArchetypeMap.insert_or_assign( entity, newArchetypeIndex );
@@ -133,15 +133,43 @@ class ECS_API ArchetypeManager
     }
 
     template <IsComponentConcept... T>
-    void ReplaceComponentData( Entity entity, T &&...components )
+    void ReplaceComponentData( Entity entity, T&&... components )
     {
         auto it = mEntityArchetypeMap.find( entity );
         if ( it != mEntityArchetypeMap.end() )
         {
             usize archetypeIndex = it->second;
-            Archetype &archetype = mArchetypes[archetypeIndex];
+            Archetype& archetype = mArchetypes[archetypeIndex];
             archetype.ReplaceEntityComponents( entity, components... );
         }
+    }
+
+  public:
+    template <IsComponentConcept... T>
+    std::vector<usize> FindMetArchetypeIndices() const
+    {
+        std::vector<usize> met;
+        ComponentIdSet componentIdSet = ComponentTypeRegistry::GetComponentIdSet<T...>();
+        for ( usize i = 0; i < mArchetypes.size(); ++i )
+        {
+            if ( mArchetypes[i].GetComponentIdSet().Include( componentIdSet ) &&
+                 mArchetypes[i].GetTotalEntityNum() > 0 )
+            {
+                met.push_back( i );
+            }
+        }
+
+        return met;
+    }
+
+    const Archetype* GetArchetype( const usize index ) const
+    {
+        return &mArchetypes[index];
+    }
+
+    Archetype* GetArchetype( const usize index )
+    {
+        return &mArchetypes[index];
     }
 
   protected:

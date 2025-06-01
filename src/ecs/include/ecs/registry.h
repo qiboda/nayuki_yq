@@ -17,8 +17,8 @@ class ECS_API Registry
     Registry();
 
   public:
-    EntityManager *mEntityManager = nullptr;
-    CommandManager *mCommandManager = nullptr;
-    ArchetypeManager *mArchetypeManager = nullptr;
-    SystemManager *mSystemManager = nullptr;
+    EntityManager* mEntityManager = nullptr;
+    CommandManager* mCommandManager = nullptr;
+    ArchetypeManager* mArchetypeManager = nullptr;
+    SystemManager* mSystemManager = nullptr;
 };

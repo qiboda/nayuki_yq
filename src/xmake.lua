@@ -11,6 +11,7 @@ add_requires("glfw", "glm", "stb", "spdlog", "rpmalloc", {
 add_requires("shaderc", { configs = { shared = false }, debug = true })
 add_requires("tbb", { configs = { shared = true }, debug = true})
 add_requires("tracy", { configs = { shared = true, manual_lifetime = true, delayed_init = true }, debug = true})
+add_requires("range-v3", { configs = { shared = false }, debug = true})
 
 add_requires("vulkansdk", { system = true })
 

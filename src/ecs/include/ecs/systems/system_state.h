@@ -14,7 +14,7 @@ class ISystemState : public NonCopyable
     virtual ~ISystemState() = default;
 
     template <IsSystemConcept Func>
-    const SystemState<Func> *Downcast( Func func ) const
+    const SystemState<Func>* Downcast( Func func ) const
     {
         UNUSED_VAR( func );
         return static_cast<const SystemState<Func>*>( this );
@@ -37,13 +37,13 @@ class ECS_API SystemState : public ISystemState
     }
 
     template <usize Index>
-    FnParamType<Func, Index>::State &GetParamState()
+    FnParamType<Func, Index>::State& GetParamState()
     {
         return std::get<Index>( SystemParamStates );
     }
 
     template <usize Index>
-    const FnParamType<Func, Index>::State &GetParamState() const
+    const FnParamType<Func, Index>::State& GetParamState() const
     {
         return std::get<Index>( SystemParamStates );
     }

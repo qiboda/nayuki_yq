@@ -6,6 +6,7 @@
 #include <core/minimal.h>
 #include <ecs/minimal.h>
 #include <oneapi/tbb/concurrent_hash_map.h>
+#include "ecs/components/component_info.h"
 #include <vector>
 
 class ECS_API EntityManager : public NonCopyable
@@ -16,6 +17,7 @@ class ECS_API EntityManager : public NonCopyable
   public:
     EntityManager()
     {
+        ComponentTypeRegistry::Register<Entity>();
     }
 
     // 申请entity
@@ -30,7 +32,7 @@ class ECS_API EntityManager : public NonCopyable
         if ( mUnactiveEntities.empty() )
         {
             usize capacity = mActiveEntities.Capacity();
-            Entity entity = Entity( static_cast<Entity::IdType>(capacity), 0 );
+            Entity entity = Entity( static_cast<Entity::IdType>( capacity ), 0 );
             return entity;
         }
         else

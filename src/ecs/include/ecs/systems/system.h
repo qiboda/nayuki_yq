@@ -14,12 +14,12 @@ struct SystemId
     friend std::hash<SystemId>;
 
   public:
-    friend bool operator==( const SystemId &lhs, const SystemId &rhs )
+    friend bool operator==( const SystemId& lhs, const SystemId& rhs )
     {
         return lhs.mId == rhs.mId;
     }
 
-    friend bool operator<( const SystemId &lhs, const SystemId &rhs )
+    friend bool operator<( const SystemId& lhs, const SystemId& rhs )
     {
         return lhs.mId < rhs.mId;
     }
@@ -64,14 +64,14 @@ class ISystem : public NonCopyable
     virtual ~ISystem() = default;
 
   public:
-    virtual void Run( class Registry *registry ) = 0;
-    virtual const ISystemState &GetSystemStateBase() const = 0;
+    virtual void Run( class Registry* registry ) = 0;
+    virtual const ISystemState& GetSystemStateBase() const = 0;
 
     template <IsSystemConcept Func>
-    const System<Func> *Downcast( Func func ) const
+    const System<Func>* Downcast( Func func ) const
     {
         UNUSED_VAR( func );
-        return static_cast<const System<Func> *>( this );
+        return static_cast<const System<Func>*>( this );
     }
 };
 
@@ -87,23 +87,23 @@ class System : public ISystem
     System( Func func )
     {
         using ArgsTypeTuple = FnArgsTypeTuple<Func>;
-        constexpr size_t kParamsCount = std::tuple_size_v<ArgsTypeTuple>;
-        SetSystemFunc( std::move( func ), std::make_index_sequence<kParamsCount>{} );
+        constexpr size_t kArgsCount = std::tuple_size_v<ArgsTypeTuple>;
+        SetSystemFunc( std::move( func ), std::make_index_sequence<kArgsCount>{} );
     }
 
     virtual ~System() = default;
 
-    virtual void Run( class Registry *registry ) override
+    virtual void Run( class Registry* registry ) override
     {
         mSystemFunc( registry );
     }
 
-    virtual const ISystemState &GetSystemStateBase() const override
+    virtual const ISystemState& GetSystemStateBase() const override
     {
         return mSystemState;
     }
 
-    const SystemState<Func> &GetSystemState() const
+    const SystemState<Func>& GetSystemState() const
     {
         return mSystemState;
     }
@@ -113,7 +113,7 @@ class System : public ISystem
     void SetSystemFunc( Func func, std::index_sequence<Index...> )
     {
         // TODO:传入函数的真实参数值。 SystemState
-        mSystemFunc = [func = std::move( func ), this]( class Registry *registry )
+        mSystemFunc = [func = std::move( func ), this]( class Registry* registry )
         {
             using ParamsTypeTuple = FnParamsTypeTuple<Func>;
 
@@ -124,7 +124,7 @@ class System : public ISystem
         };
     }
 
-    std::function<void( class Registry * )> mSystemFunc;
+    std::function<void( class Registry* )> mSystemFunc;
 
     SystemState<Func> mSystemState;
 };

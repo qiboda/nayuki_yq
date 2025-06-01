@@ -3,7 +3,7 @@
 #include "core/macro/macro.h"
 #include "ecs/archetype/archetype_chunk.h"
 #include "ecs/archetype/define.h"
-#include "ecs/components/component.h"
+#include "ecs/components/component_info.h"
 #include "ecs/entity/entity.h"
 #include "module_export.h"
 #include <core/minimal.h>
@@ -14,6 +14,9 @@
 // 组件id组合
 class ECS_API Archetype
 {
+  public:
+    using ChunkIterator = typename std::vector<ArchetypeChunk>::iterator;
+
   public:
     Archetype();
 
@@ -26,12 +29,13 @@ class ECS_API Archetype
         }
 
         bool isAdded = false;
-        for ( auto &archetypeChunk : mArchetypeChunks )
+        for ( auto& archetypeChunk : mArchetypeChunks )
         {
             NY_ASSERT( archetypeChunk.ContainEntity( entity ) == false )
             if ( archetypeChunk.CanAddEntity() )
             {
-                archetypeChunk.AddEntity( entity );
+                auto memoryInfo = GetComponentMemoryInfo( 0 );
+                archetypeChunk.AddEntity( entity, memoryInfo );
                 isAdded = true;
                 break;
             }
@@ -40,7 +44,8 @@ class ECS_API Archetype
         if ( isAdded == false )
         {
             AddNewArchetypeChunk();
-            mArchetypeChunks.back().AddEntity( entity );
+            auto memoryInfo = GetComponentMemoryInfo( 0 );
+            mArchetypeChunks.back().AddEntity( entity, memoryInfo );
         }
     }
 
@@ -53,18 +58,18 @@ class ECS_API Archetype
   public:
     inline void DestroyEntity( Entity entity )
     {
-        ArchetypeChunk *archetypeChunk = GetEntityArchetypeChunk( entity );
+        ArchetypeChunk* archetypeChunk = GetEntityArchetypeChunk( entity );
         if ( archetypeChunk )
         {
-            archetypeChunk->DestroyEntity( entity, mComponentMemoryInfo );
+            archetypeChunk->DestroyEntity( entity, mComponentMemoryInfos );
         }
     }
 
-    void MoveEntity( Entity entity, Archetype *destArchetype, ArchetypeChunk *destArchetypeChunk );
+    void MoveEntity( Entity entity, Archetype* destArchetype, ArchetypeChunk* destArchetypeChunk );
 
-    ArchetypeChunk *GetEntityArchetypeChunk( Entity entity )
+    ArchetypeChunk* GetEntityArchetypeChunk( Entity entity )
     {
-        for ( auto &archetypeChunk : mArchetypeChunks )
+        for ( auto& archetypeChunk : mArchetypeChunks )
         {
             if ( archetypeChunk.ContainEntity( entity ) )
             {
@@ -76,9 +81,9 @@ class ECS_API Archetype
 
   public:
     template <IsComponentConcept... T>
-    void AddEntityComponents( Archetype *oldArchetype, Entity entity, T &&...components )
+    void AddEntityComponents( Archetype* oldArchetype, Entity entity, T&&... components )
     {
-        ArchetypeChunk *newArchetypeChunk = GetEntityArchetypeChunk( entity );
+        ArchetypeChunk* newArchetypeChunk = GetEntityArchetypeChunk( entity );
         NY_ASSERT( newArchetypeChunk != nullptr )
 
         oldArchetype->MoveEntity( entity, this, newArchetypeChunk );
@@ -88,7 +93,7 @@ class ECS_API Archetype
     }
 
     template <IsComponentConcept... T>
-    void AddEntityComponents( Entity entity, T &&...components )
+    void AddEntityComponents( Entity entity, T&&... components )
     {
         AddEntityComponentsWithIndex( entity,
                                       std::make_index_sequence<sizeof...( T )>{},
@@ -97,19 +102,23 @@ class ECS_API Archetype
 
   protected:
     template <IsComponentConcept... T, usize... I>
-    void AddEntityComponentsWithIndex( Entity entity, std::index_sequence<I...>, T &&...components )
+    void AddEntityComponentsWithIndex( Entity entity, std::index_sequence<I...>, T&&... components )
     {
-        ArchetypeChunk *curArchetypeChunk = GetEntityArchetypeChunk( entity );
+        ArchetypeChunk* curArchetypeChunk = GetEntityArchetypeChunk( entity );
         if ( curArchetypeChunk )
         {
-            ( curArchetypeChunk->AddComponentData( entity, GetComponentMemoryInfo( I ), std::forward<T>( components ) ),
+
+            ( curArchetypeChunk->AddComponentData(
+                  entity,
+                  GetComponentMemoryInfoByComponentId( ComponentTypeRegistry::Get<T>() ),
+                  std::forward<T>( components ) ),
               ... );
         }
     }
 
   public:
     template <IsComponentConcept... T>
-    void ReplaceEntityComponents( Entity entity, T &&...components )
+    void ReplaceEntityComponents( Entity entity, T&&... components )
     {
         ReplaceEntityComponentsWithIndex( entity,
                                           std::make_index_sequence<sizeof...( T )>{},
@@ -118,9 +127,9 @@ class ECS_API Archetype
 
   protected:
     template <IsComponentConcept... T, usize... I>
-    void ReplaceEntityComponentsWithIndex( Entity entity, std::index_sequence<I...> index, T &&...components )
+    void ReplaceEntityComponentsWithIndex( Entity entity, std::index_sequence<I...> index, T&&... components )
     {
-        ArchetypeChunk *curArchetypeChunk = GetEntityArchetypeChunk( entity );
+        ArchetypeChunk* curArchetypeChunk = GetEntityArchetypeChunk( entity );
         if ( curArchetypeChunk )
         {
             ( curArchetypeChunk->ReplaceComponentData( entity,
@@ -132,18 +141,18 @@ class ECS_API Archetype
 
   public:
     template <IsComponentConcept... T>
-    void RemoveEntityComponents( Archetype *oldArchetype, Entity entity, T &&...components )
+    void RemoveEntityComponents( Archetype* oldArchetype, Entity entity, T&&... components )
     {
         ( UNUSED_VAR( components ), ... );
 
-        ArchetypeChunk *newArchetypeChunk = this->GetEntityArchetypeChunk( entity );
+        ArchetypeChunk* newArchetypeChunk = this->GetEntityArchetypeChunk( entity );
         NY_ASSERT( newArchetypeChunk != nullptr )
 
         oldArchetype->MoveEntity( entity, this, newArchetypeChunk );
     }
 
   public:
-    void Init( ComponentIdSet &&componentIdSet )
+    void Init( ComponentIdSet&& componentIdSet )
     {
         mComponentIdSet = std::move( componentIdSet );
         ComputeComponentMemoryInfo();
@@ -167,28 +176,36 @@ class ECS_API Archetype
         usize totalSize = GetArchetypeChunkDataSize();
         MaxEntityNum = totalSize / cumulativeSize;
 
-        mComponentMemoryInfo.resize( mComponentIdSet.Get().size() );
+        mComponentMemoryInfos.resize( mComponentIdSet.Get().size() );
         for ( usize i = 0; i < mComponentIdSet.Get().size(); ++i )
         {
             auto componentInfo = ComponentTypeRegistry::GetComponentInfo( mComponentIdSet.Get()[i] );
             if ( i == 0 )
             {
-                mComponentMemoryInfo[i].mTotalOffset = 0;
+                mComponentMemoryInfos[i].mTotalOffset = 0;
             }
             else
             {
-                mComponentMemoryInfo[i].mTotalOffset =
-                    mComponentMemoryInfo[i - 1].mTotalOffset + mComponentMemoryInfo[i - 1].mTotalSize;
+                mComponentMemoryInfos[i].mTotalOffset =
+                    mComponentMemoryInfos[i - 1].mTotalOffset + mComponentMemoryInfos[i - 1].mTotalSize;
             }
-            mComponentMemoryInfo[i].mComponentSize = componentInfo.size;
-            mComponentMemoryInfo[i].mTotalSize = componentInfo.size * MaxEntityNum;
+            mComponentMemoryInfos[i].mComponentSize = componentInfo.size;
+            mComponentMemoryInfos[i].mTotalSize = componentInfo.size * MaxEntityNum;
         }
     }
 
   protected:
     ArchetypeComponentMemoryInfo GetComponentMemoryInfo( usize index )
     {
-        return mComponentMemoryInfo[index];
+        return mComponentMemoryInfos[index];
+    }
+
+    ArchetypeComponentMemoryInfo GetComponentMemoryInfoByComponentId( ComponentId id )
+    {
+        auto maybe_index = mComponentIdSet.IndexOf( id );
+        NY_ASSERT( maybe_index.has_value() );
+        auto index = maybe_index.value();
+        return mComponentMemoryInfos[index];
     }
 
     // 先设定到 16 kb
@@ -198,15 +215,199 @@ class ECS_API Archetype
     }
 
   public:
-    inline const ComponentIdSet &GetComponentIdSet() const
+    inline const ComponentIdSet& GetComponentIdSet() const
     {
         return mComponentIdSet;
+    }
+
+    template <typename... T>
+        requires IsComponentSetConcept<T...>
+    std::vector<ArchetypeComponentMemoryInfo> GetMemoryInfo( const ComponentIdSet& componentIdSet,
+                                                             const std::vector<ArchetypeComponentMemoryInfo>& infos )
+    {
+        auto newComponentIdSet = ComponentTypeRegistry::GetComponentIdSet<T...>();
+        std::array<usize, sizeof...( T )> componentIdIndices;
+        for ( auto&& [i, id] : newComponentIdSet | ranges::views::enumerate )
+        {
+            auto index = componentIdSet.IndexOf( id );
+            if ( index )
+            {
+                componentIdIndices[i] = index.value();
+            }
+        }
+
+        std::vector<ArchetypeComponentMemoryInfo> newInfos;
+        newInfos.resize( sizeof...( T ) );
+        for ( auto&& [i, index] : componentIdIndices | ranges::views::enumerate )
+        {
+            newInfos[i] = infos[index];
+        }
+        return newInfos;
+    }
+
+  public:
+    template <typename... T>
+        requires IsComponentSetConcept<T...>
+    class ComponentSetIterator
+    {
+      public:
+        ComponentSetIterator()
+        {
+        }
+
+        ComponentSetIterator( Archetype* archetype )
+            : mArchetype( archetype )
+        {
+        }
+
+        ComponentSetIterator( const ComponentSetIterator& iterator )
+            : mArchetype( iterator.mArchetype )
+            , mChunkIterator( iterator.mChunkIterator )
+            , mComponentSetIterator( iterator.mComponentSetIterator )
+        {
+        }
+
+        ComponentSetIterator<T...>& begin()
+        {
+            mChunkIterator = mArchetype->begin();
+            if ( mChunkIterator != mArchetype->end() )
+            {
+                auto infos =
+                    mArchetype->GetMemoryInfo<T...>( mArchetype->mComponentIdSet, mArchetype->mComponentMemoryInfos );
+                mComponentSetIterator = mChunkIterator->ComponentSetIter<T...>( infos );
+            }
+            else
+            {
+                end();
+            }
+            return *this;
+        }
+
+        ComponentSetIterator<T...>& end()
+        {
+            mChunkIterator = mArchetype->end();
+            mComponentSetIterator = std::nullopt;
+            return *this;
+        }
+
+        void operator=( const ComponentSetIterator& other )
+        {
+            this->mArchetype = other.mArchetype;
+            this->mChunkIterator = other.mChunkIterator;
+            this->mComponentSetIterator = other.mComponentSetIterator;
+        }
+
+        // ++a
+        ComponentSetIterator& operator++()
+        {
+            mComponentSetIterator++;
+            while ( mComponentSetIterator.IsEnd() )
+            {
+                ++mChunkIterator;
+                if ( mChunkIterator != mArchetype->end() )
+                {
+                    mComponentSetIterator = mChunkIterator->ComponentSetIter<T...>( mArchetype->mComponentIdSet,
+                                                                                    mArchetype->mComponentMemoryInfos );
+                }
+                else
+                {
+                    mComponentSetIterator = std::nullopt;
+                    break;
+                }
+            }
+            return *this;
+        }
+
+        // a++
+        ComponentSetIterator operator++( i32 )
+        {
+            ComponentSetIterator old = *this;
+            if ( mComponentSetIterator.has_value() )
+            {
+                auto& iter = mComponentSetIterator.value();
+                iter++;
+                while ( iter.IsEnd() )
+                {
+                    ++mChunkIterator;
+                    if ( mChunkIterator != mArchetype->end() )
+                    {
+                        auto infos = mArchetype->GetMemoryInfo<T...>( mArchetype->mComponentIdSet,
+                                                                      mArchetype->mComponentMemoryInfos );
+                        mComponentSetIterator = mChunkIterator->ComponentSetIter<T...>( infos );
+                    }
+                    else
+                    {
+                        mComponentSetIterator = std::nullopt;
+                        break;
+                    }
+                }
+            }
+            return old;
+        }
+
+        bool operator==( const ComponentSetIterator& other ) const
+        {
+            return mArchetype == other.mArchetype && mChunkIterator == other.mChunkIterator &&
+                   mComponentSetIterator == other.mComponentSetIterator;
+        }
+
+        std::tuple<T&...> operator*()
+        {
+            return mComponentSetIterator.value().GetComponents();
+        }
+
+        std::tuple<T&...> operator*() const
+        {
+            return mComponentSetIterator.value().GetComponents();
+        }
+
+        bool IsEnd() const
+        {
+            return mChunkIterator == mArchetype->mArchetypeChunks.end();
+        }
+
+        bool IsValid() const
+        {
+            return mArchetype != nullptr;
+        }
+
+      protected:
+        Archetype* mArchetype = nullptr;
+        ChunkIterator mChunkIterator;
+        std::optional<ArchetypeChunk::ComponentSetIterator<T...>> mComponentSetIterator;
+    };
+
+    ChunkIterator begin()
+    {
+        return mArchetypeChunks.begin();
+    }
+
+    ChunkIterator end()
+    {
+        return mArchetypeChunks.end();
+    }
+
+    template <typename... T>
+        requires IsComponentSetConcept<T...>
+    ComponentSetIterator<T...> ComponentSetIter()
+    {
+        return ComponentSetIterator<T...>( this );
+    }
+
+    inline usize GetTotalEntityNum() const
+    {
+        usize totalNum = 0;
+        for ( auto& chunk : mArchetypeChunks )
+        {
+            totalNum += chunk.GetEntityNum();
+        }
+        return totalNum;
     }
 
   protected:
     ComponentIdSet mComponentIdSet;
     // memory offset and size
-    std::vector<ArchetypeComponentMemoryInfo> mComponentMemoryInfo;
+    std::vector<ArchetypeComponentMemoryInfo> mComponentMemoryInfos;
 
     // 应该是一个数组
     std::vector<ArchetypeChunk> mArchetypeChunks;

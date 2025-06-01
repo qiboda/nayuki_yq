@@ -1,4 +1,5 @@
 #include "ecs/archetype/archetype_chunk.h"
+#include "ecs/components/component_info.h"
 #include "ecs/components/component.h"
 #include "ecs/entity/entity.h"
 #include <gtest/gtest.h>
@@ -25,7 +26,7 @@ class ArchetypeChunkTest : public ::testing::Test
 
         ComponentA() = default;
 
-        ComponentA( ComponentA &&other )
+        ComponentA( ComponentA&& other )
         {
             std::cout << "ComponentA move constructor called" << std::endl;
 
@@ -41,14 +42,14 @@ class ArchetypeChunkTest : public ::testing::Test
         i32 a = 0;
         f32 b = 3.3f;
         std::string c = "hello";
-        i32 &k;
+        i32& k;
 
-        ComponentB( i32 &k )
+        ComponentB( i32& k )
             : k( k )
         {
         }
 
-        ComponentB( ComponentB &&other ) = default;
+        ComponentB( ComponentB&& other ) = default;
 
         virtual ~ComponentB() override
         {
@@ -57,7 +58,7 @@ class ArchetypeChunkTest : public ::testing::Test
     };
 };
 
-TEST_F( ArchetypeChunkTest, AddComponnet )
+TEST_F( ArchetypeChunkTest, AddComponent )
 {
     ArchetypeComponentMemoryInfo info;
     auto componentInfo = ComponentTypeRegistry::GetComponentInfo<ComponentA>();
@@ -74,16 +75,16 @@ TEST_F( ArchetypeChunkTest, AddComponnet )
     Entity entity( 1, 1 );
 
     ArchetypeChunk archetypeChunk( 100 );
-    archetypeChunk.AddEntity( entity );
+    archetypeChunk.AddEntity( entity, info );
     archetypeChunk.AddComponentData( entity, info, std::move( component ) );
 
-    ComponentA *componentA = archetypeChunk.GetComponents<ComponentA>( info );
+    ComponentA* componentA = archetypeChunk.GetComponents<ComponentA>( info );
 
     EXPECT_EQ( componentA->a, 23 );
     EXPECT_EQ( componentA->b, 3.3f );
 }
 
-TEST_F( ArchetypeChunkTest, AddComponnetWithOffset )
+TEST_F( ArchetypeChunkTest, AddComponentWithOffset )
 {
     ArchetypeComponentMemoryInfo info;
     auto componentInfo = ComponentTypeRegistry::GetComponentInfo<ComponentA>();
@@ -95,7 +96,7 @@ TEST_F( ArchetypeChunkTest, AddComponnetWithOffset )
     for ( Entity::IdType i = 0u; i < 12u; ++i )
     {
         Entity entity( i, 1 );
-        archetypeChunk.AddEntity( entity );
+        archetypeChunk.AddEntity( entity, info );
     }
 
     Entity::IdType entityIndex = 11u;
@@ -106,14 +107,14 @@ TEST_F( ArchetypeChunkTest, AddComponnetWithOffset )
 
     archetypeChunk.AddComponentData( Entity( entityIndex, 1u ), info, std::move( component ) );
 
-    ComponentA *componentA = archetypeChunk.GetComponents<ComponentA>( info );
+    ComponentA* componentA = archetypeChunk.GetComponents<ComponentA>( info );
 
     componentA += entityIndex;
     EXPECT_EQ( componentA->a, 23 );
     EXPECT_EQ( componentA->b, 3.3f );
 }
 
-TEST_F( ArchetypeChunkTest, ReplaceComponnet )
+TEST_F( ArchetypeChunkTest, ReplaceComponent )
 {
     ArchetypeChunk archetypeChunk( 100 );
 
@@ -129,20 +130,20 @@ TEST_F( ArchetypeChunkTest, ReplaceComponnet )
     component.b = 3.3f;
 
     Entity entity( 1, 1 );
-    archetypeChunk.AddEntity( entity );
+    archetypeChunk.AddEntity( entity, info );
     archetypeChunk.AddComponentData( entity, info, std::move( component ) );
 
     i32 j = 0;
-    auto componentb = ComponentB( j );
-    componentb.a = 23;
-    componentb.b = 3.3f;
-    archetypeChunk.ReplaceComponentData( entity, info, std::move( componentb ) );
+    auto componentB = ComponentB( j );
+    componentB.a = 23;
+    componentB.b = 3.3f;
+    archetypeChunk.ReplaceComponentData( entity, info, std::move( componentB ) );
 
-    ComponentB *componentBSeq = archetypeChunk.GetComponents<ComponentB>( info );
+    ComponentB* componentBSeq = archetypeChunk.GetComponents<ComponentB>( info );
     ASSERT_EQ( componentBSeq->k, j );
 }
 
-TEST_F( ArchetypeChunkTest, DeconstructorComponnet )
+TEST_F( ArchetypeChunkTest, DeconstructorComponent )
 {
     ArchetypeChunk archetypeChunk( 100 );
 
@@ -158,16 +159,16 @@ TEST_F( ArchetypeChunkTest, DeconstructorComponnet )
     component.b = 3.3f;
 
     Entity entity( 1, 1 );
-    archetypeChunk.AddEntity( entity );
+    archetypeChunk.AddEntity( entity, info );
     archetypeChunk.AddComponentData( entity, info, std::move( component ) );
 
     ASSERT_EQ( k, 12 );
 
     i32 j = 0;
-    auto componentb = ComponentB( j );
-    componentb.a = 23;
-    componentb.b = 3.3f;
-    archetypeChunk.ReplaceComponentData( entity, info, std::move( componentb ) );
+    auto componentB = ComponentB( j );
+    componentB.a = 23;
+    componentB.b = 3.3f;
+    archetypeChunk.ReplaceComponentData( entity, info, std::move( componentB ) );
 
     ASSERT_EQ( k, 0 );
 }

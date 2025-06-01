@@ -13,6 +13,7 @@ enum class FuncKind
     FuncRef,
 };
 
+/// 其中Param没有类型限定符，Args则保留了类型限定符。
 template <typename Ret, typename... Args>
 struct FnTraitBase
 {

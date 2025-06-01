@@ -6,6 +6,7 @@ InlayHints:
 
 Completion:
   AllScopes: true
+  IncludeInsertion: Never
 
 Diagnostics:
   UnusedIncludes: Strict

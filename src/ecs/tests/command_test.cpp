@@ -1,3 +1,4 @@
+#include "ecs/commands/command_param.h"
 #include <gtest/gtest.h>
 
 #include <ecs/commands/entity_command.h>
@@ -25,7 +26,7 @@ class CommandTest : public ::testing::Test
         delete mRegistry;
     }
 
-    Registry *mRegistry = nullptr;
+    Registry* mRegistry = nullptr;
 
     struct ComponentC : public Component
     {
@@ -40,6 +41,25 @@ TEST_F( CommandTest, CreateEntity )
 
     // clang-format off
     RegistryCommand::Get( mRegistry )
+        ->Entity()
+            ->Destroy( InvalidEntity )
+        ->Entity()
+            ->Create()
+                ->AddComponent(std::move(k) );
+    // clang-format on
+}
+
+TEST_F( CommandTest, CommandsParam )
+{
+    ComponentC k = ComponentC();
+    k.a = 0;
+
+    Registry registry;
+    CommandsState state;
+    auto commands = Commands::From( &registry, state );
+
+    // clang-format off
+    commands()
         ->Entity()
             ->Destroy( InvalidEntity )
         ->Entity()

@@ -10,7 +10,7 @@ void Archetype::MoveEntity( Entity entity, Archetype *destArchetype, ArchetypeCh
     ArchetypeChunk *curArchetypeChunk = GetEntityArchetypeChunk( entity );
     if ( curArchetypeChunk )
     {
-        std::vector<u8 *> moveOuttedComponentsData = curArchetypeChunk->MoveOutEntity( entity, mComponentMemoryInfo );
+        std::vector<u8 *> moveOuttedComponentsData = curArchetypeChunk->MoveOutEntity( entity, mComponentMemoryInfos );
 
         // 获得 公有的组件 id
         std::vector<ComponentId> unionComponentIds =
@@ -25,7 +25,7 @@ void Archetype::MoveEntity( Entity entity, Archetype *destArchetype, ArchetypeCh
                                                          moveOuttedComponentsData,
                                                          srcIndex,
                                                          destIndex,
-                                                         mComponentMemoryInfo );
+                                                         mComponentMemoryInfos );
         }
 
         // 如果src的component更多，那么需要把那些数据析构掉。

@@ -7,7 +7,7 @@
 #include <ecs/minimal.h>
 
 template <typename T>
-class LocalState : SystemParamState
+class LocalState : public SystemParamState
 {
   public:
     LocalState()
