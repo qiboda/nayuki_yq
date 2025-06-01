@@ -22,7 +22,7 @@ class RENDER_CORE_API Swapchain : public IRAII
     virtual void CleanUp() override;
 
   public:
-    void SetWindow( Window *window );
+    void SetWindow( Window* window );
     void SetDevice( vk::SharedDevice device );
     void SetCommandPool( vk::SharedCommandPool commandPool );
 
@@ -31,7 +31,7 @@ class RENDER_CORE_API Swapchain : public IRAII
     void DestroySwapchain();
 
   private:
-    Window *mWindow = nullptr;
+    Window* mWindow = nullptr;
     vk::SharedSwapchainKHR mSwapchain;
     vk::SharedDevice mDevice;
     vk::SharedCommandPool mCommandPool;

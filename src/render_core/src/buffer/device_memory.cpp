@@ -17,7 +17,7 @@ void DeviceMemory::CleanUp()
 {
 }
 
-void DeviceMemory::AllocateMemory( const vk::MemoryAllocateInfo &allocateInfo )
+void DeviceMemory::AllocateMemory( const vk::MemoryAllocateInfo& allocateInfo )
 {
     NY_ASSERT( mDevice )
 

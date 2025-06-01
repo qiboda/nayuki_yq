@@ -12,6 +12,6 @@ class CORE_API NonCopyable
     }
 
   private:
-    NonCopyable &operator=( const NonCopyable & ) = delete;
-    NonCopyable( const NonCopyable & ) = delete;
+    NonCopyable& operator=( const NonCopyable& ) = delete;
+    NonCopyable( const NonCopyable& ) = delete;
 };

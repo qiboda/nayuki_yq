@@ -52,7 +52,7 @@ class SparseArray
         return std::nullopt;
     }
 
-    inline const TValue *TryGet( TKey key ) const
+    inline const TValue* TryGet( TKey key ) const
     {
         if ( key < mSparseKeyArray.size() )
         {
@@ -65,7 +65,7 @@ class SparseArray
         return nullptr;
     }
 
-    inline TValue *TryGet( TKey key )
+    inline TValue* TryGet( TKey key )
     {
         if ( key < mSparseKeyArray.size() )
         {
@@ -78,12 +78,12 @@ class SparseArray
         return nullptr;
     }
 
-    inline TValue &Get( TKey key )
+    inline TValue& Get( TKey key )
     {
         return mDenseArray[mSparseKeyArray[key]];
     }
 
-    inline const TValue &Get( TKey key ) const
+    inline const TValue& Get( TKey key ) const
     {
         return mDenseArray[mSparseKeyArray[key]];
     }

@@ -24,7 +24,7 @@ class RENDER_CORE_API PhysicalDevice : public IRAII
     void DestroyPhysicalDevice();
 
   public:
-    std::pair<u32, u32> findGraphicsAndPresentQueueFamilyIndex( Window *window );
+    std::pair<u32, u32> findGraphicsAndPresentQueueFamilyIndex( Window* window );
 
   public:
     void SetInstance( SharedRenderInstance instance )
@@ -32,7 +32,7 @@ class RENDER_CORE_API PhysicalDevice : public IRAII
         mInstance = instance;
     }
 
-    vk::SharedPhysicalDevice &GetShared()
+    vk::SharedPhysicalDevice& GetShared()
     {
         return mPhysicalDevice;
     }

@@ -9,10 +9,10 @@ usize PlatformMemory::GetCacheLineSize()
     size_t line_size = 0;
     DWORD buffer_size = 0;
     DWORD i = 0;
-    SYSTEM_LOGICAL_PROCESSOR_INFORMATION *buffer = nullptr;
+    SYSTEM_LOGICAL_PROCESSOR_INFORMATION* buffer = nullptr;
 
     GetLogicalProcessorInformation( nullptr, &buffer_size );
-    buffer = ( SYSTEM_LOGICAL_PROCESSOR_INFORMATION * )malloc( buffer_size );
+    buffer = ( SYSTEM_LOGICAL_PROCESSOR_INFORMATION* )malloc( buffer_size );
     GetLogicalProcessorInformation( &buffer[0], &buffer_size );
 
     SUPPRESS_UNSAFE_BUFFER_USAGE_BEGIN

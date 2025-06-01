@@ -19,7 +19,7 @@ void CommandBufferBase::CleanUp()
     DestroyCommandBuffer();
 }
 
-void CommandBufferBase::BeginCommandBuffer( const vk::CommandBufferBeginInfo &beginInfo )
+void CommandBufferBase::BeginCommandBuffer( const vk::CommandBufferBeginInfo& beginInfo )
 {
     mCommandBuffer->begin( beginInfo );
 }

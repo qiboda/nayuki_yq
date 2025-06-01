@@ -14,7 +14,7 @@ template <IsComponentConcept... T>
 class AddComponentCommandBuffer : public CommandBufferBase
 {
   public:
-    AddComponentCommandBuffer( Entity entity, T &&...component )
+    AddComponentCommandBuffer( Entity entity, T&&... component )
         : CommandBufferBase()
         , mEntity( entity )
         , mComponents{ std::forward<T>( component )... }
@@ -22,9 +22,9 @@ class AddComponentCommandBuffer : public CommandBufferBase
     }
 
   public:
-    virtual void Execute( Registry *registry ) override
+    virtual void Execute( Registry* registry ) override
     {
-        std::apply( [&]( auto &&...comps )
+        std::apply( [&]( auto&&... comps )
                     { registry->mArchetypeManager->AddComponentData( mEntity, std::forward<T>( comps )... ); },
                     std::forward<std::tuple<T...>>( mComponents ) );
     }
@@ -43,7 +43,7 @@ template <IsComponentConcept... T>
 class RemoveComponentCommandBuffer : public CommandBufferBase
 {
   public:
-    RemoveComponentCommandBuffer( Entity entity, T &&...component )
+    RemoveComponentCommandBuffer( Entity entity, T&&... component )
         : CommandBufferBase()
         , mEntity( entity )
         , mComponents( std::forward<T>( component )... )
@@ -51,9 +51,9 @@ class RemoveComponentCommandBuffer : public CommandBufferBase
     }
 
   public:
-    virtual void Execute( Registry *registry ) override
+    virtual void Execute( Registry* registry ) override
     {
-        std::apply( [&]( auto &&...comps )
+        std::apply( [&]( auto&&... comps )
                     { registry->mArchetypeManager->RemoveComponentData( mEntity, std::forward<T>( comps )... ); },
                     std::forward<std::tuple<T...>>( mComponents ) );
     }
@@ -72,7 +72,7 @@ template <IsComponentConcept... T>
 class ReplaceComponentCommandBuffer : public CommandBufferBase
 {
   public:
-    ReplaceComponentCommandBuffer( Entity entity, T &&...component )
+    ReplaceComponentCommandBuffer( Entity entity, T&&... component )
         : CommandBufferBase()
         , mEntity( entity )
         , mComponents( std::forward<T>( component )... )
@@ -80,9 +80,9 @@ class ReplaceComponentCommandBuffer : public CommandBufferBase
     }
 
   public:
-    virtual void Execute( Registry *registry ) override
+    virtual void Execute( Registry* registry ) override
     {
-        std::apply( [&]( auto &&...comps )
+        std::apply( [&]( auto&&... comps )
                     { registry->mArchetypeManager->ReplaceComponentData( mEntity, std::forward<T>( comps )... ); },
                     std::forward<std::tuple<T...>>( mComponents ) );
     }
@@ -108,7 +108,7 @@ class ECS_API EntityInstanceCommand : public CommandBase
 
   public:
     template <IsComponentConcept... T>
-    std::shared_ptr<EntityInstanceCommand> AddComponent( T &&...components )
+    std::shared_ptr<EntityInstanceCommand> AddComponent( T&&... components )
     {
         GetRegistry()->mCommandManager->QueueCommand_AnyThread(
             AddComponentCommandBuffer<T...>( mEntity, std::forward<T>( components )... ) );
@@ -116,7 +116,7 @@ class ECS_API EntityInstanceCommand : public CommandBase
     }
 
     template <IsComponentConcept... T>
-    std::shared_ptr<EntityInstanceCommand> ReplaceComponent( T &&...component )
+    std::shared_ptr<EntityInstanceCommand> ReplaceComponent( T&&... component )
     {
         GetRegistry()->mCommandManager->QueueCommand_AnyThread(
             ReplaceComponentCommandBuffer<T...>( mEntity, std::forward<T>( component )... ) );
@@ -124,7 +124,7 @@ class ECS_API EntityInstanceCommand : public CommandBase
     }
 
     template <IsComponentConcept... T>
-    std::shared_ptr<EntityInstanceCommand> RemoveComponent( T &&...component )
+    std::shared_ptr<EntityInstanceCommand> RemoveComponent( T&&... component )
     {
         GetRegistry()->mCommandManager->QueueCommand_AnyThread(
             RemoveComponentCommandBuffer<T...>( mEntity, std::forward<T>( component )... ) );

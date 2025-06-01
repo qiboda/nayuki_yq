@@ -17,10 +17,10 @@ class CORE_API DelegateHandle
     {
     }
 
-    DelegateHandle( const DelegateHandle & ) = default;
-    DelegateHandle( DelegateHandle && ) = default;
-    DelegateHandle &operator=( const DelegateHandle & ) = default;
-    DelegateHandle &operator=( DelegateHandle && ) = default;
+    DelegateHandle( const DelegateHandle& ) = default;
+    DelegateHandle( DelegateHandle&& ) = default;
+    DelegateHandle& operator=( const DelegateHandle& ) = default;
+    DelegateHandle& operator=( DelegateHandle&& ) = default;
 
     explicit DelegateHandle( GenerateNewHandleType )
         : mHandleId( GenerateNewId() )
@@ -52,7 +52,7 @@ class CORE_API DelegateHandle
     }
 
   private:
-    friend bool operator==( const DelegateHandle &Lhs, const DelegateHandle &Rhs )
+    friend bool operator==( const DelegateHandle& Lhs, const DelegateHandle& Rhs )
     {
         return Lhs.mHandleId == Rhs.mHandleId;
     }

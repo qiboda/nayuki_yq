@@ -8,7 +8,7 @@
 #    error "alloca is not supported on this platform"
 #endif
 
-void *PlatformMemory::Alloca( usize size )
+void* PlatformMemory::Alloca( usize size )
 {
 #if defined( _MSC_VER ) // MSVC
     return _alloca( size );

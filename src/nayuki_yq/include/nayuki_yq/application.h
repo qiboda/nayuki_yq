@@ -22,7 +22,7 @@ class NAYUKI_YQ_API Application : public IRAII
     virtual void Update();
 
   public:
-    void SetAppName( const std::string_view &name )
+    void SetAppName( const std::string_view& name )
     {
         mAppInfo.setPApplicationName( name.data() );
     }
@@ -32,7 +32,7 @@ class NAYUKI_YQ_API Application : public IRAII
         mAppInfo.setApiVersion( VK_MAKE_VERSION( major, minor, patch ) );
     }
 
-    void SetEngineName( const std::string_view &name )
+    void SetEngineName( const std::string_view& name )
     {
         mAppInfo.setPEngineName( name.data() );
     }

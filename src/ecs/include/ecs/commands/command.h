@@ -17,20 +17,20 @@ class ECS_API CommandBufferBase
     virtual ~CommandBufferBase() = default;
 
   public:
-    virtual void Execute( class Registry *registry ) = 0;
+    virtual void Execute( class Registry* registry ) = 0;
     virtual usize GetSize() const = 0;
 };
 
 class CommandContext
 {
   public:
-    CommandContext( Registry *registry )
+    CommandContext( Registry* registry )
         : registry( registry )
     {
     }
 
   public:
-    Registry *GetRegistry()
+    Registry* GetRegistry()
     {
         return registry;
     }
@@ -52,7 +52,7 @@ class CommandContext
     }
 
   protected:
-    Registry *registry = nullptr;
+    Registry* registry = nullptr;
 
     std::stack<std::weak_ptr<CommandBase>> mCommandStack;
 };
@@ -87,7 +87,7 @@ class ECS_API CommandBase : public std::enable_shared_from_this<CommandBase>
     }
 
   public:
-    Registry *GetRegistry()
+    Registry* GetRegistry()
     {
         return mCommandContext->GetRegistry();
     }

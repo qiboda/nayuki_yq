@@ -19,7 +19,7 @@ class RENDER_CORE_API Device : public IRAII
     {
     }
 
-    void CreateDevice( const vk::DeviceCreateInfo &deviceInfo );
+    void CreateDevice( const vk::DeviceCreateInfo& deviceInfo );
 
     void DestroyDevice();
 
@@ -29,7 +29,7 @@ class RENDER_CORE_API Device : public IRAII
         mPhysicalDevice = physicalDevice;
     }
 
-    vk::SharedDevice &GetShared()
+    vk::SharedDevice& GetShared()
     {
         return mDevice;
     }

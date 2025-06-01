@@ -19,18 +19,18 @@ class RENDER_CORE_API Buffer : public IRAII
     void destroyBuffer();
 
   public:
-    virtual void *GetBuffer() = 0;
+    virtual void* GetBuffer() = 0;
     virtual size_t GetSize() = 0;
 
-    virtual void *Map() = 0;
+    virtual void* Map() = 0;
 
     virtual void Unmap() = 0;
 
     virtual void Resize( size_t size ) = 0;
 
-    virtual void CopyTo( Buffer *buffer ) = 0;
+    virtual void CopyTo( Buffer* buffer ) = 0;
 
-    virtual void CopyFrom( Buffer *buffer ) = 0;
+    virtual void CopyFrom( Buffer* buffer ) = 0;
 
   public:
     void SetDevice( vk::SharedDevice device )

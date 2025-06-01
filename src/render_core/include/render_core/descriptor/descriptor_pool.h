@@ -21,13 +21,13 @@ class RENDER_CORE_API DescriptorPool : public IRAII
         return mDescriptorPool.get();
     }
 
-    vk::SharedDescriptorPool &GetShared()
+    vk::SharedDescriptorPool& GetShared()
     {
         return mDescriptorPool;
     }
 
   public:
-    void CreateDescriptorPool( const vk::DescriptorPoolCreateInfo &poolInfo )
+    void CreateDescriptorPool( const vk::DescriptorPoolCreateInfo& poolInfo )
     {
         NY_ASSERT( mDevice )
 

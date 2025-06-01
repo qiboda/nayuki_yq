@@ -44,7 +44,7 @@ void PhysicalDevice::DestroyPhysicalDevice()
     mPhysicalDevice.reset();
 }
 
-std::pair<u32, u32> PhysicalDevice::findGraphicsAndPresentQueueFamilyIndex( Window *window )
+std::pair<u32, u32> PhysicalDevice::findGraphicsAndPresentQueueFamilyIndex( Window* window )
 {
     auto surface = window->GetSurface();
 
@@ -55,7 +55,7 @@ std::pair<u32, u32> PhysicalDevice::findGraphicsAndPresentQueueFamilyIndex( Wind
     // look for a queueFamilyIndex that supports graphics and present
     auto combinedIt = std::find_if( queueFamilyProperties.begin(),
                                     queueFamilyProperties.end(),
-                                    [this, &surface, &index]( vk::QueueFamilyProperties const &qfp )
+                                    [this, &surface, &index]( vk::QueueFamilyProperties const& qfp )
                                     {
                                         return ( qfp.queueFlags & vk::QueueFlagBits::eGraphics ) &&
                                                mPhysicalDevice->getSurfaceSupportKHR( index++, surface.get() );

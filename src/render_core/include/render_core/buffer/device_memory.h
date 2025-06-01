@@ -17,7 +17,7 @@ class RENDER_CORE_API DeviceMemory : public IRAII
 #pragma endregion
 
   public:
-    virtual void AllocateMemory( const vk::MemoryAllocateInfo &allocateInfo );
+    virtual void AllocateMemory( const vk::MemoryAllocateInfo& allocateInfo );
 
     virtual void FreeMemory()
     {
@@ -43,7 +43,7 @@ class RENDER_CORE_API DeviceMemory : public IRAII
     }
 
   public:
-    virtual void *GetMemory() const
+    virtual void* GetMemory() const
     {
         return nullptr;
     }
@@ -53,7 +53,7 @@ class RENDER_CORE_API DeviceMemory : public IRAII
         return 0u;
     }
 
-    virtual void *MapMemory()
+    virtual void* MapMemory()
     {
         return nullptr;
     }

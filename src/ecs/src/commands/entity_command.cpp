@@ -6,13 +6,13 @@
 #include "ecs/commands/command_manager.h"
 #include <memory>
 
-void CreateEntityCommandBuffer::Execute( Registry *registry )
+void CreateEntityCommandBuffer::Execute( Registry* registry )
 {
     registry->mEntityManager->AddEntity( mEntity );
     registry->mArchetypeManager->CreateEntity( mEntity );
 }
 
-void DestroyEntityCommandBuffer::Execute( Registry *registry )
+void DestroyEntityCommandBuffer::Execute( Registry* registry )
 {
     registry->mEntityManager->RemoveEntity( mEntity );
     registry->mArchetypeManager->DestroyEntity( mEntity );

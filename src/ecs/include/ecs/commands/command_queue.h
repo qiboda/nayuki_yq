@@ -12,7 +12,7 @@ class ECS_API CommandQueue
 
   public:
     template <typename T>
-    void AddCommand_AnyThread( T &&command )
+    void AddCommand_AnyThread( T&& command )
     {
         static_assert( std::is_base_of_v<CommandBufferBase, T> );
 
@@ -21,13 +21,13 @@ class ECS_API CommandQueue
         new ( mBuffer.data() + base ) T( std::forward<T>( command ) );
     }
 
-    void ExecuteCommands( Registry *registry )
+    void ExecuteCommands( Registry* registry )
     {
         usize size = mBuffer.size();
         usize base = 0;
         while ( base < size )
         {
-            auto commandBuffer = reinterpret_cast<CommandBufferBase *>( mBuffer.data() + base );
+            auto commandBuffer = reinterpret_cast<CommandBufferBase*>( mBuffer.data() + base );
             commandBuffer->Execute( registry );
             base += commandBuffer->GetSize();
         }

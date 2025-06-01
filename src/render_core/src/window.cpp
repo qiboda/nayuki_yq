@@ -29,12 +29,12 @@ void Window::CreateSurface( std::shared_ptr<RenderInstance> instance )
     mSharedSurfaceKHR = vk::SharedSurfaceKHR( vkSurface, instance->GetShared() );
 }
 
-std::vector<const char *> Window::GetRenderInstanceExtensions()
+std::vector<const char*> Window::GetRenderInstanceExtensions()
 {
     u32 glfwExtensionCount = 0;
-    const char **extensions = glfwGetRequiredInstanceExtensions( &glfwExtensionCount );
+    const char** extensions = glfwGetRequiredInstanceExtensions( &glfwExtensionCount );
 
-    std::vector<const char *> extensionsVec;
+    std::vector<const char*> extensionsVec;
     for ( u32 i = 0; i < glfwExtensionCount; i++ )
     {
         SUPPRESS_UNSAFE_BUFFER_USAGE_BEGIN

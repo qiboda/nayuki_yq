@@ -13,13 +13,13 @@ class ECS_API CommandManager
 
   public:
     template <typename T>
-    void QueueCommand_AnyThread( T &&CommandBuffer )
+    void QueueCommand_AnyThread( T&& CommandBuffer )
     {
         static_assert( std::is_base_of_v<CommandBufferBase, T> );
         Queue.AddCommand_AnyThread( std::forward<T>( CommandBuffer ) );
     }
 
-    void ExecuteCommands( Registry *registry )
+    void ExecuteCommands( Registry* registry )
     {
         Queue.ExecuteCommands( registry );
     }

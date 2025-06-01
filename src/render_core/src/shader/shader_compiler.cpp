@@ -11,7 +11,7 @@ ShaderCompiler::~ShaderCompiler()
 }
 
 std::string
-ShaderCompiler::PreprocessShader( const std::string &source_name, shaderc_shader_kind kind, const std::string &source )
+ShaderCompiler::PreprocessShader( const std::string& source_name, shaderc_shader_kind kind, const std::string& source )
 {
     shaderc::CompileOptions options;
     FillMacroDefinition( options );
@@ -28,9 +28,9 @@ ShaderCompiler::PreprocessShader( const std::string &source_name, shaderc_shader
     return { result.cbegin(), result.cend() };
 }
 
-std::string ShaderCompiler::CompileFileToAssembly( const std::string &source_name,
+std::string ShaderCompiler::CompileFileToAssembly( const std::string& source_name,
                                                    shaderc_shader_kind kind,
-                                                   const std::string &source,
+                                                   const std::string& source,
                                                    bool optimize )
 {
     shaderc::CompileOptions options;
@@ -50,9 +50,9 @@ std::string ShaderCompiler::CompileFileToAssembly( const std::string &source_nam
     return { result.cbegin(), result.cend() };
 }
 
-std::vector<u32> ShaderCompiler::CompileFile( const std::string &source_name,
+std::vector<u32> ShaderCompiler::CompileFile( const std::string& source_name,
                                               shaderc_shader_kind kind,
-                                              const std::string &source,
+                                              const std::string& source,
                                               bool optimize )
 {
     shaderc::CompileOptions options;

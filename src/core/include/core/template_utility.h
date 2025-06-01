@@ -34,9 +34,9 @@ struct non_const<const T>
 
 /** handle bottom const */
 template <typename T>
-struct non_const<const T *>
+struct non_const<const T*>
 {
-    using type = T *;
+    using type = T*;
 };
 
 template <typename T>

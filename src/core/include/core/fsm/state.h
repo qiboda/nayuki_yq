@@ -26,18 +26,18 @@ class State : public NonCopyable
 
 #pragma region update
   public:
-    void Update( std::shared_ptr<TFSMContext> &fsmContext, f32 DeltaSeconds )
+    void Update( std::shared_ptr<TFSMContext>& fsmContext, f32 DeltaSeconds )
     {
         OnUpdate( fsmContext, DeltaSeconds );
     }
 
   public:
-    virtual void OnUpdate( std::shared_ptr<TFSMContext> &fsmContext, f32 DeltaSeconds ) = 0;
+    virtual void OnUpdate( std::shared_ptr<TFSMContext>& fsmContext, f32 DeltaSeconds ) = 0;
 #pragma endregion update
 
 #pragma region enter
   private:
-    void Enter( std::shared_ptr<TFSMContext> &fsmContext )
+    void Enter( std::shared_ptr<TFSMContext>& fsmContext )
     {
         OnEnterPre( fsmContext );
         OnEnter( fsmContext );
@@ -45,14 +45,14 @@ class State : public NonCopyable
     }
 
   public:
-    virtual void OnEnterPre( std::shared_ptr<TFSMContext> &fsmContext ) = 0;
-    virtual void OnEnter( std::shared_ptr<TFSMContext> &fsmContext ) = 0;
-    virtual void OnEnterPost( std::shared_ptr<TFSMContext> &fsmContext ) = 0;
+    virtual void OnEnterPre( std::shared_ptr<TFSMContext>& fsmContext ) = 0;
+    virtual void OnEnter( std::shared_ptr<TFSMContext>& fsmContext ) = 0;
+    virtual void OnEnterPost( std::shared_ptr<TFSMContext>& fsmContext ) = 0;
 #pragma endregion enter
 
 #pragma region leave
   private:
-    void Leave( std::shared_ptr<TFSMContext> &fsmContext )
+    void Leave( std::shared_ptr<TFSMContext>& fsmContext )
     {
         OnLeavePre( fsmContext );
         OnLeave( fsmContext );
@@ -60,8 +60,8 @@ class State : public NonCopyable
     }
 
   public:
-    virtual void OnLeavePre( std::shared_ptr<TFSMContext> &fsmContext ) = 0;
-    virtual void OnLeave( std::shared_ptr<TFSMContext> &fsmContext ) = 0;
-    virtual void OnLeavePost( std::shared_ptr<TFSMContext> &fsmContext ) = 0;
+    virtual void OnLeavePre( std::shared_ptr<TFSMContext>& fsmContext ) = 0;
+    virtual void OnLeave( std::shared_ptr<TFSMContext>& fsmContext ) = 0;
+    virtual void OnLeavePost( std::shared_ptr<TFSMContext>& fsmContext ) = 0;
 #pragma endregion leave
 };

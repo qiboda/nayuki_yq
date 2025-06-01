@@ -9,12 +9,12 @@ struct FixedString
 
     FixedString() = default;
 
-    FixedString( const char *str )
+    FixedString( const char* str )
     {
         std::strncpy( data, str, N - 1 );
     }
 
-    bool operator==( const FixedString<N> &other ) const
+    bool operator==( const FixedString<N>& other ) const
     {
         return std::strncmp( data, other.data, N ) == 0;
     }

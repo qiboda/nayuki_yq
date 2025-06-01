@@ -19,7 +19,7 @@ class RENDER_CORE_API DescriptorSetLayout : public IRAII
     }
 
   public:
-    void CreateDescriptorLayout( const vk::DescriptorSetLayoutCreateInfo &layoutInfo )
+    void CreateDescriptorLayout( const vk::DescriptorSetLayoutCreateInfo& layoutInfo )
     {
         NY_ASSERT( mDevice )
 
@@ -44,7 +44,7 @@ class RENDER_CORE_API DescriptorSetLayout : public IRAII
         return mDescriptorSetLayout.get();
     }
 
-    vk::SharedDescriptorSetLayout &GetShared()
+    vk::SharedDescriptorSetLayout& GetShared()
     {
         return mDescriptorSetLayout;
     }

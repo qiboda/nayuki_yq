@@ -20,7 +20,7 @@ class ECS_API SystemManager
         return systemId;
     }
 
-    const std::unique_ptr<ISystem> &GetSystem( SystemId systemId ) const
+    const std::unique_ptr<ISystem>& GetSystem( SystemId systemId ) const
     {
         const auto it = mSystems.find( systemId );
         if ( it != mSystems.cend() )
@@ -30,9 +30,9 @@ class ECS_API SystemManager
         return sNullISystem;
     }
 
-    void RunSystem( class Registry *registry )
+    void RunSystem( class Registry* registry )
     {
-        for ( auto &system : mSystems )
+        for ( auto& system : mSystems )
         {
             system.second->Run( registry );
         }

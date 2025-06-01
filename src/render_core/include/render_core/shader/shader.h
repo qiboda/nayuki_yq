@@ -17,7 +17,7 @@ class RENDER_CORE_API Shader : public IRAII
     {
     }
 
-    void CreateShader( const vk::ShaderModuleCreateInfo &shaderInfo )
+    void CreateShader( const vk::ShaderModuleCreateInfo& shaderInfo )
     {
         NY_ASSERT( mDevice )
 
@@ -41,7 +41,7 @@ class RENDER_CORE_API Shader : public IRAII
         return mShaderModule.get();
     }
 
-    vk::SharedShaderModule &GetShared()
+    vk::SharedShaderModule& GetShared()
     {
         return mShaderModule;
     }

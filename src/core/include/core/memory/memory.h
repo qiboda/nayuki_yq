@@ -38,35 +38,35 @@ class Memory
     }
 
   public:
-    static void *Malloc( usize size )
+    static void* Malloc( usize size )
     {
         return MallocAllocator::Malloc( size );
     }
 
-    static void Free( void *ptr )
+    static void Free( void* ptr )
     {
         MallocAllocator::Free( ptr );
     }
 
-    static void *Realloc( void *ptr, usize size )
+    static void* Realloc( void* ptr, usize size )
     {
         return MallocAllocator::Realloc( ptr, size );
     }
 
-    static void *Calloc( usize num, usize size )
+    static void* Calloc( usize num, usize size )
     {
         return MallocAllocator::Calloc( num, size );
     }
 
-    static void *AlignedAlloc( usize size, usize alignment )
+    static void* AlignedAlloc( usize size, usize alignment )
     {
         return MallocAllocator::AlignedAlloc( size, alignment );
     }
 
   public:
-    static void Swap( void *dest, void *src, usize size )
+    static void Swap( void* dest, void* src, usize size )
     {
-        u8 *temp = PlatformMemory::Alloca<u8>( size );
+        u8* temp = PlatformMemory::Alloca<u8>( size );
         std::memcpy( temp, dest, size );
         std::memcpy( dest, src, size );
         std::memcpy( src, temp, size );

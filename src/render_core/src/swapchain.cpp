@@ -21,7 +21,7 @@ void Swapchain::CleanUp()
     DestroySwapchain();
 }
 
-void Swapchain::SetWindow( Window *window )
+void Swapchain::SetWindow( Window* window )
 {
     mWindow = window;
 }

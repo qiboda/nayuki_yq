@@ -20,7 +20,7 @@ class RENDER_CORE_API Pipeline : public IRAII
     {
     }
 
-    void CreatePipeline( const vk::GraphicsPipelineCreateInfo &pipelineInfo )
+    void CreatePipeline( const vk::GraphicsPipelineCreateInfo& pipelineInfo )
     {
         NY_ASSERT( mDevice )
 
@@ -51,7 +51,7 @@ class RENDER_CORE_API Pipeline : public IRAII
         return mPipeline.get();
     }
 
-    vk::SharedPipeline &GetShared()
+    vk::SharedPipeline& GetShared()
     {
         return mPipeline;
     }

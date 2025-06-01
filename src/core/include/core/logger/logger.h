@@ -40,20 +40,20 @@ class CORE_API LoggerCategory
     };
 
   public:
-    LoggerCategory( const Name &loggerName, Type loggerType );
+    LoggerCategory( const Name& loggerName, Type loggerType );
 
   private:
     Name GetName() const;
     Type GetType() const;
 
   private:
-    friend bool operator==( const LoggerCategory &LHS, const LoggerCategory &RHS )
+    friend bool operator==( const LoggerCategory& LHS, const LoggerCategory& RHS )
     {
         std::function<void()>();
         return LHS.GetName() == RHS.GetName() && LHS.GetType() == RHS.GetType();
     }
 
-    friend bool operator!=( const LoggerCategory &LHS, const LoggerCategory &RHS )
+    friend bool operator!=( const LoggerCategory& LHS, const LoggerCategory& RHS )
     {
         return !( LHS == RHS );
     }
@@ -83,13 +83,13 @@ class CORE_API Logger : public Singleton<Logger>
 
   public:
     // Register and create a logger.
-    void RegisterCategory( const LoggerCategory &loggerCategory );
+    void RegisterCategory( const LoggerCategory& loggerCategory );
 
-    std::shared_ptr<spdlog::logger> Get( const LoggerCategory &loggerCategory );
+    std::shared_ptr<spdlog::logger> Get( const LoggerCategory& loggerCategory );
 
   private:
-    std::shared_ptr<spdlog::logger> CreateSyncLogger( const LoggerCategory &loggerCategory );
-    std::shared_ptr<spdlog::logger> CreateAsyncLogger( const LoggerCategory &loggerCategory );
+    std::shared_ptr<spdlog::logger> CreateSyncLogger( const LoggerCategory& loggerCategory );
+    std::shared_ptr<spdlog::logger> CreateAsyncLogger( const LoggerCategory& loggerCategory );
 };
 
 #pragma region HelperMacro

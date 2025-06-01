@@ -9,5 +9,6 @@ struct ECS_API ArchetypeComponentMemoryInfo
     usize mTotalSize;
     usize mComponentSize;
 
-    friend bool operator==(const ArchetypeComponentMemoryInfo& lhs, const ArchetypeComponentMemoryInfo& rhs) = default;
+    friend bool operator==( const ArchetypeComponentMemoryInfo& lhs,
+                            const ArchetypeComponentMemoryInfo& rhs ) = default;
 };

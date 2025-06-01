@@ -48,7 +48,7 @@ class RENDER_CORE_API DescriptorSetArray : public IRAII
     {
         std::vector<vk::DescriptorSet> rawDescriptorSets;
         rawDescriptorSets.reserve( mDescriptorSets.size() );
-        for ( auto &descriptorSet : mDescriptorSets )
+        for ( auto& descriptorSet : mDescriptorSets )
         {
             rawDescriptorSets.push_back( descriptorSet.GetRaw() );
         }

@@ -8,14 +8,14 @@ class RENDER_CORE_API DescriptorSet : public IRAII
   public:
     DescriptorSet();
 
-    DescriptorSet( vk::SharedDescriptorSet &&descriptorSet )
+    DescriptorSet( vk::SharedDescriptorSet&& descriptorSet )
         : mDescriptorSet( std::move( descriptorSet ) )
     {
     }
 
     virtual ~DescriptorSet() override;
 
-    DescriptorSet( DescriptorSet &&descriptorSet )
+    DescriptorSet( DescriptorSet&& descriptorSet )
     {
         mDevice = std::move( descriptorSet.mDevice );
         mDescriptorSet = std::move( descriptorSet.mDescriptorSet );
@@ -55,7 +55,7 @@ class RENDER_CORE_API DescriptorSet : public IRAII
         return mDescriptorSet.get();
     }
 
-    vk::SharedDescriptorSet &GetShared()
+    vk::SharedDescriptorSet& GetShared()
     {
         return mDescriptorSet;
     }

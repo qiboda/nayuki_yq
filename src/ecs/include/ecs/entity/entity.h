@@ -75,7 +75,7 @@ class BasicEntity : public Component
 
 template <typename T>
     requires std::unsigned_integral<T>
-bool operator==( const BasicEntity<T> &lhs, const BasicEntity<T> &rhs )
+bool operator==( const BasicEntity<T>& lhs, const BasicEntity<T>& rhs )
 {
     return lhs.entity == rhs.entity;
 }
@@ -85,7 +85,7 @@ template <typename T>
     requires std::unsigned_integral<T>
 struct std::hash<BasicEntity<T>>
 {
-    size_t operator()( const BasicEntity<T> &entity ) const
+    size_t operator()( const BasicEntity<T>& entity ) const
     {
         return std::hash<T>()( entity.entity );
     }

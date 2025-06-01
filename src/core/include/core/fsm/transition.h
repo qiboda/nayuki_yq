@@ -40,11 +40,11 @@ class Transition : public NonCopyable
     }
 
   public:
-    virtual void StartTransition( std::shared_ptr<TFSMContext> &fsmContext ) = 0;
-    virtual void EndTransition( std::shared_ptr<TFSMContext> &fsmContext ) = 0;
+    virtual void StartTransition( std::shared_ptr<TFSMContext>& fsmContext ) = 0;
+    virtual void EndTransition( std::shared_ptr<TFSMContext>& fsmContext ) = 0;
 
   public:
-    virtual bool CanTransition( std::shared_ptr<TFSMContext> &fsmContext ) = 0;
+    virtual bool CanTransition( std::shared_ptr<TFSMContext>& fsmContext ) = 0;
 
   protected:
     TStateId mEnterStateId;

@@ -10,17 +10,17 @@ struct CORE_API FSMId
     {
     }
 
-    FSMId( const std::string &id )
+    FSMId( const std::string& id )
         : id( id )
     {
     }
 
-    bool operator==( const FSMId &fsmId ) const
+    bool operator==( const FSMId& fsmId ) const
     {
         return fsmId.id == id;
     }
 
-    bool operator!=( const FSMId &fsmId ) const
+    bool operator!=( const FSMId& fsmId ) const
     {
         return !( *this == fsmId );
     }
@@ -37,12 +37,12 @@ class CORE_API FSMInterface
     FSMInterface() = default;
     virtual ~FSMInterface() = default;
 
-    FSMInterface( const FSMInterface & ) = default;
-    FSMInterface &operator=( const FSMInterface & ) = default;
+    FSMInterface( const FSMInterface& ) = default;
+    FSMInterface& operator=( const FSMInterface& ) = default;
 
   public:
     template <typename T>
-    static T Cast( FSMInterface *fsmInterface )
+    static T Cast( FSMInterface* fsmInterface )
     {
         if ( fsmInterface && fsmInterface->GetFSMId() == T::GetFSMId_S() )
         {

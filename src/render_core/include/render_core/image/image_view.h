@@ -17,7 +17,7 @@ class RENDER_CORE_API ImageView : public IRAII
     {
     }
 
-    void CreateImageView( const vk::ImageViewCreateInfo &imageViewInfo )
+    void CreateImageView( const vk::ImageViewCreateInfo& imageViewInfo )
     {
         NY_ASSERT( mDevice )
 
@@ -41,7 +41,7 @@ class RENDER_CORE_API ImageView : public IRAII
         return mImageView.get();
     }
 
-    vk::SharedImageView &GetShared()
+    vk::SharedImageView& GetShared()
     {
         return mImageView;
     }

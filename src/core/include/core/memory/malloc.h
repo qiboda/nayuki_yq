@@ -62,7 +62,7 @@ class CORE_API MallocAllocator
     }
 
   public:
-    static void *Malloc( usize size )
+    static void* Malloc( usize size )
     {
         if ( IsInitted() == false )
         {
@@ -71,7 +71,7 @@ class CORE_API MallocAllocator
 
         if ( size == 0 )
             size = 1; // 避免零大小分配
-        void *ptr = rpmalloc( size );
+        void* ptr = rpmalloc( size );
         if ( !ptr )
         {
             NY_ASSERT( ptr )
@@ -83,7 +83,7 @@ class CORE_API MallocAllocator
         return ptr;
     }
 
-    static void *AlignedAlloc( usize size, usize alignment )
+    static void* AlignedAlloc( usize size, usize alignment )
     {
         if ( IsInitted() == false )
         {
@@ -94,7 +94,7 @@ class CORE_API MallocAllocator
         NY_ASSERT( alignment > 0 && ( alignment & ( alignment - 1 ) ) == 0 )
         if ( size == 0 )
             size = 1; // 避免零大小分配
-        void *ptr = rpaligned_alloc( alignment, size );
+        void* ptr = rpaligned_alloc( alignment, size );
         if ( !ptr )
         {
             NY_ASSERT( ptr )
@@ -106,7 +106,7 @@ class CORE_API MallocAllocator
         return ptr;
     }
 
-    static void *Realloc( void *ptr, usize size )
+    static void* Realloc( void* ptr, usize size )
     {
         if ( IsInitted() == false )
         {
@@ -118,7 +118,7 @@ class CORE_API MallocAllocator
 
         if ( size == 0 )
             size = 1; // 避免零大小分配
-        void *new_ptr = rprealloc( ptr, size );
+        void* new_ptr = rprealloc( ptr, size );
         if ( !new_ptr )
         {
             NY_ASSERT( new_ptr )
@@ -130,7 +130,7 @@ class CORE_API MallocAllocator
         return new_ptr;
     }
 
-    static void *Calloc( usize num, usize size )
+    static void* Calloc( usize num, usize size )
     {
         if ( IsInitted() == false )
         {
@@ -139,7 +139,7 @@ class CORE_API MallocAllocator
 
         if ( num == 0 || size == 0 )
             return nullptr;
-        void *ptr = rpcalloc( num, size );
+        void* ptr = rpcalloc( num, size );
         if ( !ptr )
         {
             NY_ASSERT( ptr )
@@ -151,7 +151,7 @@ class CORE_API MallocAllocator
         return ptr;
     }
 
-    static void Free( void *ptr )
+    static void Free( void* ptr )
     {
         if ( IsInitted() == false )
         {

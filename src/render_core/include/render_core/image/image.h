@@ -19,7 +19,7 @@ class RENDER_CORE_API Image : public IRAII
     }
 
   public:
-    void CreateImage( const vk::ImageCreateInfo &imageInfo )
+    void CreateImage( const vk::ImageCreateInfo& imageInfo )
     {
         NY_ASSERT( mDevice )
 
@@ -43,7 +43,7 @@ class RENDER_CORE_API Image : public IRAII
         return mImage.get();
     }
 
-    vk::SharedImage &GetShared()
+    vk::SharedImage& GetShared()
     {
         return mImage;
     }

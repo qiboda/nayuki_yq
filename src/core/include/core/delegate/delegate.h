@@ -10,7 +10,7 @@ template <typename TReturnVal, typename... TArgs>
 class MultipleDelegate
 {
   public:
-    typedef DelegateInstance<TReturnVal, TArgs...> *DelegateInstanceType;
+    typedef DelegateInstance<TReturnVal, TArgs...>* DelegateInstanceType;
 
   public:
 #pragma region ThreeFive
@@ -28,7 +28,7 @@ class MultipleDelegate
         mDelegateInstances.clear();
     }
 
-    MultipleDelegate( const MultipleDelegate &multipleDelegate )
+    MultipleDelegate( const MultipleDelegate& multipleDelegate )
     {
         for ( auto delegateInstance : multipleDelegate.mDelegateInstances )
         {
@@ -43,13 +43,13 @@ class MultipleDelegate
         }
     }
 
-    MultipleDelegate( MultipleDelegate &&multipleDelegate ) noexcept
+    MultipleDelegate( MultipleDelegate&& multipleDelegate ) noexcept
         : mDelegateInstances( std::move( multipleDelegate.mDelegateInstances ) )
     {
         multipleDelegate.mDelegateInstances.clear();
     }
 
-    MultipleDelegate &operator=( const MultipleDelegate &multipleDelegate )
+    MultipleDelegate& operator=( const MultipleDelegate& multipleDelegate )
     {
         for ( auto delegateInstance : mDelegateInstances )
         {
@@ -74,7 +74,7 @@ class MultipleDelegate
         return *this;
     }
 
-    MultipleDelegate &operator=( MultipleDelegate &&multipleDelegate ) noexcept
+    MultipleDelegate& operator=( MultipleDelegate&& multipleDelegate ) noexcept
     {
         mDelegateInstances = std::move( multipleDelegate.mDelegateInstances );
         multipleDelegate.mDelegateInstances.clear();
@@ -99,7 +99,7 @@ class MultipleDelegate
     // member function, intrusive
     template <typename TClass>
     DelegateHandle AddMem( typename DelegateMemFunInstance<TClass, TReturnVal, TArgs...>::TFunctor functor,
-                           TClass *object )
+                           TClass* object )
     {
         DelegateHandle delegateHandle( DelegateHandle::GenerateNewHandleType::GenerateNewHandle );
         DelegateInstanceType Instance = new DelegateMemFunInstance<TClass, TReturnVal, TArgs...>( functor, object );
@@ -163,7 +163,7 @@ class MultipleDelegate
 
     void Broadcast( TArgs... args )
     {
-        for ( auto &&DelegateInstance : mDelegateInstances )
+        for ( auto&& DelegateInstance : mDelegateInstances )
         {
             ( *DelegateInstance )( args... );
         }
@@ -180,7 +180,7 @@ template <typename TReturnVal, typename... TArgs>
 class SingleDelegate
 {
   public:
-    using DelegateInstanceType = DelegateInstance<TReturnVal, TArgs...> *;
+    using DelegateInstanceType = DelegateInstance<TReturnVal, TArgs...>*;
 
   public:
 #pragma region ThreeFive
@@ -195,19 +195,19 @@ class SingleDelegate
         NY_DELETE( mDelegateInstance );
     }
 
-    SingleDelegate( const SingleDelegate &singleDelegate ) noexcept
+    SingleDelegate( const SingleDelegate& singleDelegate ) noexcept
         : mDelegateInstance( singleDelegate.mDelegateInstance == nullptr ? nullptr
                                                                          : singleDelegate.mDelegateInstance->Clone() )
     {
     }
 
-    SingleDelegate( SingleDelegate &&singleDelegate ) noexcept
+    SingleDelegate( SingleDelegate&& singleDelegate ) noexcept
         : mDelegateInstance( std::move( singleDelegate.mDelegateInstance ) )
     {
         singleDelegate.mDelegateInstance = nullptr;
     }
 
-    SingleDelegate &operator=( const SingleDelegate &singleDelegate )
+    SingleDelegate& operator=( const SingleDelegate& singleDelegate )
     {
         if ( singleDelegate.mDelegateInstance )
         {
@@ -220,7 +220,7 @@ class SingleDelegate
         return *this;
     }
 
-    SingleDelegate &operator=( SingleDelegate &&singleDelegate ) noexcept
+    SingleDelegate& operator=( SingleDelegate&& singleDelegate ) noexcept
     {
         mDelegateInstance = std::move( singleDelegate.mDelegateInstance );
         singleDelegate.mDelegateInstance = nullptr;
@@ -246,7 +246,7 @@ class SingleDelegate
     // member function, intrusive
     template <typename TClass>
     DelegateHandle BindMem( typename DelegateMemFunInstance<TClass, TReturnVal, TArgs...>::TFunctor functor,
-                            TClass *object )
+                            TClass* object )
     {
         NY_ASSERT_MSG_MSG( mDelegateInstance == nullptr, L"SingleDelegate only binds once" );
 

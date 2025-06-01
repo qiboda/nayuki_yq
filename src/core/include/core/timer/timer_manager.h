@@ -50,10 +50,10 @@ class CORE_API TimerManager : public Singleton<TimerManager>
   private:
     struct TimerHandleExpireTimeGreater
     {
-        bool operator()( const TimerHandle &LHS, const TimerHandle &RHS ) const
+        bool operator()( const TimerHandle& LHS, const TimerHandle& RHS ) const
         {
-            const TimerData &timerDataLHS = TimerManager::GetInstance().GetTimerData( LHS );
-            const TimerData &timerDataRHS = TimerManager::GetInstance().GetTimerData( RHS );
+            const TimerData& timerDataLHS = TimerManager::GetInstance().GetTimerData( LHS );
+            const TimerData& timerDataRHS = TimerManager::GetInstance().GetTimerData( RHS );
             return timerDataLHS.expireTime > timerDataRHS.expireTime;
         }
     };
@@ -77,14 +77,14 @@ class CORE_API TimerManager : public Singleton<TimerManager>
 
   public:
     TimerHandle SetTimer( f32 intervalTime, TimerDelegate timerDelegate, bool bLoop = false, bool bActive = true );
-    void InvalidTimer( const TimerHandle &timerHandle );
+    void InvalidTimer( const TimerHandle& timerHandle );
 
-    void PauseTimer( const TimerHandle &timerHandle );
-    void ActiveTimer( const TimerHandle &timerHandle );
+    void PauseTimer( const TimerHandle& timerHandle );
+    void ActiveTimer( const TimerHandle& timerHandle );
 
   private:
-    const TimerData &GetTimerData( const TimerHandle &timerHandle ) const;
-    TimerData &GetTimerData( const TimerHandle &timerHandle );
+    const TimerData& GetTimerData( const TimerHandle& timerHandle ) const;
+    TimerData& GetTimerData( const TimerHandle& timerHandle );
 
   private:
     TimerDataHashMap mTimerDataHashMap;

@@ -17,7 +17,7 @@ class RENDER_CORE_API RenderPass : public IRAII
     {
     }
 
-    void CreateRenderPass( const vk::RenderPassCreateInfo &renderPassInfo )
+    void CreateRenderPass( const vk::RenderPassCreateInfo& renderPassInfo )
     {
         NY_ASSERT( mDevice )
 
@@ -46,7 +46,7 @@ class RENDER_CORE_API RenderPass : public IRAII
         return mRenderPass.get();
     }
 
-    vk::SharedRenderPass &GetShared()
+    vk::SharedRenderPass& GetShared()
     {
         return mRenderPass;
     }

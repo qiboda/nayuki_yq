@@ -10,14 +10,14 @@ void TimerManager::Tick( f32 deltaSeconds )
 
     while ( mActiveTimerMinHeap.Size() > 0 )
     {
-        const TimerHandle &topTimerHandle = mActiveTimerMinHeap.Top();
+        const TimerHandle& topTimerHandle = mActiveTimerMinHeap.Top();
         if ( mTimerDataHashMap.at( topTimerHandle ).expireTime > mInternalTime )
         {
             break;
         }
         else
         {
-            const TimerHandle &popTimerHandle = mActiveTimerMinHeap.Pop();
+            const TimerHandle& popTimerHandle = mActiveTimerMinHeap.Pop();
             pendingExecuteTimerHandles.push_back( popTimerHandle );
         }
     }
@@ -26,7 +26,7 @@ void TimerManager::Tick( f32 deltaSeconds )
     {
         if ( executeTimerHandle.IsValid() )
         {
-            TimerData &timerData = mTimerDataHashMap.at( executeTimerHandle );
+            TimerData& timerData = mTimerDataHashMap.at( executeTimerHandle );
 
             // execute delegate
             i32 executeCount = 1;
@@ -82,7 +82,7 @@ TimerHandle TimerManager::SetTimer( f32 intervalTime, TimerDelegate timerDelegat
     return timerHandle;
 }
 
-void TimerManager::InvalidTimer( const TimerHandle &timerHandle )
+void TimerManager::InvalidTimer( const TimerHandle& timerHandle )
 {
     if ( timerHandle.IsValid() )
     {
@@ -93,7 +93,7 @@ void TimerManager::InvalidTimer( const TimerHandle &timerHandle )
     }
 }
 
-void TimerManager::PauseTimer( const TimerHandle &timerHandle )
+void TimerManager::PauseTimer( const TimerHandle& timerHandle )
 {
     if ( timerHandle.IsValid() )
     {
@@ -107,7 +107,7 @@ void TimerManager::PauseTimer( const TimerHandle &timerHandle )
     }
 }
 
-void TimerManager::ActiveTimer( const TimerHandle &timerHandle )
+void TimerManager::ActiveTimer( const TimerHandle& timerHandle )
 {
     if ( timerHandle.IsValid() )
     {
@@ -122,7 +122,7 @@ void TimerManager::ActiveTimer( const TimerHandle &timerHandle )
     }
 }
 
-inline const TimerData &TimerManager::GetTimerData( const TimerHandle &timerHandle ) const
+inline const TimerData& TimerManager::GetTimerData( const TimerHandle& timerHandle ) const
 {
     if ( timerHandle.IsValid() )
     {
@@ -135,7 +135,7 @@ inline const TimerData &TimerManager::GetTimerData( const TimerHandle &timerHand
     return InvalidTimerData;
 }
 
-inline TimerData &TimerManager::GetTimerData( const TimerHandle &timerHandle )
+inline TimerData& TimerManager::GetTimerData( const TimerHandle& timerHandle )
 {
-    return const_cast<TimerData &>( std::as_const( *this ).GetTimerData( timerHandle ) );
+    return const_cast<TimerData&>( std::as_const( *this ).GetTimerData( timerHandle ) );
 }

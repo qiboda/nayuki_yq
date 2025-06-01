@@ -34,7 +34,7 @@ class FSM : public FSMInterface, public NonCopyable
     }
 
   public:
-    virtual bool Exec( std::shared_ptr<TFSMContext> &fsmContext )
+    virtual bool Exec( std::shared_ptr<TFSMContext>& fsmContext )
     {
         for ( size_t i = 0u; i < mTransitions.size(); ++i )
         {

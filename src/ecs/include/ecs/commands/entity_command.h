@@ -16,7 +16,7 @@ class ECS_API CreateEntityCommandBuffer : public CommandBufferBase
     }
 
   public:
-    virtual void Execute( Registry *registry ) override;
+    virtual void Execute( Registry* registry ) override;
 
     virtual usize GetSize() const override
     {
@@ -36,7 +36,7 @@ class ECS_API DestroyEntityCommandBuffer : public CommandBufferBase
     }
 
   public:
-    virtual void Execute( Registry *registry ) override;
+    virtual void Execute( Registry* registry ) override;
 
     virtual usize GetSize() const override
     {

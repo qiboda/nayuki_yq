@@ -11,24 +11,24 @@ static PFN_vkCreateDebugUtilsMessengerEXT pfnVkCreateDebugUtilsMessengerEXT;
 static PFN_vkDestroyDebugUtilsMessengerEXT pfnVkDestroyDebugUtilsMessengerEXT;
 
 VKAPI_ATTR VkResult VKAPI_CALL vkCreateDebugUtilsMessengerEXT( VkInstance instance,
-                                                               const VkDebugUtilsMessengerCreateInfoEXT *pCreateInfo,
-                                                               const VkAllocationCallbacks *pAllocator,
-                                                               VkDebugUtilsMessengerEXT *pMessenger )
+                                                               const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo,
+                                                               const VkAllocationCallbacks* pAllocator,
+                                                               VkDebugUtilsMessengerEXT* pMessenger )
 {
     return pfnVkCreateDebugUtilsMessengerEXT( instance, pCreateInfo, pAllocator, pMessenger );
 }
 
 VKAPI_ATTR void VKAPI_CALL vkDestroyDebugUtilsMessengerEXT( VkInstance instance,
                                                             VkDebugUtilsMessengerEXT messenger,
-                                                            VkAllocationCallbacks const *pAllocator )
+                                                            VkAllocationCallbacks const* pAllocator )
 {
     return pfnVkDestroyDebugUtilsMessengerEXT( instance, messenger, pAllocator );
 }
 
 static VKAPI_ATTR vk::Bool32 VKAPI_CALL debugMessageFunc( vk::DebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
                                                           vk::DebugUtilsMessageTypeFlagsEXT messageTypes,
-                                                          vk::DebugUtilsMessengerCallbackDataEXT const *pCallbackData,
-                                                          void *_pUserData )
+                                                          vk::DebugUtilsMessengerCallbackDataEXT const* pCallbackData,
+                                                          void* _pUserData )
 {
     UNUSED_VAR( _pUserData );
 
@@ -82,7 +82,7 @@ static VKAPI_ATTR vk::Bool32 VKAPI_CALL debugMessageFunc( vk::DebugUtilsMessageS
 }
 #endif // DEBUG
 
-void RenderInstance::CreateInstance( vk::ApplicationInfo &appInfo, std::shared_ptr<Window> window )
+void RenderInstance::CreateInstance( vk::ApplicationInfo& appInfo, std::shared_ptr<Window> window )
 {
     NY_LOG_INFO( LogRenderCore, "Creating Render Instance." );
 
@@ -90,9 +90,9 @@ void RenderInstance::CreateInstance( vk::ApplicationInfo &appInfo, std::shared_p
 
     appInfo.setApiVersion( mVkAapiVersion );
 
-    std::vector<const char *> renderInstanceExtensions = window->GetRenderInstanceExtensions();
+    std::vector<const char*> renderInstanceExtensions = window->GetRenderInstanceExtensions();
 
-    std::vector<const char *> renderInstanceLayers;
+    std::vector<const char*> renderInstanceLayers;
     renderInstanceLayers.push_back( "VK_LAYER_KHRONOS_validation" );
 
     // #if (VULKAN_HPP_DISPATCH_LOADER_DYNAMIC == 1)
@@ -122,7 +122,7 @@ void RenderInstance::CreateInstance( vk::ApplicationInfo &appInfo, std::shared_p
     }
 
     NY_LOG_INFO( LogRenderCore, "Vulkan instance available extensions:" );
-    for ( const auto &extension : vk::enumerateInstanceExtensionProperties() )
+    for ( const auto& extension : vk::enumerateInstanceExtensionProperties() )
     {
         NY_LOG_INFO( LogRenderCore, "\t {}", extension.extensionName.data() );
     }

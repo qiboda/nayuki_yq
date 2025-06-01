@@ -19,12 +19,12 @@ struct CORE_API Extent2D
     {
     }
 
-    bool operator==( const Extent2D &other ) const
+    bool operator==( const Extent2D& other ) const
     {
         return width == other.width && height == other.height;
     }
 
-    bool operator!=( const Extent2D &other ) const
+    bool operator!=( const Extent2D& other ) const
     {
         return !( *this == other );
     }

@@ -18,7 +18,7 @@ class RENDER_CORE_API FrameBuffer : public IRAII
     {
     }
 
-    void CreateFrameBuffer( const vk::FramebufferCreateInfo &frameBufferInfo )
+    void CreateFrameBuffer( const vk::FramebufferCreateInfo& frameBufferInfo )
     {
         NY_ASSERT( mDevice )
 
@@ -42,7 +42,7 @@ class RENDER_CORE_API FrameBuffer : public IRAII
         return mFrameBuffer.get();
     }
 
-    vk::SharedFramebuffer &GetShared()
+    vk::SharedFramebuffer& GetShared()
     {
         return mFrameBuffer;
     }

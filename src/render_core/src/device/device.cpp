@@ -10,7 +10,7 @@ Device::~Device()
     CleanUp();
 }
 
-void Device::CreateDevice( const vk::DeviceCreateInfo &deviceInfo )
+void Device::CreateDevice( const vk::DeviceCreateInfo& deviceInfo )
 {
     NY_ASSERT( mPhysicalDevice )
 

@@ -9,7 +9,7 @@
 
 #pragma region LoggerCategory
 
-LoggerCategory::LoggerCategory( const Name &loggerName, Type loggerType )
+LoggerCategory::LoggerCategory( const Name& loggerName, Type loggerType )
     : mLoggerName( loggerName )
     , mLoggerType( loggerType )
 {
@@ -38,12 +38,12 @@ LoggerCategory::Type LoggerCategory::GetType() const
 
 #pragma region Logger
 
-std::shared_ptr<spdlog::logger> Logger::Get( const LoggerCategory &loggerCategory )
+std::shared_ptr<spdlog::logger> Logger::Get( const LoggerCategory& loggerCategory )
 {
     return spdlog::get( loggerCategory.GetName() );
 }
 
-void Logger::RegisterCategory( const LoggerCategory &loggerCategory )
+void Logger::RegisterCategory( const LoggerCategory& loggerCategory )
 {
     switch ( loggerCategory.GetType() )
     {
@@ -76,7 +76,7 @@ void Logger::RegisterCategory( const LoggerCategory &loggerCategory )
     }
 }
 
-std::shared_ptr<spdlog::logger> Logger::CreateSyncLogger( const LoggerCategory &loggerCategory )
+std::shared_ptr<spdlog::logger> Logger::CreateSyncLogger( const LoggerCategory& loggerCategory )
 {
     try
     {
@@ -102,14 +102,14 @@ std::shared_ptr<spdlog::logger> Logger::CreateSyncLogger( const LoggerCategory &
         }
         return syncLogger;
     }
-    catch ( spdlog::spdlog_ex &ex )
+    catch ( spdlog::spdlog_ex& ex )
     {
         std::cerr << "spdlog initialization failed: " << ex.what() << std::endl;
         exit( EXIT_FAILURE );
     }
 }
 
-std::shared_ptr<spdlog::logger> Logger::CreateAsyncLogger( const LoggerCategory &loggerCategory )
+std::shared_ptr<spdlog::logger> Logger::CreateAsyncLogger( const LoggerCategory& loggerCategory )
 {
     try
     {
@@ -139,7 +139,7 @@ std::shared_ptr<spdlog::logger> Logger::CreateAsyncLogger( const LoggerCategory 
         }
         return asyncLogger;
     }
-    catch ( spdlog::spdlog_ex &ex )
+    catch ( spdlog::spdlog_ex& ex )
     {
         std::cerr << "spdlog initialization failed: " << ex.what() << std::endl;
         exit( EXIT_FAILURE );

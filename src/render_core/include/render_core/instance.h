@@ -27,12 +27,12 @@ class RENDER_CORE_API RenderInstance final : public IRAII
     }
 
     /// @brief 创建 vulkan instance
-    void CreateInstance( vk::ApplicationInfo &appInfo, std::shared_ptr<Window> window );
+    void CreateInstance( vk::ApplicationInfo& appInfo, std::shared_ptr<Window> window );
 
     void CreatePhysicalDevice();
 
   public:
-    vk::SharedInstance &GetShared()
+    vk::SharedInstance& GetShared()
     {
         return mInstance;
     }

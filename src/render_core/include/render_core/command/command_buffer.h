@@ -19,7 +19,7 @@ class RENDER_CORE_API CommandBufferBase : public IRAII
     void DestroyCommandBuffer();
 
   public:
-    void BeginCommandBuffer( const vk::CommandBufferBeginInfo &beginInfo );
+    void BeginCommandBuffer( const vk::CommandBufferBeginInfo& beginInfo );
     void EndCommandBuffer();
 
   public:

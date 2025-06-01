@@ -71,7 +71,7 @@ class RENDER_CORE_API Window : public IRAII, public ITickable
         }
     }
 
-    void SetWindowTitle( const std::string &title )
+    void SetWindowTitle( const std::string& title )
     {
         mTitle = title;
         if ( mWindow )
@@ -80,7 +80,7 @@ class RENDER_CORE_API Window : public IRAII, public ITickable
         }
     }
 
-    vk::SharedSurfaceKHR &GetSurface()
+    vk::SharedSurfaceKHR& GetSurface()
     {
         return mSharedSurfaceKHR;
     }
@@ -108,10 +108,10 @@ class RENDER_CORE_API Window : public IRAII, public ITickable
   public:
     void CreateSurface( std::shared_ptr<class RenderInstance> instance );
 
-    std::vector<const char *> GetRenderInstanceExtensions();
+    std::vector<const char*> GetRenderInstanceExtensions();
 
   protected:
-    GLFWwindow *mWindow = nullptr;
+    GLFWwindow* mWindow = nullptr;
 
     vk::SharedSurfaceKHR mSharedSurfaceKHR;
 

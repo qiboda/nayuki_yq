@@ -21,7 +21,7 @@ class TimerHandle
   public:
     struct Hash
     {
-        constexpr u64 operator()( const TimerHandle &timerHandle ) const
+        constexpr u64 operator()( const TimerHandle& timerHandle ) const
         {
             return timerHandle.mDataIndex;
         }
@@ -45,12 +45,12 @@ class TimerHandle
     }
 
   public:
-    friend bool operator==( const TimerHandle &LHS, const TimerHandle &RHS )
+    friend bool operator==( const TimerHandle& LHS, const TimerHandle& RHS )
     {
         return LHS.mDataIndex == RHS.mDataIndex;
     }
 
-    friend bool operator!=( const TimerHandle &LHS, const TimerHandle &RHS )
+    friend bool operator!=( const TimerHandle& LHS, const TimerHandle& RHS )
     {
         return ( LHS == RHS ) == false;
     }

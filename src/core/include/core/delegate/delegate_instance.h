@@ -17,7 +17,7 @@ class DelegateInstance
     {
     }
 
-    explicit DelegateInstance( const DelegateHandle &delegateHandle )
+    explicit DelegateInstance( const DelegateHandle& delegateHandle )
         : mDelegateHandle( delegateHandle )
     {
     }
@@ -27,15 +27,15 @@ class DelegateInstance
     }
 
     virtual TReturnVal operator()( TArgs... args ) const = 0;
-    virtual DelegateInstance<TReturnVal, TArgs...> *Clone() const = 0;
+    virtual DelegateInstance<TReturnVal, TArgs...>* Clone() const = 0;
 
   public:
-    const DelegateHandle &GetHandle() const
+    const DelegateHandle& GetHandle() const
     {
         return mDelegateHandle;
     }
 
-    DelegateHandle &GetHandle()
+    DelegateHandle& GetHandle()
     {
         return mDelegateHandle;
     }
@@ -56,13 +56,13 @@ class DelegateFunInstance : public DelegateInstance<TReturnVal, TArgs...>
     using TFunctor = std::function<TReturnVal( TArgs... )>;
 
   public:
-    DelegateFunInstance( const TFunctor &functor )
+    DelegateFunInstance( const TFunctor& functor )
         : DelegateInstance<TReturnVal, TArgs...>()
         , mFunctor( functor )
     {
     }
 
-    DelegateFunInstance( const TFunctor &functor, const DelegateHandle &delegateHandle )
+    DelegateFunInstance( const TFunctor& functor, const DelegateHandle& delegateHandle )
         : DelegateInstance<TReturnVal, TArgs...>( delegateHandle )
         , mFunctor( functor )
     {
@@ -78,7 +78,7 @@ class DelegateFunInstance : public DelegateInstance<TReturnVal, TArgs...>
         return mFunctor( args... );
     }
 
-    virtual DelegateInstance<TReturnVal, TArgs...> *Clone() const override
+    virtual DelegateInstance<TReturnVal, TArgs...>* Clone() const override
     {
         return new DelegateFunInstance( mFunctor, this->GetHandle() );
     }
@@ -94,14 +94,14 @@ class DelegateMemFunInstance : public DelegateInstance<TReturnVal, TArgs...>
     using TFunctor = TReturnVal ( TClass::* )( TArgs... );
 
   public:
-    DelegateMemFunInstance( TFunctor functor, TClass *object )
+    DelegateMemFunInstance( TFunctor functor, TClass* object )
         : DelegateInstance<TReturnVal, TArgs...>()
         , mFunctor( functor )
         , mObject( object )
     {
     }
 
-    DelegateMemFunInstance( TFunctor functor, TClass *object, const DelegateHandle &delegateHandle )
+    DelegateMemFunInstance( TFunctor functor, TClass* object, const DelegateHandle& delegateHandle )
         : DelegateInstance<TReturnVal, TArgs...>( delegateHandle )
         , mFunctor( functor )
         , mObject( object )
@@ -124,14 +124,14 @@ class DelegateMemFunInstance : public DelegateInstance<TReturnVal, TArgs...>
         return TReturnVal();
     }
 
-    virtual DelegateInstance<TReturnVal, TArgs...> *Clone() const override
+    virtual DelegateInstance<TReturnVal, TArgs...>* Clone() const override
     {
         return new DelegateMemFunInstance( mFunctor, mObject, this->GetHandle() );
     }
 
   private:
     TFunctor mFunctor;
-    TClass *mObject;
+    TClass* mObject;
 };
 
 template <typename TClass, typename TReturnVal, typename... TArgs>
@@ -148,7 +148,7 @@ class DelegateSPMemFunInstance : public DelegateInstance<TReturnVal, TArgs...>
     {
     }
 
-    DelegateSPMemFunInstance( TFunctor functor, std::shared_ptr<TClass> SPObject, const DelegateHandle &delegateHandle )
+    DelegateSPMemFunInstance( TFunctor functor, std::shared_ptr<TClass> SPObject, const DelegateHandle& delegateHandle )
         : DelegateInstance<TReturnVal, TArgs...>( delegateHandle )
         , mFunctor( functor )
         , mWPObject( SPObject )
@@ -172,7 +172,7 @@ class DelegateSPMemFunInstance : public DelegateInstance<TReturnVal, TArgs...>
         return ( ( *SPObject ).*mFunctor )( args... );
     }
 
-    virtual DelegateInstance<TReturnVal, TArgs...> *Clone() const override
+    virtual DelegateInstance<TReturnVal, TArgs...>* Clone() const override
     {
         return new DelegateSPMemFunInstance( mFunctor, mWPObject.lock(), this->GetHandle() );
     }

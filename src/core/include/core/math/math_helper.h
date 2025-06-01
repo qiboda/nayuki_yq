@@ -31,25 +31,25 @@ class CORE_API MathHelper
     }
 
     template <typename T>
-    static T Min( const T &a, const T &b )
+    static T Min( const T& a, const T& b )
     {
         return a < b ? a : b;
     }
 
     template <typename T>
-    static T Max( const T &a, const T &b )
+    static T Max( const T& a, const T& b )
     {
         return a > b ? a : b;
     }
 
     template <typename T>
-    static T Lerp( const T &a, const T &b, f32 t )
+    static T Lerp( const T& a, const T& b, f32 t )
     {
         return a + ( b - a ) * t;
     }
 
     template <typename T>
-    static T Clamp( const T &x, const T &low, const T &high )
+    static T Clamp( const T& x, const T& low, const T& high )
     {
         return x < low ? low : ( x > high ? high : x );
     }

@@ -77,7 +77,7 @@ class Heap
   public:
 #pragma region Operate
 
-    void Push( const TElem &elem )
+    void Push( const TElem& elem )
     {
         mContainer.push_back( elem );
         std::push_heap( mContainer.begin(), mContainer.end(), TCompPred() );
@@ -91,18 +91,18 @@ class Heap
         return pop_value;
     }
 
-    const TElem &Top() const
+    const TElem& Top() const
     {
         return mContainer.front();
     }
 
-    TElem &Top()
+    TElem& Top()
     {
         return mContainer.front();
     }
 
     // TODO: change to remove_heap_elem() global function.
-    bool Remove( const TElem &elem )
+    bool Remove( const TElem& elem )
     {
         u64 index = GetElemIndex( elem );
         if ( index == NONE_INDEX )
@@ -119,7 +119,7 @@ class Heap
 
 #pragma endregion Operate
 
-    u64 GetElemIndex( const TElem &elem ) const
+    u64 GetElemIndex( const TElem& elem ) const
     {
         return GetElemIndexInternal( elem, 0u );
     }
@@ -130,7 +130,7 @@ class Heap
     }
 
   private:
-    u64 GetElemIndexInternal( const TElem &elem, const u64 index ) const
+    u64 GetElemIndexInternal( const TElem& elem, const u64 index ) const
     {
         if ( index >= mContainer.size() )
         {

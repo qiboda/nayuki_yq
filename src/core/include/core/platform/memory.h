@@ -10,11 +10,11 @@ class CORE_API PlatformMemory
 
     static usize GetPageSize();
 
-    static void *Alloca( usize size );
+    static void* Alloca( usize size );
 
     template <typename T>
-    static T *Alloca( usize size )
+    static T* Alloca( usize size )
     {
-        return reinterpret_cast<T *>( Alloca( size ) );
+        return reinterpret_cast<T*>( Alloca( size ) );
     }
 };

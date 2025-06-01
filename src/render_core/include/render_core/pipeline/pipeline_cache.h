@@ -17,7 +17,7 @@ class RENDER_CORE_API PipelineCache : public IRAII
     {
     }
 
-    void CreatePipelineCache( const vk::PipelineCacheCreateInfo &pipelineCacheInfo )
+    void CreatePipelineCache( const vk::PipelineCacheCreateInfo& pipelineCacheInfo )
     {
         NY_ASSERT( mDevice )
 
@@ -41,7 +41,7 @@ class RENDER_CORE_API PipelineCache : public IRAII
         return mPipelineCache.get();
     }
 
-    vk::SharedPipelineCache &GetShared()
+    vk::SharedPipelineCache& GetShared()
     {
         return mPipelineCache;
     }
