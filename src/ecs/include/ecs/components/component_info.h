@@ -3,46 +3,21 @@
 #include <core/core.h>
 #include <ecs/ecs.h>
 
+#include "core/registry/id.h"
 #include "ecs/components/component_concept.h"
 
-class ComponentTypeRegistry;
-
-struct ECS_API ComponentId
+struct ECS_API ComponentId : public Id
 {
-    friend class ComponentTypeRegistry;
-
   public:
-    ComponentId()
-        : id( std::numeric_limits<u32>::max() )
-    {
-    }
-
-    ComponentId( u32 id )
-        : id( id )
-    {
-    }
-
-  public:
-    usize Index() const
-    {
-        return id;
-    }
-
     // 会隐式生成 != 比较操作。
-    bool operator==( const ComponentId& other ) const = default;
+    friend bool operator==( const ComponentId& lhs, const ComponentId& rhs )
+    {
+        return lhs.mId == rhs.mId;
+    }
 
     bool operator<( const ComponentId& other ) const
     {
-        return id < other.id;
-    }
-
-  private:
-    u32 id = std::numeric_limits<u32>::max();
-
-  private:
-    u32 GenNext()
-    {
-        return id++;
+        return mId < other.mId;
     }
 };
 
@@ -51,7 +26,7 @@ struct std::hash<ComponentId>
 {
     usize operator()( const ComponentId& componentId ) const
     {
-        return std::hash<usize>()( componentId.Index() );
+        return std::hash<u32>()( componentId.Index() );
     }
 };
 
@@ -244,7 +219,7 @@ struct ECS_API ComponentInfo
 
 // 用于获取组件id
 // 使用静态变量缓存，接口易用，性能更高。
-class ECS_API ComponentTypeRegistry
+class ECS_API ComponentTypeRegistry : public IdRegistry<ComponentId, Component>
 {
   public:
     template <IsComponentConcept T>
@@ -252,13 +227,6 @@ class ECS_API ComponentTypeRegistry
     {
         Get<T>();
         GetComponentInfo<T>();
-    }
-
-    template <IsComponentConcept T>
-    static ComponentId Get()
-    {
-        static const ComponentId sId = ComponentId( sCounter.GenNext() );
-        return sId;
     }
 
     template <IsComponentConcept... T>
@@ -300,6 +268,5 @@ class ECS_API ComponentTypeRegistry
     }
 
   private:
-    static inline ComponentId sCounter = ComponentId( 0 );
     static inline std::unordered_map<ComponentId, ComponentInfo> sComponentInfoMap;
 };

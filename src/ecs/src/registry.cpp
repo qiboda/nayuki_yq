@@ -6,7 +6,8 @@
 #include "ecs/systems/system_manager.h"
 
 Registry::Registry()
-    : mEntityManager( new EntityManager() )
+    : mFeatureManager( new FeatureManager() )
+    , mEntityManager( new EntityManager() )
     , mCommandManager( new CommandManager() )
     , mArchetypeManager( new ArchetypeManager() )
     , mSystemManager( new SystemManager() )
