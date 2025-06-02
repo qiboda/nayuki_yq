@@ -28,8 +28,7 @@ class ArchetypeChunkTest : public ::testing::Test
 
         ComponentA( ComponentA&& other )
         {
-            std::cout << "ComponentA move constructor called" << std::endl;
-
+            // std::cout << "ComponentA move constructor called" << std::endl;
             a = other.a;
             b = other.b;
             c = std::move( other.c );

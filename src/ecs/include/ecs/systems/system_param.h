@@ -3,7 +3,6 @@
 #include "module_export.h"
 #include <core/minimal.h>
 #include <ecs/minimal.h>
-#include <type_traits>
 
 class ECS_API SystemParam
 {
@@ -16,7 +15,7 @@ class ECS_API SystemParam
  * 此处 typename T::State 要求 State 是 public 的
  */
 template <typename T>
-concept IsSystemParamConcept = std::is_base_of_v<SystemParam, T> && requires { typename T::State; };
+concept IsSystemParamConcept = IsStrictDerivedConcept<SystemParam, T> && requires { typename T::State; };
 
 template <typename... T>
 inline constexpr bool AllSystemParams = ( IsSystemParamConcept<T> && ... );

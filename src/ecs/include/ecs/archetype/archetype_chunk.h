@@ -19,7 +19,7 @@ class ECS_API ArchetypeChunk
     explicit ArchetypeChunk( usize MaxEntityNum, usize memorySize = 16 * 1024 )
         : MaxEntityNum( MaxEntityNum )
     {
-        std::cout << "ArchetypeChunk::ArchetypeChunk " << memorySize << std::endl;
+        // std::cout << "ArchetypeChunk::ArchetypeChunk " << memorySize << std::endl;
         mArchetypeComponentData = new u8[memorySize]();
     }
 

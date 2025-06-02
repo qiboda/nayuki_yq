@@ -5,7 +5,7 @@
 struct Id;
 
 template <typename T>
-concept IsId = std::is_base_of_v<Id, T>;
+concept IsId = IsStrictDerivedConcept<Id, T>;
 
 struct ECS_API Id
 {
@@ -42,7 +42,7 @@ class IdRegistry
 {
   public:
     template <typename TType>
-        requires std::is_base_of_v<TBaseType, TType>
+        requires IsStrictDerivedConcept<TBaseType, TType>
     static TId Get()
     {
         static const TId id = Next();

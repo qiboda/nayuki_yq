@@ -14,7 +14,7 @@ class ECS_API CommandQueue
     template <typename T>
     void AddCommand_AnyThread( T&& command )
     {
-        static_assert( std::is_base_of_v<CommandBufferBase, T> );
+        static_assert( IsStrictDerivedConcept<CommandBufferBase, T> );
 
         usize base = mBuffer.size();
         mBuffer.resize( base + sizeof( T ) );

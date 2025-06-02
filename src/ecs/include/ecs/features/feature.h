@@ -27,7 +27,7 @@ class ECS_API IFeature
 };
 
 template <typename T>
-concept IsFeature = std::is_base_of_v<IFeature, T>;
+concept IsFeature = IsStrictDerivedConcept<IFeature, T>;
 
 struct FeatureId : public Id
 {

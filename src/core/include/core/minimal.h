@@ -44,3 +44,4 @@
 #include <core/compiler/optimize.h>
 #include <core/logger/log.h>
 #include <core/logger/category.h>
+#include <core/concepts/derived.h>

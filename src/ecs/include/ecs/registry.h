@@ -27,10 +27,12 @@ class ECS_API Registry
             feature.Build( this );
             mFeatureManager->AddedFeature( std::forward<T>( feature ) );
         }
-        // else
-        // {
-        //     NY_LOG_WARN( LogEcs, "You try to add a feature that already added" );
-        // }
+    }
+
+  public:
+    template <typename T>
+    void ConfigurePhase()
+    {
     }
 
   public:

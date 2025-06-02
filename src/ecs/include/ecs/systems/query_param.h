@@ -38,5 +38,5 @@ template <typename... T>
 concept IsQueryArgsSetConcept =
     AreUnique<T...>::value &&
     // entity 也是component
-    ( std::is_base_of_v<Component, std::decay_t<T>> && ... ) &&
+    ( IsStrictDerivedValue<Component, std::decay_t<T>> && ... ) &&
     ( ( IsEntityValue<std::decay_t<T>> ? EntityArgsLimitConcept<T> : NonEntityComponentArgsLimitConcept<T> ) && ... );

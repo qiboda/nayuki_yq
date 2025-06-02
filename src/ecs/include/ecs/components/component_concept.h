@@ -6,14 +6,14 @@
 
 // 不强制要求 is_trivially_copyable_v
 template <typename T>
-concept IsComponentConcept = std::is_base_of_v<Component, T>;
+concept IsComponentConcept = IsStrictDerivedConcept<Component, T>;
 //  && std::is_trivially_copyable_v<T>;
 
 template <typename T>
-concept IsRegularComponentConcept = std::is_base_of_v<Component, T> && ( IsEntityConcept<T> == false );
+concept IsRegularComponentConcept = IsStrictDerivedConcept<Component, T> && ( IsEntityConcept<T> == false );
 
 template <typename T>
-concept IsEntityComponentConcept = std::is_base_of_v<Component, T> && IsEntityConcept<T>;
+concept IsEntityComponentConcept = IsStrictDerivedConcept<Component, T> && IsEntityConcept<T>;
 
 template <typename... T>
 concept IsComponentSetConcept = ( IsComponentConcept<T> && ... ) && AreUniqueValue<T...>;

@@ -15,7 +15,7 @@ class ECS_API CommandManager
     template <typename T>
     void QueueCommand_AnyThread( T&& CommandBuffer )
     {
-        static_assert( std::is_base_of_v<CommandBufferBase, T> );
+        static_assert( IsStrictDerivedConcept<CommandBufferBase, T> );
         Queue.AddCommand_AnyThread( std::forward<T>( CommandBuffer ) );
     }
 
