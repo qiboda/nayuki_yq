@@ -49,6 +49,15 @@
         }
 #endif // !NY_ASSERT_MSG_MSG
 
+#ifndef NY_STATIC_ASSERT_MSG
+#    define NY_STATIC_ASSERT_MSG( expr, msg, ... )                                                                     \
+        if constexpr ( bool( expr ) == false )                                                                         \
+        {                                                                                                              \
+            std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " << std::format( msg, ##__VA_ARGS__ ) << std::endl; \
+            assert( expr );                                                                                            \
+        }
+#endif // !NY_ASSERT_MSG_MSG
+
 #pragma endregion assert
 
 #pragma region memory

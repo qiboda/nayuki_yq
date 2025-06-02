@@ -7,6 +7,7 @@
 #include "ecs/entity/entity_manager.h"
 #include "ecs/features/feature.h"
 #include "ecs/features/feature_manager.h"
+#include "ecs/schedule/schedule_manager.h"
 #include "ecs/systems/system_manager.h"
 
 // 实体，组件的管理类。等价于 ECS 中的 World
@@ -30,9 +31,9 @@ class ECS_API Registry
     }
 
   public:
-    template <typename T>
-    void ConfigurePhase()
+    void ConfigurePhase( PhaseConfigure&& configure )
     {
+        mScheduleManager->ConfigSchedulePhase( std::forward<PhaseConfigure>( configure ) );
     }
 
   public:
@@ -41,4 +42,5 @@ class ECS_API Registry
     CommandManager* mCommandManager = nullptr;
     ArchetypeManager* mArchetypeManager = nullptr;
     SystemManager* mSystemManager = nullptr;
+    ScheduleManager* mScheduleManager = nullptr;
 };

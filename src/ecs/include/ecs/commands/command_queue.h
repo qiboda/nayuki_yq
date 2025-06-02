@@ -3,7 +3,6 @@
 #include "ecs/commands/command.h"
 #include <core/minimal.h>
 #include <ecs/minimal.h>
-#include <type_traits>
 
 class ECS_API CommandQueue
 {

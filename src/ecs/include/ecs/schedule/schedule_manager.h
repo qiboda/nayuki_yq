@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ecs/schedule/graph/graph.h"
+#include "ecs/schedule/phase/config.h"
 #include <core/minimal.h>
 #include <ecs/minimal.h>
 
@@ -11,10 +12,13 @@ class ECS_API ScheduleManager
 
   public:
     // 期望有一个配置，可以转换为图的关系，设置到mScheduleGraph。
-    void ConfigSchedulePhase()
+    void ConfigSchedulePhase( PhaseConfigure&& configure )
     {
+        PhaseConfigureSet.configure( std::forward<PhaseConfigure>( configure ) );
     }
 
   protected:
     Graph mScheduleGraph;
+
+    PhaseConfigureSet PhaseConfigureSet;
 };

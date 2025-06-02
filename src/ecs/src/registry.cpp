@@ -11,5 +11,6 @@ Registry::Registry()
     , mCommandManager( new CommandManager() )
     , mArchetypeManager( new ArchetypeManager() )
     , mSystemManager( new SystemManager() )
+    , mScheduleManager( new ScheduleManager() )
 {
 }

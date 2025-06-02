@@ -2,43 +2,126 @@
 
 #include "ecs/schedule/phase/phase.h"
 #include <core/container/small_vector.h>
+#include <range/v3/all.hpp>
 #include <core/minimal.h>
 #include <ecs/minimal.h>
 
-/// a.before(b).after(c);
-/// [a, b, c].before(d).after(e);
-struct SchedulePhaseConfigure
+struct PhaseEdge
 {
-    template <typename... T>
-    SchedulePhaseConfigure()
-        : mPhases( ( std::make_shared<T>(), ... ) )
-    {
-    }
+    // edge的起点
+    PhaseId mOut;
+    // edge的终点
+    PhaseId mIn;
 
-    template <IsSchedulePhase T>
-    SchedulePhaseConfigure& Before()
+    friend auto operator<=>( const PhaseEdge& lhs, const PhaseEdge& rhs ) = default;
+};
+
+struct PhaseConfigure
+{
+    template <IsSchedulePhase... T>
+    PhaseConfigure& init()
     {
-        mBeforePhases.push_back( std::make_shared<T>() );
+        mPhases = { PhaseIdRegistry::Get<T>()... };
         return *this;
     }
 
     template <IsSchedulePhase T>
-    SchedulePhaseConfigure& After()
+    PhaseConfigure& Before()
     {
-        mAfterPhases.push_back( std::make_shared<T>() );
+        PhaseId id = PhaseIdRegistry::Get<T>();
+        mOtherPhases.insert( id );
+        for ( auto&& phase : mPhases )
+        {
+            Edge.insert( PhaseEdge{
+                .mOut = id,
+                .mIn = phase,
+            } );
+        }
+        return *this;
+    }
+
+    template <IsSchedulePhase T>
+    PhaseConfigure& After()
+    {
+        PhaseId id = PhaseIdRegistry::Get<T>();
+        mOtherPhases.insert( id );
+        for ( auto&& phase : mPhases )
+        {
+            Edge.insert( PhaseEdge{
+                .mOut = phase,
+                .mIn = id,
+            } );
+        }
+        return *this;
+    }
+
+    PhaseConfigure& Chain()
+    {
+        for ( auto phaseWindow : mPhases | ranges::views::sliding( 2 ) )
+        {
+            auto begin = phaseWindow.begin();
+            auto second = ++begin;
+            Edge.insert( PhaseEdge{
+                .mOut = *begin,
+                .mIn = *second,
+            } );
+        }
         return *this;
     }
 
   protected:
-    SmallVector<std::shared_ptr<SchedulePhaseBase>, 4> mBeforePhases;
-    SmallVector<std::shared_ptr<SchedulePhaseBase>, 4> mAfterPhases;
+    std::set<PhaseId> mPhases;
+    std::set<PhaseId> mOtherPhases;
 
-    SmallVector<std::shared_ptr<SchedulePhaseBase>, 16> mPhases;
+    std::set<PhaseEdge> Edge;
 };
 
-struct SchedulePhaseConfigureSet
+template <IsSchedulePhase... T>
+struct PhaseConfigureBuilder
+{
+    PhaseConfigureBuilder()
+        : mConfig()
+    {
+        mConfig.init<T...>();
+    }
+
+    template <IsSchedulePhase O>
+    PhaseConfigureBuilder& Before()
+    {
+        mConfig.Before<O>();
+        return *this;
+    }
+
+    template <IsSchedulePhase O>
+    PhaseConfigureBuilder& After()
+    {
+        mConfig.After<O>();
+        return *this;
+    }
+
+    PhaseConfigureBuilder& Chain()
+    {
+        mConfig.Chain();
+        return *this;
+    }
+
+    PhaseConfigure End()
+    {
+        return std::move( mConfig );
+    }
+
+  protected:
+    PhaseConfigure mConfig;
+};
+
+struct PhaseConfigureSet
 {
   public:
-    std::vector<std::shared_ptr<SchedulePhaseBase>> mPhases;
-    // std::vector<Constraint> mConstraints;
+    void configure( PhaseConfigure&& configure )
+    {
+        mConfigures.push_back( configure );
+    }
+
+  protected:
+    std::vector<PhaseConfigure> mConfigures;
 };
