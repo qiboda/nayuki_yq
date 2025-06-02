@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ecs/schedule/graph/graph.h"
-#include "ecs/schedule/phase/phase.h"
 #include <core/minimal.h>
 #include <ecs/minimal.h>
 

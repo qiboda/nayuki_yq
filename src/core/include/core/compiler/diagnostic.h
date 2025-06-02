@@ -1,7 +1,5 @@
 #pragma once
 
-#include <core/minimal.h>
-
 // Suppress -Wunsafe-buffer-usage only on Clang
 #if defined( __clang__ )
 #    define DO_PRAGMA( X ) _Pragma( #X )

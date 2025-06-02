@@ -41,3 +41,5 @@
 #include <core/misc/tickable.h>
 #include <core/compiler/diagnostic.h>
 #include <core/compiler/optimize.h>
+#include <core/logger/log.h>
+#include <core/logger/category.h>

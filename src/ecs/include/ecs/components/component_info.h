@@ -1,7 +1,7 @@
 #pragma once
 
-#include <core/core.h>
-#include <ecs/ecs.h>
+#include <core/minimal.h>
+#include <ecs/minimal.h>
 
 #include "core/registry/id.h"
 #include "ecs/components/component_concept.h"
