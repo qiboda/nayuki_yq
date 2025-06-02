@@ -182,7 +182,7 @@ class ECS_API ArchetypeChunk
 
   public:
     template <IsComponentConcept Component>
-    class ECS_API ComponentIterator
+    class ComponentIterator
     {
       public:
         using ComponentType = Component;
@@ -279,7 +279,7 @@ class ECS_API ArchetypeChunk
 
     template <typename... T>
         requires IsComponentSetConcept<T...>
-    class ECS_API ComponentSetIterator
+    class ComponentSetIterator
     {
       public:
         using ComponentTypes = std::tuple<T...>;
