@@ -36,9 +36,9 @@ struct FeatureId : public Id
 template <>
 struct std::hash<FeatureId>
 {
-    usize operator()( FeatureId& id )
+    usize operator()( const FeatureId& id ) const
     {
-        return std::hash<usize>()( id.Index() );
+        return std::hash<u32>()( id.Index() );
     }
 };
 

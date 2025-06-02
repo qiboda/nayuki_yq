@@ -31,13 +31,7 @@ class CORE_API LoggerCategory
   private:
     friend bool operator==( const LoggerCategory& LHS, const LoggerCategory& RHS )
     {
-        std::function<void()>();
         return LHS.GetName() == RHS.GetName() && LHS.GetType() == RHS.GetType();
-    }
-
-    friend bool operator!=( const LoggerCategory& LHS, const LoggerCategory& RHS )
-    {
-        return !( LHS == RHS );
     }
 
   private:

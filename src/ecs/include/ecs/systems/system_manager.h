@@ -3,9 +3,8 @@
 #include "ecs/systems/system.h"
 #include <core/minimal.h>
 #include <ecs/minimal.h>
-#include <memory>
 
-class ECS_API SystemManager
+class ECS_API SystemManager: public NonCopyable
 {
   public:
     SystemManager();
@@ -16,7 +15,7 @@ class ECS_API SystemManager
     {
         auto systemId = SystemId();
         systemId.Set();
-        mSystems.emplace( systemId, std::make_unique<System<Func>>( func ) );
+        mSystems.emplace( systemId, System<Func>( func ) );
         return systemId;
     }
 

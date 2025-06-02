@@ -15,16 +15,13 @@ struct GraphNodeId
     GraphNodeId() = default;
     GraphNodeId( const GraphNodeId& ) = default;
 
-    friend bool operator==( const GraphNodeId& lhs, const GraphNodeId& rhs )
-    {
-        return lhs.mId == rhs.mId;
-    }
+    friend auto operator<=>( const GraphNodeId& lhs, const GraphNodeId& rhs ) = default;
 };
 
 template <>
 struct std::hash<GraphNodeId>
 {
-    usize operator()( const GraphNodeId& id )
+    usize operator()( const GraphNodeId& id ) const
     {
         return std::hash<usize>()( id.mId );
     }

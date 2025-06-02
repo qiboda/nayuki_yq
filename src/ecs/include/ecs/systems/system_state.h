@@ -8,7 +8,7 @@
 template <IsSystemConcept T>
 class SystemState;
 
-class ISystemState : public NonCopyable
+class ECS_API ISystemState : public NonCopyable
 {
   public:
     virtual ~ISystemState() = default;
@@ -25,7 +25,7 @@ class ISystemState : public NonCopyable
  * @brief 缓存System的状态, 例如SystemParam的缓存，更具体一些，比如 Local<T>的参数
  */
 template <IsSystemConcept Func>
-class ECS_API SystemState : public ISystemState
+class SystemState : public ISystemState
 {
     // FnArgs to State
     using SystemParamStateListType = ApplyFnParamsTo<Func, AllSystemParamStateTypes>;

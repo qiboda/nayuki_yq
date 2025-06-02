@@ -9,7 +9,7 @@
 #include <limits>
 #include <tuple>
 
-struct SystemId
+struct ECS_API SystemId
 {
     friend std::hash<SystemId>;
 
@@ -25,7 +25,7 @@ struct SystemId
     }
 
   public:
-    constexpr SystemId()
+    SystemId()
         : mId( std::numeric_limits<usize>::max() )
     {
     }
@@ -41,7 +41,7 @@ struct SystemId
     static inline usize sIdGenerator = 0;
 };
 
-static inline constexpr SystemId InvalidSystemId = SystemId();
+static inline const SystemId InvalidSystemId = SystemId();
 
 template <>
 struct std::hash<SystemId>
