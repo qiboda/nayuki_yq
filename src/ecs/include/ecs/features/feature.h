@@ -21,7 +21,7 @@ class ECS_API IFeature
 
     virtual void Build( class Registry* registry )
     {
-        NY_ASSERT_MSG( false, "You must implement this virtual function" )
+        NY_STATIC_ASSERT_MSG( false, "You must implement this virtual function" )
         UNUSED_VAR( registry );
     }
 };
