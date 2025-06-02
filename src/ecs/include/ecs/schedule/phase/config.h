@@ -119,7 +119,7 @@ struct PhaseConfigureSet
   public:
     void configure( PhaseConfigure&& configure )
     {
-        mConfigures.push_back( configure );
+        mConfigures.emplace_back( std::forward<PhaseConfigure>( configure ) );
     }
 
   protected:

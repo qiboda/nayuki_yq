@@ -4,7 +4,7 @@
 #include <core/minimal.h>
 #include <ecs/minimal.h>
 
-class ECS_API SystemManager: public NonCopyable
+class ECS_API SystemManager : public NonCopyable
 {
   public:
     SystemManager();
@@ -15,7 +15,7 @@ class ECS_API SystemManager: public NonCopyable
     {
         auto systemId = SystemId();
         systemId.Set();
-        mSystems.emplace( systemId, System<Func>( func ) );
+        mSystems.emplace( systemId, std::make_unique<System<Func>>( func ) );
         return systemId;
     }
 
