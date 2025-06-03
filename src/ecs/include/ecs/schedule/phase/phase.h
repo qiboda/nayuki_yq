@@ -21,6 +21,15 @@ struct PhaseId : public Id
     }
 };
 
+template <>
+struct std::hash<PhaseId>
+{
+    usize operator()( const PhaseId& id ) const
+    {
+        return std::hash<u32>()( id.Index() );
+    }
+};
+
 class PhaseIdRegistry : public IdRegistry<PhaseId, PhaseBase>
 {
 };

@@ -14,11 +14,22 @@ class ECS_API ScheduleManager
     // 期望有一个配置，可以转换为图的关系，设置到mScheduleGraph。
     void ConfigSchedulePhase( PhaseConfigure&& configure )
     {
-        PhaseConfigureSet.configure( std::forward<PhaseConfigure>( configure ) );
+        mPhaseConfigureSet.Configure( std::forward<PhaseConfigure>( configure ) );
+    }
+
+    const Graph<PhaseId, PhaseInfo>& GetScheduleGraph() const
+    {
+        return mScheduleGraph;
+    }
+
+    void BuildGraph()
+    {
+        mScheduleGraph = mPhaseConfigureSet.BuildGraph();
+        mScheduleGraph.TopSort();
     }
 
   protected:
-    Graph mScheduleGraph;
+    Graph<PhaseId, PhaseInfo> mScheduleGraph;
 
-    PhaseConfigureSet PhaseConfigureSet;
+    PhaseConfigureSet mPhaseConfigureSet;
 };
