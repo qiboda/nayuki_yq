@@ -34,6 +34,9 @@ class Topology
 template <typename TNodeId, typename TNode>
 class Graph
 {
+    template <typename TTNodeId, typename TTNode>
+    friend class TarjanGraph;
+
   public:
     Graph()
     {
@@ -43,6 +46,16 @@ class Graph
     void AddNode( TNodeId id, TNode& node )
     {
         mNodes.emplace( id, node );
+    }
+
+    void AddNode( TNodeId id, TNode&& node )
+    {
+        mNodes.emplace( id, node );
+    }
+
+    const TNode& GetNode( TNodeId id ) const
+    {
+        return mNodes.find(id)->second;
     }
 
     void AddEdge( TNodeId out, TNodeId in )
@@ -117,7 +130,7 @@ class Graph
     }
 
   protected:
-    std::unordered_map<TNodeId, TNode> mNodes;
+    std::map<TNodeId, TNode> mNodes;
     std::unordered_multimap<TNodeId, TNodeId> mEdges;
 
     Topology<TNodeId> mTopology;
