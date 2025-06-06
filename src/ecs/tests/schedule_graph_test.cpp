@@ -3,6 +3,7 @@
 #include "ecs/schedule/phase/default.h"
 #include "ecs/schedule/phase/phase.h"
 #include <gtest/gtest.h>
+#include <range/v3/view/enumerate.hpp>
 
 class ScheduleGraphTest : public ::testing::Test
 {
@@ -43,20 +44,20 @@ TEST_F( ScheduleGraphTest, TarjanTest )
     TarjanGraph<PhaseId, std::string> tarjan( graph );
     tarjan.RunTarjan();
     auto SCCs = tarjan.GetSCCs();
-    for (auto vv : SCCs)
+    for ( auto vv : SCCs | ranges::views::enumerate )
     {
-        for (auto v : vv)
+        for ( auto v : vv.second )
         {
-            auto node = graph.GetNode(v);
-            std::cout << node << std::endl;
+            auto node = graph.GetNode( v );
+            std::cout << vv.first << " " << node << std::endl;
         }
     }
 
     EXPECT_EQ( SCCs.size(), 3 );
     EXPECT_EQ( SCCs[0].size(), 3 );
-    EXPECT_EQ( SCCs[0][0], updatePhase );
-    EXPECT_EQ( SCCs[0][1], lastPhase );
-    EXPECT_EQ( SCCs[0][2], postUpdatePhase );
+    EXPECT_NE( std::find( SCCs[0].begin(), SCCs[0].end(), updatePhase ), SCCs[0].end() );
+    EXPECT_NE( std::find( SCCs[0].begin(), SCCs[0].end(), lastPhase ), SCCs[0].end() );
+    EXPECT_NE( std::find( SCCs[0].begin(), SCCs[0].end(), postUpdatePhase ), SCCs[0].end() );
 
     EXPECT_EQ( SCCs[1].size(), 1 );
     EXPECT_EQ( SCCs[1][0], preUpdatePhase );

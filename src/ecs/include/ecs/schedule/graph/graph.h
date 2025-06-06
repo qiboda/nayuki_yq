@@ -55,7 +55,7 @@ class Graph
 
     const TNode& GetNode( TNodeId id ) const
     {
-        return mNodes.find(id)->second;
+        return mNodes.find( id )->second;
     }
 
     void AddEdge( TNodeId out, TNodeId in )
@@ -79,7 +79,7 @@ class Graph
      */
     void TopSort()
     {
-        std::unordered_map<TNodeId, u32> nodeInNums;
+        std::unordered_map<TNodeId, i32> nodeInNums;
         // 统计有入度的节点
         for ( auto&& [idOut, idIn] : mEdges )
         {
@@ -103,20 +103,32 @@ class Graph
         while ( nodeInNums.size() > 0 )
         {
             std::set<TNodeId> layer;
+            std::map<TNodeId, i32> nodeDecreaseCountMap;
             std::erase_if( nodeInNums,
-                           [&layer]( auto& pair )
+                           [&layer, this, &nodeDecreaseCountMap]( auto& pair )
                            {
-                               if ( pair.second == 0 )
+                               if ( pair.second <= 0 )
                                {
                                    layer.insert( pair.first );
+
+                                   auto range = mEdges.equal_range( pair.first );
+                                   for ( auto it = range.first; it != range.second; ++it )
+                                   {
+                                       nodeDecreaseCountMap[it->second] += 1;
+                                   }
                                    return true;
                                }
-                               else
-                               {
-                                   pair.second -= 1;
-                                   return false;
-                               }
+                               return false;
                            } );
+
+            for ( auto&& [nodeId, decreaseCount] : std::move( nodeDecreaseCountMap ) )
+            {
+                auto it = nodeInNums.find( nodeId );
+                if ( it != nodeInNums.end() )
+                {
+                    it->second -= decreaseCount;
+                }
+            }
 
             NY_ASSERT_MSG( layer.size() > 0, "Topology has a circle at least." )
 

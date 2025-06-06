@@ -26,7 +26,7 @@ TEST_F( SchedulePhaseTest, PhaseGraph )
 {
     Registry registry;
     registry.ConfigurePhase(
-        PhaseConfigureBuilder<UpdatePhase, PostUpdatePhase>().After<LastPhase>().Before<FirstPhase>().Chain().End() );
+        PhaseConfigureBuilder<UpdatePhase, PostUpdatePhase>().After<FirstPhase>().Before<LastPhase>().Chain().End() );
     registry.mScheduleManager->BuildGraph();
     auto graph = registry.mScheduleManager->GetScheduleGraph();
     auto topology = graph.GetTopology();
