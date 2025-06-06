@@ -17,7 +17,7 @@
  * TODO：优化数据结构，降低内存占用和 map查询的性能损耗
  */
 template <typename TNodeId, typename TNode>
-class ECS_API TarjanGraph
+class TarjanGraph
 {
   public:
     TarjanGraph( Graph<TNodeId, TNode>& graph )
