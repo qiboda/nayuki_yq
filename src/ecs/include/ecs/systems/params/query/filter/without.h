@@ -7,13 +7,10 @@
 
 template <typename... T>
     requires IsComponentSetConcept<T...>
-class With : public QueryFilter
+class Without : public QueryFilter
 {
   public:
-    using ComponentSetType = std::tuple<T...>;
-
-  public:
-    With()
+    Without()
     {
     }
 
@@ -21,6 +18,6 @@ class With : public QueryFilter
     static bool Filter( const ComponentIdSet& componentIdSet )
     {
         ComponentIdSet filtered = ComponentTypeRegistry::GetComponentIdSet<T...>();
-        return componentIdSet.Include( filtered );
+        return componentIdSet.Exclude( filtered );
     }
 };

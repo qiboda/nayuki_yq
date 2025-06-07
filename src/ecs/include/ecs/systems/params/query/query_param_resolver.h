@@ -1,5 +1,6 @@
 #pragma once
 
+#include "core/concepts/are_unique.h"
 #include "core/concepts/tuple.h"
 #include "core/concepts/derived.h"
 #include "ecs/systems/params/query/query_data.h"
@@ -34,8 +35,10 @@ struct QueryParamResolver
 
     using QueryDataTypes = TypePackFilterType<IsStrictDerivedComponent, T...>;
     using QueryDataDecayedTypes = TypePackFilterType<IsStrictDerivedComponent, std::decay_t<T>...>;
+    using QueryDataSetType = TupleApplyTo<QueryDataTypes, QueryDataSet>;
 
     using QueryFilterTypes = TypePackFilterType<IsStrictDerivedQueryFilter, T...>;
+    using QueryFilterSetType = TupleApplyTo<QueryFilterTypes, QueryFilterSet>;
 
     template <QueryParamType lastType>
     static consteval bool IsOrdered()

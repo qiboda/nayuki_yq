@@ -1,7 +1,6 @@
 #pragma once
 
 #include <core/minimal.h>
-#include <core/minimal.h>
 
 template <typename TBase, typename TDerived>
 inline constexpr bool IsStrictDerivedValue = std::is_base_of_v<TBase, TDerived> && !std::is_same_v<TBase, TDerived>;

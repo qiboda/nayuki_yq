@@ -4,6 +4,8 @@
 #include "ecs/archetype/archetype.h"
 #include "ecs/components/component_info.h"
 #include "ecs/entity/entity.h"
+#include "ecs/systems/params/query/query_data.h"
+#include "ecs/systems/params/query/query_filter.h"
 #include <core/minimal.h>
 #include <ecs/minimal.h>
 #include <unordered_map>
@@ -145,15 +147,17 @@ class ECS_API ArchetypeManager
     }
 
   public:
-    template <IsComponentConcept... T>
+    template <typename TQueryDataSet, typename TQueryFilterSet>
+        requires IsQueryDataSetConcept<TQueryDataSet> && IsQueryFilterSetConcept<TQueryFilterSet>
     std::vector<usize> FindMetArchetypeIndices() const
     {
         std::vector<usize> met;
-        ComponentIdSet componentIdSet = ComponentTypeRegistry::GetComponentIdSet<T...>();
+        const ComponentIdSet& componentIdSet = TQueryDataSet::GetComponentIdSet();
         for ( usize i = 0; i < mArchetypes.size(); ++i )
         {
-            if ( mArchetypes[i].GetComponentIdSet().Include( componentIdSet ) &&
-                 mArchetypes[i].GetTotalEntityNum() > 0 )
+            const ComponentIdSet& ArchetypeComponentIdSet = mArchetypes[i].GetComponentIdSet();
+            if ( mArchetypes[i].GetTotalEntityNum() > 0 && ArchetypeComponentIdSet.Include( componentIdSet ) &&
+                 TQueryFilterSet::Filter( ArchetypeComponentIdSet ) )
             {
                 met.push_back( i );
             }

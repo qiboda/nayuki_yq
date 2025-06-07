@@ -119,3 +119,25 @@ template <template <typename> typename TFilter, typename TTuple>
 using TupleFilterType = TupleFilter<TFilter, TTuple>;
 
 #pragma endregion
+
+#pragma region TupleApply
+
+template <typename TTuple>
+struct TupleApply;
+
+template <typename... T>
+struct TupleApply<std::tuple<T...>>
+{
+    template <template <typename...> typename TTarget>
+    using To = TTarget<T...>;
+    template <template <typename...> typename TTarget>
+    using DecayedTo = TTarget<std::decay_t<T>...>;
+};
+
+template <typename TTuple, template <typename...> typename TTarget>
+using TupleApplyTo = TupleApply<TTuple>::template To<TTarget>;
+
+template <typename TTuple, template <typename...> typename TTarget>
+using TupleApplyDecayedTo = TupleApply<TTuple>::template DecayedTo<TTarget>;
+
+#pragma endregion

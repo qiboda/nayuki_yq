@@ -16,7 +16,9 @@ class QueryState : public SystemParamState
     void Init( Registry* registry )
     {
         mRegistry = registry;
-        archetypeIndices = registry->mArchetypeManager->FindMetArchetypeIndices<std::decay_t<T>...>();
+        using DataDecayedType = QueryParamResolver<T...>::QueryDataSetType;
+        using FilterSetType = QueryParamResolver<T...>::QueryFilterSetType;
+        archetypeIndices = registry->mArchetypeManager->FindMetArchetypeIndices<DataDecayedType, FilterSetType>();
     }
 
     class Iterator
@@ -171,6 +173,8 @@ struct SystemParamTrait<Query<T...>>
 
     using QueryFilterTypeTuple = QueryParamResolverType::QueryFilterTypes;
 
+#pragma region ReadWrite
+
     template <typename TTuple>
     struct ParamReadonly;
 
@@ -206,4 +210,6 @@ struct SystemParamTrait<Query<T...>>
 
     static constexpr std::vector<bool> ReadWrite = ParamReadWrite<QueryDataTypeTuple>::GetParamReadWrite(
         std::make_index_sequence<std::tuple_size_v<QueryDataTypeTuple>>() );
+
+#pragma endregion
 };

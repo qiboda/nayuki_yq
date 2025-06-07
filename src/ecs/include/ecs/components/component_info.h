@@ -83,6 +83,7 @@ struct ECS_API ComponentIdSet
         }
     }
 
+    // 包含关系
     bool Include( const ComponentIdSet& other ) const
     {
         auto begin = ids.cbegin();
@@ -116,6 +117,19 @@ struct ECS_API ComponentIdSet
         return true;
     }
 
+    // 互斥关系, 完全不包含
+    bool Exclude( const ComponentIdSet& other ) const
+    {
+        for ( ComponentId id : other.ids )
+        {
+            if ( Contains( id ) )
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     const std::vector<ComponentId>& Get() const
     {
         return ids;
@@ -129,6 +143,26 @@ struct ECS_API ComponentIdSet
     auto end()
     {
         return ids.end();
+    }
+
+    auto begin() const
+    {
+        return ids.begin();
+    }
+
+    auto end() const
+    {
+        return ids.end();
+    }
+
+    auto cbegin() const
+    {
+        return ids.cbegin();
+    }
+
+    auto cend() const
+    {
+        return ids.cend();
     }
 
     void Reserve( usize size )
@@ -155,6 +189,16 @@ struct ECS_API ComponentIdSet
             return std::distance( ids.begin(), it );
         }
         return std::nullopt;
+    }
+
+    bool Contains( ComponentId id ) const
+    {
+        auto it = std::lower_bound( ids.begin(), ids.end(), id );
+        if ( it != ids.end() && *it == id )
+        {
+            return true;
+        }
+        return false;
     }
 
     /// lhs - rhs
