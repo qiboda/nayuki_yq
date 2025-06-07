@@ -2,15 +2,14 @@
 
 #include "core/macro/macro.h"
 #include "ecs/registry.h"
-#include "ecs/systems/query_param.h"
+#include "ecs/systems/params/query/query_data.h"
 #include "ecs/systems/system_param.h"
+#include "ecs/systems/params/query/query_param_resolver.h"
 #include <core/minimal.h>
 #include <ecs/minimal.h>
-#include <functional>
-#include <vector>
 
 template <typename... T>
-    requires IsQueryArgsSetConcept<T...>
+    requires QueryParamResolverConcept<T...>
 class QueryState : public SystemParamState
 {
   public:
@@ -121,7 +120,7 @@ class QueryState : public SystemParamState
 };
 
 template <typename... T>
-    requires IsQueryArgsSetConcept<T...>
+    requires QueryParamResolverConcept<T...>
 class Query : public SystemParam
 {
     using State = QueryState<T...>;
@@ -160,21 +159,51 @@ class Query : public SystemParam
 };
 
 template <typename... T>
-    requires IsQueryArgsSetConcept<T...>
+    requires QueryParamResolverConcept<T...>
 struct SystemParamTrait<Query<T...>>
 {
     using Type = Query<T...>;
 
-    using QueryArgTypesTuple = std::tuple<T...>;
-    using QueryParamTypesTuple = std::tuple<std::decay_t<T>...>;
+    using QueryParamResolverType = QueryParamResolver<T...>;
 
-    static constexpr std::vector<bool> readonly = ParamReadonly( std::make_index_sequence<sizeof...( T )>() );
+    using QueryDataTypeTuple = QueryParamResolverType::QueryDataTypes;
+    using QueryDataDecayedTypeTuple = QueryParamResolverType::QueryDataDecayedTypes;
 
-    template <usize... I>
-    consteval std::vector<bool> ParamReadonly( std::index_sequence<I...> )
+    using QueryFilterTypeTuple = QueryParamResolverType::QueryFilterTypes;
+
+    template <typename TTuple>
+    struct ParamReadonly;
+
+    template <typename... P>
+    struct ParamReadonly<std::tuple<P...>>
     {
-        std::vector<bool> result( sizeof...( T ) );
-        ( ( result[I] = IsReadOnlyQueryParam<T> ), ... );
-        return result;
-    }
+        template <usize... I>
+        static consteval std::vector<bool> GetParamReadonly( std::index_sequence<I...> )
+        {
+            std::vector<bool> result( sizeof...( P ) );
+            ( ( result[I] = IsReadOnlyQueryData<std::decay_t<T>> ), ... );
+            return result;
+        }
+    };
+
+    template <typename TTuple>
+    struct ParamReadWrite;
+
+    template <typename... P>
+    struct ParamReadWrite<std::tuple<P...>>
+    {
+        template <usize... I>
+        static consteval std::vector<bool> GetParamReadWrite( std::index_sequence<I...> )
+        {
+            std::vector<bool> result( sizeof...( P ) );
+            ( ( result[I] = IsReadWriteQueryData<std::decay_t<T>> ), ... );
+            return result;
+        }
+    };
+
+    static constexpr std::vector<bool> Readonly = ParamReadonly<QueryDataTypeTuple>::GetParamReadonly(
+        std::make_index_sequence<std::tuple_size_v<QueryDataTypeTuple>>() );
+
+    static constexpr std::vector<bool> ReadWrite = ParamReadWrite<QueryDataTypeTuple>::GetParamReadWrite(
+        std::make_index_sequence<std::tuple_size_v<QueryDataTypeTuple>>() );
 };

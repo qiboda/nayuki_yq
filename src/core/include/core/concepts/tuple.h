@@ -2,6 +2,8 @@
 
 #include <core/minimal.h>
 
+#pragma region TupleIndex
+
 /**
  * @brief 获得第一个相同类型的元素在tuple中的位置
  * @tparam Tuple tuple类型
@@ -38,16 +40,18 @@ struct TupleIndexTrait<std::tuple<T...>, Elem>
 };
 
 template <typename Tuple, typename Elem>
-static inline constexpr usize TupleIndex = TupleIndexTrait<Tuple, Elem>::Value;
+inline constexpr usize TupleIndex = TupleIndexTrait<Tuple, Elem>::Value;
 template <typename Tuple, typename Elem>
-static inline constexpr usize IsInTuple = TupleIndexTrait<Tuple, Elem>::IsIn;
+inline constexpr usize IsInTuple = TupleIndexTrait<Tuple, Elem>::IsIn;
 template <typename Tuple, typename Elem>
 concept IsInTupleConcept = IsInTuple<Tuple, Elem>;
 
+#pragma endregion
+
+#pragma region TupleSubset
+
 /**
- * @brief 获得第一个相同类型的元素在tuple中的位置
- * @tparam Tuple tuple类型
- * @tparam Elem 元素类型
+ * @brief 检测是否一个Tuple是另一个Tuple的子集。
  */
 template <typename Tuple, typename SubTuple>
 struct TupleSubsetTrait;
@@ -60,7 +64,58 @@ struct TupleSubsetTrait<std::tuple<T...>, std::tuple<U...>>
 };
 
 template <typename Tuple, typename SubTuple>
-static inline constexpr bool IsSubsetOfTuple = TupleSubsetTrait<Tuple, SubTuple>::IsSubset;
+inline constexpr bool IsSubsetOfTuple = TupleSubsetTrait<Tuple, SubTuple>::IsSubset;
 
 template <typename Tuple, typename SubTuple>
-static inline constexpr std::vector<usize> TupleSubsetIndex = TupleSubsetTrait<Tuple, SubTuple>::SubsetIndex;
+inline constexpr std::vector<usize> TupleSubsetIndex = TupleSubsetTrait<Tuple, SubTuple>::SubsetIndex;
+
+#pragma endregion
+
+#pragma region TupleFilterType
+
+template <typename TTuple1, typename TTuple2>
+struct TupleCat;
+
+template <typename... T1, typename... T2>
+struct TupleCat<std::tuple<T1...>, std::tuple<T2...>>
+{
+    using Type = std::tuple<T1..., T2...>;
+};
+
+template <template <typename> typename TFilter, typename... T>
+struct TypePackFilter;
+
+template <template <typename> typename TFilter>
+struct TypePackFilter<TFilter>
+{
+    using Type = std::tuple<>;
+};
+
+template <template <typename> typename TFilter, typename T>
+struct TypePackFilter<TFilter, T>
+{
+    using Type = std::conditional_t<TFilter<std::decay_t<T>>::Value, std::tuple<T>, std::tuple<>>;
+};
+
+template <template <typename> typename TFilter, typename T, typename... Ts>
+struct TypePackFilter<TFilter, T, Ts...>
+{
+    using Type = TupleCat<TypePackFilter<TFilter, T>, TypePackFilter<TFilter, Ts...>>;
+};
+
+template <template <typename> typename TFilter, typename... Ts>
+using TypePackFilterType = TypePackFilter<TFilter, Ts...>::Type;
+
+template <template <typename> typename TFilter, typename TTuple>
+struct TupleFilter;
+
+template <template <typename> typename TFilter, typename... T>
+struct TupleFilter<TFilter, std::tuple<T...>>
+{
+    using Type = TypePackFilterType<TFilter, T...>;
+};
+
+template <template <typename> typename TFilter, typename TTuple>
+using TupleFilterType = TupleFilter<TFilter, TTuple>;
+
+#pragma endregion

@@ -1,14 +1,13 @@
 #include <gtest/gtest.h>
 #include <tuple>
 
-#include "core/macro/macro.h"
-#include "ecs/commands/entity_command.h"
-#include "ecs/commands/entity_instance_command.h"
 #include "ecs/components/component.h"
 #include "ecs/commands/registry_command.h"
 #include "ecs/entity/entity.h"
-#include "ecs/systems/query.h"
-#include "ecs/systems/query_param.h"
+#include "ecs/systems/params/query/query.h"
+#include "ecs/systems/params/query/query_data.h"
+#include "ecs/commands/entity_command.h"
+#include "ecs/commands/entity_instance_command.h"
 
 class QueryTest : public ::testing::Test
 {
@@ -48,17 +47,17 @@ class QueryTest : public ::testing::Test
 
 TEST_F( QueryTest, QueryParamComponentQualifier )
 {
-    auto query1 = IsQueryArgsSetConcept<ComponentA>;
+    auto query1 = IsQueryDataArgConcept<ComponentA>;
     EXPECT_FALSE( query1 );
-    auto query2 = IsQueryArgsSetConcept<const ComponentA>;
+    auto query2 = IsQueryDataArgConcept<const ComponentA>;
     EXPECT_FALSE( query2 );
-    auto query3 = IsQueryArgsSetConcept<ComponentA&>;
+    auto query3 = IsQueryDataArgConcept<ComponentA&>;
     EXPECT_TRUE( query3 );
-    auto query4 = IsQueryArgsSetConcept<const ComponentA&>;
+    auto query4 = IsQueryDataArgConcept<const ComponentA&>;
     EXPECT_TRUE( query4 );
-    auto query5 = IsQueryArgsSetConcept<ComponentB*>;
+    auto query5 = IsQueryDataArgConcept<ComponentB*>;
     EXPECT_FALSE( query5 );
-    auto query6 = IsQueryArgsSetConcept<const ComponentA*>;
+    auto query6 = IsQueryDataArgConcept<const ComponentA*>;
     EXPECT_FALSE( query6 );
 }
 
@@ -69,31 +68,31 @@ TEST_F( QueryTest, QueryParamEntityQualifier )
     auto EntityParamLimit = EntityArgsLimitConcept<Entity>;
     EXPECT_TRUE( EntityParamLimit );
 
-    auto query1 = IsQueryArgsSetConcept<Entity>;
+    auto query1 = IsQueryDataArgConcept<Entity>;
     EXPECT_TRUE( query1 );
-    auto query2 = IsQueryArgsSetConcept<const Entity>;
+    auto query2 = IsQueryDataArgConcept<const Entity>;
     EXPECT_FALSE( query2 );
-    auto query3 = IsQueryArgsSetConcept<Entity*>;
+    auto query3 = IsQueryDataArgConcept<Entity*>;
     EXPECT_FALSE( query3 );
-    auto query4 = IsQueryArgsSetConcept<const Entity*>;
+    auto query4 = IsQueryDataArgConcept<const Entity*>;
     EXPECT_FALSE( query4 );
-    auto query5 = IsQueryArgsSetConcept<Entity&>;
+    auto query5 = IsQueryDataArgConcept<Entity&>;
     EXPECT_FALSE( query5 );
-    auto query6 = IsQueryArgsSetConcept<const Entity&>;
+    auto query6 = IsQueryDataArgConcept<const Entity&>;
     EXPECT_FALSE( query6 );
 }
 
 TEST_F( QueryTest, QueryParamSameType )
 {
-    auto query1 = IsQueryArgsSetConcept<ComponentA&, ComponentB&>;
+    auto query1 = IsQueryParamsValue<ComponentA&, ComponentB&>;
     EXPECT_EQ( query1, true );
-    auto query2 = IsQueryArgsSetConcept<ComponentA&, ComponentA&>;
+    auto query2 = IsQueryParamsValue<ComponentA&, ComponentA&>;
     EXPECT_EQ( query2, false );
-    auto query3 = IsQueryArgsSetConcept<ComponentA&, ComponentB&, const ComponentA&>;
+    auto query3 = IsQueryParamsValue<ComponentA&, ComponentB&, const ComponentA&>;
     EXPECT_EQ( query3, false );
-    auto value4 = IsQueryArgsSetConcept<ComponentA&, Entity>;
+    auto value4 = IsQueryParamsValue<ComponentA&, Entity>;
     EXPECT_EQ( value4, true );
-    auto value5 = IsQueryArgsSetConcept<ComponentA&, Entity, Entity>;
+    auto value5 = IsQueryParamsValue<ComponentA&, Entity, Entity>;
     EXPECT_EQ( value5, false );
 }
 

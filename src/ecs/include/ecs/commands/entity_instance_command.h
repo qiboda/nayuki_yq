@@ -2,12 +2,9 @@
 
 #include "ecs/commands/command.h"
 #include "ecs/commands/entity_command.h"
-#include "ecs/components/component.h"
 #include "ecs/entity/entity.h"
 #include <core/minimal.h>
 #include <ecs/minimal.h>
-#include <memory>
-#include <utility>
 #include <ecs/commands/command_manager.h>
 
 template <IsComponentConcept... T>

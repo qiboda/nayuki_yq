@@ -2,7 +2,7 @@
 #include <tuple>
 
 #include "core/macro/macro.h"
-#include "ecs/systems/local.h"
+#include "ecs/systems/params/local.h"
 #include "ecs/systems/system_manager.h"
 #include "ecs/systems/system_param.h"
 
@@ -36,7 +36,7 @@ TEST( FuncTraitTests, TestAddFuncTrait )
 {
     TestAddFuncTrait<FnTrait<decltype( Add )>>( FuncKind::Func );
     TestAddFuncTrait<FnTrait<decltype( &Add )>>( FuncKind::FuncPtr );
-    TestAddFuncTrait<FnTrait<decltype( Add ) &>>( FuncKind::FuncRef );
+    TestAddFuncTrait<FnTrait<decltype( Add )&>>( FuncKind::FuncRef );
 }
 
 class SystemTest : public ::testing::Test
@@ -66,7 +66,7 @@ class SystemTest : public ::testing::Test
         return 0;
     }
 
-    static void test_local( Local<i32> &a )
+    static void test_local( Local<i32>& a )
     {
         a.mValue++;
     }
@@ -98,18 +98,18 @@ TEST_F( SystemTest, LocalParamTest )
 
     {
         sm.RunSystem( &registry );
-        const auto &system = sm.GetSystem( id );
-        const auto &systemDc = system->Downcast( &SystemTest::test_local );
-        const auto &systemState = systemDc->GetSystemState();
+        const auto& system = sm.GetSystem( id );
+        const auto& systemDc = system->Downcast( &SystemTest::test_local );
+        const auto& systemState = systemDc->GetSystemState();
         auto paramState = systemState.GetParamState<0>();
         EXPECT_EQ( paramState.value, 1 );
     }
 
     {
         sm.RunSystem( &registry );
-        const auto &system = sm.GetSystem( id );
-        const auto &systemDc = system->Downcast( &SystemTest::test_local );
-        const auto &systemState = systemDc->GetSystemState();
+        const auto& system = sm.GetSystem( id );
+        const auto& systemDc = system->Downcast( &SystemTest::test_local );
+        const auto& systemState = systemDc->GetSystemState();
         auto paramState = systemState.GetParamState<0>();
         EXPECT_EQ( paramState.value, 2 );
     }

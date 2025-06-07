@@ -41,7 +41,7 @@ struct ECS_API SystemId
     static inline usize sIdGenerator = 0;
 };
 
-static inline const SystemId InvalidSystemId = SystemId();
+static const SystemId InvalidSystemId = SystemId();
 
 template <>
 struct std::hash<SystemId>
@@ -75,7 +75,7 @@ class ISystem : public NonCopyable
     }
 };
 
-static inline const std::unique_ptr<ISystem> sNullISystem = nullptr;
+static const std::unique_ptr<ISystem> sNullISystem = nullptr;
 
 /**
  * @brief 每个Func的System的特化类。

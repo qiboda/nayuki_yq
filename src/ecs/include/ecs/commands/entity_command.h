@@ -4,7 +4,6 @@
 #include "ecs/commands/registry_command.h"
 #include <core/minimal.h>
 #include <ecs/minimal.h>
-#include <memory>
 
 class ECS_API CreateEntityCommandBuffer : public CommandBufferBase
 {
