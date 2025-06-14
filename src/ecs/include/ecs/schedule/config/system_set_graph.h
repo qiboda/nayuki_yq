@@ -11,9 +11,9 @@ class ECS_API SystemSetGraph
     SystemSetGraph();
 
   protected:
-    std::unordered_multimap<SystemSetId, ScheduleNodeId> AllNodesInSet;
+    // std::unordered_multimap<SystemSetId, ScheduleNodeId> AllNodesInSet;
 
-    std::set<SystemSetId> AllSets;
+    // std::set<SystemSetId> AllSets;
 
-    std::unordered_map<SystemSetId, SystemSetId> AllEdges;
+    // std::unordered_map<SystemSetId, SystemSetId> AllEdges;
 };

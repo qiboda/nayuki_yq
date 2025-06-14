@@ -15,7 +15,7 @@ struct ECS_API Id
     template <IsId TId>
     friend class IdGenerator;
 
-    Id()
+    constexpr Id()
         : mId( std::numeric_limits<u32>::max() )
     {
     }

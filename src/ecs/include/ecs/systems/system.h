@@ -12,6 +12,9 @@ struct ECS_API SystemId : public Id
     friend class SystemIdRegistry;
 
   public:
+    static const SystemId Invalid;
+
+  public:
     friend bool operator==( const SystemId& lhs, const SystemId& rhs )
     {
         return lhs.mId == rhs.mId;
@@ -22,8 +25,6 @@ struct ECS_API SystemId : public Id
         return lhs.mId < rhs.mId;
     }
 };
-
-static const SystemId InvalidSystemId = SystemId();
 
 template <>
 struct std::hash<SystemId>
@@ -46,7 +47,7 @@ class ECS_API SystemIdRegistry
             return it->second;
         }
 
-        return InvalidSystemId;
+        return SystemId::Invalid;
     }
 
     template <IsSystemConcept Func>
@@ -71,9 +72,9 @@ class ECS_API SystemIdRegistry
     }
 
   protected:
-    static inline SystemId sId = {};
+    static SystemId sId;
 
-    static inline std::unordered_map<void*, SystemId> mFuncToIdMap = {};
+    static std::unordered_map<void*, SystemId> mFuncToIdMap;
 };
 
 template <IsSystemConcept Func>

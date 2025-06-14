@@ -14,7 +14,7 @@ class ECS_API SystemManager : public NonCopyable
     SystemId AddSystem( Func func )
     {
         auto systemId = SystemIdRegistry::Get( func );
-        if ( systemId != InvalidSystemId )
+        if ( systemId != SystemId::Invalid )
         {
             // System already exists.
             return systemId;

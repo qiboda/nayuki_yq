@@ -7,7 +7,7 @@
 #include "ecs/schedule/config/system_set.h"
 #include "ecs/systems/system_manager.h"
 
-class ECS_API ScheduleGraph
+class ECS_API ScheduleGraph : public NonCopyable
 {
   public:
     ScheduleGraph();

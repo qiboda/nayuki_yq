@@ -26,6 +26,6 @@ class ECS_API SystemNodeGraph
     }
 
   protected:
-    std::unordered_map<ScheduleNodeId, ScheduleSystemNode> AllNodes;
-    std::unordered_map<ScheduleNodeId, ScheduleNodeId> AllEdges;
+    // std::unordered_map<ScheduleNodeId, ScheduleSystemNode> AllNodes;
+    // std::unordered_map<ScheduleNodeId, ScheduleNodeId> AllEdges;
 };
