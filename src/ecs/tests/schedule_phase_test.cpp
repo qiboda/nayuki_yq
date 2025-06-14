@@ -1,6 +1,7 @@
 
 #include "ecs/registry.h"
 #include "ecs/schedule/phase/default.h"
+#include "ecs/schedule/phase/config.h"
 #include <gtest/gtest.h>
 
 class SchedulePhaseTest : public ::testing::Test
@@ -18,15 +19,22 @@ class SchedulePhaseTest : public ::testing::Test
 TEST_F( SchedulePhaseTest, PhaseConfigure )
 {
     Registry registry;
-    registry.ConfigurePhase(
-        PhaseConfigureBuilder<UpdatePhase, PostUpdatePhase>().After<LastPhase>().Before<FirstPhase>().Chain().End() );
+    registry.ConfigurePhase( PhaseConfigure::Create<UpdatePhase, PostUpdatePhase>()
+                                 .After<LastPhase>()
+                                 .Before<FirstPhase>()
+                                 .Chain()
+                                 .Build() );
 }
 
 TEST_F( SchedulePhaseTest, PhaseGraph )
 {
     Registry registry;
-    registry.ConfigurePhase(
-        PhaseConfigureBuilder<UpdatePhase, PostUpdatePhase>().After<FirstPhase>().Before<LastPhase>().Chain().End() );
+    registry.ConfigurePhase( PhaseConfigure::Create<UpdatePhase, PostUpdatePhase>()
+                                 .After<FirstPhase>()
+                                 .Before<LastPhase>()
+                                 .Chain()
+                                 .Build() );
+    registry.mScheduleManager->ApplyPhaseConfigures();
     registry.mScheduleManager->BuildGraph();
     auto graph = registry.mScheduleManager->GetScheduleGraph();
     auto topology = graph.GetTopology();

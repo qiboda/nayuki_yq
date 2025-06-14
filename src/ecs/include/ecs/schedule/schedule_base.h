@@ -2,7 +2,6 @@
 /// 每个调度图的节点，可以设定前后顺序和依赖关系。
 #pragma once
 
-#include "ecs/systems/system_concept.h"
 #include <core/minimal.h>
 #include <ecs/minimal.h>
 
@@ -27,6 +26,10 @@ class ECS_API ScheduleBase : public std::enable_shared_from_this<ScheduleBase>
     const std::shared_ptr<class ScheduleGraph> GetScheduleGraph() const
     {
         return mScheduleGraph;
+    }
+
+    virtual void Run()
+    {
     }
 
   protected:

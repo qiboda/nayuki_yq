@@ -5,6 +5,7 @@
 
 #include "ecs/schedule/config/node.h"
 #include "ecs/schedule/config/system_set.h"
+#include "ecs/schedule/graph/graph.h"
 #include "ecs/systems/system_manager.h"
 
 class ECS_API ScheduleGraph : public NonCopyable
@@ -12,6 +13,7 @@ class ECS_API ScheduleGraph : public NonCopyable
   public:
     ScheduleGraph();
 
+#pragma region Config
     /**
      * @brief
      * AddSystems(&SystemFunction)
@@ -22,6 +24,7 @@ class ECS_API ScheduleGraph : public NonCopyable
     void AddSystemSetNodeConfig( class ScheduleSystemSetNodeConfig&& config );
 
     void ApplyNodeConfigs();
+#pragma endregion Config
 
 #pragma region InConfig
     template <IsSystemConcept Func>
@@ -46,20 +49,30 @@ class ECS_API ScheduleGraph : public NonCopyable
     void BeforeSystemSetInConfig( ScheduleNodeId curNodeId );
 #pragma endregion // InConfig
 
+  void BuildCompositeGraph();
+  void BuildDependencyGraph();
+
   protected:
     std::vector<ScheduleSystemNodeConfig> mSystemNodeConfigs;
     std::vector<ScheduleSystemSetNodeConfig> mSystemSetNodeConfigs;
 
   protected:
-    std::unordered_map<SystemId, ScheduleNodeId> AllSystemNodes;
-    std::unordered_map<SystemSetId, ScheduleNodeId> AllSystemSetNodes;
+    std::unordered_map<SystemId, ScheduleNodeId> mAllSystemNodes;
+    std::unordered_map<SystemSetId, ScheduleNodeId> mAllSystemSetNodes;
 
-    std::unordered_map<ScheduleNodeId, ScheduleNodeVariant> AllNodes;
+    std::unordered_map<ScheduleNodeId, ScheduleNodeVariant> mAllNodes;
 
+    /// 用户设置的
     // 层级嵌套结构
-    std::unordered_map<ScheduleNodeId, ScheduleNodeId> CompositeEdges;
+    std::unordered_map<ScheduleNodeId, ScheduleNodeId> mCompositeEdges;
     // 依赖关系 水平结构
-    std::unordered_map<ScheduleNodeId, ScheduleNodeId> DependencyEdges;
+    std::unordered_map<ScheduleNodeId, ScheduleNodeId> mDependencyEdges;
+
+  protected:
+    /// 计算得出的
+    // 此处的ScheduleNode只是一个占位符，因为Graph目前不需要Node
+    Graph<ScheduleNodeId, ScheduleNode> mCompositeGraph;
+    Graph<ScheduleNodeId, ScheduleNode> mDependencyGraph;
 
   protected:
     SystemManager* mSystemManager = nullptr;
@@ -75,8 +88,8 @@ template <IsSystemConcept Func>
 ScheduleNodeId ScheduleGraph::AddSystemInConfig( Func func )
 {
     SystemId systemId = mSystemManager->AddSystem( func );
-    auto it = AllSystemNodes.find( systemId );
-    if ( it != AllSystemNodes.end() )
+    auto it = mAllSystemNodes.find( systemId );
+    if ( it != mAllSystemNodes.end() )
     {
         // System already exists.
         return it->second;
@@ -84,8 +97,8 @@ ScheduleNodeId ScheduleGraph::AddSystemInConfig( Func func )
 
     auto scheduleNodeId = ScheduleNodeIdGenerator::Next();
     ScheduleSystemNode Node = ScheduleSystemNode( systemId );
-    AllNodes.emplace( scheduleNodeId, std::move( Node ) );
-    AllSystemNodes.emplace( systemId, scheduleNodeId );
+    mAllNodes.emplace( scheduleNodeId, std::move( Node ) );
+    mAllSystemNodes.emplace( systemId, scheduleNodeId );
 
     return scheduleNodeId;
 }
@@ -95,14 +108,14 @@ template <IsSystemConcept Func>
 void ScheduleGraph::AfterSystemInConfig( Func func, ScheduleNodeId curNodeId )
 {
     ScheduleNodeId afterNodeId = AddSystemInConfig( func );
-    DependencyEdges.emplace( afterNodeId, curNodeId );
+    mDependencyEdges.emplace( afterNodeId, curNodeId );
 }
 
 template <IsSystemConcept Func>
 void ScheduleGraph::BeforeSystemInConfig( ScheduleNodeId curNodeId, Func func )
 {
     ScheduleNodeId beforeNodeId = AddSystemInConfig( func );
-    DependencyEdges.emplace( curNodeId, beforeNodeId );
+    mDependencyEdges.emplace( curNodeId, beforeNodeId );
 }
 
 template <IsSystemSetConcept T>
@@ -110,22 +123,22 @@ void ScheduleGraph::InSetInConfig( ScheduleNodeId curNodeId )
 {
     auto ScheduleNodeId = AddSystemSetInConfig<T>();
 
-    CompositeEdges.emplace( ScheduleNodeId, curNodeId );
+    mCompositeEdges.emplace( ScheduleNodeId, curNodeId );
 }
 
 template <IsSystemSetConcept T>
 ScheduleNodeId ScheduleGraph::AddSystemSetInConfig()
 {
     auto systemSetId = SystemSetIdRegistry::Get<T>();
-    auto it = AllSystemSetNodes.find( systemSetId );
-    if ( it != AllSystemSetNodes.end() )
+    auto it = mAllSystemSetNodes.find( systemSetId );
+    if ( it != mAllSystemSetNodes.end() )
     {
         return it.second;
     }
 
     auto scheduleNodeId = ScheduleNodeIdGenerator::Next();
-    AllSystemSetNodes.emplace( systemSetId, scheduleNodeId );
-    AllNodes.emplace( scheduleNodeId, ScheduleSystemSetNode( systemSetId ) );
+    mAllSystemSetNodes.emplace( systemSetId, scheduleNodeId );
+    mAllNodes.emplace( scheduleNodeId, ScheduleSystemSetNode( systemSetId ) );
     return scheduleNodeId;
 }
 
@@ -134,7 +147,7 @@ void ScheduleGraph::AfterSystemSetInConfig( ScheduleNodeId curNodeId )
 {
     auto ScheduleNodeId = AddSystemSetInConfig<T>();
 
-    DependencyEdges.emplace( ScheduleNodeId, curNodeId );
+    mDependencyEdges.emplace( ScheduleNodeId, curNodeId );
 }
 
 template <IsSystemSetConcept T>
@@ -142,7 +155,7 @@ void ScheduleGraph::BeforeSystemSetInConfig( ScheduleNodeId curNodeId )
 {
     auto ScheduleNodeId = AddSystemSetInConfig<T>();
 
-    DependencyEdges.emplace( curNodeId, ScheduleNodeId );
+    mDependencyEdges.emplace( curNodeId, ScheduleNodeId );
 }
 
 #pragma endregion // InConfig

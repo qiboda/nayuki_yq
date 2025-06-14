@@ -142,6 +142,7 @@ class Graph
     }
 
   protected:
+    // 这里使用map而不是unordered map, 是为了TarjanGraph的计算结果保持有序。
     std::map<TNodeId, TNode> mNodes;
     std::unordered_multimap<TNodeId, TNodeId> mEdges;
 

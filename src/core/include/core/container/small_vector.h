@@ -3,7 +3,7 @@
 #include <core/minimal.h>
 
 template <typename T, usize N>
-class SmallVector
+class SmallVector: public NonCopyable
 {
   public:
     static constexpr usize MAX_SIZE = 32;
@@ -53,6 +53,31 @@ class SmallVector
         destroy_elements();
         if ( !UsingInline )
             ::operator delete( mData );
+    }
+
+    SmallVector( SmallVector&& other )
+        : mData( std::move( other.mData ) )
+        , mSize( std::move( other.mSize ) )
+        , mCapacity( std::move( other.mCapacity ) )
+        , UsingInline( std::move( other.UsingInline ) )
+    {
+        other.mData = nullptr;
+        other.mSize = 0;
+        other.mCapacity = 0;
+        other.UsingInline = true;
+    }
+
+    SmallVector operator=( SmallVector&& other )
+    {
+        mData = std::move( other.mData );
+        mSize = std::move( other.mSize );
+        mCapacity = std::move( other.mCapacity );
+        UsingInline = std::move( other.UsingInline );
+
+        other.mData = nullptr;
+        other.mSize = 0;
+        other.mCapacity = 0;
+        other.UsingInline = true;
     }
 
     void push_back( const T& val )

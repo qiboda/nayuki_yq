@@ -13,7 +13,7 @@ NAME_FORMATTER( PhaseBase )
 template <typename T>
 concept IsSchedulePhase = IsStrictDerivedConcept<PhaseBase, T>;
 
-struct PhaseId : public Id
+struct ECS_API PhaseId : public Id
 {
     friend auto operator<=>( const PhaseId& lhs, const PhaseId& rhs )
     {
@@ -30,6 +30,12 @@ struct std::hash<PhaseId>
     }
 };
 
-class PhaseIdRegistry : public IdRegistry<PhaseId, PhaseBase>
+class ECS_API PhaseIdRegistry : public IdRegistry<PhaseId, PhaseBase>
 {
+};
+
+struct ECS_API PhaseInfo
+{
+    PhaseId mId;
+    std::string mName;
 };

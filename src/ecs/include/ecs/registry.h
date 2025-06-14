@@ -41,5 +41,5 @@ class ECS_API Registry
     EntityManager* mEntityManager = nullptr;
     CommandManager* mCommandManager = nullptr;
     ArchetypeManager* mArchetypeManager = nullptr;
-    ScheduleManager* mScheduleManager = nullptr;
+    std::shared_ptr<ScheduleManager> mScheduleManager = nullptr;
 };

@@ -27,3 +27,23 @@ void ScheduleGraph::ApplyNodeConfigs()
         config.Apply( mSchedule );
     }
 }
+
+void ScheduleGraph::BuildCompositeGraph()
+{
+    for ( auto [outEdgeId, inEdgeId] : mCompositeEdges )
+    {
+        mCompositeGraph.AddNode( outEdgeId, {} );
+        mCompositeGraph.AddNode( inEdgeId, {} );
+        mCompositeGraph.AddEdge( outEdgeId, inEdgeId );
+    }
+}
+
+void ScheduleGraph::BuildDependencyGraph()
+{
+    // for ( auto [outEdgeId, inEdgeId] : mCompositeEdges )
+    // {
+    //     mCompositeGraph.AddNode( outEdgeId, {} );
+    //     mCompositeGraph.AddNode( inEdgeId, {} );
+    //     mCompositeGraph.AddEdge( outEdgeId, inEdgeId );
+    // }
+}

@@ -21,13 +21,13 @@ class TarjanGraph
 {
   public:
     TarjanGraph( Graph<TNodeId, TNode>& graph )
-        : graph( graph )
+        : mGraph( graph )
     {
     }
 
     void RunTarjan()
     {
-        for ( const auto& [nodeId, node] : graph.mNodes )
+        for ( const auto& [nodeId, node] : mGraph.mNodes )
         {
             if ( mIndices.find( nodeId ) == mIndices.end() )
             {
@@ -49,7 +49,7 @@ class TarjanGraph
         mOnStack[v] = true;
 
         // 遍历邻居
-        auto range = graph.mEdges.equal_range( v );
+        auto range = mGraph.mEdges.equal_range( v );
         for ( auto it = range.first; it != range.second; ++it )
         {
             const TNodeId& w = it->second;
@@ -91,5 +91,5 @@ class TarjanGraph
 
     std::vector<std::vector<TNodeId>> mSCCs; // 最终结果
 
-    Graph<TNodeId, TNode>& graph;
+    Graph<TNodeId, TNode>& mGraph;
 };
