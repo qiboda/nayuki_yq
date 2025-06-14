@@ -15,15 +15,20 @@ add_plugindirs("xmake/plugins")
 
 if is_host("windows") then
     set_toolchains("msvc")
-else 
+else
     set_toolchains("clang")
 end
 
 set_warnings("allextra", "error")
 set_languages("c17", "cxx20")
 
+-- stdexec 需要下面两个选项来正确识别 C++ 标准版本。
+add_cxxflags("cl::/Zc:__cplusplus")
+-- 在 MSVC 中启用预处理器的 C++ 标准版本。
+add_cxxflags("cl::/Zc:preprocessor")
+
 -- 检查toolchains是msvc还是clang, 可能得到nil
--- if get_config("toolchain") == "msvc" 
+-- if get_config("toolchain") == "msvc"
 
 add_cxxflags("cl::/utf-8")
 -- 检测到有类型没有dll导出，但是被用在了dll接口中时报警告。

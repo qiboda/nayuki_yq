@@ -1,7 +1,7 @@
 includes(os.projectdir() .. "/xmake/utils.lua")
 
 -- , {configs= { toolchains = "clang" }}
-add_requires("stdexec")
+add_requires("stdexec", { configs = { shared = true }, debug = true })
 
 -- external = true -> /external:I to refer to the header file path 
 add_requires("glfw", "glm", "stb", "spdlog", "rpmalloc", {
