@@ -53,19 +53,15 @@ struct ECS_API PhaseConfigure
 
 #include "ecs/schedule/schedule_manager.h"
 
-template <IsSchedulePhase T>
-auto MakeAddLambda()
-{
-    return []( std::shared_ptr<ScheduleManager> scheduleManager ) -> PhaseId
-    {
-        return scheduleManager->AddPhaseInConfig<T>();
-    };
-};
-
 template <IsSchedulePhase... T>
 PhaseConfigure& PhaseConfigure::Add()
 {
-    ( mCurNodesFunctions.push_back( MakeAddLambda<T>() ), ... );
+    ( mCurNodesFunctions.push_back(
+          []( std::shared_ptr<ScheduleManager> scheduleManager ) -> PhaseId
+          {
+              return scheduleManager->AddPhaseInConfig<T>();
+          } ),
+      ... );
     return *this;
 }
 
