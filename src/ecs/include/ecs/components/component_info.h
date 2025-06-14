@@ -212,7 +212,9 @@ struct ECS_API ComponentIdSet
         std::ranges::copy_if( lhsIds,
                               std::back_inserter( result ),
                               [&rhsIds]( auto& needle )
-                              { return std::ranges::find( rhsIds, needle ) == rhsIds.end(); } );
+                              {
+                                  return std::ranges::find( rhsIds, needle ) == rhsIds.end();
+                              } );
         return result;
     }
 
@@ -227,7 +229,9 @@ struct ECS_API ComponentIdSet
         std::ranges::copy_if( lhsIds,
                               std::back_inserter( result ),
                               [&rhsIds]( auto& needle )
-                              { return std::ranges::find( rhsIds, needle ) != rhsIds.end(); } );
+                              {
+                                  return std::ranges::find( rhsIds, needle ) != rhsIds.end();
+                              } );
         return result;
     }
 

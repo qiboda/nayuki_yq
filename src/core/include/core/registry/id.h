@@ -12,6 +12,9 @@ struct ECS_API Id
     template <IsId TId, typename TBaseType>
     friend class IdRegistry;
 
+    template <IsId TId>
+    friend class IdGenerator;
+
     Id()
         : mId( std::numeric_limits<u32>::max() )
     {
@@ -50,6 +53,21 @@ class IdRegistry
     }
 
   private:
+    static TId Next()
+    {
+        auto index = sId.Index() + 1;
+        sId.SetId( index );
+        return sId;
+    }
+
+  protected:
+    static inline TId sId = TId();
+};
+
+template <IsId TId>
+class IdGenerator
+{
+  public:
     static TId Next()
     {
         auto index = sId.Index() + 1;

@@ -41,6 +41,5 @@ class ECS_API Registry
     EntityManager* mEntityManager = nullptr;
     CommandManager* mCommandManager = nullptr;
     ArchetypeManager* mArchetypeManager = nullptr;
-    SystemManager* mSystemManager = nullptr;
     ScheduleManager* mScheduleManager = nullptr;
 };

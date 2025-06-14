@@ -21,9 +21,12 @@ class AddComponentCommandBuffer : public CommandBufferBase
   public:
     virtual void Execute( Registry* registry ) override
     {
-        std::apply( [&]( auto&&... comps )
-                    { registry->mArchetypeManager->AddComponentData( mEntity, std::forward<T>( comps )... ); },
-                    std::forward<std::tuple<T...>>( mComponents ) );
+        std::apply(
+            [&]( auto&&... comps )
+            {
+                registry->mArchetypeManager->AddComponentData( mEntity, std::forward<T>( comps )... );
+            },
+            std::forward<std::tuple<T...>>( mComponents ) );
     }
 
     virtual usize GetSize() const override
@@ -50,9 +53,12 @@ class RemoveComponentCommandBuffer : public CommandBufferBase
   public:
     virtual void Execute( Registry* registry ) override
     {
-        std::apply( [&]( auto&&... comps )
-                    { registry->mArchetypeManager->RemoveComponentData( mEntity, std::forward<T>( comps )... ); },
-                    std::forward<std::tuple<T...>>( mComponents ) );
+        std::apply(
+            [&]( auto&&... comps )
+            {
+                registry->mArchetypeManager->RemoveComponentData( mEntity, std::forward<T>( comps )... );
+            },
+            std::forward<std::tuple<T...>>( mComponents ) );
     }
 
     virtual usize GetSize() const override
@@ -79,9 +85,12 @@ class ReplaceComponentCommandBuffer : public CommandBufferBase
   public:
     virtual void Execute( Registry* registry ) override
     {
-        std::apply( [&]( auto&&... comps )
-                    { registry->mArchetypeManager->ReplaceComponentData( mEntity, std::forward<T>( comps )... ); },
-                    std::forward<std::tuple<T...>>( mComponents ) );
+        std::apply(
+            [&]( auto&&... comps )
+            {
+                registry->mArchetypeManager->ReplaceComponentData( mEntity, std::forward<T>( comps )... );
+            },
+            std::forward<std::tuple<T...>>( mComponents ) );
     }
 
     virtual usize GetSize() const override

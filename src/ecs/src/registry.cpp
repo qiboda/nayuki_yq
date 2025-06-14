@@ -10,7 +10,6 @@ Registry::Registry()
     , mEntityManager( new EntityManager() )
     , mCommandManager( new CommandManager() )
     , mArchetypeManager( new ArchetypeManager() )
-    , mSystemManager( new SystemManager() )
     , mScheduleManager( new ScheduleManager() )
 {
 }

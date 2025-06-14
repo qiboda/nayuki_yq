@@ -13,8 +13,12 @@ class ECS_API SystemManager : public NonCopyable
     template <IsSystemConcept Func>
     SystemId AddSystem( Func func )
     {
-        auto systemId = SystemId();
-        systemId.Set();
+        auto systemId = SystemIdRegistry::Get( func );
+        if ( systemId != InvalidSystemId )
+        {
+            // System already exists.
+            return systemId;
+        }
         mSystems.emplace( systemId, std::make_unique<System<Func>>( func ) );
         return systemId;
     }

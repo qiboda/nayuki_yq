@@ -1,17 +1,15 @@
 #pragma once
 
 #include "core/macro/macro.h"
+#include "core/registry/id.h"
 #include "ecs/systems/system_concept.h"
 #include "ecs/systems/system_state.h"
 #include <core/minimal.h>
 #include <ecs/minimal.h>
-#include <functional>
-#include <limits>
-#include <tuple>
 
-struct ECS_API SystemId
+struct ECS_API SystemId : public Id
 {
-    friend std::hash<SystemId>;
+    friend class SystemIdRegistry;
 
   public:
     friend bool operator==( const SystemId& lhs, const SystemId& rhs )
@@ -23,22 +21,6 @@ struct ECS_API SystemId
     {
         return lhs.mId < rhs.mId;
     }
-
-  public:
-    SystemId()
-        : mId( std::numeric_limits<usize>::max() )
-    {
-    }
-
-    void Set()
-    {
-        mId = sIdGenerator++;
-    }
-
-  private:
-    usize mId;
-
-    static inline usize sIdGenerator = 0;
 };
 
 static const SystemId InvalidSystemId = SystemId();
@@ -48,8 +30,50 @@ struct std::hash<SystemId>
 {
     size_t operator()( SystemId systemId ) const noexcept
     {
-        return std::hash<usize>()( systemId.mId );
+        return std::hash<usize>()( systemId.Index() );
     }
+};
+
+class ECS_API SystemIdRegistry
+{
+  public:
+    template <IsSystemConcept Func>
+    static SystemId Get( Func func )
+    {
+        auto it = mFuncToIdMap.find( reinterpret_cast<void*>( func ) );
+        if ( it != mFuncToIdMap.end() )
+        {
+            return it->second;
+        }
+
+        return InvalidSystemId;
+    }
+
+    template <IsSystemConcept Func>
+    static SystemId GetOrAdd( Func func )
+    {
+        auto it = mFuncToIdMap.find( reinterpret_cast<void*>( func ) );
+        if ( it != mFuncToIdMap.end() )
+        {
+            return it->second;
+        }
+
+        auto systemId = Next();
+        mFuncToIdMap.emplace( reinterpret_cast<void*>( func ), systemId );
+    }
+
+  protected:
+    static SystemId Next()
+    {
+        auto index = sId.Index() + 1;
+        sId.SetId( index );
+        return sId;
+    }
+
+  protected:
+    static inline SystemId sId = {};
+
+    static inline std::unordered_map<void*, SystemId> mFuncToIdMap = {};
 };
 
 template <IsSystemConcept Func>
@@ -58,7 +82,7 @@ class System;
 /**
  * @brief System的接口类
  */
-class ISystem : public NonCopyable
+class ECS_API ISystem : public NonCopyable
 {
   public:
     virtual ~ISystem() = default;
@@ -75,7 +99,7 @@ class ISystem : public NonCopyable
     }
 };
 
-static const std::unique_ptr<ISystem> sNullISystem = nullptr;
+static inline const std::unique_ptr<ISystem> sNullISystem = nullptr;
 
 /**
  * @brief 每个Func的System的特化类。

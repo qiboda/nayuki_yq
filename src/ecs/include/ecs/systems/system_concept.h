@@ -40,10 +40,9 @@ struct FnTraitBase
 template <typename Func>
 struct FnTrait : FnTraitBase<void>
 {
-    static_assert( false );
-
+    // static_assert( false );
     using FuncType = Func;
-    constexpr static auto FuncKind = FuncType::Invalid;
+    constexpr static auto FuncKind = FuncKind::Invalid;
 };
 
 template <typename Ret, typename... Args>
