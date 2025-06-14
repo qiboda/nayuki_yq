@@ -16,7 +16,10 @@ void PhaseConfigure::Apply( std::shared_ptr<ScheduleManager> scheduleManager )
         }
     }
 
-    mChainFunction( scheduleManager, std::move( Chain ) );
+    if ( mChainFunction )
+    {
+        mChainFunction( scheduleManager, std::move( Chain ) );
+    }
 }
 
 PhaseConfigure& PhaseConfigure::Chain()

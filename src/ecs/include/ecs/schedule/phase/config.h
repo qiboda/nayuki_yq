@@ -49,7 +49,8 @@ struct ECS_API PhaseConfigure
   protected:
     std::vector<std::function<PhaseId( std::shared_ptr<ScheduleManager> )>> mCurNodesFunctions;
     std::vector<std::function<void( std::shared_ptr<ScheduleManager>, PhaseId )>> mOperateFunctions;
-    std::function<void( std::shared_ptr<ScheduleManager>, ScheduleManager::PhaseIdChainType&& )> mChainFunction;
+    std::function<void( std::shared_ptr<ScheduleManager>, ScheduleManager::PhaseIdChainType&& )> mChainFunction =
+        nullptr;
 };
 
 template <IsSchedulePhase... T>

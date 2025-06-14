@@ -113,7 +113,7 @@ class System : public ISystem
     {
         using ArgsTypeTuple = FnArgsTypeTuple<Func>;
         constexpr size_t kArgsCount = std::tuple_size_v<ArgsTypeTuple>;
-        SetSystemFunc( std::move( func ), std::make_index_sequence<kArgsCount>{} );
+        SetSystemFunc( func, std::make_index_sequence<kArgsCount>{} );
     }
 
     virtual ~System() = default;
@@ -138,7 +138,7 @@ class System : public ISystem
     void SetSystemFunc( Func func, std::index_sequence<Index...> )
     {
         // TODO:传入函数的真实参数值。 SystemState
-        mSystemFunc = [func = std::move( func ), this]( class Registry* registry )
+        mSystemFunc = [func, this]( class Registry* registry )
         {
             using ParamsTypeTuple = FnParamsTypeTuple<Func>;
 

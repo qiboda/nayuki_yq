@@ -2,6 +2,8 @@
 /// 每个调度图的节点，可以设定前后顺序和依赖关系。
 #pragma once
 
+#include "core/container/small_vector.h"
+#include "ecs/schedule/config/node.h"
 #include <core/minimal.h>
 #include <ecs/minimal.h>
 
@@ -12,11 +14,11 @@ class ECS_API ScheduleBase : public std::enable_shared_from_this<ScheduleBase>
     ScheduleBase();
 
   public:
-    // /// 添加一个系统节点配置到调度图中。
-    // void AddSystemNodeConfig( ScheduleSystemNodeConfig&& config );
+    /// 添加一个系统节点配置到调度图中。
+    void AddSystemNodeConfig( class ScheduleSystemNodeConfig&& config );
 
-    // /// 添加一个系统集节点配置到调度图中。
-    // void AddSystemSetNodeConfig( ScheduleSystemSetNodeConfig&& config );
+    /// 添加一个系统集节点配置到调度图中。
+    void AddSystemSetNodeConfig( class ScheduleSystemSetNodeConfig&& config );
 
     std::shared_ptr<class ScheduleGraph> GetScheduleGraph()
     {

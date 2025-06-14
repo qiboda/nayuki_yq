@@ -11,17 +11,14 @@
  */
 class ECS_API ScheduleSystemNodeConfig
 {
-  public:
-    /**
-     * @brief Construct a new Schedule System Node Config object
-     *
-     * @param func 作为mCurNodes
-     */
-    template <IsSystemConcept Func>
-    ScheduleSystemNodeConfig( Func func );
+  protected:
+    ScheduleSystemNodeConfig()
+    {
+    }
 
-    // template <IsSystemConcept... Func>
-    // ScheduleSystemNodeConfig( Func... func );
+  public:
+    template <IsSystemConcept... Func>
+    static ScheduleSystemNodeConfig Create( Func... func );
 
     /**
      * @brief func -> mCurNodes
@@ -47,54 +44,69 @@ class ECS_API ScheduleSystemNodeConfig
     template <IsSystemSetConcept T>
     ScheduleSystemNodeConfig& Before();
 
-    // void Chain()
-    // {
-    // for ( const auto& sliding : mCurNodes | ranges::views::sliding( 2 ) )
-    // {
-    //     auto begin = sliding.begin();
-    //     mEdgeMap.insert( { *begin, *begin++ } );
-    // }
-    // }
+    ScheduleSystemNodeConfig& Chain();
 
     template <IsSystemSetConcept T>
     ScheduleSystemNodeConfig& InSet();
 
+    ScheduleSystemNodeConfig Build()
+    {
+        return *this;
+    }
+
     void Apply( std::shared_ptr<class ScheduleBase> Schedule )
     {
-        ScheduleNodeId nodeId = mCurNodesFunctions( Schedule );
-        for ( auto&& func : mOperateFunctions )
+        ScheduleNodeIdChainType Chain;
+        for ( auto&& curFunc : mCurNodesFunctions )
         {
-            func( Schedule, nodeId );
+            auto scheduleNodeId = curFunc( Schedule );
+            Chain.push_back( scheduleNodeId );
+
+            for ( auto&& func : mOperateFunctions )
+            {
+                func( Schedule, scheduleNodeId );
+            }
+
+            mOperateFunctions.clear();
         }
-        mOperateFunctions.clear();
+
+        if ( mChainFunction )
+        {
+            mChainFunction( Schedule, std::move( Chain ) );
+        }
     }
 
   protected:
     // 第一个也是唯一一个是获得主 system nodes.
-    std::function<ScheduleNodeId( std::shared_ptr<class ScheduleBase> Schedule )> mCurNodesFunctions;
+    std::vector<std::function<ScheduleNodeId( std::shared_ptr<class ScheduleBase> Schedule )>> mCurNodesFunctions;
     std::vector<std::function<void( std::shared_ptr<class ScheduleBase> Schedule, ScheduleNodeId )>> mOperateFunctions;
+    std::function<void( std::shared_ptr<class ScheduleBase> Schedule, ScheduleNodeIdChainType&& )> mChainFunction =
+        nullptr;
 };
 
 #include "ecs/schedule/schedule_base.h"
 #include "ecs/schedule/schedule_graph.h"
 
-template <IsSystemConcept Func>
-ScheduleSystemNodeConfig::ScheduleSystemNodeConfig( Func func )
+template <IsSystemConcept... Func>
+ScheduleSystemNodeConfig ScheduleSystemNodeConfig::Create( Func... func )
 {
-    mOperateFunctions.push_back(
-        [func = std::move( func )]( std::shared_ptr<ScheduleBase> Schedule ) -> ScheduleNodeId
-        {
-            return Schedule->GetScheduleGraph()->AddSystemInConfig( func );
-        } );
+    ScheduleSystemNodeConfig config;
+    ( config.mCurNodesFunctions.push_back(
+          [func]( std::shared_ptr<ScheduleBase> Schedule ) -> ScheduleNodeId
+          {
+              return Schedule->GetScheduleGraph()->AddSystemInConfig( func );
+          } ),
+      ... );
+    return config;
 }
 
 template <IsSystemConcept Func>
 ScheduleSystemNodeConfig& ScheduleSystemNodeConfig::After( Func func )
 {
     mOperateFunctions.push_back(
-        [func = std::move( func )]( std::shared_ptr<ScheduleBase> Schedule, ScheduleNodeId curNodeId )
+        [func]( std::shared_ptr<ScheduleBase> Schedule, ScheduleNodeId curNodeId )
         {
-            Schedule->GetScheduleGraph()->AfterSystemInConfig( std::move( func ), curNodeId );
+            Schedule->GetScheduleGraph()->AfterSystemInConfig( func, curNodeId );
         } );
     return *this;
 }
@@ -103,9 +115,31 @@ template <IsSystemConcept Func>
 ScheduleSystemNodeConfig& ScheduleSystemNodeConfig::Before( Func func )
 {
     mOperateFunctions.push_back(
-        [func = std::move( func )]( std::shared_ptr<ScheduleBase> Schedule, ScheduleNodeId curNodeId )
+        [func]( std::shared_ptr<ScheduleBase> Schedule, ScheduleNodeId curNodeId )
         {
-            Schedule->GetScheduleGraph()->BeforeSystemInConfig( curNodeId, std::move( func ) );
+            Schedule->GetScheduleGraph()->BeforeSystemInConfig( curNodeId, func );
+        } );
+    return *this;
+}
+
+template <IsSystemSetConcept T>
+ScheduleSystemNodeConfig& ScheduleSystemNodeConfig::After()
+{
+    mOperateFunctions.push_back(
+        []( std::shared_ptr<ScheduleBase> Schedule, ScheduleNodeId curNodeId )
+        {
+            Schedule->GetScheduleGraph()->AfterSystemSetInConfig<T>( curNodeId );
+        } );
+    return *this;
+}
+
+template <IsSystemSetConcept T>
+ScheduleSystemNodeConfig& ScheduleSystemNodeConfig::Before()
+{
+    mOperateFunctions.push_back(
+        []( std::shared_ptr<ScheduleBase> Schedule, ScheduleNodeId curNodeId )
+        {
+            Schedule->GetScheduleGraph()->BeforeSystemSetInConfig<T>( curNodeId );
         } );
     return *this;
 }

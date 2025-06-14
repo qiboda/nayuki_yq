@@ -6,7 +6,6 @@
 
 /**
  * @brief 所有的SystemSet的基类。
- * SystemSetBase的子类不需要定义。只需要声明即可。
  */
 struct ECS_API SystemSetBase
 {

@@ -47,10 +47,21 @@ class ECS_API ScheduleGraph : public NonCopyable
 
     template <IsSystemSetConcept T>
     void BeforeSystemSetInConfig( ScheduleNodeId curNodeId );
+
+    void ChainInConfig( ScheduleNodeIdChainType&& Chain )
+    {
+        for ( usize i = 0; i < Chain.size() - 1; ++i )
+        {
+            auto curNodeId = Chain[i];
+            auto nextNodeId = Chain[i + 1];
+            mDependencyEdges.emplace( curNodeId, nextNodeId );
+        }
+    }
+
 #pragma endregion // InConfig
 
-  void BuildCompositeGraph();
-  void BuildDependencyGraph();
+    void BuildCompositeGraph();
+    void BuildDependencyGraph();
 
   protected:
     std::vector<ScheduleSystemNodeConfig> mSystemNodeConfigs;
@@ -133,7 +144,7 @@ ScheduleNodeId ScheduleGraph::AddSystemSetInConfig()
     auto it = mAllSystemSetNodes.find( systemSetId );
     if ( it != mAllSystemSetNodes.end() )
     {
-        return it.second;
+        return it->second;
     }
 
     auto scheduleNodeId = ScheduleNodeIdGenerator::Next();

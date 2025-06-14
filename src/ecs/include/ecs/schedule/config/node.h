@@ -1,5 +1,6 @@
 #pragma once
 
+#include "core/container/small_vector.h"
 #include "core/registry/id.h"
 #include "ecs/schedule/config/system_set.h"
 #include "ecs/systems/system.h"
@@ -113,3 +114,5 @@ class ECS_API ScheduleNodeVariant : public NonCopyable
   private:
     NodeType mNode;
 };
+
+using ScheduleNodeIdChainType = SmallVector<ScheduleNodeId, 8>;

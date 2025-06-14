@@ -125,6 +125,7 @@ template <typename... T>
     requires QueryParamResolverConcept<T...>
 class Query : public SystemParam
 {
+  public:
     using State = QueryState<T...>;
     using Trait = SystemParamTrait<Query<T...>>;
 

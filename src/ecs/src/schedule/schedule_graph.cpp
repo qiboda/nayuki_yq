@@ -5,12 +5,12 @@ ScheduleGraph::ScheduleGraph()
 {
 }
 
-void ScheduleGraph::AddSystemNodeConfig( class ScheduleSystemNodeConfig&& config )
+void ScheduleGraph::AddSystemNodeConfig( ScheduleSystemNodeConfig&& config )
 {
     mSystemNodeConfigs.push_back( std::move( config ) );
 }
 
-void ScheduleGraph::AddSystemSetNodeConfig( class ScheduleSystemSetNodeConfig&& config )
+void ScheduleGraph::AddSystemSetNodeConfig( ScheduleSystemSetNodeConfig&& config )
 {
     mSystemSetNodeConfigs.push_back( std::move( config ) );
 }

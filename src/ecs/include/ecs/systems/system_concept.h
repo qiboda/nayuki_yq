@@ -40,7 +40,7 @@ struct FnTraitBase
 template <typename Func>
 struct FnTrait : FnTraitBase<void>
 {
-    // static_assert( false );
+    static_assert( false );
     using FuncType = Func;
     constexpr static auto FuncKind = FuncKind::Invalid;
 };
@@ -82,6 +82,9 @@ using FnArgType = typename FnTrait<Func>::template Arg<Index>;
 template <typename Func, usize Index>
 using FnParamType = typename FnTrait<Func>::template Param<Index>;
 
+template <typename Func>
+static constexpr inline usize FnArgCount = FnTrait<Func>::ArgCount;
+
 template <typename Func, template <typename...> typename T>
 using ApplyFnArgsTo = typename FnTrait<Func>::template ApplyArgsTo<T>;
 template <typename Func, template <typename...> typename T>
@@ -94,8 +97,8 @@ struct AllSystemParamsWrapper
 };
 
 template <typename Func>
-inline constexpr bool IsSystem =
-    std::same_as<FnReturnType<Func>, void> && ApplyFnArgsTo<Func, AllSystemParamsWrapper>::value;
+inline constexpr bool IsSystem = std::same_as<FnReturnType<Func>, void> && FnArgCount<Func> > 0 &&
+                                 ApplyFnArgsTo<Func, AllSystemParamsWrapper>::value;
 
 template <typename Func>
 concept IsSystemConcept = IsSystem<Func>;

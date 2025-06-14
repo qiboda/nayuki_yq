@@ -77,7 +77,7 @@ TEST_F( SystemTest, IsSystemTest )
     bool system1 = IsSystem<decltype( &SystemTest::add )>;
     EXPECT_FALSE( system1 );
     bool system2 = IsSystem<decltype( &SystemTest::addvoid )>;
-    EXPECT_TRUE( system2 );
+    EXPECT_FALSE( system2 );
     bool system3 = AllSystemParamsConcept<>;
     EXPECT_TRUE( system3 );
     bool system4 = IsSystem<decltype( &SystemTest::addvoidreturn )>;
