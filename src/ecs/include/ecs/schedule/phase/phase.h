@@ -1,5 +1,6 @@
 #pragma once
 
+#include "core/container/small_vector.h"
 #include "core/macro/formatter.h"
 #include "core/registry/id.h"
 #include <core/minimal.h>
@@ -39,3 +40,5 @@ struct ECS_API PhaseInfo
     PhaseId mId;
     std::string mName;
 };
+
+using PhaseIdChainType = SmallVector<PhaseId, 8>;

@@ -2,7 +2,6 @@
 
 #include "ecs/schedule/phase/phase.h"
 #include <core/container/small_vector.h>
-#include "ecs/schedule/schedule_manager.h"
 #include <range/v3/all.hpp>
 #include <core/minimal.h>
 #include <ecs/minimal.h>
@@ -40,7 +39,7 @@ struct ECS_API PhaseConfigure
         return *this;
     }
 
-    void Apply( std::shared_ptr<ScheduleManager> scheduleManager );
+    void Apply( std::shared_ptr<class ScheduleManager> scheduleManager );
 
   protected:
     template <IsSchedulePhase... T>
@@ -49,20 +48,24 @@ struct ECS_API PhaseConfigure
   protected:
     std::vector<std::function<PhaseId( std::shared_ptr<ScheduleManager> )>> mCurNodesFunctions;
     std::vector<std::function<void( std::shared_ptr<ScheduleManager>, PhaseId )>> mOperateFunctions;
-    std::function<void( std::shared_ptr<ScheduleManager>, ScheduleManager::PhaseIdChainType&& )> mChainFunction =
-        nullptr;
+    std::function<void( std::shared_ptr<ScheduleManager>, PhaseIdChainType&& )> mChainFunction = nullptr;
+};
+
+#include "ecs/schedule/schedule_manager.h"
+
+template <IsSchedulePhase T>
+auto MakeAddLambda()
+{
+    return []( std::shared_ptr<ScheduleManager> scheduleManager ) -> PhaseId
+    {
+        return scheduleManager->AddPhaseInConfig<T>();
+    };
 };
 
 template <IsSchedulePhase... T>
 PhaseConfigure& PhaseConfigure::Add()
 {
-    ( mCurNodesFunctions.push_back(
-          []( std::shared_ptr<ScheduleManager> scheduleManager )
-          {
-              return scheduleManager->AddPhaseInConfig<T>();
-          } ),
-      ... );
-
+    ( mCurNodesFunctions.push_back( MakeAddLambda<T>() ), ... );
     return *this;
 }
 

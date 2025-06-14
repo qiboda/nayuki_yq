@@ -1,6 +1,5 @@
 #pragma once
 
-#include "core/container/small_vector.h"
 #include "ecs/schedule/graph/graph.h"
 #include "ecs/schedule/phase/phase.h"
 #include <core/minimal.h>
@@ -8,9 +7,6 @@
 
 class ECS_API ScheduleManager : public std::enable_shared_from_this<ScheduleManager>
 {
-  public:
-    using PhaseIdChainType = SmallVector<PhaseId, 8>;
-
   public:
     ScheduleManager();
 
@@ -57,7 +53,7 @@ class ECS_API ScheduleManager : public std::enable_shared_from_this<ScheduleMana
     void ChainInConfig( PhaseIdChainType&& chain );
 
   protected:
-    std::vector<struct PhaseConfigure> mPhaseConfigures;
+    std::shared_ptr<class PhaseConfigSet> mPhaseConfigSet;
 
     Graph<PhaseId, PhaseInfo> mScheduleGraph;
 };
