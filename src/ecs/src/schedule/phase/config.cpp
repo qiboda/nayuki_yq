@@ -4,7 +4,7 @@
 
 void PhaseConfigure::Apply( std::shared_ptr<ScheduleManager> scheduleManager )
 {
-    ScheduleManager::PhaseIdChainType Chain;
+    PhaseIdChainType Chain;
     for ( auto&& func : mCurNodesFunctions )
     {
         PhaseId phaseId = func( scheduleManager );
@@ -24,7 +24,7 @@ void PhaseConfigure::Apply( std::shared_ptr<ScheduleManager> scheduleManager )
 
 PhaseConfigure& PhaseConfigure::Chain()
 {
-    mChainFunction = []( std::shared_ptr<ScheduleManager> scheduleManager, ScheduleManager::PhaseIdChainType&& chain )
+    mChainFunction = []( std::shared_ptr<ScheduleManager> scheduleManager, PhaseIdChainType&& chain )
     {
         scheduleManager->ChainInConfig( std::move( chain ) );
     };

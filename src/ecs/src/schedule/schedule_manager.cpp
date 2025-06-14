@@ -1,14 +1,16 @@
 
 #include "ecs/schedule/schedule_manager.h"
 #include "ecs/schedule/phase/config.h"
+#include "ecs/schedule/phase/config_set.h"
 
 ScheduleManager::ScheduleManager()
+    : mPhaseConfigSet( std::make_shared<PhaseConfigSet>() )
 {
 }
 
 void ScheduleManager::ConfigSchedulePhase( PhaseConfigure&& configure )
 {
-    mPhaseConfigures.emplace_back( std::move( configure ) );
+    mPhaseConfigSet->AddSchedulePhase( std::move( configure ) );
 }
 
 void ScheduleManager::ChainInConfig( PhaseIdChainType&& chain )
@@ -21,11 +23,7 @@ void ScheduleManager::ChainInConfig( PhaseIdChainType&& chain )
 
 void ScheduleManager::ApplyPhaseConfigures()
 {
-    for ( auto&& configure : mPhaseConfigures )
-    {
-        configure.Apply( shared_from_this() );
-    }
-    mPhaseConfigures.clear();
+    mPhaseConfigSet->ApplyPhaseConfigures( shared_from_this() );
 }
 
 ScheduleManager::~ScheduleManager()
