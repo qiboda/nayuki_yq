@@ -3,7 +3,7 @@
 #include <core/minimal.h>
 #include <ecs/minimal.h>
 
-#include "ecs/schedule/config/nodes/node.h"
+#include "ecs/schedule/config/node.h"
 #include "ecs/schedule/config/system_set.h"
 #include "ecs/systems/system_manager.h"
 
@@ -23,6 +23,7 @@ class ECS_API ScheduleGraph : public NonCopyable
 
     void ApplyNodeConfigs();
 
+#pragma region InConfig
     template <IsSystemConcept Func>
     ScheduleNodeId AddSystemInConfig( Func func );
 
@@ -43,6 +44,7 @@ class ECS_API ScheduleGraph : public NonCopyable
 
     template <IsSystemSetConcept T>
     void BeforeSystemSetInConfig( ScheduleNodeId curNodeId );
+#pragma endregion // InConfig
 
   protected:
     std::vector<ScheduleSystemNodeConfig> mSystemNodeConfigs;
@@ -64,8 +66,10 @@ class ECS_API ScheduleGraph : public NonCopyable
     std::shared_ptr<class ScheduleBase> mSchedule = nullptr;
 };
 
-#include "ecs/schedule/config/nodes/system_node.h"
-#include "ecs/schedule/config/nodes/system_set_node.h"
+#include "ecs/schedule/config/system_node_config.h"
+#include "ecs/schedule/config/system_set_node_config.h"
+
+#pragma region InConfig
 
 template <IsSystemConcept Func>
 ScheduleNodeId ScheduleGraph::AddSystemInConfig( Func func )
@@ -138,5 +142,7 @@ void ScheduleGraph::BeforeSystemSetInConfig( ScheduleNodeId curNodeId )
 {
     auto ScheduleNodeId = AddSystemSetInConfig<T>();
 
-    DependencyEdges.emplace( ScheduleNodeId, curNodeId );
+    DependencyEdges.emplace( curNodeId, ScheduleNodeId );
 }
+
+#pragma endregion // InConfig

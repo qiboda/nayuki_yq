@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ecs/schedule/config/nodes/node.h"
+#include "ecs/schedule/config/node.h"
 #include <core/minimal.h>
 #include <ecs/minimal.h>
 #include <range/v3/view/sliding.hpp>
