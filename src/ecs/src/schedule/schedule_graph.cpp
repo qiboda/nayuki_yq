@@ -1,7 +1,10 @@
 
 #include "ecs/schedule/schedule_graph.h"
+#include "ecs/schedule/graph/tarjan_graph.h"
 
 ScheduleGraph::ScheduleGraph()
+    : mSchedule( nullptr )
+    , mSystemManager( nullptr )
 {
 }
 
@@ -38,6 +41,22 @@ void ScheduleGraph::BuildCompositeGraph()
     }
 }
 
+bool ScheduleGraph::CheckCompositeGraphValid()
+{
+    TarjanGraph<ScheduleNodeId, ScheduleNode> tarjanGraph( mCompositeGraph );
+    tarjanGraph.RunTarjan();
+    const std::vector<std::vector<ScheduleNodeId>>& sccs = tarjanGraph.GetSCCs();
+    for ( auto&& scc : sccs )
+    {
+        if ( scc.size() > 1 )
+        {
+            // 有环
+            return false;
+        }
+    }
+    return true;
+}
+
 void ScheduleGraph::BuildDependencyGraph()
 {
     // for ( auto [outEdgeId, inEdgeId] : mCompositeEdges )
@@ -46,4 +65,24 @@ void ScheduleGraph::BuildDependencyGraph()
     //     mCompositeGraph.AddNode( inEdgeId, {} );
     //     mCompositeGraph.AddEdge( outEdgeId, inEdgeId );
     // }
+}
+
+void ScheduleGraph::SetScheduleBase( std::shared_ptr<class ScheduleBase> schedule )
+{
+    mSchedule = schedule;
+}
+
+void ScheduleGraph::Initialize()
+{
+    mSystemManager = std::make_shared<SystemManager>();
+}
+
+void ScheduleGraph::CleanUp()
+{
+}
+
+void ScheduleGraph::ClearNodeConfigs()
+{
+    mSystemNodeConfigs.clear();
+    mSystemSetNodeConfigs.clear();
 }

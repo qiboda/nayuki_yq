@@ -41,6 +41,7 @@
         "rpfree",
         "rpmalloc",
         "rprealloc",
+        "sccs",
         "shaderc",
         "spdlog",
         "SPIR",

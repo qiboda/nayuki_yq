@@ -135,7 +135,7 @@ template <IsSystemSetConcept T>
 ScheduleSystemSetNodeConfig& ScheduleSystemSetNodeConfig::InSet()
 {
     mOperateFunctions.push_back(
-        [this]( std::shared_ptr<class ScheduleBase> schedule, ScheduleNodeId curNodeId )
+        []( std::shared_ptr<class ScheduleBase> schedule, ScheduleNodeId curNodeId )
         {
             schedule->GetScheduleGraph()->InSetInConfig<T>( curNodeId );
         } );

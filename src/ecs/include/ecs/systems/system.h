@@ -51,16 +51,23 @@ class ECS_API SystemIdRegistry
     }
 
     template <IsSystemConcept Func>
-    static SystemId GetOrAdd( Func func )
+    static SystemId Add( Func func )
     {
-        auto it = mFuncToIdMap.find( reinterpret_cast<void*>( func ) );
-        if ( it != mFuncToIdMap.end() )
-        {
-            return it->second;
-        }
-
         auto systemId = Next();
         mFuncToIdMap.emplace( reinterpret_cast<void*>( func ), systemId );
+        return systemId;
+    }
+
+    template <IsSystemConcept Func>
+    static SystemId GetOrAdd( Func func )
+    {
+        auto systemId = Get( func );
+        if ( systemId != SystemId::Invalid )
+        {
+            return systemId;
+        }
+
+        return Add( func );
     }
 
   protected:

@@ -19,8 +19,10 @@ class ECS_API SystemManager : public NonCopyable
             // System already exists.
             return systemId;
         }
-        mSystems.emplace( systemId, std::make_unique<System<Func>>( func ) );
-        return systemId;
+
+        auto newSystemId = SystemIdRegistry::Add( func );
+        mSystems.emplace( newSystemId, std::make_unique<System<Func>>( func ) );
+        return newSystemId;
     }
 
     const std::unique_ptr<ISystem>& GetSystem( SystemId systemId ) const

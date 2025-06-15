@@ -48,6 +48,10 @@ class ScheduleGraphTest : public ::testing::Test
     struct SystemSet2 : public SystemSetBase
     {
     };
+
+    struct SystemSet3 : public SystemSetBase
+    {
+    };
 };
 
 TEST_F( ScheduleGraphTest, TarjanTest )
@@ -101,14 +105,50 @@ TEST_F( ScheduleGraphTest, TarjanTest )
 
 TEST_F( ScheduleGraphTest, SystemNodeConfig )
 {
-    ScheduleBase scheduleBase;
-    scheduleBase.AddSystemNodeConfig(
+    std::shared_ptr<ScheduleBase> scheduleBase = std::make_shared<ScheduleBase>();
+    scheduleBase->Initialize();
+    auto scheduleGraph = scheduleBase->GetScheduleGraph();
+
+    scheduleBase->AddSystemNodeConfig(
         ScheduleSystemNodeConfig::Create( &ScheduleGraphTest::System1 ).After<SystemSet1>().Build() );
+    scheduleGraph->ApplyNodeConfigs();
+    // scheduleGraph->BuildCompositeGraph();
+    // EXPECT_TRUE( scheduleGraph->CheckCompositeGraphValid() );
+
+    scheduleGraph->ClearNodeConfigs();
+
+    scheduleBase->AddSystemNodeConfig(
+        ScheduleSystemNodeConfig::Create( &ScheduleGraphTest::System1 ).Before<SystemSet1>().Build() );
+    scheduleGraph->ApplyNodeConfigs();
+    // scheduleGraph->BuildCompositeGraph();
+    // EXPECT_FALSE( scheduleGraph->CheckCompositeGraphValid() );
 }
 
 TEST_F( ScheduleGraphTest, SystemSetNodeConfig )
 {
-    ScheduleBase scheduleBase;
-    scheduleBase.AddSystemSetNodeConfig(
-        ScheduleSystemSetNodeConfig::Create<SystemSet1>().After( &ScheduleGraphTest::System1 ).Build() );
+    std::shared_ptr<ScheduleBase> scheduleBase = std::make_shared<ScheduleBase>();
+    scheduleBase->Initialize();
+    auto scheduleGraph = scheduleBase->GetScheduleGraph();
+
+    scheduleBase->AddSystemSetNodeConfig(
+        ScheduleSystemSetNodeConfig::Create<SystemSet1>().InSet<SystemSet2>().Build() );
+    scheduleGraph->ApplyNodeConfigs();
+    scheduleGraph->BuildCompositeGraph();
+    EXPECT_TRUE( scheduleGraph->CheckCompositeGraphValid() );
+
+    scheduleGraph->ClearNodeConfigs();
+
+    scheduleBase->AddSystemSetNodeConfig(
+        ScheduleSystemSetNodeConfig::Create<SystemSet2>().InSet<SystemSet3>().Build() );
+    scheduleGraph->ApplyNodeConfigs();
+    scheduleGraph->BuildCompositeGraph();
+    EXPECT_TRUE( scheduleGraph->CheckCompositeGraphValid() );
+
+    scheduleGraph->ClearNodeConfigs();
+
+    scheduleBase->AddSystemSetNodeConfig(
+        ScheduleSystemSetNodeConfig::Create<SystemSet3>().InSet<SystemSet1>().Build() );
+    scheduleGraph->ApplyNodeConfigs();
+    scheduleGraph->BuildCompositeGraph();
+    EXPECT_FALSE( scheduleGraph->CheckCompositeGraphValid() );
 }

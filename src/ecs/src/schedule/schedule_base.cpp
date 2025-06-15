@@ -16,3 +16,13 @@ void ScheduleBase::AddSystemSetNodeConfig( ScheduleSystemSetNodeConfig&& config 
 {
     mScheduleGraph->AddSystemSetNodeConfig( std::move( config ) );
 }
+
+void ScheduleBase::Initialize()
+{
+    mScheduleGraph->SetScheduleBase( shared_from_this() );
+    mScheduleGraph->Initialize();
+}
+
+void ScheduleBase::CleanUp()
+{
+}

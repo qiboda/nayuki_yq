@@ -8,11 +8,18 @@
 #include "ecs/schedule/graph/graph.h"
 #include "ecs/systems/system_manager.h"
 
-class ECS_API ScheduleGraph : public NonCopyable
+class ECS_API ScheduleGraph : public IRAII
 {
   public:
     ScheduleGraph();
 
+    void SetScheduleBase( std::shared_ptr<class ScheduleBase> schedule );
+
+  public:
+    virtual void Initialize() override;
+    virtual void CleanUp() override;
+
+  public:
 #pragma region Config
     /**
      * @brief
@@ -24,6 +31,7 @@ class ECS_API ScheduleGraph : public NonCopyable
     void AddSystemSetNodeConfig( class ScheduleSystemSetNodeConfig&& config );
 
     void ApplyNodeConfigs();
+    void ClearNodeConfigs();
 #pragma endregion Config
 
 #pragma region InConfig
@@ -61,6 +69,8 @@ class ECS_API ScheduleGraph : public NonCopyable
 #pragma endregion // InConfig
 
     void BuildCompositeGraph();
+    bool CheckCompositeGraphValid();
+
     void BuildDependencyGraph();
 
   protected:
@@ -86,8 +96,8 @@ class ECS_API ScheduleGraph : public NonCopyable
     Graph<ScheduleNodeId, ScheduleNode> mDependencyGraph;
 
   protected:
-    SystemManager* mSystemManager = nullptr;
     std::shared_ptr<class ScheduleBase> mSchedule = nullptr;
+    std::shared_ptr<SystemManager> mSystemManager = nullptr;
 };
 
 #include "ecs/schedule/config/system_node_config.h"
