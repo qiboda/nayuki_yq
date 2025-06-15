@@ -1,13 +1,13 @@
 #include <gtest/gtest.h>
 #include <tuple>
 
+#include "ecs/commands/entity_command.h"
+#include "ecs/commands/entity_instance_command.h"
 #include "ecs/components/component.h"
 #include "ecs/commands/registry_command.h"
 #include "ecs/entity/entity.h"
 #include "ecs/systems/params/query/query.h"
 #include "ecs/systems/params/query/query_data.h"
-#include "ecs/commands/entity_command.h"
-#include "ecs/commands/entity_instance_command.h"
 
 class QueryTest : public ::testing::Test
 {

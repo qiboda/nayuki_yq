@@ -112,16 +112,28 @@ TEST_F( ScheduleGraphTest, SystemNodeConfig )
     scheduleBase->AddSystemNodeConfig(
         ScheduleSystemNodeConfig::Create( &ScheduleGraphTest::System1 ).After<SystemSet1>().Build() );
     scheduleGraph->ApplyNodeConfigs();
-    // scheduleGraph->BuildCompositeGraph();
-    // EXPECT_TRUE( scheduleGraph->CheckCompositeGraphValid() );
+    scheduleGraph->BuildCompositeGraph();
+    scheduleGraph->BuildDependencyGraph();
+    EXPECT_TRUE( scheduleGraph->CheckDependencyGraphValid() );
 
     scheduleGraph->ClearNodeConfigs();
 
     scheduleBase->AddSystemNodeConfig(
         ScheduleSystemNodeConfig::Create( &ScheduleGraphTest::System1 ).Before<SystemSet1>().Build() );
     scheduleGraph->ApplyNodeConfigs();
-    // scheduleGraph->BuildCompositeGraph();
-    // EXPECT_FALSE( scheduleGraph->CheckCompositeGraphValid() );
+    scheduleGraph->BuildCompositeGraph();
+    scheduleGraph->BuildDependencyGraph();
+    // 节点之间没有依赖关系，所以是有效的。
+    EXPECT_TRUE( scheduleGraph->CheckDependencyGraphValid() );
+
+    scheduleGraph->ClearNodeConfigs();
+
+    scheduleBase->AddSystemNodeConfig(
+        ScheduleSystemNodeConfig::Create( &ScheduleGraphTest::System2 ).InSet<SystemSet1>().Build() );
+    scheduleGraph->ApplyNodeConfigs();
+    scheduleGraph->BuildCompositeGraph();
+    scheduleGraph->BuildDependencyGraph();
+    EXPECT_FALSE( scheduleGraph->CheckDependencyGraphValid() );
 }
 
 TEST_F( ScheduleGraphTest, SystemSetNodeConfig )

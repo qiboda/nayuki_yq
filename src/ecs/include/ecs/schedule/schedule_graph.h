@@ -72,6 +72,12 @@ class ECS_API ScheduleGraph : public IRAII
     bool CheckCompositeGraphValid();
 
     void BuildDependencyGraph();
+    bool CheckDependencyGraphValid();
+
+    const Topology<ScheduleNodeId>& GetTopology();
+
+  protected:
+    std::vector<ScheduleNodeId> FindAllSystemNodesInSystemSet( ScheduleNodeId systemSetNodeId );
 
   protected:
     std::vector<ScheduleSystemNodeConfig> mSystemNodeConfigs;
@@ -84,10 +90,10 @@ class ECS_API ScheduleGraph : public IRAII
     std::unordered_map<ScheduleNodeId, ScheduleNodeVariant> mAllNodes;
 
     /// 用户设置的
-    // 层级嵌套结构
-    std::unordered_map<ScheduleNodeId, ScheduleNodeId> mCompositeEdges;
-    // 依赖关系 水平结构
-    std::unordered_map<ScheduleNodeId, ScheduleNodeId> mDependencyEdges;
+    // 层级嵌套结构，因为一个父节点可以有多个子节点，所以是multimap
+    std::unordered_multimap<ScheduleNodeId, ScheduleNodeId> mCompositeEdges;
+    // 依赖关系 水平结构，一个节点可以有多个相连节点，所以是multimap
+    std::unordered_multimap<ScheduleNodeId, ScheduleNodeId> mDependencyEdges;
 
   protected:
     /// 计算得出的
@@ -166,17 +172,17 @@ ScheduleNodeId ScheduleGraph::AddSystemSetInConfig()
 template <IsSystemSetConcept T>
 void ScheduleGraph::AfterSystemSetInConfig( ScheduleNodeId curNodeId )
 {
-    auto ScheduleNodeId = AddSystemSetInConfig<T>();
+    auto scheduleNodeId = AddSystemSetInConfig<T>();
 
-    mDependencyEdges.emplace( ScheduleNodeId, curNodeId );
+    mDependencyEdges.emplace( scheduleNodeId, curNodeId );
 }
 
 template <IsSystemSetConcept T>
 void ScheduleGraph::BeforeSystemSetInConfig( ScheduleNodeId curNodeId )
 {
-    auto ScheduleNodeId = AddSystemSetInConfig<T>();
+    auto scheduleNodeId = AddSystemSetInConfig<T>();
 
-    mDependencyEdges.emplace( curNodeId, ScheduleNodeId );
+    mDependencyEdges.emplace( curNodeId, scheduleNodeId );
 }
 
 #pragma endregion // InConfig
