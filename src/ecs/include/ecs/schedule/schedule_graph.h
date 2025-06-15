@@ -68,6 +68,8 @@ class ECS_API ScheduleGraph : public IRAII
 
 #pragma endregion // InConfig
 
+    void BuildGraph();
+
     void BuildCompositeGraph();
     bool CheckCompositeGraphValid();
 

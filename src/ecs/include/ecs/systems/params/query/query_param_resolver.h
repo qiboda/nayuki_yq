@@ -40,6 +40,10 @@ struct QueryParamResolver
     using QueryFilterTypes = TypePackFilterType<IsStrictDerivedQueryFilter, T...>;
     using QueryFilterSetType = TupleApplyTo<QueryFilterTypes, QueryFilterSet>;
 
+    template <typename TType>
+    using IsNonEntity = IsNot<IsSame<Entity, TType>>;
+    using QueryDataNonEntityTypes = TupleFilterType<IsNonEntity, QueryDataTypes>;
+
     template <QueryParamType lastType>
     static consteval bool IsOrdered()
     {

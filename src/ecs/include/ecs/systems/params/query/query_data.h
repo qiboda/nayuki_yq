@@ -18,11 +18,19 @@ constexpr inline bool IsQueryData = IsStrictDerivedValue<Component, T>;
 template <typename T>
 concept IsQueryDataConcept = IsQueryData<T>;
 
-template <IsQueryDataConcept T>
-inline constexpr bool IsReadOnlyQueryData = std::is_const_v<T>;
+/**
+ * @brief 允许有限定符
+ */
+template <typename T>
+concept IsQueryDataQualifiedConcept = IsQueryData<std::decay_t<T>>;
 
-template <IsQueryDataConcept T>
-inline constexpr bool IsReadWriteQueryData = ( std::is_const_v<T> == false );
+/**
+ * @brief 引用类型下is_const_v始终是false
+ *
+ * @tparam T
+ */
+template <IsQueryDataQualifiedConcept T>
+inline constexpr bool IsWritableQueryData = ( std::is_const_v<std::remove_reference_t<T>> == false );
 
 template <typename T>
 concept EntityArgsLimitConcept =
@@ -55,7 +63,7 @@ class QueryDataSet
     using QueryDataSetDecayedParamTypes = std::tuple<std::decay_t<T>...>;
 
   public:
-    static ComponentIdSet GetComponentIdSet()
+    constexpr static ComponentIdSet GetComponentIdSet()
     {
         return ComponentTypeRegistry::GetComponentIdSet<std::decay_t<T>...>();
     }

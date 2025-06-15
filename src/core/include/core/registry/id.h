@@ -20,18 +20,18 @@ struct ECS_API Id
     {
     }
 
-    friend bool operator==( const Id& lhs, const Id& rhs )
+    constexpr friend bool operator==( const Id& lhs, const Id& rhs )
     {
         return lhs.mId == rhs.mId;
     }
 
-    u32 Index() const
+    constexpr u32 Index() const
     {
         return mId;
     }
 
   protected:
-    void SetId( u32 id )
+    constexpr void SetId( u32 id )
     {
         mId = id;
     }
@@ -53,7 +53,7 @@ class IdRegistry
     }
 
   private:
-    static TId Next()
+    static constexpr TId Next()
     {
         auto index = sId.Index() + 1;
         sId.SetId( index );
@@ -68,7 +68,7 @@ template <IsId TId>
 class IdGenerator
 {
   public:
-    static TId Next()
+    static constexpr TId Next()
     {
         auto index = sId.Index() + 1;
         sId.SetId( index );

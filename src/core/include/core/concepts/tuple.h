@@ -82,8 +82,14 @@ struct TupleCat<std::tuple<T1...>, std::tuple<T2...>>
     using Type = std::tuple<T1..., T2...>;
 };
 
+template <typename TTuple1, typename TTuple2>
+using TupleCatType = TupleCat<TTuple1, TTuple2>::Type;
+
 template <template <typename> typename TFilter, typename... T>
 struct TypePackFilter;
+
+template <template <typename> typename TFilter, typename... Ts>
+using TypePackFilterType = TypePackFilter<TFilter, Ts...>::Type;
 
 template <template <typename> typename TFilter>
 struct TypePackFilter<TFilter>
@@ -100,11 +106,8 @@ struct TypePackFilter<TFilter, T>
 template <template <typename> typename TFilter, typename T, typename... Ts>
 struct TypePackFilter<TFilter, T, Ts...>
 {
-    using Type = TupleCat<TypePackFilter<TFilter, T>, TypePackFilter<TFilter, Ts...>>;
+    using Type = TupleCatType<TypePackFilterType<TFilter, T>, TypePackFilterType<TFilter, Ts...>>;
 };
-
-template <template <typename> typename TFilter, typename... Ts>
-using TypePackFilterType = TypePackFilter<TFilter, Ts...>::Type;
 
 template <template <typename> typename TFilter, typename TTuple>
 struct TupleFilter;
@@ -116,7 +119,7 @@ struct TupleFilter<TFilter, std::tuple<T...>>
 };
 
 template <template <typename> typename TFilter, typename TTuple>
-using TupleFilterType = TupleFilter<TFilter, TTuple>;
+using TupleFilterType = TupleFilter<TFilter, TTuple>::Type;
 
 #pragma endregion
 

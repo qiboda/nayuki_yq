@@ -116,7 +116,7 @@ TEST_F( QueryTest, QuerySingleComponent )
 
     QueryState<ComponentA&> queryState;
     queryState.Init( &registry );
-    Query<ComponentA&> query = Query<ComponentA&>::From( &registry, queryState );
+    Query<ComponentA&> query = Query<ComponentA&>::From( &registry, &queryState );
 
     usize count = 0;
     for ( auto [a] : query )
@@ -134,6 +134,16 @@ TEST_F( QueryTest, QuerySingleComponent )
         EXPECT_EQ( a.i, 5 );
     }
     EXPECT_EQ( count, 2 );
+}
+
+TEST_F( QueryTest, QueryReadWrite )
+{
+    using ABCTrait = SystemParamTrait<Query<ComponentA&, const ComponentB&, ComponentC&>>;
+    EXPECT_EQ( ABCTrait::ComponentsReadWrite.size(), 3 );
+
+    EXPECT_EQ( ABCTrait::ComponentsReadWrite[0].second, true );
+    EXPECT_EQ( ABCTrait::ComponentsReadWrite[1].second, false );
+    EXPECT_EQ( ABCTrait::ComponentsReadWrite[2].second, true );
 }
 
 TEST_F( QueryTest, StructuredBindingTest )

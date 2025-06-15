@@ -127,15 +127,14 @@ class Query : public SystemParam
 {
   public:
     using State = QueryState<T...>;
-    using Trait = SystemParamTrait<Query<T...>>;
 
   public:
-    Query( State& state )
+    Query( State* state )
         : mState( state )
     {
     }
 
-    static Query<T...> From( Registry* registry, State& state )
+    static Query<T...> From( Registry* registry, State* state )
     {
         UNUSED_VAR( registry );
         return Query<T...>( state );
@@ -149,16 +148,16 @@ class Query : public SystemParam
 
     State::Iterator begin()
     {
-        return mState.begin();
+        return mState->begin();
     }
 
     State::Iterator end()
     {
-        return mState.end();
+        return mState->end();
     }
 
   protected:
-    State& mState;
+    State* mState = nullptr;
 };
 
 template <typename... T>
@@ -170,47 +169,34 @@ struct SystemParamTrait<Query<T...>>
     using QueryParamResolverType = QueryParamResolver<T...>;
 
     using QueryDataTypeTuple = QueryParamResolverType::QueryDataTypes;
+    using QueryDataNonEntityTypeTuple = QueryParamResolverType::QueryDataNonEntityTypes;
     using QueryDataDecayedTypeTuple = QueryParamResolverType::QueryDataDecayedTypes;
 
     using QueryFilterTypeTuple = QueryParamResolverType::QueryFilterTypes;
 
 #pragma region ReadWrite
 
+    constexpr static inline usize NonEntityDataTypeCount = std::tuple_size_v<QueryDataNonEntityTypeTuple>;
+    using ComponentsReadWriteType = std::array<std::pair<ComponentId, bool>, NonEntityDataTypeCount>;
+
     template <typename TTuple>
-    struct ParamReadonly;
+    struct ParamWritable;
 
     template <typename... P>
-    struct ParamReadonly<std::tuple<P...>>
+    struct ParamWritable<std::tuple<P...>>
     {
-        template <usize... I>
-        static consteval std::vector<bool> GetParamReadonly( std::index_sequence<I...> )
+        using ParamType = std::tuple<P...>;
+
+        static ComponentsReadWriteType GetParamReadWrite()
         {
-            std::vector<bool> result( sizeof...( P ) );
-            ( ( result[I] = IsReadOnlyQueryData<std::decay_t<T>> ), ... );
-            return result;
+            return { std::make_pair( ComponentTypeRegistry::Get<std::decay_t<P>>(),
+                                     IsWritableQueryData<P> )... };
         }
     };
 
-    template <typename TTuple>
-    struct ParamReadWrite;
-
-    template <typename... P>
-    struct ParamReadWrite<std::tuple<P...>>
-    {
-        template <usize... I>
-        static consteval std::vector<bool> GetParamReadWrite( std::index_sequence<I...> )
-        {
-            std::vector<bool> result( sizeof...( P ) );
-            ( ( result[I] = IsReadWriteQueryData<std::decay_t<T>> ), ... );
-            return result;
-        }
-    };
-
-    static constexpr std::vector<bool> Readonly = ParamReadonly<QueryDataTypeTuple>::GetParamReadonly(
-        std::make_index_sequence<std::tuple_size_v<QueryDataTypeTuple>>() );
-
-    static constexpr std::vector<bool> ReadWrite = ParamReadWrite<QueryDataTypeTuple>::GetParamReadWrite(
-        std::make_index_sequence<std::tuple_size_v<QueryDataTypeTuple>>() );
+    // true 是可写的，false 是只读的
+    static inline const ComponentsReadWriteType ComponentsReadWrite =
+        ParamWritable<QueryDataNonEntityTypeTuple>::GetParamReadWrite();
 
 #pragma endregion
 };

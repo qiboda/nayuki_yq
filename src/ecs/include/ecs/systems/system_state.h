@@ -28,7 +28,7 @@ template <IsSystemConcept Func>
 class SystemState : public ISystemState
 {
     // FnArgs to State
-    using SystemParamStateListType = ApplyFnParamsTo<Func, AllSystemParamStateTypes>;
+    using SystemParamStateListType = ApplyFnDecayedParamsTo<Func, AllSystemParamStateTypes>;
 
   public:
     SystemState()
@@ -37,13 +37,13 @@ class SystemState : public ISystemState
     }
 
     template <usize Index>
-    FnParamType<Func, Index>::State& GetParamState()
+    FnDecayedParamType<Func, Index>::State& GetParamState()
     {
         return std::get<Index>( SystemParamStates );
     }
 
     template <usize Index>
-    const FnParamType<Func, Index>::State& GetParamState() const
+    const FnDecayedParamType<Func, Index>::State& GetParamState() const
     {
         return std::get<Index>( SystemParamStates );
     }

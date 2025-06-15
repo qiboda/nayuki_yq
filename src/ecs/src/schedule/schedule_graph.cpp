@@ -185,3 +185,72 @@ const Topology<ScheduleNodeId>& ScheduleGraph::GetTopology()
     mDependencyGraph.TopSort();
     return mDependencyGraph.GetTopology();
 }
+
+/**
+ * @brief
+ * 没有同一个元素，且无序的两两元素遍历。
+ * 即没有 (a, a) 以及 (a, b) 和 (b, a) 都会遍历 的情况。
+ */
+template <typename T, typename Func>
+void ForEachPair( const std::set<T>& s, Func&& f )
+{
+    for ( auto it1 = s.begin(); it1 != s.end(); ++it1 )
+    {
+        auto it2 = it1;
+        ++it2;
+        for ( ; it2 != s.end(); ++it2 )
+        {
+            f( *it1, *it2 );
+        }
+    }
+}
+
+void ScheduleGraph::BuildGraph()
+{
+    // 用户定义的嵌套结构循环检测
+    BuildCompositeGraph();
+    if ( CheckCompositeGraphValid() == false )
+    {
+        return;
+    }
+
+    // TODO: 应该增加一个展开前的检测。
+    // 比如，设置了system set，但是system set内部没有节点，展开后的循环检测检测不到。
+    // 但是外部插件可能会在内部设置节点，就总是会出错了。应该提前检测，避免外部拓展出问题。
+
+    // 用户定义的展开后的 node 循环检测
+    BuildDependencyGraph();
+    if ( CheckDependencyGraphValid() == false )
+    {
+        return;
+    }
+
+    const Topology<ScheduleNodeId>& topology = GetTopology();
+    for ( usize i = 0; i < topology.LayerNum(); ++i )
+    {
+        const std::set<ScheduleNodeId>& layer = topology.GetLayer( i );
+
+        ForEachPair( layer,
+                     [this]( const ScheduleNodeId& nodeId1, const ScheduleNodeId& nodeId2 )
+                     {
+                         auto it1 = mAllNodes.find( nodeId1 );
+                         auto it2 = mAllNodes.find( nodeId2 );
+
+                         auto& node1 = it1->second.Get<ScheduleSystemNode>();
+                         auto& node2 = it2->second.Get<ScheduleSystemNode>();
+
+                         auto& system1 = mSystemManager->GetSystem( node1.GetSystemId() );
+                         auto& system2 = mSystemManager->GetSystem( node2.GetSystemId() );
+
+                         if ( system1->write_conflict( system2 ) )
+                         {
+                             mDependencyGraph.AddEdge( nodeId1, nodeId2 );
+                         }
+
+                         if ( system2->write_conflict( system1 ) )
+                         {
+                             mDependencyGraph.AddEdge( nodeId2, nodeId1 );
+                         }
+                     } );
+    }
+}

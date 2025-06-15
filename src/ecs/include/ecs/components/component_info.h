@@ -39,12 +39,12 @@ struct ECS_API ComponentIdSet
     std::vector<ComponentId> ids;
 
   public:
-    ComponentIdSet()
+    constexpr ComponentIdSet()
         : ids()
     {
     }
 
-    explicit ComponentIdSet( std::vector<ComponentId>&& otherIds )
+    constexpr explicit ComponentIdSet( std::vector<ComponentId>&& otherIds )
         : ids( otherIds )
     {
     }
@@ -278,7 +278,7 @@ class ECS_API ComponentTypeRegistry : public IdRegistry<ComponentId, Component>
     }
 
     template <IsComponentConcept... T>
-    static ComponentIdSet GetComponentIdSet()
+    constexpr static ComponentIdSet GetComponentIdSet()
     {
         ComponentIdSet componentIdSet;
         componentIdSet.Reserve( sizeof...( T ) );

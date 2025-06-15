@@ -30,18 +30,29 @@ class Local : public SystemParam
     using State = LocalState<T>;
 
   public:
-    Local( State& state )
-        : mValue{ state.value }
+    Local( State* state )
+        : mState{ state }
     {
     }
 
-    static Local<T> From( Registry* registry, State& state )
+    static Local<T> From( Registry* registry, State* state )
     {
         UNUSED_VAR( registry );
         return Local<T>( state );
     }
 
-    T& mValue;
+    T& operator*()
+    {
+        return mState->value;
+    }
+
+    const T& operator*() const
+    {
+        return mState->value;
+    }
+
+  protected:
+    State* mState = nullptr;
 };
 
 template <typename T>

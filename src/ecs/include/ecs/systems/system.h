@@ -2,6 +2,7 @@
 
 #include "core/macro/macro.h"
 #include "core/registry/id.h"
+#include "ecs/components/component_info.h"
 #include "ecs/systems/system_concept.h"
 #include "ecs/systems/system_state.h"
 #include <core/minimal.h>
@@ -105,6 +106,8 @@ class ECS_API ISystem : public NonCopyable
         UNUSED_VAR( func );
         return static_cast<const System<Func>*>( this );
     }
+
+    virtual bool write_conflict( const std::unique_ptr<ISystem>& other ) const = 0;
 };
 
 static inline const std::unique_ptr<ISystem> sNullISystem = nullptr;
@@ -116,10 +119,11 @@ template <IsSystemConcept Func>
 class System : public ISystem
 {
   public:
-    System( Func func )
+    constexpr System( Func func )
     {
-        using ArgsTypeTuple = FnArgsTypeTuple<Func>;
+        using ArgsTypeTuple = FnParamsTypeTuple<Func>;
         constexpr size_t kArgsCount = std::tuple_size_v<ArgsTypeTuple>;
+        static_assert( kArgsCount > 0 );
         SetSystemFunc( func, std::make_index_sequence<kArgsCount>{} );
     }
 
@@ -140,23 +144,35 @@ class System : public ISystem
         return mSystemState;
     }
 
+    virtual bool write_conflict( const std::unique_ptr<ISystem>& other ) const override
+    {
+        UNUSED_VAR( other );
+        return false; // 默认不冲突
+    }
+
   private:
     template <size_t... Index>
-    void SetSystemFunc( Func func, std::index_sequence<Index...> )
+    constexpr void SetSystemFunc( Func func, std::index_sequence<Index...> )
     {
         // TODO:传入函数的真实参数值。 SystemState
         mSystemFunc = [func, this]( class Registry* registry )
         {
-            using ParamsTypeTuple = FnParamsTypeTuple<Func>;
+            using ParamsTypeTuple = FnDecayedParamsTypeTuple<Func>;
 
             ParamsTypeTuple tuple = std::make_tuple(
-                ( FnParamType<Func, Index>::From( registry, mSystemState.template GetParamState<Index>() ), ... ) );
+                ( FnDecayedParamType<Func, Index>::From( registry, &mSystemState.template GetParamState<Index>() ), ... ) );
             // 将第Index个SystemParam构造出值
             std::apply( func, tuple );
         };
     }
 
     std::function<void( class Registry* )> mSystemFunc;
+
+    /**
+     * @brief
+     * true 表示写，false 表示只读
+     */
+    std::unordered_map<ComponentId, bool> mComponentReadWriteMap;
 
     SystemState<Func> mSystemState;
 };

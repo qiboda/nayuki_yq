@@ -25,7 +25,7 @@ void Archetype::MoveEntity( Entity entity, Archetype* destArchetype, ArchetypeCh
                                                          moveOuttedComponentsData,
                                                          srcIndex,
                                                          destIndex,
-                                                         mComponentMemoryInfos );
+                                                         destArchetype->mComponentMemoryInfos );
         }
 
         // 如果src的component更多，那么需要把那些数据析构掉。
