@@ -175,7 +175,7 @@
     "xmake.compileCommandsBackend": "clangd",
     "notebook.defaultFormatter": "xaver.clang-format",
     "editor.defaultFormatter": "xaver.clang-format",
-    "C_Cpp.intelliSenseEngine": "disabled",
+    "C_Cpp.intelliSenseEngine": "default",
     "C_Cpp.formatting": "disabled",
     "C_Cpp.autoAddFileAssociations": false,
     "C_Cpp.autocompleteAddParentheses": false,
@@ -240,5 +240,5 @@
         ]
     },
     "testMate.cpp.test.executables": "{build,Build,BUILD,out,Out,OUT}/**/*{test,Test,TEST,tests}*",
-    "C_Cpp.default.compilerPath": "/usr/sbin/clang"
+    "C_Cpp.default.compilerPath": "cl.exe"
 }
