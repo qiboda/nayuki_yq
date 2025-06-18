@@ -9,7 +9,7 @@ target("ecs_tests")
     --默认情况下不编译
     set_default(false)
 
-    add_packages("gtest", "glm", "tbb", "rpmalloc", "tracy", "range-v3")
+    add_packages("gtest", "glm", "tbb", "fmt", "rpmalloc", "tracy", "range-v3")
 
     --添加本地target依赖
     add_deps("core")

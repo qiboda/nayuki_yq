@@ -17,7 +17,6 @@
 #include <unordered_set> // IWYU pragma: keep
 #include <stack>         // IWYU pragma: keep
 #include <atomic>        // IWYU pragma: keep
-#include <format>        // IWYU pragma: keep
 #include <thread>        // IWYU pragma: keep
 #include <mutex>         // IWYU pragma: keep
 #include <atomic>        // IWYU pragma: keep

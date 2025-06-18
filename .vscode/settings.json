@@ -17,6 +17,7 @@
         "headerfiles",
         "HRESULT",
         "ifdef",
+        "imgui",
         "includedirs",
         "installdir",
         "intrin",

@@ -42,6 +42,8 @@ add_cxxflags("cl::/wd4324")
 add_cxxflags("cl::/wd4820")
 -- 允许没有使用的函数
 add_cxxflags("cl::/wd4514")
+-- 允许不能辨认的attribute
+add_cxxflags("cl::/wd5030")
 
 add_cxxflags("clang::-ferror-limit=0")
 -- 强制区分大小写

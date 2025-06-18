@@ -29,7 +29,7 @@ target(module_name)
     -- set_symbols("debug")
     -- set_strip("all")
 
-    add_packages("spdlog", "tracy", "glm", "rpmalloc", "tbb")
+    add_packages("spdlog", "tracy", "glm", "rpmalloc", "tbb", "fmt")
 
     after_build(function (target)
         for _, pkg in pairs(target:pkgs()) do

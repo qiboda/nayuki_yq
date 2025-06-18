@@ -32,7 +32,7 @@ class ECS_API ScheduleManager : public std::enable_shared_from_this<ScheduleMana
     PhaseId AddPhaseInConfig()
     {
         PhaseId id = PhaseIdRegistry::Get<T>();
-        mScheduleGraph.AddNode( id, PhaseInfo{ .mId = id, .mName = std::format( "{}", T{} ) } );
+        mScheduleGraph.AddNode( id, PhaseInfo{ .mId = id, .mName = fmt::format( "{}", T{} ) } );
         return id;
     }
 

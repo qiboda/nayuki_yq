@@ -7,7 +7,7 @@
 
 class CORE_API MemoryTracker
 {
-    friend std::formatter<MemoryTracker>;
+    friend fmt::formatter<MemoryTracker>;
 
   public:
     static void Malloc( usize size )
@@ -92,7 +92,7 @@ class CORE_API MemoryTracker
 
     static std::string ToString()
     {
-        return std::format(
+        return fmt::format(
             "MemoryTracker: TotalAllocatedMemoryCount: {}, TotalFreeMemoryCount: {}, CurrentAllocatedMemoryCount: {}, TotalMemorySize: {}, TotalFreeMemorySize: {}, CurrentMemorySize: {} MemorySizeCountMap: {}",
             MemoryTracker::GetTotalAllocatedMemoryCount().load(),
             MemoryTracker::GetTotalFreeMemoryCount().load(),
@@ -105,9 +105,9 @@ class CORE_API MemoryTracker
 };
 
 // template <>
-// struct std::formatter<MemoryTracker>
+// struct fmt::formatter<MemoryTracker>
 // {
-//     constexpr auto parse( std::format_parse_context &ctx )
+//     constexpr auto parse( fmt::format_parse_context &ctx )
 //     {
 //         return ctx.begin();
 //     }

@@ -3,9 +3,9 @@
 #ifndef NAME_FORMATTER
 #    define NAME_FORMATTER( Type )                                                                                     \
         template <>                                                                                                    \
-        struct std::formatter<Type>                                                                                    \
+        struct fmt::formatter<Type>                                                                                    \
         {                                                                                                              \
-            constexpr auto parse( std::format_parse_context& ctx )                                                     \
+            constexpr auto parse( fmt::format_parse_context& ctx )                                                     \
             {                                                                                                          \
                 return ctx.begin();                                                                                    \
             }                                                                                                          \
@@ -15,7 +15,7 @@
             {                                                                                                          \
                 UNUSED_VAR( v );                                                                                       \
                 UNUSED_VAR( ctx );                                                                                     \
-                return std::format_to( ctx.out(), #Type );                                                             \
+                return fmt::format_to( ctx.out(), #Type );                                                             \
             }                                                                                                          \
         };
 #endif

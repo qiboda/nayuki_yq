@@ -3,7 +3,7 @@
 #include <cassert>
 // 下方 宏中 std::cerr 使用
 #include <iostream> // IWYU pragma: keep
-#include <format>   // IWYU pragma: keep
+#include <fmt/format.h>   // IWYU pragma: keep
 
 #pragma region disable_warning
 
@@ -16,7 +16,7 @@
 #    define NY_PRE_CONDITION( expr, msg, ... )                                                                         \
         if ( bool( expr ) == false )                                                                                   \
         {                                                                                                              \
-            std::cerr << std::format( msg, ##__VA_ARGS__ ) << std::endl;                                               \
+            std::cerr << fmt::format( msg, ##__VA_ARGS__ ) << std::endl;                                               \
             assert( expr );                                                                                            \
         }
 #endif // !NY_PRE_CONDITION
@@ -25,7 +25,7 @@
 #    define NY_POST_CONDITION( expr, msg, ... )                                                                        \
         if ( bool( expr ) == false )                                                                                   \
         {                                                                                                              \
-            std::cerr << std::format( msg, ##__VA_ARGS__ ) << std::endl;                                               \
+            std::cerr << fmt::format( msg, ##__VA_ARGS__ ) << std::endl;                                               \
             assert( expr );                                                                                            \
         }
 #endif // !NY_POST_CONDITION
@@ -44,7 +44,7 @@
 #    define NY_ASSERT_MSG( expr, msg, ... )                                                                            \
         if ( bool( expr ) == false )                                                                                   \
         {                                                                                                              \
-            std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " << std::format( msg, ##__VA_ARGS__ ) << std::endl; \
+            std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " << fmt::format( msg, ##__VA_ARGS__ ) << std::endl; \
             assert( expr );                                                                                            \
         }
 #endif // !NY_ASSERT_MSG_MSG
@@ -53,7 +53,7 @@
 #    define NY_STATIC_ASSERT_MSG( expr, msg, ... )                                                                     \
         if constexpr ( bool( expr ) == false )                                                                         \
         {                                                                                                              \
-            std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " << std::format( msg, ##__VA_ARGS__ ) << std::endl; \
+            std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " << fmt::format( msg, ##__VA_ARGS__ ) << std::endl; \
             assert( expr );                                                                                            \
         }
 #endif // !NY_ASSERT_MSG_MSG
