@@ -1,16 +1,16 @@
 
-#include <core/core.h>
-#include <core/memory/global_new.h>
-
 #include <meta_forge/meta_forge.h>
-
-NY_LOG_CATEGORY_DEFINITION( LogMetaForge )
+#include <cstddef>
+#include <utility>
 
 #define STRUCT(name) [[clang::annotate(#name)]]
 #define PROPERTY(...) [[clang::annotate(#__VA_ARGS__)]]
 
 #define usize size_t
 
+/**
+ * 注释内容说明
+ */
 struct [[clang::annotate("my_struct")]] MyStruct
 {
    PROPERTY(field, name)

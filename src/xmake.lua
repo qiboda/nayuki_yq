@@ -1,6 +1,5 @@
 includes(os.projectdir() .. "/xmake/utils.lua")
 
--- , {configs= { toolchains = "clang" }}
 add_requires("stdexec", { configs = { shared = true }, debug = true })
 
 add_requires("imgui", { configs = { shared = true}, debug = true })
@@ -22,11 +21,8 @@ add_requires("vulkansdk", { system = true })
 add_requires("gtest", { configs = { main = false, shared = false, gmock = true } })
 -- end
 
--- if is_host("window") then
---     add_requires("llvm", {debug = true, external = true})
--- else
-add_requires("libllvm", {debug = true, external =true, configs = { libcxx = true, libcxxabi = true, libunwind = true}})
--- end
+-- , libunwind = true
+add_requires("libllvm", {debug = true, configs = { libcxx = true, libcxxabi = true}})
 
 includes_cur_dirs()
 

@@ -15,6 +15,7 @@ add_plugindirs("xmake/plugins")
 
 if is_host("windows") then
     set_toolchains("msvc")
+    -- set_toolchains("clang-cl")
 else
     set_toolchains("clang")
 end
@@ -50,6 +51,8 @@ add_cxxflags("clang::-ferror-limit=0")
 add_cxxflags("clang::-Wnonportable-include-path")
 -- 允许未知的属性
 add_cxxflags("clang::-Wno-unknown-attributes")
+add_cxxflags("clang_cl::-Wno-unknown-attributes")
+add_cxxflags("cl::/wd5222")
 
 add_cxxflags("clang::-Wno-gnu-zero-variadic-macro-arguments")
 -- 允许在构造函数中覆盖成员变量

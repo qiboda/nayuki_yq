@@ -82,8 +82,7 @@ class ECS_API ScheduleGraph : public IRAII
     std::vector<ScheduleNodeId> FindAllSystemNodesInSystemSet( ScheduleNodeId systemSetNodeId );
 
   protected:
-    std::vector<ScheduleSystemNodeConfig> mSystemNodeConfigs;
-    std::vector<ScheduleSystemSetNodeConfig> mSystemSetNodeConfigs;
+    std::unique_ptr<struct NodeConfigCache> mNodeConfigCache;
 
   protected:
     std::unordered_map<SystemId, ScheduleNodeId> mAllSystemNodes;
@@ -108,10 +107,11 @@ class ECS_API ScheduleGraph : public IRAII
     std::shared_ptr<SystemManager> mSystemManager = nullptr;
 };
 
+#pragma region InConfig
+
 #include "ecs/schedule/config/system_node_config.h"
 #include "ecs/schedule/config/system_set_node_config.h"
-
-#pragma region InConfig
+#include "ecs/schedule/config/node_config_cache.h"
 
 template <IsSystemConcept Func>
 ScheduleNodeId ScheduleGraph::AddSystemInConfig( Func func )

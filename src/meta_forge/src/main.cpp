@@ -24,10 +24,18 @@ class StructAttributePrinter : public clang::ast_matchers::MatchFinder::MatchCal
         clang::SourceLocation Loc = RD->getLocation();
         if ( SM->isInSystemHeader( Loc ) )
         {
-            return; // ⛔️ 忽略系统头中的匹配
+            return; // 忽略系统头中的匹配
         }
 
-        std::cout << "Struct: " << RD->getNameAsString() << "\n";
+        clang::ASTContext* Context = Result.Context;
+        const clang::RawComment* RC = Context->getRawCommentForDeclNoCache( RD );
+        if ( RC )
+        {
+            llvm::outs() << "Comment for " << RD->getNameAsString() << ": "
+                         << RC->getRawText( Context->getSourceManager() ) << "\n";
+        }
+
+        std::cout << "Struct: " << RD->getNameAsString() << SM->getFilename(Loc).str() << "\n";
         for ( const clang::Attr* attr : RD->attrs() )
         {
             std::cout << "  Attr Kind: " << attr->getSpelling() << "\n";
@@ -57,41 +65,92 @@ class StructAttributePrinter : public clang::ast_matchers::MatchFinder::MatchCal
     }
 };
 
+class FilteringCompilationDatabase : public clang::tooling::CompilationDatabase
+{
+  public:
+    FilteringCompilationDatabase( CompilationDatabase& Inner )
+        : InnerDB( Inner )
+    {
+    }
+
+    std::vector<clang::tooling::CompileCommand> getCompileCommands( llvm::StringRef FilePath ) const override
+    {
+        auto Commands = InnerDB.getCompileCommands( FilePath );
+
+        for ( auto& Command : Commands )
+        {
+            std::vector<std::string> Filtered;
+            for ( auto& Arg : Command.CommandLine )
+            {
+                if ( Arg == "/W4" )
+                    continue;
+                // 不编译
+                if ( Arg == "/c" )
+                    continue;
+                if ( Arg.find( "/Fobuild" ) != std::string::npos )
+                    continue;
+                if ( Arg == "/WX" )
+                    continue;
+                if ( Arg == "/Zc:preprocessor" )
+                    continue;
+                Filtered.push_back( Arg );
+            }
+            Command.CommandLine = std::move( Filtered );
+        }
+        return Commands;
+    }
+
+    std::vector<std::string> getAllFiles() const override
+    {
+        return InnerDB.getAllFiles();
+    }
+
+    std::vector<clang::tooling::CompileCommand> getAllCompileCommands() const override
+    {
+        return InnerDB.getAllCompileCommands(); // 可选：也做过滤
+    }
+
+  private:
+    CompilationDatabase& InnerDB;
+};
+
 int main( int argc, const char** argv )
 {
     llvm::cl::OptionCategory ToolCategory( "attribute-parser options" );
     auto ExpectedParser = clang::tooling::CommonOptionsParser::create( argc, argv, ToolCategory );
     if ( !ExpectedParser )
     {
-        llvm::outs() << "parse error" << "\n";
         llvm::errs() << ExpectedParser.takeError();
         return 0;
     }
     clang::tooling::CommonOptionsParser& OptionsParser = ExpectedParser.get();
 
-    auto& compilations = OptionsParser.getCompilations();
+    auto compilations = FilteringCompilationDatabase( OptionsParser.getCompilations() );
     auto sourcePathList = OptionsParser.getSourcePathList();
     clang::tooling::ClangTool Tool( compilations, sourcePathList );
 
     // 添加 -isystem 参数
-    clang::tooling::ArgumentsAdjuster AddIsystem =
-        getInsertArgumentAdjuster( { "-isystem",
-                                     "/usr/include/c++/15.1.1",
-                                     "-isystem",
-                                     "/usr/include/c++/15.1.1/x86_64-pc-linux-gnu",
-                                     "-isystem",
-                                     "/usr/include/c++/15.1.1/backward",
-                                     "-isystem",
-                                     "/usr/lib/clang/20/include",
-                                     "-isystem",
-                                     "/usr/local/include",
-                                     "-isystem",
-                                     "/usr/include",
-                                     //  "-mno-avx512bf16",
-                                     "-march=sapphirerapids" },
-                                   clang::tooling::ArgumentInsertPosition::BEGIN );
+    // clang::tooling::ArgumentsAdjuster AddIsystem =
+    //     getInsertArgumentAdjuster( { "-isystem",
+    //                                  "/usr/include/c++/15.1.1",
+    //                                  "-isystem",
+    //                                  "/usr/include/c++/15.1.1/x86_64-pc-linux-gnu",
+    //                                  "-isystem",
+    //                                  "/usr/include/c++/15.1.1/backward",
+    //                                  "-isystem",
+    //                                  "/usr/lib/clang/20/include",
+    //                                  "-isystem",
+    //                                  "/usr/local/include",
+    //                                  "-isystem",
+    //                                  "/usr/include",
+    //                                  //  "-mno-avx512bf16",
+    //                                  "-march=sapphirerapids" },
+    //                                clang::tooling::ArgumentInsertPosition::BEGIN );
 
-    Tool.appendArgumentsAdjuster( AddIsystem );
+    // Tool.appendArgumentsAdjuster( AddIsystem );
+    Tool.appendArgumentsAdjuster(
+        clang::tooling::getInsertArgumentAdjuster( "-fsyntax-only", clang::tooling::ArgumentInsertPosition::BEGIN ) );
+    // Tool.appendArgumentsAdjuster( getInsertArgumentAdjuster( "-Wno-everything", ArgumentInsertPosition::END ) );
 
     for ( auto& file : sourcePathList )
     {

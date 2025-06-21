@@ -3,29 +3,30 @@
 #include "ecs/schedule/graph/tarjan_graph.h"
 
 ScheduleGraph::ScheduleGraph()
-    : mSchedule( nullptr )
+    : mNodeConfigCache( std::make_unique<NodeConfigCache>() )
+    , mSchedule( nullptr )
     , mSystemManager( nullptr )
 {
 }
 
 void ScheduleGraph::AddSystemNodeConfig( ScheduleSystemNodeConfig&& config )
 {
-    mSystemNodeConfigs.push_back( std::move( config ) );
+    mNodeConfigCache->mSystemNodeConfigs.push_back( std::move( config ) );
 }
 
 void ScheduleGraph::AddSystemSetNodeConfig( ScheduleSystemSetNodeConfig&& config )
 {
-    mSystemSetNodeConfigs.push_back( std::move( config ) );
+    mNodeConfigCache->mSystemSetNodeConfigs.push_back( std::move( config ) );
 }
 
 void ScheduleGraph::ApplyNodeConfigs()
 {
-    for ( auto&& config : mSystemNodeConfigs )
+    for ( auto&& config : mNodeConfigCache->mSystemNodeConfigs )
     {
         config.Apply( mSchedule );
     }
 
-    for ( auto&& config : mSystemSetNodeConfigs )
+    for ( auto&& config : mNodeConfigCache->mSystemSetNodeConfigs )
     {
         config.Apply( mSchedule );
     }
@@ -133,8 +134,8 @@ void ScheduleGraph::CleanUp()
 
 void ScheduleGraph::ClearNodeConfigs()
 {
-    mSystemNodeConfigs.clear();
-    mSystemSetNodeConfigs.clear();
+    mNodeConfigCache->mSystemNodeConfigs.clear();
+    mNodeConfigCache->mSystemSetNodeConfigs.clear();
 }
 
 std::vector<ScheduleNodeId> ScheduleGraph::FindAllSystemNodesInSystemSet( ScheduleNodeId systemSetNodeId )
