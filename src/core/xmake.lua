@@ -30,6 +30,7 @@ target(module_name)
     -- set_strip("all")
 
     add_packages("spdlog", "tracy", "glm", "rpmalloc", "tbb", "fmt")
+    add_packages("llvm")
 
     after_build(function (target)
         for _, pkg in pairs(target:pkgs()) do

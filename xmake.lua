@@ -9,7 +9,7 @@ includes(os.projectdir() .. "/xmake/rules/llvm-cov.lua")
 
 set_installdir("install")
 
--- 自动更新 compile commands 文件
+-- 使用vsxmake时，自动更新 compile commands 文件
 add_rules("plugin.vsxmake.autoupdate")
 add_plugindirs("xmake/plugins")
 
@@ -48,6 +48,8 @@ add_cxxflags("cl::/wd5030")
 add_cxxflags("clang::-ferror-limit=0")
 -- 强制区分大小写
 add_cxxflags("clang::-Wnonportable-include-path")
+-- 允许未知的属性
+add_cxxflags("clang::-Wno-unknown-attributes")
 
 add_cxxflags("clang::-Wno-gnu-zero-variadic-macro-arguments")
 -- 允许在构造函数中覆盖成员变量

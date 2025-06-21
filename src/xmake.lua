@@ -22,7 +22,11 @@ add_requires("vulkansdk", { system = true })
 add_requires("gtest", { configs = { main = false, shared = false, gmock = true } })
 -- end
 
-add_requires("llvm")
+-- if is_host("window") then
+--     add_requires("llvm", {debug = true, external = true})
+-- else
+add_requires("libllvm", {debug = true, external =true, configs = { libcxx = true, libcxxabi = true, libunwind = true}})
+-- end
 
 includes_cur_dirs()
 
