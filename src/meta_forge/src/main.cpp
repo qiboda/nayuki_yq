@@ -7,11 +7,12 @@
 #include <clang/AST/RecordLayout.h>
 
 #include <iostream>
-#include <meta_forge/struct_attribute_collector.h>
+#include <meta_forge/collector/struct_attribute_collector.h>
+#include <meta_forge/collector/class_attribute_collector.h>
 #include <meta_forge/command_list_parser.h>
 
-clang::ast_matchers::DeclarationMatcher ClassMatcher =
-    clang::ast_matchers::recordDecl( clang::ast_matchers::isClass() ).bind( "class" );
+#include <rfl/json.hpp>
+#include <rfl.hpp>
 
 class FilteringCompilationDatabase : public clang::tooling::CompilationDatabase
 {
@@ -120,9 +121,21 @@ int main( int argc, const char** argv )
         llvm::outs() << "\n";
     }
 
-    StructAttributeCollector Handler;
-    clang::ast_matchers::MatchFinder Finder;
-    Finder.addMatcher( StructMatcher, &Handler );
+    std::shared_ptr<MetaInfoManager> metaInfoManager = std::make_shared<MetaInfoManager>();
 
-    return Tool.run( clang::tooling::newFrontendActionFactory( &Finder ).get() );
+    clang::ast_matchers::MatchFinder Finder;
+    StructAttributeCollector StructHandler;
+    Finder.addMatcher( StructMatcher, &StructHandler );
+    ClassAttributeCollector ClassHandler( metaInfoManager );
+    Finder.addMatcher( ClassMatcher, &ClassHandler );
+
+    Tool.run( clang::tooling::newFrontendActionFactory( &Finder ).get() );
+
+    const std::string json_string = rfl::json::write( *metaInfoManager, rfl::json::pretty );
+
+    std::ofstream file("D:/nayuki_yq/src/meta_forge/tests/dump.json");
+    file << json_string;
+    file.close();
+
+    return 0;
 }

@@ -14,3 +14,4 @@ vsxmake2022/
 compile_commands.json
 install/
 /coverage/
+*.json

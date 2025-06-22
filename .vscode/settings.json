@@ -36,6 +36,7 @@
         "pcxxheader",
         "pheader",
         "plugindirs",
+        "Pointee",
         "projectdir",
         "releasedbg",
         "rpaligned",
@@ -147,7 +148,8 @@
         "xloctime": "cpp",
         "xmemory": "cpp",
         "xtree": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "deque": "cpp"
     },
     "clangd.arguments": [
         "--clang-tidy",

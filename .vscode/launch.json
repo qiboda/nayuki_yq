@@ -9,7 +9,10 @@
             "request": "launch",
             "name": "Launch",
             "program": "${workspaceFolder}/build/windows/x64/debug/meta_forge.exe",
-            "args": [],
+            "args": [
+                "--compilations=D:/nayuki_yq/.vscode/",
+                "D:/nayuki_yq/src/meta_forge/tests/test_class.cpp"
+            ],
             "cwd": "${workspaceFolder}"
         }
         // {

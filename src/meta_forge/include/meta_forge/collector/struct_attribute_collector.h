@@ -43,6 +43,11 @@ class StructAttributeCollector : public clang::ast_matchers::MatchFinder::MatchC
             }
         }
 
+        clang::FileID mainFID = SM->getMainFileID();
+        const clang::FileEntry* MainFile = SM->getFileEntryForID( mainFID );
+        if ( MainFile )
+            llvm::outs() << "Main file: " << MainFile->tryGetRealPathName() << "\n";
+
         if ( bNayukiAttr )
         {
             clang::ASTContext* Context = Result.Context;

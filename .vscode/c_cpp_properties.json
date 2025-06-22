@@ -17,18 +17,23 @@
                 ".vscode/compile_commands.json"
             ],
             "includePath": [
-                "${workspaceFolder}/src/core/include/**",
-                "${workspaceFolder}/src/ecs/include/**",
-                "${workspaceFolder}/src/render_core/include/**",
-                "${workspaceFolder}/src/render/include/**",
-                "${workspaceFolder}/src/nayuki_yq/include/**",
-                "${workspaceFolder}/src/meta_forge/include/**",
+                "${workspaceFolder}/src/core/include",
+                "${workspaceFolder}/src/ecs/include",
+                "${workspaceFolder}/src/render_core/include",
+                "${workspaceFolder}/src/render/include",
+                "${workspaceFolder}/src/nayuki_yq/include",
+                "${workspaceFolder}/src/meta_forge/include",
                 "${workspaceFolder}/build/generated",
                 "C:/Users/skwy/AppData/Local/.xmake/packages/l/libllvm/19.1.7/b95bbee7e59642049bccf582018dd457/include"
             ],
             "mergeConfigurations": false,
             "recursiveIncludes": {
-                "reduce": "always"
+                "reduce": "never",
+                "priority": "beforeSystemIncludes",
+                "order": "breadthFirst"
+            },
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true
             }
         },
         {
@@ -43,11 +48,11 @@
                 "${workspaceFolder}/.vscode/compile_commands.json"
             ],
             "includePath": [
-                "${workspaceFolder}/src/core/include/**",
-                "${workspaceFolder}/src/ecs/include/**",
-                "${workspaceFolder}/src/render_core/include/**",
-                "${workspaceFolder}/src/render/include/**",
-                "${workspaceFolder}/src/nayuki_yq/include/**",
+                "${workspaceFolder}/src/core/include/",
+                "${workspaceFolder}/src/ecs/include/",
+                "${workspaceFolder}/src/render_core/include/",
+                "${workspaceFolder}/src/render/include/",
+                "${workspaceFolder}/src/nayuki_yq/include/",
                 "${workspaceFolder}/build/generated"
             ],
             "mergeConfigurations": false
