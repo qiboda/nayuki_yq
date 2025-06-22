@@ -2,11 +2,17 @@
 module_name = "meta_forge"
 module_name_macro = "META_FORGE"
 
+-- , libunwind = true
+add_requires("libllvm", {debug = true, configs = { libcxx = true, libcxxabi = true}})
+-- 因为libllvm仅仅支持 MT
+add_requires("reflect-cpp", {debug = true, configs = { runtimes = "MT" }})
+
 target(module_name)
     set_kind("binary")
 
     set_group("binary")
 
+    -- 因为libllvm仅仅支持 MT
     set_runtimes("MT")
 
     add_files("src/**.cpp")
@@ -23,9 +29,9 @@ target(module_name)
     set_symbols("debug")
     set_strip("all")
 
-    -- if is_host("windows") then
-        add_packages( "libllvm" )
-        -- add_packages( "vcpkg::llvm" )
+    add_packages( "libllvm" )
+    add_packages( "reflect-cpp" )
+
     after_build(function (target)
         for _, pkg in pairs(target:pkgs()) do
             local installdir = pkg:installdir()

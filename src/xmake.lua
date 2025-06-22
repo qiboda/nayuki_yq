@@ -21,9 +21,6 @@ add_requires("vulkansdk", { system = true })
 add_requires("gtest", { configs = { main = false, shared = false, gmock = true } })
 -- end
 
--- , libunwind = true
-add_requires("libllvm", {debug = true, configs = { libcxx = true, libcxxabi = true}})
-
 includes_cur_dirs()
 
 -- 递归的包含所有的tests 模块
