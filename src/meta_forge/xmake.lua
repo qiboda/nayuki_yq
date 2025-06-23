@@ -3,7 +3,8 @@ module_name = "meta_forge"
 module_name_macro = "META_FORGE"
 
 -- , libunwind = true
-add_requires("libllvm", {debug = true, configs = { libcxx = true, libcxxabi = true}})
+-- libcxx = true, libcxxabi = true
+add_requires("libllvm", {debug = true, configs = { }})
 -- 因为libllvm仅仅支持 MT
 add_requires("reflect-cpp", {debug = true, configs = { runtimes = "MT" }})
 
