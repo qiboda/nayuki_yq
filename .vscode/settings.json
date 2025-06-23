@@ -170,11 +170,11 @@
         "--query-driver=C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx86/x64/cl.exe"
     ],
     "clangd.checkUpdates": true,
-    "clangd.path": "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/Llvm/bin/clangd.exe",
+    "clangd.path": "clangd",
     "xmake.compileCommandsBackend": "cpptools",
     "notebook.defaultFormatter": "xaver.clang-format",
     "editor.defaultFormatter": "xaver.clang-format",
-    "C_Cpp.intelliSenseEngine": "default",
+    "C_Cpp.intelliSenseEngine": "disabled",
     "C_Cpp.formatting": "disabled",
     "C_Cpp.autoAddFileAssociations": true,
     "C_Cpp.autocompleteAddParentheses": true,
