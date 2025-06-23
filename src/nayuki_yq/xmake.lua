@@ -16,9 +16,6 @@ target(module_name)
     -- 必须定义
     add_defines(module_name_macro .. "_EXPORTS")
 
-    add_packages("glfw", "glm", "stb", "spdlog", "tracy", "rpmalloc", "tbb")
-    add_packages("vulkansdk")
-
     -- 添加本地target依赖
     add_deps("core")
     add_deps("render_core")

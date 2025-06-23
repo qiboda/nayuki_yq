@@ -9,7 +9,7 @@ target("core_tests")
     -- 默认情况下不编译
     set_default(false)
 
-    add_packages("spdlog", "glm", "gtest", "fmt", "tbb", "rpmalloc", "tracy")
+    add_packages("gtest")
     add_deps("core")
 
     if get_config("toolchain") == "clang" then

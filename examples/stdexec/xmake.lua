@@ -6,9 +6,4 @@ target("exec")
     set_default(false)
     set_group("examples")
 
-    add_packages("glfw", "glm", "stb", "spdlog", "tracy", "stdexec")
-    add_packages("vulkansdk")
-
-    add_deps("nayuki_yq")
-    add_deps("core")
-    add_deps("render_core")
+    add_deps("task")

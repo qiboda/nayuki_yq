@@ -6,9 +6,7 @@ target("hello_imgui")
     set_default(false)
     set_group("examples")
 
-    add_packages("glfw", "glm", "stb", "spdlog", "tracy", "imgui")
-    add_packages("vulkansdk")
+    add_packages("imgui")
 
     add_deps("nayuki_yq")
-    add_deps("core")
     add_deps("render_core")

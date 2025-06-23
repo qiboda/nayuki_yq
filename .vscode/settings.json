@@ -149,7 +149,8 @@
         "xmemory": "cpp",
         "xtree": "cpp",
         "xutility": "cpp",
-        "deque": "cpp"
+        "deque": "cpp",
+        "*.def": "cpp"
     },
     "clangd.arguments": [
         "--clang-tidy",

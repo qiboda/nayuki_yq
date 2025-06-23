@@ -37,4 +37,7 @@ InstalledDir: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\L
 
 
 
- xmake run meta_forge --compilations=D:/nayuki_yq/.vscode/ D:\nayuki_yq\src\meta_forge\
+ xmake run meta_forge --compilations=D:/nayuki_yq/.vscode/ D:\nayuki_yq\src\meta_forgeo
+
+用于反射，看情况，自己修改
+https://github.com/Ubpa/UDRefl

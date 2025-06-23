@@ -17,7 +17,6 @@ target(module_name)
     -- 必须定义
     add_defines(module_name_macro .. "_EXPORTS")
 
-    add_packages("glm", "spdlog", "tracy", "fmt", "rpmalloc", "tbb", "range-v3")
-    add_packages("vulkansdk")
+    add_packages("range-v3", { public = true})
 
     add_deps("core")

@@ -29,8 +29,9 @@ target(module_name)
     -- set_symbols("debug")
     -- set_strip("all")
 
-    add_packages("spdlog", "tracy", "glm", "rpmalloc", "tbb", "fmt")
-    add_packages("llvm")
+    add_packages("rpmalloc")
+    -- todo: 封装spdlog，之后将它改为private
+    add_packages("tracy", "spdlog", "tbb", "glm",  "fmt", {public = true})
 
     after_build(function (target)
         for _, pkg in pairs(target:pkgs()) do

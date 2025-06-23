@@ -1,6 +1,6 @@
 
-module_name = "task"
-module_name_macro = "TASK"
+module_name = "meta"
+module_name_macro = "META"
 
 target(module_name)
     set_kind("shared")
@@ -20,7 +20,5 @@ target(module_name)
     -- 这两个选项同时使用，生成独立的debug符号信息。
     set_symbols("debug")
     set_strip("all")
-
-    add_packages("stdexec", { public = true})
 
     add_deps("core")

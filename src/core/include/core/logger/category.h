@@ -6,6 +6,7 @@
 #include <module_export.h>
 #include <string>
 
+
 class CORE_API LoggerCategory
 {
   public:

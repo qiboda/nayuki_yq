@@ -5,6 +5,9 @@
  */
 #pragma once
 
+#include <core/minimal.h>
+#include "core/logger/category.h"
+
 #ifdef DEBUG
 #    define SPDLOG_DEBUG_ON
 #    define SPDLOG_TRACE_ON
@@ -21,9 +24,6 @@
 #include <spdlog/sinks/ansicolor_sink.h>
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
-
-#include <core/minimal.h>
-#include "core/logger/category.h"
 
 // 添加这个前置声明，避免 clangd 警告报错
 template <typename T>
