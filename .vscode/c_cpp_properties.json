@@ -24,7 +24,12 @@
                 "${workspaceFolder}/src/nayuki_yq/include",
                 "${workspaceFolder}/src/meta_forge/include",
                 "${workspaceFolder}/build/generated",
-                "C:/Users/skwy/AppData/Local/.xmake/packages/l/libllvm/19.1.7/b95bbee7e59642049bccf582018dd457/include"
+                "${workspaceFolder}/src/meta/include",
+                "C:/Users/skwy/AppData/Local/.xmake/packages/l/libllvm/19.1.7/b95bbee7e59642049bccf582018dd457/include",
+                "C:/Users/skwy/AppData/Local/.xmake/packages/g/glm/1.0.1/9539bbcb40144d45b3116945f7a0a373/include",
+                "C:/Users/skwy/AppData/Local/.xmake/packages/f/fmt/11.2.0/dd62a494d73c4ba6b148e8c6feed4601/include",
+                "C:/Users/skwy/AppData/Local/.xmake/packages/s/spdlog/v1.15.3/0f5509cebf954d4f8c1085547c9763da/include",
+                "C:/Program Files (x86)/Windows Kits/10/Include/**"
             ],
             "mergeConfigurations": false,
             "recursiveIncludes": {

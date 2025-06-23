@@ -2,6 +2,7 @@
 
 #if defined( _WIN32 )
 #    include <Windows.h>
+#    include <sysinfoapi.h>
 #    include <core/compiler/diagnostic.h>
 
 usize PlatformMemory::GetCacheLineSize()
