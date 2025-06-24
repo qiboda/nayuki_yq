@@ -7,7 +7,7 @@ struct Id;
 template <typename T>
 concept IsId = IsStrictDerivedConcept<Id, T>;
 
-struct ECS_API Id
+struct CORE_API Id
 {
     template <IsId TId, typename TBaseType>
     friend class IdRegistry;
