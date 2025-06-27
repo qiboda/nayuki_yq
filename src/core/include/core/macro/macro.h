@@ -2,13 +2,14 @@
 
 #include <cassert>
 // 下方 宏中 std::cerr 使用
-#include <iostream> // IWYU pragma: keep
-#include <fmt/format.h>   // IWYU pragma: keep
+#include <iostream>     // IWYU pragma: keep
+#include <fmt/format.h> // IWYU pragma: keep
 
 #pragma region disable_warning
 
 // to remove unused variable warning
-#define UNUSED_VAR( var ) ( ( void )&var )
+#define UNUSED_VARS( ... ) ( ( void )( 0, ##__VA_ARGS__ ) )
+#define UNUSED_VARS_PACK( args ) ( ( UNUSED_VARS( args ), ... ) )
 
 #pragma endregion disable_warning
 

@@ -60,6 +60,6 @@ std::pair<u32, u32> PhysicalDevice::findGraphicsAndPresentQueueFamilyIndex( Wind
                                         return ( qfp.queueFlags & vk::QueueFlagBits::eGraphics ) &&
                                                mPhysicalDevice->getSurfaceSupportKHR( index++, surface.get() );
                                     } );
-    UNUSED_VAR( combinedIt );
+    UNUSED_VARS( combinedIt );
     return { index, index }; // the first index that supports graphics and present
 }

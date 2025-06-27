@@ -53,7 +53,7 @@ class RENDER_CORE_API Window : public IRAII, public ITickable
 
     virtual void Tick( float deltaTime ) override
     {
-        UNUSED_VAR( deltaTime );
+        UNUSED_VARS( deltaTime );
         if ( mWindow )
         {
             glfwPollEvents();

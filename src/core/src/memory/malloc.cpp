@@ -19,7 +19,7 @@ void MallocAllocator::Init()
     sInitted = true;
 }
 
-inline void MallocAllocator::Shutdown()
+void MallocAllocator::Shutdown()
 {
     NY_ASSERT( sMainThreadId == std::this_thread::get_id() )
 
@@ -28,7 +28,7 @@ inline void MallocAllocator::Shutdown()
     sInitted = false;
 }
 
-inline bool MallocAllocator::IsInitted()
+bool MallocAllocator::IsInitted()
 {
     if ( sMainThreadId == std::this_thread::get_id() )
     {
@@ -40,23 +40,23 @@ inline bool MallocAllocator::IsInitted()
     }
 }
 
-inline void MallocAllocator::ThreadInit()
+void MallocAllocator::ThreadInit()
 {
     // 检查是否是主线程, 非主线程才能调用
     rpmalloc_thread_initialize();
 }
 
-inline void MallocAllocator::ThreadShutdown()
+void MallocAllocator::ThreadShutdown()
 {
     rpmalloc_thread_finalize( true );
 }
 
-inline bool MallocAllocator::IsThreadInitted()
+bool MallocAllocator::IsThreadInitted()
 {
     return rpmalloc_is_thread_initialized() > 0 ? true : false;
 }
 
-inline void* MallocAllocator::Malloc( usize size )
+void* MallocAllocator::Malloc( usize size )
 {
     if ( IsInitted() == false )
     {
@@ -77,7 +77,7 @@ inline void* MallocAllocator::Malloc( usize size )
     return ptr;
 }
 
-inline void* MallocAllocator::AlignedAlloc( usize size, usize alignment )
+void* MallocAllocator::AlignedAlloc( usize size, usize alignment )
 {
     if ( IsInitted() == false )
     {
@@ -100,7 +100,7 @@ inline void* MallocAllocator::AlignedAlloc( usize size, usize alignment )
     return ptr;
 }
 
-inline void* MallocAllocator::Realloc( void* ptr, usize size )
+void* MallocAllocator::Realloc( void* ptr, usize size )
 {
     if ( IsInitted() == false )
     {
@@ -124,7 +124,7 @@ inline void* MallocAllocator::Realloc( void* ptr, usize size )
     return new_ptr;
 }
 
-inline void* MallocAllocator::Calloc( usize num, usize size )
+void* MallocAllocator::Calloc( usize num, usize size )
 {
     if ( IsInitted() == false )
     {
@@ -145,7 +145,7 @@ inline void* MallocAllocator::Calloc( usize num, usize size )
     return ptr;
 }
 
-inline void MallocAllocator::Free( void* ptr )
+void MallocAllocator::Free( void* ptr )
 {
     if ( IsInitted() == false )
     {

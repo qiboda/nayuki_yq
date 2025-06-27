@@ -22,7 +22,7 @@ class ECS_API IFeature
     virtual void Build( class Registry* registry )
     {
         NY_STATIC_ASSERT_MSG( false, "You must implement this virtual function" )
-        UNUSED_VAR( registry );
+        UNUSED_VARS( registry );
     }
 };
 

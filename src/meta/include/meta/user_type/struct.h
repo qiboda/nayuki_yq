@@ -8,6 +8,10 @@
 class META_API Struct : public Structured
 {
   public:
+    Struct()
+    {
+    }
+
     Struct( TypeInfo typeInfo )
         : Structured( typeInfo )
     {

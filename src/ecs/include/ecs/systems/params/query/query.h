@@ -136,14 +136,14 @@ class Query : public SystemParam
 
     static Query<T...> From( Registry* registry, State* state )
     {
-        UNUSED_VAR( registry );
+        UNUSED_VARS( registry );
         return Query<T...>( state );
     }
 
   public:
     void foreach ( std::function<void( T... )> callback )
     {
-        UNUSED_VAR( callback );
+        UNUSED_VARS( callback );
     }
 
     State::Iterator begin()

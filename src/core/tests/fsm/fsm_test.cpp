@@ -49,16 +49,16 @@ class SkillState_Spell : public SkillState
   public:
     virtual void OnUpdate( std::shared_ptr<SkillFSMContext> &fsmContext, f32 DeltaSeconds ) override
     {
-        UNUSED_VAR( fsmContext );
-        UNUSED_VAR( DeltaSeconds );
+        UNUSED_VARS( fsmContext );
+        UNUSED_VARS( DeltaSeconds );
     }
 
-    virtual void OnEnterPre( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VAR( fsmContext ); }
-    virtual void OnEnter( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VAR( fsmContext ); }
-    virtual void OnEnterPost( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VAR( fsmContext ); }
-    virtual void OnLeavePre( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VAR( fsmContext ); }
-    virtual void OnLeave( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VAR( fsmContext ); }
-    virtual void OnLeavePost( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VAR( fsmContext ); }
+    virtual void OnEnterPre( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
+    virtual void OnEnter( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
+    virtual void OnEnterPost( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
+    virtual void OnLeavePre( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
+    virtual void OnLeave( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
+    virtual void OnLeavePost( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
 
   private:
 };
@@ -76,16 +76,16 @@ class SkillState_Cast : public SkillState
   public:
     virtual void OnUpdate( std::shared_ptr<SkillFSMContext> &fsmContext, f32 DeltaSeconds ) override
     {
-        UNUSED_VAR( fsmContext );
-        UNUSED_VAR( DeltaSeconds );
+        UNUSED_VARS( fsmContext );
+        UNUSED_VARS( DeltaSeconds );
     }
 
-    virtual void OnEnterPre( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VAR( fsmContext ); }
-    virtual void OnEnter( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VAR( fsmContext ); }
-    virtual void OnEnterPost( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VAR( fsmContext ); }
-    virtual void OnLeavePre( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VAR( fsmContext ); }
-    virtual void OnLeave( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VAR( fsmContext ); }
-    virtual void OnLeavePost( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VAR( fsmContext ); }
+    virtual void OnEnterPre( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
+    virtual void OnEnter( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
+    virtual void OnEnterPost( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
+    virtual void OnLeavePre( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
+    virtual void OnLeave( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
+    virtual void OnLeavePost( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
 
   private:
 };

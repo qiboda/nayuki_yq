@@ -1,16 +1,8 @@
 #pragma once
 
-#include "core/registry/id.h"
+#include "meta/type_id.h"
 #include <core/minimal.h>
 #include <meta/minimal.h>
-
-struct META_API TypeId : public Id
-{
-};
-
-struct TypeIdGenerator : public IdGenerator<TypeId>
-{
-};
 
 enum class TypeKind : u8
 {
@@ -41,8 +33,17 @@ struct TypeInfo
 class META_API TypeBase
 {
   public:
+    TypeBase()
+    {
+    }
+
     TypeBase( TypeInfo typeInfo );
     virtual ~TypeBase() = default;
+
+    void SetTypeInfo( TypeInfo typeInfo )
+    {
+        mTypeInfo = typeInfo;
+    }
 
     TypeId GetTypeId()
     {

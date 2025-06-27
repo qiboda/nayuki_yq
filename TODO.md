@@ -41,3 +41,6 @@ InstalledDir: C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\L
 
 用于反射，看情况，自己修改
 https://github.com/Ubpa/UDRefl
+
+
+向下转型，有运行时反射，可以根据反射来判断。

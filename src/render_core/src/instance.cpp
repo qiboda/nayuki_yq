@@ -30,7 +30,7 @@ static VKAPI_ATTR vk::Bool32 VKAPI_CALL debugMessageFunc( vk::DebugUtilsMessageS
                                                           vk::DebugUtilsMessengerCallbackDataEXT const* pCallbackData,
                                                           void* _pUserData )
 {
-    UNUSED_VAR( _pUserData );
+    UNUSED_VARS( _pUserData );
 
     std::string message;
 

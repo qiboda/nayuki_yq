@@ -12,7 +12,7 @@ class ECS_API QueryFilter
 
     static bool Filter( const ComponentIdSet& componentIdSet )
     {
-        UNUSED_VAR( componentIdSet );
+        UNUSED_VARS( componentIdSet );
         return true;
     }
 };

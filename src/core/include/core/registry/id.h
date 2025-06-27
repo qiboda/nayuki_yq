@@ -20,10 +20,7 @@ struct CORE_API Id
     {
     }
 
-    constexpr friend bool operator==( const Id& lhs, const Id& rhs )
-    {
-        return lhs.mId == rhs.mId;
-    }
+    constexpr friend auto operator<=>( const Id& lhs, const Id& rhs ) = default;
 
     constexpr u32 Index() const
     {

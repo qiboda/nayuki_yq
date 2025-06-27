@@ -26,12 +26,12 @@ class RENDER_CORE_API DeviceMemory : public IRAII
 
     virtual void BindBuffer( vk::SharedBuffer buffer )
     {
-        UNUSED_VAR( buffer );
+        UNUSED_VARS( buffer );
     }
 
     virtual void BindImage( vk::SharedImage image )
     {
-        UNUSED_VAR( image );
+        UNUSED_VARS( image );
     }
 
     virtual void UnbindBuffer()

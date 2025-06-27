@@ -99,7 +99,7 @@ class ECS_API ArchetypeManager
     template <IsComponentConcept... T>
     void RemoveComponentData( Entity entity, T&&... component )
     {
-        ( UNUSED_VAR( component ), ... );
+        ( UNUSED_VARS( component ), ... );
 
         auto it = mEntityArchetypeMap.find( entity );
         if ( it != mEntityArchetypeMap.end() )

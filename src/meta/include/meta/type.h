@@ -3,11 +3,11 @@
 #include <core/minimal.h>
 #include <meta/minimal.h>
 
-#include "meta/class.h"
-#include "meta/enum.h"
-#include "meta/function.h"
-#include "meta/struct.h"
-#include "meta/value.h"
+#include "meta/user_type/class.h"
+#include "meta/user_type/enum.h"
+#include "meta/user_type/struct.h"
+#include "meta/value/function.h"
+#include "meta/value/value.h"
 
 struct TypeIdRegistry
 {
@@ -58,6 +58,7 @@ struct TypeIdRegistry
     std::map<TypeId, Enum*> mAllEnums;
     std::map<TypeId, Class*> mAllClasses;
     std::map<TypeId, Struct*> mAllStructs;
+    // todo: 也需要存储其他类型，包括各种复合类型。
 };
 
 struct ValueIdRegistry

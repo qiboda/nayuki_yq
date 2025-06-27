@@ -54,7 +54,7 @@ class SystemTest : public ::testing::Test
     static void Add( i32 a, i32 b )
     {
         i32 c = a + b;
-        UNUSED_VAR( c );
+        UNUSED_VARS( c );
     }
 
     static void AddVoid()

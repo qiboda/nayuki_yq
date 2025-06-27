@@ -1,9 +1,10 @@
 #pragma once
 
+#include "meta/value/value.h"
 #include <core/minimal.h>
 #include <meta/minimal.h>
 
-class META_API Function
+class META_API Function : public Value
 {
   public:
     template <typename TFunc>

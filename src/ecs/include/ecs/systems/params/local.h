@@ -37,7 +37,7 @@ class Local : public SystemParam
 
     static Local<T> From( Registry* registry, State* state )
     {
-        UNUSED_VAR( registry );
+        UNUSED_VARS( registry );
         return Local<T>( state );
     }
 

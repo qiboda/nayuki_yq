@@ -8,17 +8,14 @@
 class META_API Class : public Structured
 {
   public:
+    Class()
+    {
+    }
+
     Class( TypeInfo typeInfo )
         : Structured( typeInfo )
     {
     }
 
     virtual ~Class() = default;
-
-  public:
-    template <typename TFunc>
-    void AddFunc( std::string& name )
-    {
-        UNUSED_VAR( name );
-    }
 };

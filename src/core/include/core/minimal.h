@@ -46,3 +46,4 @@
 #include <core/logger/log.h>
 #include <core/logger/category.h>
 #include <core/concepts/derived.h>
+#include <core/helper/enum.h>

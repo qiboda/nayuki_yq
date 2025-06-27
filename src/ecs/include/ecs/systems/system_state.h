@@ -16,7 +16,7 @@ class ECS_API ISystemState : public NonCopyable
     template <IsSystemConcept Func>
     const SystemState<Func>* Downcast( Func func ) const
     {
-        UNUSED_VAR( func );
+        UNUSED_VARS( func );
         return static_cast<const SystemState<Func>*>( this );
     }
 };

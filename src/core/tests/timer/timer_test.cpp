@@ -3,17 +3,17 @@
 #include <core/minimal.h>
 #include <core/timer/timer_manager.h>
 
-class TimerTest : public ::testing::Test
+class TypeIdTest : public ::testing::Test
 {
   protected:
-    TimerTest() {}
-    ~TimerTest() override {}
+    TypeIdTest() {}
+    ~TypeIdTest() override {}
 
     void SetUp() override {}
     void TearDown() override {}
 };
 
-TEST_F( TimerTest, TimerMultipleExecute )
+TEST_F( TypeIdTest, TimerMultipleExecute )
 {
     i32 i = 0;
     TimerDelegate AddOne;

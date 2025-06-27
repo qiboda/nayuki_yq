@@ -103,7 +103,7 @@ class ECS_API ISystem : public NonCopyable
     template <IsSystemConcept Func>
     const System<Func>* Downcast( Func func ) const
     {
-        UNUSED_VAR( func );
+        UNUSED_VARS( func );
         return static_cast<const System<Func>*>( this );
     }
 
@@ -146,7 +146,7 @@ class System : public ISystem
 
     virtual bool write_conflict( const std::unique_ptr<ISystem>& other ) const override
     {
-        UNUSED_VAR( other );
+        UNUSED_VARS( other );
         return false; // 默认不冲突
     }
 

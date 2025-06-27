@@ -143,7 +143,7 @@ class ECS_API Archetype
     template <IsComponentConcept... T>
     void RemoveEntityComponents( Archetype* oldArchetype, Entity entity, T&&... components )
     {
-        ( UNUSED_VAR( components ), ... );
+        ( UNUSED_VARS( components ), ... );
 
         ArchetypeChunk* newArchetypeChunk = this->GetEntityArchetypeChunk( entity );
         NY_ASSERT( newArchetypeChunk != nullptr )

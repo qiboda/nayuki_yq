@@ -1,5 +1,2 @@
 
-#include "meta/struct.h"
-
-Struct::Struct() {} 
-    
+#include "meta/user_type/struct.h"
