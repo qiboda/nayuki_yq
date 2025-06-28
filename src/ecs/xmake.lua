@@ -20,3 +20,4 @@ target(module_name)
     add_packages("range-v3", { public = true})
 
     add_deps("core")
+    add_deps("meta")

@@ -69,6 +69,8 @@
         "*.csv": "csv",
         "*.tpl": "scriban-txt",
         "*.inc": "glsl",
+        "*.inja": "jinja",
+        "*.tmpl": "jinja",
         "*.glsl": "glsl",
         "*.template": "angelscript_snippet",
         "list": "cpp",

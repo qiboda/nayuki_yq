@@ -1,6 +1,7 @@
 #pragma once
 
 #include "meta/type_base.h"
+#include "meta/user_type/namespace.h"
 #include <core/minimal.h>
 #include <meta/minimal.h>
 
@@ -15,6 +16,60 @@ enum class EnumUnderlyingType : u8
     U32,
     U64,
 };
+
+template <typename T>
+struct EnumUnderlyingTypeTrait;
+
+template <>
+struct EnumUnderlyingTypeTrait<i8>
+{
+    inline static constexpr EnumUnderlyingType Value = EnumUnderlyingType::I8;
+};
+
+template <>
+struct EnumUnderlyingTypeTrait<i16>
+{
+    inline static constexpr EnumUnderlyingType Value = EnumUnderlyingType::I8;
+};
+
+template <>
+struct EnumUnderlyingTypeTrait<i32>
+{
+    inline static constexpr EnumUnderlyingType Value = EnumUnderlyingType::I32;
+};
+
+template <>
+struct EnumUnderlyingTypeTrait<i64>
+{
+    inline static constexpr EnumUnderlyingType Value = EnumUnderlyingType::I64;
+};
+
+template <>
+struct EnumUnderlyingTypeTrait<u8>
+{
+    inline static constexpr EnumUnderlyingType Value = EnumUnderlyingType::U8;
+};
+
+template <>
+struct EnumUnderlyingTypeTrait<u16>
+{
+    inline static constexpr EnumUnderlyingType Value = EnumUnderlyingType::U16;
+};
+
+template <>
+struct EnumUnderlyingTypeTrait<u32>
+{
+    inline static constexpr EnumUnderlyingType Value = EnumUnderlyingType::U32;
+};
+
+template <>
+struct EnumUnderlyingTypeTrait<u64>
+{
+    inline static constexpr EnumUnderlyingType Value = EnumUnderlyingType::U64;
+};
+
+template <typename T>
+inline constexpr EnumUnderlyingType EnumUnderlyingTypeValue = EnumUnderlyingTypeTrait<T>::Value;
 
 template <>
 struct fmt::formatter<EnumUnderlyingType> : fmt::formatter<std::string>
@@ -54,14 +109,18 @@ struct EnumField
 class META_API Enum : public TypeBase
 {
   public:
-    Enum( TypeInfo typeInfo, EnumUnderlyingType underlyingType = EnumUnderlyingType::U8 )
+    explicit Enum( TypeInfo typeInfo,
+                   EnumUnderlyingType underlyingType = EnumUnderlyingType::U8,
+                   std::unique_ptr<Namespace> mNamespace = nullptr )
         : TypeBase( typeInfo )
         , mUnderlyingType( underlyingType )
+        , mNamespace( std::move( mNamespace ) )
     {
     }
 
   public:
     template <typename T>
+        requires std::is_integral_v<T>
     void Add( std::string name, T value )
     {
         mAllFields.push_back( { name, reinterpret_cast<u64>( value ) } );
@@ -131,4 +190,6 @@ class META_API Enum : public TypeBase
     std::vector<EnumField> mAllFields;
 
     EnumUnderlyingType mUnderlyingType;
+
+    std::unique_ptr<Namespace> mNamespace = nullptr;
 };

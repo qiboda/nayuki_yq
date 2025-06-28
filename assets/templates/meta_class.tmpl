@@ -1,0 +1,9 @@
+
+static void {{ ClassName }}::RegistryMeta()
+{
+    Namespace* ns = new Namespace( "{{ Namespace }}" );
+
+    MetaRegistry().
+        Create<&{{Namespace}}::{{ ClassName }}>( "{{ ClassName }}" )
+        .SetNamespace( std::make_unique<Namespace>( "{{ Namespace }}" ) );
+}

@@ -3,9 +3,9 @@
 #include "meta/type_base.h"
 #include <core/minimal.h>
 #include <meta/minimal.h>
-#include "meta/user_type/structured.h"
+#include "meta/user_type/struct.h"
 
-class META_API Class : public Structured
+class META_API Class : public Struct
 {
   public:
     Class()
@@ -13,7 +13,7 @@ class META_API Class : public Structured
     }
 
     Class( TypeInfo typeInfo )
-        : Structured( typeInfo )
+        : Struct( typeInfo )
     {
     }
 

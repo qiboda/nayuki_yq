@@ -189,8 +189,7 @@ struct SystemParamTrait<Query<T...>>
 
         static ComponentsReadWriteType GetParamReadWrite()
         {
-            return { std::make_pair( ComponentTypeRegistry::Get<std::decay_t<P>>(),
-                                     IsWritableQueryData<P> )... };
+            return { std::make_pair( ComponentTypeRegistry::Get<std::decay_t<P>>(), IsWritableQueryData<P> )... };
         }
     };
 

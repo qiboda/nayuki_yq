@@ -31,7 +31,7 @@ target(module_name)
 
     add_packages("rpmalloc")
     -- todo: 封装spdlog，之后将它改为private
-    add_packages("tracy", "spdlog", "tbb", "glm",  "fmt", {public = true})
+    add_packages("tracy", "spdlog", "tbb", "glm",  "fmt", "icu4c", {public = true})
 
     after_build(function (target)
         for _, pkg in pairs(target:pkgs()) do

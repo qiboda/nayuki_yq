@@ -13,8 +13,8 @@
             template <typename TFormatContext>                                                                         \
             auto format( const Type& v, TFormatContext& ctx ) const                                                    \
             {                                                                                                          \
-                UNUSED_VARS( v );                                                                                       \
-                UNUSED_VARS( ctx );                                                                                     \
+                UNUSED_VARS( v );                                                                                      \
+                UNUSED_VARS( ctx );                                                                                    \
                 return fmt::format_to( ctx.out(), #Type );                                                             \
             }                                                                                                          \
         };

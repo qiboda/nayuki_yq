@@ -17,6 +17,8 @@ add_requires("spdlog", { configs = { fmt_external = true }, debug = true, extern
 
 add_requires("vulkansdk", { system = true })
 
+add_requires("icu4c", { configs = { shared = true }, debug = true})
+
 -- if has_config("test") then
 add_requires("gtest", { configs = { main = false, shared = false, gmock = true } })
 -- end

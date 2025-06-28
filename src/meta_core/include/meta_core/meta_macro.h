@@ -33,3 +33,9 @@
 #    define AReadonly READONLY
 
 #endif
+
+#ifndef META_BODY
+#    define META_BODY                                                                                                  \
+      public:                                                                                                          \
+        static void RegistryMeta();
+#endif

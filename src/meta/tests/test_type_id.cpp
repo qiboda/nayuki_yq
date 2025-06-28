@@ -44,3 +44,24 @@ TEST_F( TypeIdTest, TypeIdGeneratorGetWithConst )
     TypeId id2 = TypeIdGenerator::Get<int>();
     ASSERT_EQ( id1, id2 ); // const int 和 int 应该是相同的 TypeId
 }
+
+namespace _TypeIdTestDetail
+{
+class A
+{
+};
+}; // namespace _TypeIdTestDetail
+
+namespace _TypeIdTestDetail2
+{
+class A
+{
+};
+}; // namespace _TypeIdTestDetail2
+
+TEST_F( TypeIdTest, NamespaceSameTypeNameTest )
+{
+    TypeId id1 = TypeIdGenerator::Get<_TypeIdTestDetail::A>();
+    TypeId id2 = TypeIdGenerator::Get<_TypeIdTestDetail2::A>();
+    ASSERT_NE( id1, id2 );
+}

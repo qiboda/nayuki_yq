@@ -34,6 +34,10 @@ class META_API Value
   public:
     Value();
 
+    virtual ~Value()
+    {
+    }
+
   public:
     // 获取类型ID
     TypeId GetTypeId() const;

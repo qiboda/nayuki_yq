@@ -3,7 +3,7 @@
 #include <core/minimal.h>
 
 template <typename T, usize N>
-class SmallVector: public NonCopyable
+class SmallVector : public NonCopyable
 {
   public:
     static constexpr usize MAX_SIZE = 32;

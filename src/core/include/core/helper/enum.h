@@ -17,7 +17,7 @@ struct IsFlagEnum : std::false_type
 
 template <typename E>
     requires std::is_enum_v<E>
-inline bool IsFlagEnumValue = IsFlagEnum<E>::value;
+inline constexpr bool IsFlagEnumValue = IsFlagEnum<E>::value;
 
 template <typename E>
 concept IsFlagEnumConcept = IsFlagEnumValue<E>;

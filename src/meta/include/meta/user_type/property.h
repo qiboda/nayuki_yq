@@ -5,19 +5,11 @@
 #include <core/minimal.h>
 #include <meta/minimal.h>
 
-struct META_API PropertyMemoryInfo
-{
-    // 在 类或者结构体 中的偏移量
-    void* mData;
-    // 在 类或者结构体 中的大小
-    u32 mSize;
-    // 在 类或者结构体 中的对齐方式
-    u32 mAlignment;
-};
-
-class META_API IPropertyGetInfo
+class META_API IPropertyInfo
 {
   public:
+    virtual ~IPropertyInfo() = default;
+
     virtual void* GetPropertyValue( void* StructuredValue ) = 0;
 
     virtual usize GetPropertyAlign() = 0;
@@ -28,7 +20,7 @@ class META_API IPropertyGetInfo
 };
 
 template <auto Ptr>
-struct PropertyPtrTrait : std::false_type, public IPropertyGetInfo
+struct PropertyPtrTrait : std::false_type, public IPropertyInfo
 {
     virtual void* GetPropertyValue( void* StructuredValue ) override
     {
@@ -53,7 +45,7 @@ struct PropertyPtrTrait : std::false_type, public IPropertyGetInfo
 };
 
 template <typename TClass, typename TProperty, TProperty TClass::* Ptr>
-struct PropertyPtrTrait<Ptr> : std::true_type, public IPropertyGetInfo
+struct PropertyPtrTrait<Ptr> : std::true_type, public IPropertyInfo
 {
     using Type = TProperty TClass::*;
     using ClassType = TClass;
@@ -63,6 +55,7 @@ struct PropertyPtrTrait<Ptr> : std::true_type, public IPropertyGetInfo
 
     PropertyType* GetPropertyValueInner( ClassType* c )
     {
+        // std::invoke( Ptr, c );
         return c->*PropertyPtr;
     }
 
@@ -103,15 +96,19 @@ class META_API Property
   public:
     Property();
 
+    ~Property()
+    {
+        if ( mPropertyInfo )
+        {
+            delete mPropertyInfo;
+        }
+    }
+
+    template <auto Ptr>
     void Create( std::string& name, TypeId typeId )
     {
         mName = name;
         mTypeId = typeId;
-    }
-
-    template <auto Ptr>
-    void SetMemoryInfo()
-    {
         mPropertyInfo = new PropertyPtrTrait<Ptr>();
     }
 
@@ -127,7 +124,7 @@ class META_API Property
     }
 
   protected:
-    IPropertyGetInfo* mPropertyInfo;
+    IPropertyInfo* mPropertyInfo = nullptr;
 
     // 限定符
     QualifierFlag mQualifierFlag = QualifierFlag::None;

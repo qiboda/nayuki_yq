@@ -160,7 +160,8 @@ class System : public ISystem
             using ParamsTypeTuple = FnDecayedParamsTypeTuple<Func>;
 
             ParamsTypeTuple tuple = std::make_tuple(
-                ( FnDecayedParamType<Func, Index>::From( registry, &mSystemState.template GetParamState<Index>() ), ... ) );
+                ( FnDecayedParamType<Func, Index>::From( registry, &mSystemState.template GetParamState<Index>() ),
+                  ... ) );
             // 将第Index个SystemParam构造出值
             std::apply( func, tuple );
         };

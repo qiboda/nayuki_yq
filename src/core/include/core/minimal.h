@@ -22,6 +22,7 @@
 #include <atomic>        // IWYU pragma: keep
 #include <optional>      // IWYU pragma: keep
 #include <variant>       // IWYU pragma: keep
+#include <any>           // IWYU pragma: keep
 
 // GLM
 //  GLM本为是OpenGL设计的，在OpenGL中，NDC（标准化设备坐标系）的深度范围为[-1,
@@ -47,3 +48,4 @@
 #include <core/logger/category.h>
 #include <core/concepts/derived.h>
 #include <core/helper/enum.h>
+#include <core/helper/fmt.h>

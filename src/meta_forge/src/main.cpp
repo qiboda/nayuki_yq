@@ -133,7 +133,7 @@ int main( int argc, const char** argv )
 
     const std::string json_string = rfl::json::write( *metaInfoManager, rfl::json::pretty );
 
-    std::ofstream file("D:/nayuki_yq/src/meta_forge/tests/dump.json");
+    std::ofstream file( "D:/nayuki_yq/src/meta_forge/tests/dump.json" );
     file << json_string;
     file.close();
 

@@ -1,5 +1,8 @@
 #pragma once
 
+#include "meta/user_type/define.h"
+#include "meta/user_type/namespace.h"
+#include "meta/value/fn_ptr_trait.h"
 #include "meta/value/value.h"
 #include <core/minimal.h>
 #include <meta/minimal.h>
@@ -7,30 +10,40 @@
 class META_API Function : public Value
 {
   public:
-    template <typename TFunc>
-    Function( std::string& name, TFunc* func )
-        : mFunc( func )
-        , mName( name )
+    Function()
     {
     }
 
-    template <usize TIndex, typename TParam>
-    void Param( std::string& name )
+    template <auto FuncPtr>
+    void Create( std::string& name, std::unique_ptr<Namespace> ns = nullptr )
     {
-        if ( mParamName.size() < TIndex )
+        // 看看能不能靠funcTrait将参数类型提取出来然后判断，将结果存入buffer？？？？？？？？
+        mName = name;
+        mFunc = FnPtrTrait<FuncPtr>();
+        mNamespace = std::move( ns );
+    }
+
+    void SetAccessLevel( AccessLevel accessLevel )
+    {
+        mAccessLevel = accessLevel;
+    }
+
+    template <typename... TArgs>
+    void invoke( TArgs... args )
+    {
+        if ( mFunc )
         {
-            mParamName.resize( TIndex );
+            mFunc->Invoke( FnParamValues{ nullptr, { std::any( args )... } } );
         }
-        mParamName[TIndex] = name;
-    }
-
-    void Invoke()
-    {
     }
 
   protected:
-    void* mFunc;
+    // 访问级别
+    AccessLevel mAccessLevel = AccessLevel::Public;
+
     std::string mName;
 
-    std::vector<std::string> mParamName;
+    FnPtrInfo* mFunc = nullptr; // 函数指针信息
+
+    std::unique_ptr<Namespace> mNamespace = nullptr;
 };

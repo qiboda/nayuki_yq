@@ -2,6 +2,7 @@
 
 #include <concepts>
 #include <cstdint>
+#include <unicode/unistr.h>
 
 using i8 = int8_t;
 using i16 = int16_t;
@@ -20,6 +21,8 @@ using usize = std::size_t;
 #else
 using usize = size_t;
 #endif
+
+using UString = icu::UnicodeString;
 
 #pragma region NONE_INDEX
 

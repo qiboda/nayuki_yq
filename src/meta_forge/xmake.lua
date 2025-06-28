@@ -8,6 +8,8 @@ add_requires("libllvm", {debug = true, configs = { }})
 -- 因为libllvm仅仅支持 MT
 add_requires("reflect-cpp", {debug = true, configs = { runtimes = "MT" }})
 
+add_requires("inja", {debug = true, configs = { runtimes = "MT" }})
+
 target(module_name)
     set_kind("binary")
 
@@ -32,6 +34,9 @@ target(module_name)
 
     add_packages( "libllvm" )
     add_packages( "reflect-cpp" )
+    add_packages( "inja" )
+
+    add_deps("meta_core")
 
     after_build(function (target)
         for _, pkg in pairs(target:pkgs()) do

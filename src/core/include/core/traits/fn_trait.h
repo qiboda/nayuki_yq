@@ -5,9 +5,18 @@
 enum class FuncKind
 {
     Invalid,
+
     Func,
     FuncPtr,
     FuncRef,
+
+    Method,
+    MethodPtr,
+};
+
+struct ECS_API FnInfo
+{
+    virtual ~FnInfo() = default;
 };
 
 /// 其中Param没有类型限定符，Args则保留了类型限定符。
@@ -61,6 +70,13 @@ struct FnTrait<Ret ( & )( Args... )> : FnTraitBase<Ret, Args...>
 {
     using FuncType = Ret ( & )( Args... );
     constexpr static auto FuncKind = FuncKind::FuncRef;
+};
+
+template <typename TClass, typename Ret, typename... Args>
+struct FnTrait<Ret ( TClass::* )( Args... )> : FnTraitBase<Ret, Args...>
+{
+    using FuncType = Ret ( TClass::* )( Args... );
+    constexpr static auto FuncKind = FuncKind::MethodPtr;
 };
 
 template <typename T>
