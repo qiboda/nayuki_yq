@@ -1,7 +1,6 @@
 #pragma once
 
-#include <core/minimal.h>
-#include <meta/minimal.h>
+#include <core/core.h>
 
 enum class QualifierFlag : u8
 {

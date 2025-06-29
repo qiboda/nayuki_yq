@@ -1,9 +1,6 @@
 #pragma once
 
-#include "core/container/small_vector.h"
-#include "core/helper/string.h"
-#include <core/minimal.h>
-#include <meta/minimal.h>
+#include "core/core.h"
 #include <fmt/xchar.h>
 
 class META_API Namespace

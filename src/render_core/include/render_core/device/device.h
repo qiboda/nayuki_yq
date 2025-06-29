@@ -1,7 +1,5 @@
 #pragma once
 
-#include <core/minimal.h>
-#include <render_core/minimal.h>
 #include "render_core/device/physical_device.h"
 
 class RENDER_CORE_API Device : public IRAII

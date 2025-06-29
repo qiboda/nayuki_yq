@@ -1,7 +1,5 @@
 #pragma once
 
-#include <core/minimal.h>
-#include <ecs/minimal.h>
 #include "ecs/archetype/archetype_manager.h"
 #include "ecs/commands/command_manager.h"
 #include "ecs/entity/entity_manager.h"

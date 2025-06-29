@@ -3,8 +3,6 @@
 #include "core/container/sparse_array.h"
 #include "core/misc/non_copyable.h"
 #include "ecs/entity/entity.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
 #include <oneapi/tbb/concurrent_hash_map.h>
 #include "ecs/components/component_info.h"
 #include <vector>

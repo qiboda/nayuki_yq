@@ -1,6 +1,9 @@
 #pragma once
 
-#include <core/minimal.h>
+#include "core/concepts/derived.h"
+#include "core/type_def.h"
+#include <limits>
+#include <module_export.h>
 
 struct Id;
 

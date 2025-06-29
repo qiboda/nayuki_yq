@@ -1,8 +1,6 @@
 #pragma once
 
 #include "ecs/systems/system.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
 
 class ECS_API SystemManager : public NonCopyable
 {

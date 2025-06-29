@@ -4,7 +4,6 @@
 #include <core/delegate/delegate_interface.h>
 #include <core/misc/singleton.h>
 #include <core/timer/timer_handle.h>
-#include <core/minimal.h>
 #include <unordered_set>
 
 DECL_SINGLE_DElEGATE_TYPE( TimerDelegate );

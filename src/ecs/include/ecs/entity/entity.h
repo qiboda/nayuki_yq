@@ -1,8 +1,6 @@
 #pragma once
 
 #include "ecs/components/component.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
 #include <type_traits>
 
 /// 实体也是一个组件

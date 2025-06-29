@@ -5,8 +5,6 @@
 #include "ecs/components/component_info.h"
 #include "ecs/systems/system_concept.h"
 #include "ecs/systems/system_state.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
 
 struct ECS_API SystemId : public Id
 {

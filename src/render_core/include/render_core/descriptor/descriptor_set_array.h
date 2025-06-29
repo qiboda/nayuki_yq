@@ -3,8 +3,7 @@
 #include "render_core/descriptor/descriptor_pool.h"
 #include "render_core/descriptor/descriptor_set.h"
 #include "render_core/descriptor/descriptor_set_layout.h"
-#include <core/minimal.h>
-#include <render_core/minimal.h>
+
 #include <vector>
 
 class RENDER_CORE_API DescriptorSetArray : public IRAII

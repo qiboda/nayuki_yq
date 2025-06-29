@@ -1,9 +1,8 @@
 #pragma once
 
+#include "render_core/window.h"
 #include <memory>
-#include <render_core/window.h>
-#include <core/minimal.h>
-#include <render_core/minimal.h>
+#include <render_core/render_core.h>
 
 using VkApiVersion = u32;
 

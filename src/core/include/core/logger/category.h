@@ -2,7 +2,6 @@
 
 #include "core/compiler/diagnostic.h"
 #include "core/type_def.h"
-#include <functional>
 #include <module_export.h>
 #include <string>
 

@@ -6,8 +6,6 @@
 #include "ecs/components/component_info.h"
 #include "ecs/entity/entity.h"
 #include "module_export.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
 #include <utility>
 #include <vector>
 

@@ -1,6 +1,7 @@
 #include <memory>
 #include <render_core/render_core.h>
 
+#include "core/logger/log.h"
 #include "core/macro/macro.h"
 #include <render_core/instance.h>
 #include <vector>

@@ -11,13 +11,11 @@ target(module_name)
     add_includedirs("include", { public = true })
     add_headerfiles("include/**.h", { public = true })
 
-    -- local pheader_file = path.join("include", module_name, module_name .. ".h");
-    -- set_pcxxheader(pheader_file)
+    local pheader_file = path.join("include", module_name, module_name .. ".h");
+     set_pcheader(pheader_file)
 
     -- 必须定义
     add_defines(module_name_macro .. "_EXPORTS")
 
     add_deps("core")
     add_deps("render_core")
-
-    -- set_toolchains("mingw@llvm-mingw")

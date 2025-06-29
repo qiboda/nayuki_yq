@@ -1,8 +1,9 @@
 #pragma once
 
-#include <core/minimal.h>
+#include <core/type_def.h>
+#include <module_export.h>
 
-enum class FuncKind
+enum class FuncKind : u8
 {
     Invalid,
 

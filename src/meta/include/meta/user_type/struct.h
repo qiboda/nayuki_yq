@@ -6,8 +6,6 @@
 #include "meta/user_type/property.h"
 #include "meta/value/function.h"
 #include "meta/value/method.h"
-#include <core/minimal.h>
-#include <meta/minimal.h>
 
 /**
  * @brief 禁止虚继承(菱形继承)

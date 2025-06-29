@@ -3,8 +3,6 @@
 #include "render_core/device/device.h"
 #include "render_core/device/physical_device.h"
 #include "render_core/instance.h"
-#include <core/minimal.h>
-#include <render_core/minimal.h>
 
 class RENDER_CORE_API RenderContext : public Singleton<RenderContext>, public NonCopyable
 {

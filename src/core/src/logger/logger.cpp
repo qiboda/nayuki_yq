@@ -6,6 +6,7 @@
 
 #include <core/core.h>
 #include <iostream> // IWYU pragma: keep
+#include <core/logger/logger.h>
 
 #pragma region LoggerCategory
 

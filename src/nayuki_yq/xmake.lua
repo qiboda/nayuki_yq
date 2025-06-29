@@ -11,7 +11,7 @@ target(module_name)
     add_includedirs("include", { public = true })
     add_headerfiles("include/**.h", { public = true })
 
-    -- set_pcxxheader("include/".. module_name .. "/" .. module_name .. ".h")
+     set_pcheader("include/".. module_name .. "/" .. module_name .. ".h")
 
     -- 必须定义
     add_defines(module_name_macro .. "_EXPORTS")
@@ -19,5 +19,3 @@ target(module_name)
     -- 添加本地target依赖
     add_deps("core")
     add_deps("render_core")
-
-    -- set_toolchains("mingw@llvm-mingw")

@@ -5,8 +5,6 @@
 #include "ecs/systems/params/query/query_data.h"
 #include "ecs/systems/system_param.h"
 #include "ecs/systems/params/query/query_param_resolver.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
 
 template <typename... T>
     requires QueryParamResolverConcept<T...>

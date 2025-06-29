@@ -4,8 +4,6 @@
 #include "meta/user_type/namespace.h"
 #include "meta/value/fn_ptr_trait.h"
 #include "meta/value/value.h"
-#include <core/minimal.h>
-#include <meta/minimal.h>
 
 class META_API Function : public Value
 {

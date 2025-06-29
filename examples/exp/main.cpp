@@ -1,26 +1,25 @@
+#include "core/macro/macro.h"
 #include "core/type_def.h"
 #include <coroutine>
 #include <iostream>
+#include <filesystem>
 
 // 一个简单的 Awaitable 类型
 // 对 co_await 的控制。
-struct [[mytool::Tag]] SimpleAwaitable
+struct SimpleAwaitable
 {
-    [[mytool::Tag]]
     bool await_ready() const noexcept
     {
         std::cout << "await_ready\n";
         return false; // false 表示需要挂起
     }
 
-    [[mytool::Tag]]
     void await_suspend( std::coroutine_handle<> h ) const noexcept
     {
         std::cout << "await_suspend\n";
         h.resume(); // 立刻恢复，模拟异步任务完成
     }
 
-    [[mytool::Tag]]
     int await_resume() const noexcept
     {
         std::cout << "await_resume\n";
@@ -29,7 +28,7 @@ struct [[mytool::Tag]] SimpleAwaitable
 };
 
 // 协程的返回类型，需要定义 promise_type
-struct [[mytool::Tag]] MyTask
+struct MyTask
 {
     // 协程 函数的标志。 控制了整个协程函数的使用。
     struct promise_type
@@ -105,8 +104,13 @@ MyTask my_coroutine()
     std::cout << "co_await returned: " << result << "\n";
 }
 
-[[mytool::Tag]]
-int main()
+int main( i32 argc, char* argv[] )
 {
-    [[mytool::Tag]] my_coroutine(); // 执行协程
+    UNUSED_VARS( argc );
+
+    std::filesystem::path exePath = std::filesystem::absolute( argv[0] );
+    std::filesystem::path exeDir = exePath.parent_path();
+    std::cout << "Executable directory: " << exeDir << std::endl;
+    std::filesystem::path cwd = std::filesystem::current_path();
+    std::cout << "work directory: " << cwd << std::endl;
 }

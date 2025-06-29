@@ -1,8 +1,6 @@
 #pragma once
 
 #include "module_export.h"
-#include <core/minimal.h>
-#include <render_core/minimal.h>
 
 class RENDER_CORE_API CommandBufferBase : public IRAII
 {

@@ -1,6 +1,8 @@
 #pragma once
 
-#include <core/minimal.h>
+#include "core/type_def.h"
+#include <tuple>
+#include <vector>
 
 #pragma region TupleIndex
 

@@ -1,8 +1,6 @@
 #pragma once
 
 #include "ecs/schedule/phase/config.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
 
 class ECS_API PhaseConfigSet
 {

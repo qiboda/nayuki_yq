@@ -1,8 +1,5 @@
 #pragma once
 
-#include <core/minimal.h>
-#include <ecs/minimal.h>
-
 #include "ecs/schedule/config/node.h"
 #include "ecs/schedule/config/system_set.h"
 #include "ecs/schedule/graph/graph.h"

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/minimal.h"
+#include <module_export.h>
 
 class CORE_API NonCopyable
 {

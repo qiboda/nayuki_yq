@@ -3,8 +3,7 @@
 #include "core/container/small_vector.h"
 #include "core/macro/formatter.h"
 #include "core/registry/id.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
+#include "core/core.h"
 
 struct ECS_API PhaseBase
 {

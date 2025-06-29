@@ -6,8 +6,6 @@
 #include "ecs/entity/entity.h"
 #include "ecs/systems/params/query/query_data.h"
 #include "ecs/systems/params/query/query_filter.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
 #include <unordered_map>
 #include <utility>
 

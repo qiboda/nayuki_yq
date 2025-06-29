@@ -1,8 +1,6 @@
 #pragma once
 
 #include "module_export.h"
-#include <core/minimal.h>
-#include <render_core/minimal.h>
 
 #include <render_core/instance.h>
 #include <render_core/swapchain.h>

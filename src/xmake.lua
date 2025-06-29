@@ -28,6 +28,6 @@ includes_cur_dirs()
 -- 递归的包含所有的tests 模块
 includes("**/tests/xmake.lua")
 
-before_build(function ()
+after_load(function ()
     import("core.project.task").run("module_export")
 end)

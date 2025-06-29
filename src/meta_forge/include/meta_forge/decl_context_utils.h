@@ -1,11 +1,9 @@
 #pragma once
 
-#include <meta_forge/minimal.h>
-#include <llvm/Support/MathExtras.h>
-#include <llvm/ADT/BitmaskEnum.h>
+#include <meta_forge/meta_forge.h>
 #include "meta_forge/meta_info.h"
 
-class DeclContextUtils
+class META_FORGE_API DeclContextUtils
 {
   public:
     DeclContextUtils();

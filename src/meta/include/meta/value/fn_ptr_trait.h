@@ -1,8 +1,6 @@
 #pragma once
 
 #include "meta/meta.h"
-#include <core/minimal.h>
-#include <meta/minimal.h>
 
 enum class FnPtrKind : u8
 {

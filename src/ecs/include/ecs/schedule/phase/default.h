@@ -1,7 +1,5 @@
 #pragma once
 
-#include <core/minimal.h>
-#include <ecs/minimal.h>
 #include "ecs/schedule/phase/phase.h"
 
 struct ECS_API StartupPhase : public PhaseBase

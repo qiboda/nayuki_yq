@@ -2,8 +2,6 @@
 
 #include "meta/type_id.h"
 #include "meta/user_type/define.h"
-#include <core/minimal.h>
-#include <meta/minimal.h>
 
 class META_API IPropertyInfo
 {

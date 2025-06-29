@@ -2,8 +2,6 @@
 
 #include "render_core/instance.h"
 #include "render_core/window.h"
-#include <core/minimal.h>
-#include <render_core/minimal.h>
 
 class RENDER_CORE_API PhysicalDevice : public IRAII
 {

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "core/container/small_vector.h"
-#include <core/minimal.h>
 
 namespace StringHelper
 {

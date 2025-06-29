@@ -5,25 +5,7 @@
  */
 #pragma once
 
-#include <core/minimal.h>
-#include "core/logger/category.h"
-
-#ifdef DEBUG
-#    define SPDLOG_DEBUG_ON
-#    define SPDLOG_TRACE_ON
-#endif // !DEBUG
-
-#ifdef _WIN32
-#    ifndef SPDLOG_WCHAR_TO_UTF8_SUPPORT
-#        define SPDLOG_WCHAR_TO_UTF8_SUPPORT
-#    endif // !SPDLOG_WCHAR_TO_UTF8_SUPPORT
-#endif
-
-#include <spdlog/async.h>
-#include <spdlog/async_logger.h>
-#include <spdlog/sinks/ansicolor_sink.h>
-#include <spdlog/sinks/basic_file_sink.h>
-#include <spdlog/spdlog.h>
+#include "core/core.h"
 
 // 添加这个前置声明，避免 clangd 警告报错
 template <typename T>

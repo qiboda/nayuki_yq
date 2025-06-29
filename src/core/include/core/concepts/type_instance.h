@@ -1,4 +1,6 @@
-#include <core/minimal.h>
+#pragma once
+
+#include <type_traits>
 
 template <typename TInstance, template <typename...> class TTemplate>
 struct IsTypeInstanceOf : std::false_type

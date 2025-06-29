@@ -1,13 +1,11 @@
 #pragma once
 
+#include "core/core.h"
 #include "core/concepts/tuple.h"
-#include "core/macro/macro.h"
 #include "ecs/archetype/define.h"
 #include <core/memory/memory.h>
 #include "ecs/components/component.h"
 #include "ecs/entity/entity.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
 #include "ecs/components/component_concept.h"
 #include "module_export.h"
 #include <range/v3/view/enumerate.hpp>

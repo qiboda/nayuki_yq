@@ -2,8 +2,6 @@
 
 #include "ecs/components/component_info.h"
 #include "ecs/systems/params/query/query_data.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
 
 class ECS_API QueryFilter
 {

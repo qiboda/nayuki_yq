@@ -1,3 +1,4 @@
+set_languages("c++20")
 
 target("exp")
     set_kind("binary")

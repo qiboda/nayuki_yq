@@ -1,8 +1,6 @@
 #pragma once
 
 #include "meta/type_base.h"
-#include <core/minimal.h>
-#include <meta/minimal.h>
 
 struct META_API ValueStorage
 {

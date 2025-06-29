@@ -1,7 +1,7 @@
 #pragma once
 
+#include "core/type_def.h"
 #include <concepts>
-#include <core/minimal.h>
 #include <limits>
 #include <optional>
 #include <utility>

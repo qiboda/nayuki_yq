@@ -100,3 +100,11 @@ includes("src")
 
 -- add examples
 includes("examples")
+
+-- 定义一个 rule
+rule("MetaForge")
+    add_deps("meta_forge")
+    before_build(function (target)
+        -- os.exec("xmake run meta_forge --module_folder " .. target:targetdir())
+        -- 你可以把 echo 换成你要执行的其他命令
+    end)

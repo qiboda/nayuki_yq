@@ -1,7 +1,7 @@
 #pragma once
 
-#include <core/minimal.h>
-#include <render_core/minimal.h>
+#include <core/core.h>
+#include <render_core/render_core.h>
 
 class RENDER_CORE_API ImageView : public IRAII
 {

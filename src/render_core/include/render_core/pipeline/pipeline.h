@@ -1,10 +1,9 @@
 #pragma once
 
+#include "core/logger/log.h"
 #include "core/logger/logger.h"
 #include "render_core/pipeline/pipeline_layout.h"
 #include "render_core/render_core.h"
-#include <core/minimal.h>
-#include <render_core/minimal.h>
 
 class RENDER_CORE_API Pipeline : public IRAII
 {

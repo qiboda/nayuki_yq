@@ -1,8 +1,7 @@
 #pragma once
 
-#include <core/minimal.h>
 #include <exec/static_thread_pool.hpp>
-#include <task/minimal.h>
+#include <core/core.h>
 
 class TASK_API AsyncComputeTaskPool
 {

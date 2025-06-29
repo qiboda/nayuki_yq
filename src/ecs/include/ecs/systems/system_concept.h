@@ -1,6 +1,5 @@
 #pragma once
 
-#include <core/minimal.h>
 #include "core/traits/fn_trait.h"
 #include "ecs/components/component_info.h"
 #include "ecs/systems/system_param.h"

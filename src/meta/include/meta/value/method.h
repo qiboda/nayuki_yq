@@ -3,8 +3,6 @@
 #include "meta/user_type/define.h"
 #include "meta/value/fn_ptr_trait.h"
 #include "meta/value/value.h"
-#include <core/minimal.h>
-#include <meta/minimal.h>
 
 // 使用模板。无法通过基类传递参数和返回值。
 class META_API Method : public Value

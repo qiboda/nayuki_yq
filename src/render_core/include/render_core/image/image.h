@@ -1,8 +1,6 @@
 #pragma once
 
 #include "render_core/image/image_view.h"
-#include <core/minimal.h>
-#include <render_core/minimal.h>
 
 class RENDER_CORE_API Image : public IRAII
 {

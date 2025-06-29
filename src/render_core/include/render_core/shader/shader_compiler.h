@@ -1,9 +1,8 @@
 #pragma once
 
-#include <render_core/minimal.h>
-#include <core/minimal.h>
-
 #include <shaderc/shaderc.hpp>
+#include <module_export.h>
+#include <core/core.h>
 
 class RENDER_CORE_API ShaderCompiler : public Singleton<ShaderCompiler>, public IRAII
 {

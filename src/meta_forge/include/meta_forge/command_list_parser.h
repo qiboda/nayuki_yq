@@ -1,10 +1,9 @@
 #pragma once
 
-#include <meta_forge/minimal.h>
-#include <clang/Tooling/CommonOptionsParser.h>
-#include <clang/Tooling/Tooling.h>
+#include <meta_forge/meta_forge.h>
+#include <core/core.h>
 
-class CommandListParser
+class META_FORGE_API CommandListParser
 {
   public:
     CommandListParser( int& argc, const char** argv );
@@ -26,6 +25,16 @@ class CommandListParser
         return SourcePathList;
     }
 
+    const std::string GetModuleFolder() const
+    {
+        return mModuleFolder;
+    }
+
+    const std::string GetCompilationsFolder() const
+    {
+        return mCompilationsFolder;
+    }
+
   private:
     CommandListParser() = default;
 
@@ -36,4 +45,8 @@ class CommandListParser
 
     std::unique_ptr<clang::tooling::CompilationDatabase> Compilations;
     std::vector<std::string> SourcePathList;
+
+    std::string mModuleFolder;
+
+    std::string mCompilationsFolder;
 };

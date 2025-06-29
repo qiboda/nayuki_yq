@@ -1,6 +1,6 @@
 #pragma once
 
-#include <core/minimal.h>
+#include <type_traits>
 
 #pragma region IsStrictDerived
 

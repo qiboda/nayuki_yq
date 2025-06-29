@@ -1,6 +1,7 @@
 #pragma once
 
-#include "core/minimal.h"
+#include "core/type_def.h"
+#include <module_export.h>
 
 struct CORE_API Extent2D
 {

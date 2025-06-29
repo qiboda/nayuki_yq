@@ -2,8 +2,6 @@
 
 #include "core/macro/macro.h"
 #include "ecs/systems/system_concept.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
 
 template <IsSystemConcept T>
 class SystemState;

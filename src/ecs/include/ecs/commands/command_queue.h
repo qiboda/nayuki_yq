@@ -1,8 +1,7 @@
 #pragma once
 
 #include "ecs/commands/command.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
+#include <core/core.h>
 
 class ECS_API CommandQueue
 {

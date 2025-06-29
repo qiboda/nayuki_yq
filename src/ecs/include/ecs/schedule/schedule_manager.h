@@ -2,8 +2,6 @@
 
 #include "ecs/schedule/graph/graph.h"
 #include "ecs/schedule/phase/phase.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
 
 class ECS_API ScheduleManager : public std::enable_shared_from_this<ScheduleManager>
 {

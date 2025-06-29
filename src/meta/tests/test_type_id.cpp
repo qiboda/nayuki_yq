@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <meta/minimal.h>
+ 
 #include <meta/type_id.h>
 
 class TypeIdTest : public ::testing::Test

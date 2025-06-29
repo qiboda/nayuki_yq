@@ -1,8 +1,6 @@
 #pragma once
 
 #include "core/registry/id.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
 
 /**
  * @brief 所有的SystemSet的基类。

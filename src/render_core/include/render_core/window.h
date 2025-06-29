@@ -1,11 +1,8 @@
 #pragma once
 
-#include "core/macro/macro.h"
+#include <render_core/render_core.h>
 #include "core/math/math.h"
 #include "core/misc/tickable.h"
-
-#include <core/minimal.h>
-#include <render_core/minimal.h>
 
 class RENDER_CORE_API Window : public IRAII, public ITickable
 {

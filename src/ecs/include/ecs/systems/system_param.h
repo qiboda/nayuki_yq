@@ -1,8 +1,6 @@
 #pragma once
 
-#include "module_export.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
+#include "core/core.h"
 
 class ECS_API SystemParam
 {

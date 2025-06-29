@@ -3,8 +3,6 @@
 #include "ecs/schedule/phase/phase.h"
 #include <core/container/small_vector.h>
 #include <range/v3/all.hpp>
-#include <core/minimal.h>
-#include <ecs/minimal.h>
 
 struct ECS_API PhaseConfigure
 {

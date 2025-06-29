@@ -1,5 +1,6 @@
 
 #include "render_core/shader/shader_compiler.h"
+#include "core/logger/log.h"
 #include "render_core/render_core.h"
 
 ShaderCompiler::ShaderCompiler()

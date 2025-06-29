@@ -2,6 +2,7 @@
 
 #include <concepts>
 #include <cstdint>
+#include <filesystem>
 #include <unicode/unistr.h>
 
 using i8 = int8_t;
@@ -23,6 +24,7 @@ using usize = size_t;
 #endif
 
 using UString = icu::UnicodeString;
+using FsPath = std::filesystem::path;
 
 #pragma region NONE_INDEX
 

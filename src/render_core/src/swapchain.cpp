@@ -1,5 +1,5 @@
 
-#include <render_core/minimal.h>
+
 #include "render_core/swapchain.h"
 #include "render_core/vktype_conv.h"
 

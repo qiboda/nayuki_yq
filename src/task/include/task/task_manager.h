@@ -1,7 +1,6 @@
 #pragma once
 
-#include <core/minimal.h>
-#include <task/minimal.h>
+#include <module_export.h>
 
 /**
  * @brief 分为三个task pool

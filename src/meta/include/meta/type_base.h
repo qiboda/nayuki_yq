@@ -1,8 +1,7 @@
 #pragma once
 
+#include "core/core.h"
 #include "meta/type_id.h"
-#include <core/minimal.h>
-#include <meta/minimal.h>
 
 enum class TypeKind : u8
 {

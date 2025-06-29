@@ -3,8 +3,7 @@
 #include "ecs/commands/registry_command.h"
 #include "ecs/registry.h"
 #include "ecs/systems/system_param.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
+#include <core/core.h>
 
 class ECS_API CommandsState : public SystemParamState
 {

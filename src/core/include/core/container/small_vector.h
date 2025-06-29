@@ -1,6 +1,7 @@
 #pragma once
 
-#include <core/minimal.h>
+#include "core/misc/non_copyable.h"
+#include "core/type_def.h"
 
 template <typename T, usize N>
 class SmallVector : public NonCopyable

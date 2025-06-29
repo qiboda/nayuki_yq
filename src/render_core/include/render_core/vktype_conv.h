@@ -1,8 +1,6 @@
 #pragma once
 
 #include "core/math/math.h"
-#include <core/minimal.h>
-#include <render_core/minimal.h>
 
 namespace vkconv
 {

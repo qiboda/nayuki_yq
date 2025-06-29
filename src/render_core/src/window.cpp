@@ -1,3 +1,4 @@
+#include "core/logger/log.h"
 #include "core/macro/macro.h"
 #include "render_core/instance.h"
 #include <memory>

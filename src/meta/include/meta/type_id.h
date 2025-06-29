@@ -1,8 +1,7 @@
 #pragma once
 
-#include <core/minimal.h>
-#include <meta/minimal.h>
 #include "core/registry/id.h"
+#include <module_export.h>
 
 struct META_API TypeId : public Id
 {

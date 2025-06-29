@@ -4,8 +4,6 @@
 #include "core/registry/id.h"
 #include "ecs/schedule/config/system_set.h"
 #include "ecs/systems/system.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
 
 class ECS_API ScheduleNode
 {

@@ -4,8 +4,7 @@
 #include "ecs/components/component_info.h"
 #include "core/concepts/type_instance.h"
 #include "ecs/entity/entity.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
+
 #include <type_traits>
 
 // 或者是Entity，或者是Component的引用，或者是const Component的引用

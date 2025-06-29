@@ -1,8 +1,5 @@
 #pragma once
 
-#include <core/minimal.h>
-#include <meta/minimal.h>
-
 #include "meta/user_type/class.h"
 #include "meta/user_type/enum.h"
 #include "meta/value/function.h"

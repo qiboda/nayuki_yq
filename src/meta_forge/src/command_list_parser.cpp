@@ -1,20 +1,19 @@
 
 #include "meta_forge/command_list_parser.h"
-#include <optional>
-#include <filesystem>
+#include <core/fs/paths.h>
 
 // 定义参数
-llvm::cl::OptionCategory ToolCategory( "options" );
+static llvm::cl::OptionCategory ToolCategory( "options" );
 
-static llvm::cl::list<std::string> SourcePaths( llvm::cl::Positional,
-                                                llvm::cl::desc( "<input source files or folders>" ),
-                                                llvm::cl::OneOrMore,
+static llvm::cl::opt<std::string> ModuleFolder( llvm::cl::Positional,
+                                                llvm::cl::desc( "<input module folder relative engine root project>" ),
+                                                llvm::cl::Required,
                                                 llvm::cl::cat( ToolCategory ) );
 
-static llvm::cl::opt<std::string> CompilationsPath( "compilations",
-                                                    llvm::cl::desc( "compile_commands.json folder path" ),
-                                                    llvm::cl::Required,
-                                                    llvm::cl::cat( ToolCategory ) );
+static llvm::cl::opt<std::string> CompilationsFolder( "compilations",
+                                                      llvm::cl::desc( "compile_commands.json folder path" ),
+                                                      llvm::cl::Required,
+                                                      llvm::cl::cat( ToolCategory ) );
 
 CommandListParser::CommandListParser( int& argc, const char** argv )
 {
@@ -25,15 +24,18 @@ CommandListParser::CommandListParser( int& argc, const char** argv )
         return;
     }
 
+    FsPath engineFolder = Paths::EngineFolder();
+
     // 收集文件列表
     SourcePathList.clear();
-    for ( const auto& input : SourcePaths )
-    {
-        CollectSourceFiles( input );
-    }
+    auto sourceFolder = engineFolder / ModuleFolder.getValue();
+    CollectSourceFiles( sourceFolder );
 
     std::string ErrorMsg;
-    Compilations = clang::tooling::CompilationDatabase::loadFromDirectory( CompilationsPath, ErrorMsg );
+    Compilations = clang::tooling::CompilationDatabase::loadFromDirectory( CompilationsFolder, ErrorMsg );
+
+    mCompilationsFolder = CompilationsFolder.getValue();
+    mModuleFolder = ModuleFolder.getValue();
 }
 
 llvm::Expected<CommandListParser> CommandListParser::create( int& argc, const char** argv )

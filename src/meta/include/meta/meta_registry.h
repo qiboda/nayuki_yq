@@ -2,8 +2,6 @@
 
 #include "core/macro/macro.h"
 #include "meta/user_type/class.h"
-#include <core/minimal.h>
-#include <meta/minimal.h>
 #include <meta/type_manager.h>
 
 class META_API ClassRegistry

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <core/minimal.h>
 #if defined( __clang__ ) && !defined( _MSC_VER )
 #    include <cxxabi.h>
 #endif

@@ -2,8 +2,7 @@
 
 #include "ecs/commands/command.h"
 #include "ecs/registry.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
+#include <core/core.h>
 #include <memory>
 
 class ECS_API RegistryCommand : public CommandBase

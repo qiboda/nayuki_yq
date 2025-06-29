@@ -1,8 +1,8 @@
 #pragma once
 
-#include <meta_forge/minimal.h>
+#include <core/core.h>
 
-enum class ContextPathType : uint8_t
+enum class META_FORGE_API ContextPathType : u8
 {
     Global = 0,
     Class = 1 << 0,
@@ -35,7 +35,7 @@ inline bool Has( ContextPathType self, ContextPathType type )
     return ( static_cast<uint8_t>( self ) & static_cast<uint8_t>( type ) ) != 0;
 }
 
-struct ContextPath
+struct META_FORGE_API ContextPath
 {
     std::string mName;
     ContextPathType mType;
@@ -57,7 +57,7 @@ struct std::hash<ContextPath>
     }
 };
 
-struct ContextCombinedPath
+struct META_FORGE_API ContextCombinedPath
 {
     std::vector<ContextPath> mCombinedPath;
 
@@ -93,7 +93,7 @@ struct std::hash<ContextCombinedPath>
     }
 };
 
-enum class TypeQualifier : uint32_t
+enum class META_FORGE_API TypeQualifier : uint32_t
 {
     None = 0,
     Volatile = 1 << 0,
@@ -104,7 +104,7 @@ enum class TypeQualifier : uint32_t
     IsConstexpr = 1 << 4,
 };
 
-enum class VariableType : uint8_t
+enum class META_FORGE_API VariableType : uint8_t
 {
     None = 0,
     LVRef = 1,
@@ -112,7 +112,7 @@ enum class VariableType : uint8_t
     Ptr = 3,
 };
 
-struct MetaIdGenerator
+struct META_FORGE_API MetaIdGenerator
 {
     using MetaIdType = uint32_t;
 
@@ -129,7 +129,7 @@ struct MetaIdGenerator
     static inline MetaIdType InvalidId = 0;
 };
 
-struct MetaInfo
+struct META_FORGE_API MetaInfo
 {
   public:
     MetaIdGenerator::MetaIdType mId = MetaIdGenerator::InvalidId;
@@ -139,7 +139,7 @@ struct MetaInfo
     std::vector<std::string> mMetas;
 };
 
-struct PropertyMetaInfo
+struct META_FORGE_API PropertyMetaInfo
 {
   public:
     MetaInfo mMetaInfo;
@@ -162,7 +162,7 @@ struct PropertyMetaInfo
  * 是外部链接的类型才支持(链接器保证全局唯一)，而且如果需要跨dll，必须导出(如果不导出，则每个dll有一个独立的全局变量）
  * TODO: 多处包含，如何排除？
  */
-struct ValueMetaInfo
+struct META_FORGE_API ValueMetaInfo
 {
   public:
     MetaInfo mMetaInfo;
@@ -184,12 +184,12 @@ struct ValueMetaInfo
     bool mIsPtr;
 };
 
-struct FunctionParam
+struct META_FORGE_API FunctionParam
 {
     std::string mName;
 };
 
-struct FunctionMetaInfo
+struct META_FORGE_API FunctionMetaInfo
 {
   public:
     MetaInfo mMetaInfo;
@@ -209,12 +209,12 @@ struct FunctionMetaInfo
     bool mIsConsteval;
 };
 
-struct MethodParam
+struct META_FORGE_API MethodParam
 {
     std::string mName;
 };
 
-struct MethodMetaInfo
+struct META_FORGE_API MethodMetaInfo
 {
   public:
     MetaInfo mMetaInfo;
@@ -239,13 +239,13 @@ struct MethodMetaInfo
     bool mIsOverride;
 };
 
-struct ParentMetaInfo
+struct META_FORGE_API ParentMetaInfo
 {
     MetaIdGenerator::MetaIdType mId;
     std::string mAccessLevel;
 };
 
-struct StructMetaInfo
+struct META_FORGE_API StructMetaInfo
 {
   public:
     MetaInfo mMetaInfo;
@@ -268,7 +268,7 @@ struct StructMetaInfo
     std::vector<ValueMetaInfo> mValues;
 };
 
-struct ClassMetaInfo
+struct META_FORGE_API ClassMetaInfo
 {
   public:
     MetaInfo mMetaInfo;
@@ -291,14 +291,14 @@ struct ClassMetaInfo
     std::vector<ValueMetaInfo> mValues;
 };
 
-struct EnumMember
+struct META_FORGE_API EnumMember
 {
     std::string mName;
     // reinterpret_cast 存储和提取类型。
     uint64_t mValue;
 };
 
-struct EnumMetaInfo
+struct META_FORGE_API EnumMetaInfo
 {
   public:
     MetaInfo mMetaInfo;
@@ -314,7 +314,7 @@ struct EnumMetaInfo
     std::vector<EnumMember> mEnumMembers;
 };
 
-struct MetaInfoUniqueKey
+struct META_FORGE_API MetaInfoUniqueKey
 {
     std::string mFilePath;
     ContextCombinedPath mContextPath;
@@ -338,7 +338,7 @@ struct std::hash<MetaInfoUniqueKey>
  * @brief
  * 还缺少union和c style enum？
  */
-struct MetaInfoManager
+struct META_FORGE_API MetaInfoManager
 {
   public:
     std::unordered_map<MetaInfoUniqueKey, ClassMetaInfo> mAllClassMetaInfo;

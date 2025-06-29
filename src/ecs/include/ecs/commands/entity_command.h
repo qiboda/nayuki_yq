@@ -2,8 +2,7 @@
 
 #include "ecs/commands/command.h"
 #include "ecs/commands/registry_command.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
+#include <core/core.h>
 
 class ECS_API CreateEntityCommandBuffer : public CommandBufferBase
 {

@@ -2,8 +2,6 @@
 
 #include "meta/type_base.h"
 #include "meta/user_type/namespace.h"
-#include <core/minimal.h>
-#include <meta/minimal.h>
 
 enum class EnumUnderlyingType : u8
 {

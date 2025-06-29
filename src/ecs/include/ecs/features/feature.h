@@ -1,8 +1,7 @@
 #pragma once
 
+#include "core/core.h"
 #include "core/registry/id.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
 
 class ECS_API IFeature
 {

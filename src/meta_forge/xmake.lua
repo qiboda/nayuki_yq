@@ -4,7 +4,7 @@ module_name_macro = "META_FORGE"
 
 -- , libunwind = true
 -- libcxx = true, libcxxabi = true
-add_requires("libllvm", {debug = true, configs = { }})
+add_requires("libllvm", {configs = { }})
 -- 因为libllvm仅仅支持 MT
 add_requires("reflect-cpp", {debug = true, configs = { runtimes = "MT" }})
 
@@ -22,21 +22,22 @@ target(module_name)
     add_includedirs("include", { public = true })
     add_headerfiles("include/**.h", { public = true })
 
-    -- local pheader_file = path.join("include", module_name, module_name .. ".h");
-    -- set_pcxxheader(pheader_file)
+    local pheader_file = path.join("include", module_name, module_name .. ".h");
+     set_pcheader(pheader_file)
 
     -- 必须定义
-    -- add_defines(module_name_macro .. "_EXPORTS")
+    add_defines(module_name_macro .. "_EXPORTS")
 
     -- 这两个选项同时使用，生成独立的debug符号信息。
-    set_symbols("debug")
-    set_strip("all")
+    -- set_symbols("debug")
+    -- set_strip("all")
 
     add_packages( "libllvm" )
     add_packages( "reflect-cpp" )
     add_packages( "inja" )
 
     add_deps("meta_core")
+    add_deps("core")
 
     after_build(function (target)
         for _, pkg in pairs(target:pkgs()) do

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <core/minimal.h>
-#include <ecs/minimal.h>
+#include <core/core.h>
 
 /// 所有组件的基类
 struct ECS_API Component

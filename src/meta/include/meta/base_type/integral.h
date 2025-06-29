@@ -2,8 +2,6 @@
 
 #include "meta/base_type/base.h"
 #include "meta/type_base.h"
-#include <core/minimal.h>
-#include <meta/minimal.h>
 
 class META_API Bool : public BaseType
 {

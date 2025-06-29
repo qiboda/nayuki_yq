@@ -1,7 +1,5 @@
 #pragma once
 
-#include <core/minimal.h>
-#include <ecs/minimal.h>
 #include <ecs/schedule/graph/graph.h>
 
 /**

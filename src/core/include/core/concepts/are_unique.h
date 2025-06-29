@@ -1,6 +1,6 @@
 #pragma once
 
-#include <core/minimal.h>
+#include <type_traits>
 
 template <typename... T>
 struct Contains : std::false_type

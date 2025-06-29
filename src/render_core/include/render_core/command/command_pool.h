@@ -1,8 +1,5 @@
 #pragma once
 
-#include <core/minimal.h>
-#include <render_core/minimal.h>
-
 class RENDER_CORE_API CommandPool : public IRAII
 {
   public:

@@ -1,9 +1,10 @@
 #pragma once
 
-#include <meta_forge/minimal.h>
+#include <meta_forge/meta_forge.h>
 
 inline clang::ast_matchers::DeclarationMatcher StructMatcher =
-    clang::ast_matchers::recordDecl( clang::ast_matchers::isStruct() ).bind( "struct" );
+    clang::ast_matchers::recordDecl( clang::ast_matchers::isStruct(), clang::ast_matchers::isExpansionInMainFile() )
+        .bind( "struct" );
 
 class StructAttributeCollector : public clang::ast_matchers::MatchFinder::MatchCallback
 {
@@ -16,6 +17,9 @@ class StructAttributeCollector : public clang::ast_matchers::MatchFinder::MatchC
 
         clang::SourceManager* SM = Result.SourceManager;
         clang::SourceLocation Loc = RD->getLocation();
+
+        llvm::outs() << SM->getFilename( Loc ) << "\n";
+
         if ( SM->isInSystemHeader( Loc ) )
         {
             return; // 忽略系统头中的匹配

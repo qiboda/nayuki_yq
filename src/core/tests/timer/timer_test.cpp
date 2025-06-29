@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 
-#include <core/minimal.h>
 #include <core/timer/timer_manager.h>
 
 class TypeIdTest : public ::testing::Test

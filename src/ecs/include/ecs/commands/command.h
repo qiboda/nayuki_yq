@@ -1,7 +1,6 @@
 #pragma once
 
-#include <core/minimal.h>
-#include <ecs/minimal.h>
+#include <core/core.h>
 #include <memory>
 #include <stack>
 

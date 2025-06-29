@@ -3,8 +3,6 @@
 #include "core/macro/macro.h"
 #include "ecs/registry.h"
 #include "ecs/systems/system_param.h"
-#include <core/minimal.h>
-#include <ecs/minimal.h>
 
 template <typename T>
 class LocalState : public SystemParamState

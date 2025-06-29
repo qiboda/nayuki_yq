@@ -1,8 +1,6 @@
 #pragma once
 
 #include "meta/base_type/base.h"
-#include <core/minimal.h>
-#include <meta/minimal.h>
 
 class META_API Float : public BaseType
 {

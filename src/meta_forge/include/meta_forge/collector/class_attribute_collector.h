@@ -1,13 +1,12 @@
 #pragma once
 
-#include <meta_forge/minimal.h>
+#include <meta_forge/meta_forge.h>
 #include <meta_forge/meta_info.h>
-#include <iostream>
 #include <meta_forge/decl_context_utils.h>
-#include <clang/AST/Decl.h>
 
 inline clang::ast_matchers::DeclarationMatcher ClassMatcher =
-    clang::ast_matchers::recordDecl( clang::ast_matchers::isClass() ).bind( "class" );
+    clang::ast_matchers::recordDecl( clang::ast_matchers::isClass(), clang::ast_matchers::isExpansionInMainFile() )
+        .bind( "class" );
 
 class ClassAttributeCollector : public clang::ast_matchers::MatchFinder::MatchCallback
 {
@@ -26,6 +25,9 @@ class ClassAttributeCollector : public clang::ast_matchers::MatchFinder::MatchCa
 
         clang::SourceManager* SM = Result.SourceManager;
         clang::SourceLocation Loc = RD->getLocation();
+
+        llvm::outs() << SM->getFilename( Loc ) << "\n";
+
         if ( SM->isInSystemHeader( Loc ) )
         {
             return; // 忽略系统头中的匹配

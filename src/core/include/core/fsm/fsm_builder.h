@@ -1,9 +1,10 @@
 #pragma once
 
 #include "core/fsm/fsm_interface.h"
-#include <core/minimal.h>
+#include "core/misc/singleton.h"
 
 #include <core/fsm/fsm.h>
+#include <algorithm>
 
 class CORE_API FSMBuilder : public Singleton<FSMBuilder>
 {
