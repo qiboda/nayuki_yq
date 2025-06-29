@@ -12,7 +12,7 @@ target(module_name)
     add_headerfiles("include/**.h", { public = true })
 
     local pheader_file = path.join("include", module_name, module_name .. ".h");
-     set_pcheader(pheader_file)
+     set_pcxxheader(pheader_file)
 
     -- 必须定义
     add_defines(module_name_macro .. "_EXPORTS")

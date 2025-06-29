@@ -31,7 +31,7 @@ enum class CompoundFlag : u8
 };
 FLAG_ENUM( CompoundFlag );
 
-enum class META_API AccessLevel : u8
+enum class AccessLevel : u8
 {
     Public,
     Protected,

@@ -5,9 +5,10 @@
 
 struct META_API TypeId : public Id
 {
+    TypeId() = default;
 };
 
-struct TypeIdGenerator : public IdGenerator<TypeId>
+struct META_API TypeIdGenerator : public IdGenerator<TypeId>
 {
     template <typename TType>
     static TypeId Get()

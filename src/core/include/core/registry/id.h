@@ -5,10 +5,8 @@
 #include <limits>
 #include <module_export.h>
 
-struct Id;
-
 template <typename T>
-concept IsId = IsStrictDerivedConcept<Id, T>;
+concept IsId = IsStrictDerivedConcept<struct CORE_API Id, T>;
 
 struct CORE_API Id
 {
@@ -18,20 +16,18 @@ struct CORE_API Id
     template <IsId TId>
     friend class IdGenerator;
 
-    constexpr Id()
-        : mId( std::numeric_limits<u32>::max() )
-    {
-    }
+  public:
+    Id();
 
-    constexpr friend auto operator<=>( const Id& lhs, const Id& rhs ) = default;
+    friend auto operator<=>( const Id& lhs, const Id& rhs ) = default;
 
-    constexpr u32 Index() const
+    u32 Index() const
     {
         return mId;
     }
 
   protected:
-    constexpr void SetId( u32 id )
+    void SetId( u32 id )
     {
         mId = id;
     }
@@ -53,7 +49,7 @@ class IdRegistry
     }
 
   private:
-    static constexpr TId Next()
+    static TId Next()
     {
         auto index = sId.Index() + 1;
         sId.SetId( index );
@@ -68,7 +64,7 @@ template <IsId TId>
 class IdGenerator
 {
   public:
-    static constexpr TId Next()
+    static TId Next()
     {
         auto index = sId.Index() + 1;
         sId.SetId( index );

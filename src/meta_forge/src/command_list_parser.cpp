@@ -24,18 +24,16 @@ CommandListParser::CommandListParser( int& argc, const char** argv )
         return;
     }
 
-    FsPath engineFolder = Paths::EngineFolder();
-
     // 收集文件列表
     SourcePathList.clear();
-    auto sourceFolder = engineFolder / ModuleFolder.getValue();
-    CollectSourceFiles( sourceFolder );
-
-    std::string ErrorMsg;
-    Compilations = clang::tooling::CompilationDatabase::loadFromDirectory( CompilationsFolder, ErrorMsg );
+    mModuleFolder = ModuleFolder.getValue();
+    CollectSourceFiles( mModuleFolder );
 
     mCompilationsFolder = CompilationsFolder.getValue();
-    mModuleFolder = ModuleFolder.getValue();
+    std::string ErrorMsg;
+    Compilations = clang::tooling::CompilationDatabase::loadFromDirectory(mCompilationsFolder, ErrorMsg );
+    
+	llvm::outs() << ErrorMsg << "\n";
 }
 
 llvm::Expected<CommandListParser> CommandListParser::create( int& argc, const char** argv )

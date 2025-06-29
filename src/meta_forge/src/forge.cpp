@@ -92,6 +92,11 @@ void Forge::RunPhase( ForgePhase phase )
 
 void Forge::RunParseCommands()
 {
+    RunPhase( ForgePhase::RunTools );
+}
+
+void Forge::RunRunTools()
+{
     // 定义参数
     auto commandListParser = CommandListParser::create( mArgc, mArgv );
     if ( !commandListParser )
@@ -102,47 +107,42 @@ void Forge::RunParseCommands()
 
     mCommandListParser = &commandListParser.get();
 
-    RunPhase( ForgePhase::RunTools );
-}
-
-void Forge::RunRunTools()
-{
     auto compilations = FilteringCompilationDatabase( mCommandListParser->getCompilations() );
     auto sourceFiles = mCommandListParser->getSourcePathList();
 
     clang::tooling::ClangTool Tool( compilations, sourceFiles );
     Tool.appendArgumentsAdjuster(
         clang::tooling::getInsertArgumentAdjuster( "-fsyntax-only", clang::tooling::ArgumentInsertPosition::BEGIN ) );
-    Tool.appendArgumentsAdjuster(
-        getInsertArgumentAdjuster( "-Wno-everything", clang::tooling::ArgumentInsertPosition::END ) );
+    // Tool.appendArgumentsAdjuster(
+    //     getInsertArgumentAdjuster( "-Wno-everything", clang::tooling::ArgumentInsertPosition::END ) );
 
     // 添加 - isystem 参数
-    clang::tooling::ArgumentsAdjuster AddIsystem = getInsertArgumentAdjuster(
-        { "-isystem",
-          "/usr/include/c++/15.1.1",
-          "-isystem",
-          "/usr/include/c++/15.1.1/x86_64-pc-linux-gnu",
-          "-isystem",
-          "/usr/include/c++/15.1.1/backward",
-          "-isystem",
-          "/usr/lib/clang/20/include",
-          "-isystem",
-          "/usr/local/include",
-          "-isystem",
-          "/usr/include",
-          "-march=sapphirerapids",
-          //  "-Xclang",
-          //  "-ast-dump",
-          "-ftime-report",
-          //  "-ftime-trace=tract.json",
-          "-I/home/skwy/repos/nayuki_yq/build/.objs/meta_forge/linux/x86_64/release/src/meta_forge/include/meta_forge/cxx/",
-          "-include",
-          "meta_forge/meta_forge.h",
-          "-fmodules",
-          "-fmodules-cache-path=./modules-cache" },
-        clang::tooling::ArgumentInsertPosition::BEGIN );
+    // clang::tooling::ArgumentsAdjuster AddIsystem = getInsertArgumentAdjuster(
+    //     { "-isystem",
+    //       "/usr/include/c++/15.1.1",
+    //       "-isystem",
+    //       "/usr/include/c++/15.1.1/x86_64-pc-linux-gnu",
+    //       "-isystem",
+    //       "/usr/include/c++/15.1.1/backward",
+    //       "-isystem",
+    //       "/usr/lib/clang/20/include",
+    //       "-isystem",
+    //       "/usr/local/include",
+    //       "-isystem",
+    //       "/usr/include",
+    //       "-march=sapphirerapids",
+    //       //  "-Xclang",
+    //       //  "-ast-dump",
+    //       "-ftime-report",
+    //       //  "-ftime-trace=tract.json",
+    //       "-I/home/skwy/repos/nayuki_yq/build/.objs/meta_forge/linux/x86_64/release/src/meta_forge/include/meta_forge/cxx/",
+    //       "-include",
+    //       "meta_forge/meta_forge.h",
+    //       "-fmodules",
+    //       "-fmodules-cache-path=./modules-cache" },
+    //     clang::tooling::ArgumentInsertPosition::BEGIN );
 
-    Tool.appendArgumentsAdjuster( AddIsystem );
+    // Tool.appendArgumentsAdjuster( AddIsystem );
 
     clang::ast_matchers::MatchFinder Finder;
     StructAttributeCollector StructHandler;

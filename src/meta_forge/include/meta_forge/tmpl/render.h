@@ -12,7 +12,7 @@ class META_FORGE_API TmplRender
         FsPath AssetFolder = Paths::EngineAssetFolder();
         mInTemplateFolder = AssetFolder / "templates" / "meta_forge";
         mOutFolder = std::move( outFolder );
-        env = new inja::Environment{ mInTemplateFolder, mOutFolder };
+        env = new inja::Environment(mInTemplateFolder.string(), mOutFolder.string());
     }
 
     ~TmplRender()
@@ -34,7 +34,7 @@ class META_FORGE_API TmplRender
 
     void render( FsPath tmplFile, FsPath dataFile, FsPath resultFile )
     {
-        env->write_with_json_file( tmplFile, dataFile, resultFile );
+        env->write_with_json_file( tmplFile.string(), dataFile.string(), resultFile.string() );
     }
 
   protected:

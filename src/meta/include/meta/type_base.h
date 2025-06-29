@@ -13,7 +13,7 @@ enum class TypeKind : u8
     Enum,
 };
 
-struct TypeInfo
+struct META_API TypeInfo
 {
     TypeId mId;
     std::string mName;

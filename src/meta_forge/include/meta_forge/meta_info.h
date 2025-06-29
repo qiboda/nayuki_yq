@@ -2,7 +2,7 @@
 
 #include <core/core.h>
 
-enum class META_FORGE_API ContextPathType : u8
+enum class ContextPathType : u8
 {
     Global = 0,
     Class = 1 << 0,
@@ -93,7 +93,7 @@ struct std::hash<ContextCombinedPath>
     }
 };
 
-enum class META_FORGE_API TypeQualifier : uint32_t
+enum class TypeQualifier : uint32_t
 {
     None = 0,
     Volatile = 1 << 0,
@@ -104,7 +104,7 @@ enum class META_FORGE_API TypeQualifier : uint32_t
     IsConstexpr = 1 << 4,
 };
 
-enum class META_FORGE_API VariableType : uint8_t
+enum class VariableType : uint8_t
 {
     None = 0,
     LVRef = 1,

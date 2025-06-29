@@ -1,6 +1,7 @@
 #pragma once
 
 #include "meta/type_base.h"
+#include "core/core.h"
 
 struct META_API ValueStorage
 {
@@ -38,16 +39,28 @@ class META_API Value
 
   public:
     // 获取类型ID
-    TypeId GetTypeId() const;
+    TypeId GetTypeId() const
+    {
+        return mTypeId;
+    }
 
     // 获取名字
-    const std::string& GetName() const;
+    const std::string& GetName() const
+    {
+        return mName;
+    }
 
     // 设置值
-    void SetValue( const Value& value );
+    void SetValue( const Value& value )
+    {
+        UNUSED_VARS( value );
+    }
 
     // 获取值
-    const Value& GetValue() const;
+    const Value& GetValue() const
+    {
+        return *this;
+    }
 
   protected:
     TypeId mTypeId;    // 值的类型ID

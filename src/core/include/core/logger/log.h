@@ -38,7 +38,7 @@ namespace LoggerDetail
 #ifndef NY_LOG_CRITICAL
 #    define NY_LOG_CRITICAL( LogCategory, LogInfo, ... )                                                               \
         NY_LOG( LogCategory, critical, LogInfo, ##__VA_ARGS__ );                                                       \
-        NY_ASSERT_MSG( false, LogInfo, ##__VA_ARGS__ );
+        NY_STATIC_ASSERT_MSG(false, LogInfo, ##__VA_ARGS__ );
 #endif // !NY_LOG_CRITICAL
 
 SUPPRESS_UNUSED_MACROS_END
