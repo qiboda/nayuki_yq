@@ -1,23 +1,29 @@
 #pragma once
 
-#include <exec/static_thread_pool.hpp>
 #include <core/core.h>
+
+export module compute_task_pool;
+import stdexec_mod;
 
 namespace TaskPoolDetail
 {
-inline u32 GetMaxThreadNum()
+export inline u32 GetMaxThreadNum()
 {
     return std::thread::hardware_concurrency() > 0 ? std::thread::hardware_concurrency() : 1u;
 }
 } // namespace TaskPoolDetail
 
-class TASK_API ComputeTaskPool
+export class TASK_API ComputeTaskPool
 {
   public:
     static inline constexpr u32 DefaultThreadCount = 8;
 
   public:
-    ComputeTaskPool();
+    ComputeTaskPool()
+        : mStaticThreadPool( DefaultThreadCount )
+        , mScheduler( mStaticThreadPool.get_scheduler() )
+    {
+    }
 
   public:
     stdexec::sender auto Schedule()

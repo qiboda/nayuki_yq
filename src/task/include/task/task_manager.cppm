@@ -2,6 +2,8 @@
 
 #include <module_export.h>
 
+export module task_manager;
+
 /**
  * @brief 分为三个task pool
  * 1. io thread pool（io密集型）
@@ -12,8 +14,10 @@
  *
  * 之后还要考虑，检测是否是主线程，属于哪个线程池等。
  */
-class TASK_API TaskManager
+export class TASK_API TaskManager
 {
   public:
-    TaskManager();
+    TaskManager()
+    {
+    }
 };

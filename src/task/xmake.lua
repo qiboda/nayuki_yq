@@ -8,6 +8,7 @@ target(module_name)
     set_group("libraries")
 
     add_files("src/**.cpp")
+    add_files("include/task/**.cppm", { public = true })
     add_includedirs("include", { public = true })
     add_headerfiles("include/**.h", { public = true })
 
