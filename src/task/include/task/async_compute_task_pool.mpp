@@ -1,8 +1,10 @@
+module;
+
 #include <core/core.h>
 
-import stdexec_mod;
-
 export module async_compute_task_pool;
+
+import stdexec_mod;
 
 export class TASK_API AsyncComputeTaskPool
 {

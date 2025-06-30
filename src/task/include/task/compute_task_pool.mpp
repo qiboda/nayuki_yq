@@ -1,10 +1,10 @@
-#pragma once
+module ;
 
 #include <core/core.h>
 
-import stdexec_mod;
-
 export module compute_task_pool;
+
+import stdexec_mod;
 
 namespace TaskPoolDetail
 {
