@@ -2,8 +2,9 @@
 
 #include <core/core.h>
 
-export module compute_task_pool;
 import stdexec_mod;
+
+export module compute_task_pool;
 
 namespace TaskPoolDetail
 {
@@ -26,24 +27,24 @@ export class TASK_API ComputeTaskPool
     }
 
   public:
-    stdexec::sender auto Schedule()
+    sender auto Schedule()
     {
-        return stdexec::schedule( mScheduler );
+        return schedule( mScheduler );
     }
 
     template <typename Func>
-    stdexec::sender auto Then( Func&& func )
+    sender auto Then( Func&& func )
     {
-        return stdexec::schedule( mScheduler ) | stdexec::then( func );
+        return schedule( mScheduler ) | then( func );
     }
 
     template <typename... Func>
-    stdexec::sender auto WhenAll( Func&&... func )
+    sender auto WhenAll( Func&&... func )
     {
-        return stdexec::schedule( mScheduler ) | stdexec::when_all( func... );
+        return schedule( mScheduler ) | when_all( func... );
     }
 
   protected:
-    exec::static_thread_pool mStaticThreadPool;
-    exec::static_thread_pool::scheduler mScheduler;
+    static_thread_pool mStaticThreadPool;
+    static_thread_pool::scheduler mScheduler;
 };

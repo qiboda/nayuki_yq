@@ -45,6 +45,8 @@ add_cxxflags("cl::/wd4820")
 add_cxxflags("cl::/wd4514")
 -- 允许不能辨认的attribute
 add_cxxflags("cl::/wd5030")
+-- 不强制要求include 在 export 之前。。。。
+-- add_cxxflags("cl::/wd5244")
 
 add_cxxflags("clang::-ferror-limit=0")
 -- 强制区分大小写

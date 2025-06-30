@@ -1,5 +1,7 @@
 #include <core/core.h>
 
+import stdexec_mod;
+
 export module async_compute_task_pool;
 
 export class TASK_API AsyncComputeTaskPool
@@ -12,6 +14,6 @@ export class TASK_API AsyncComputeTaskPool
     }
 
   protected:
-    exec::static_thread_pool mStaticThreadPool;
-    exec::static_thread_pool::scheduler mScheduler;
+    static_thread_pool mStaticThreadPool;
+    static_thread_pool::scheduler mScheduler;
 };
