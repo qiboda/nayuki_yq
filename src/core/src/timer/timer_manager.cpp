@@ -1,6 +1,4 @@
-#include <core/core.h>
-
-#include "core/timer/timer_manager.h"
+module core.timer;
 
 void TimerManager::Tick( f32 deltaSeconds )
 {

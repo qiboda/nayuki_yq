@@ -1,5 +1,6 @@
 
-#include "core/fs/paths.h"
-#include <core/platform/platform_exe.h>
+module core.fs.paths;
+
+import core.platform.exe;
 
 FsPath Paths::sEngineFolder = ParseEngineFolder( PlatformExe::GetExePath() );

@@ -6,8 +6,11 @@ target(module_name)
 
     set_group("libraries")
 
+    -- modules
+    add_files("src/impl/**.mpp", { kind = "source" })
+    add_files("module/**.ixx", { public = true })
+    -- 常规方案
     add_files("src/**.cpp")
-    add_files("include/**.mpp")
     add_includedirs("include", { public = true })
     add_headerfiles("include/**.h", { public = true })
 

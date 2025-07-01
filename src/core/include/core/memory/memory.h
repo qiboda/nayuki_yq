@@ -1,8 +1,8 @@
 #pragma once
 
 #include "core/memory/malloc.h"
-#include "core/platform/memory.h"
-#include <cstring>
+
+import std;
 
 class Memory
 {
@@ -64,11 +64,5 @@ class Memory
     }
 
   public:
-    static void Swap( void* dest, void* src, usize size )
-    {
-        u8* temp = PlatformMemory::Alloca<u8>( size );
-        std::memcpy( temp, dest, size );
-        std::memcpy( dest, src, size );
-        std::memcpy( src, temp, size );
-    }
+    static void Swap( void* dest, void* src, usize size );
 };

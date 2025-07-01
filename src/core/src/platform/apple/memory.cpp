@@ -1,6 +1,8 @@
-#include "core/platform/memory.h"
 
 #if defined( __APPLE__ )
+
+module core.platform.memory;
+
 #    include <sys/sysctl.h>
 
 usize PlatformMemory::GetCacheLineSize()

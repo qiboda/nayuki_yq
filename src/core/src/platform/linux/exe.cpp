@@ -1,11 +1,11 @@
+
 #if defined( __linux__ )
 
-#    include "core/platform/platform_exe.h"
-#    include "core/type_def.h"
 #    include <unistd.h>
-#    include <limits.h>
-#    include <string>
-#    include <filesystem>
+
+module core.platform.exe;
+
+import core;
 
 FsPath PlatformExe::GetExePath()
 {

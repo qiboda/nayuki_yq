@@ -1,10 +1,5 @@
 ﻿#pragma once
 
-#include <cassert>
-// 下方 宏中 std::cerr 使用
-#include <iostream>     // IWYU pragma: keep
-#include <fmt/format.h> // IWYU pragma: keep
-
 #pragma region disable_warning
 
 // to remove unused variable warning

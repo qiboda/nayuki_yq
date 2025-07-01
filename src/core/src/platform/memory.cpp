@@ -1,4 +1,4 @@
-#include <core/platform/memory.h>
+module core.platform.memory:alloca;
 
 #if defined( _MSC_VER ) // MSVC
 #    include <malloc.h>

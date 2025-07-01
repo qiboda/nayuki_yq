@@ -1,9 +1,9 @@
 #pragma once
 
-#include "core/type_def.h"
 #include "module_export.h"
 
-#include <thread>
+import core;
+import std;
 
 class CORE_API MallocAllocator
 {

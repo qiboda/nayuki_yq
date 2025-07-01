@@ -2,8 +2,10 @@
 
 #include "core/macro/macro.h"
 #include <module_export.h>
-#include <core/type_def.h>
+
 #include <tbb/concurrent_hash_map.h>
+
+import core;
 
 class CORE_API MemoryTracker
 {

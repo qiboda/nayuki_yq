@@ -2,8 +2,9 @@
 // GameTimer.cpp by Frank Luna (C) 2011 All Rights Reserved.
 // ***************************************************************************************
 
-#include <core/core.h>
-#include "core/timer/game_timer.h"
+module core.timer;
+
+import core;
 
 GameTimer::GameTimer( GameTimerState GameTimerState /* = GameTimerState::Running */ )
     : mPrevTimePoint( mClock.now() )

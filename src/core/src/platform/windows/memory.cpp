@@ -1,6 +1,8 @@
-#include "core/platform/memory.h"
 
 #if defined( _WIN32 )
+
+import core.platform.memory;
+
 #    include <Windows.h>
 #    include <sysinfoapi.h>
 #    include <core/compiler/diagnostic.h>

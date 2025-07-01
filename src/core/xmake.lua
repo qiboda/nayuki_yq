@@ -8,6 +8,10 @@ target(module_name)
 
     -- set_toolchains("mingw@llvm-mingw")
 
+    -- modules
+    add_files("src/impl/**.mpp", { kind = "source" })
+    add_files("module/**.ixx", { public = true })
+    -- 常规方案
     add_files("src/**.cpp")
     -- public 意味着依赖这个 target 的其他 target 也会使用这个 includedirs。
     add_includedirs("include", { public = true })
@@ -15,7 +19,7 @@ target(module_name)
     add_headerfiles("include/**.h", { public = true })
 
     -- 预编译头文件
-     set_pcxxheader("include/".. module_name .. "/" .. module_name .. ".h")
+    --  set_pcxxheader("include/".. module_name .. "/" .. module_name .. ".h")
 
     -- 启用dll export
     add_defines(module_name_macro .. "_EXPORTS")

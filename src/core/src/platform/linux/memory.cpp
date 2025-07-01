@@ -1,7 +1,10 @@
-#include "core/platform/memory.h"
-
 #if defined( __linux__ )
+
 #    include <unistd.h>
+
+module core.platform.memory:windows;
+
+import core;
 
 usize PlatformMemory::GetCacheLineSize()
 {

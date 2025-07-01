@@ -1,2 +1,1 @@
-
-#include "core/platform/platform_exe.h"
+module core.platform.exe;

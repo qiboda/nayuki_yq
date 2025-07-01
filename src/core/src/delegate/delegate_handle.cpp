@@ -1,7 +1,7 @@
+module core.delegate;
 
-#include "core/delegate/delegate_handle.h"
-
-#include <atomic>
+import std;
+import core;
 
 namespace DelegateDetail
 {
