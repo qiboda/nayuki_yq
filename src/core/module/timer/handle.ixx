@@ -2,9 +2,11 @@ module;
 
 #include <core/macro/macro.h>
 
-export module core.timer:timer_handle;
+export module core.timer:handle;
 
 import core;
+import std;
+import fmt;
 
 namespace TimerHandle_Detail
 {

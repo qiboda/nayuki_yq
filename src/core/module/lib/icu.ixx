@@ -2,6 +2,6 @@ module;
 
 #include <unicode/unistr.h>
 
-export module icu_mod;
+export module icu;
 
 export using UString = icu::UnicodeString;

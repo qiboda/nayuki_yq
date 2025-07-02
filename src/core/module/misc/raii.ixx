@@ -4,7 +4,7 @@ module;
 
 export module core.misc:iraii;
 
-import core.misc:non_copyable;
+import :non_copyable;
 
 export class CORE_API IRAII : public NonCopyable
 {

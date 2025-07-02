@@ -1,5 +1,5 @@
 export module core.timer;
 
-export import :timer_handle;
-export import :timer_manager;
+export import :handle;
+export import :manager;
 export import :game_timer;

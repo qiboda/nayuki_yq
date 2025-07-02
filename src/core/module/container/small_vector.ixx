@@ -1,6 +1,7 @@
 export module core.container:small_vector;
 
 import core;
+import std;
 import core.misc;
 
 export template <typename T, usize N>
@@ -27,7 +28,7 @@ class SmallVector : public NonCopyable
     {
         // TODO 优化，使用inline专用的内存块，这样可以原地扩展内存？
         T* newData = reinterpret_cast<T*>( ::operator new( sizeof( T ) * new_capacity ) );
-        for ( std::size_t i = 0; i < mSize; ++i )
+        for ( usize i = 0; i < mSize; ++i )
             new ( newData + i ) T( std::move( mData[i] ) );
 
         destroy_elements();
@@ -103,17 +104,17 @@ class SmallVector : public NonCopyable
             reallocate( size );
     }
 
-    T& operator[]( std::size_t index )
+    T& operator[]( usize index )
     {
         return mData[index];
     }
 
-    const T& operator[]( std::size_t index ) const
+    const T& operator[]( usize index ) const
     {
         return mData[index];
     }
 
-    std::size_t size() const
+    usize size() const
     {
         return mSize;
     }

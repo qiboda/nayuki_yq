@@ -1,11 +1,13 @@
-#pragma once
+module;
 
 #include "module_export.h"
+
+export module core.memory:malloc;
 
 import core;
 import std;
 
-class CORE_API MallocAllocator
+export class CORE_API MallocAllocator
 {
     static std::thread::id sMainThreadId;
     static std::atomic<bool> sInitted;

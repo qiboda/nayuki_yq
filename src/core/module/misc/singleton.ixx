@@ -37,8 +37,8 @@ class Singleton
         return &GetInstance();
     }
 
-    static T instance;
+    static inline T instance;
 };
 
-template <typename T>
-T Singleton<T>::instance;
+// template <typename T>
+// T Singleton<T>::instance;

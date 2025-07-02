@@ -1,5 +1,8 @@
 module core.timer;
 
+import core.type;
+import std;
+
 void TimerManager::Tick( f32 deltaSeconds )
 {
     mInternalTime += deltaSeconds;

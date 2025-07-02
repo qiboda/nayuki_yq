@@ -7,13 +7,17 @@ module;
 
 #include <module_export.h>
 
-export module core.logger;
+export module core.logger:logger;
 
-import core;
+import core.type;
+import core.misc;
+import spdlog;
 
-// 添加这个前置声明，避免 clangd 警告报错
-template <typename T>
-class Singleton;
+import :category;
+
+// // 添加这个前置声明，避免 clangd 警告报错
+// template <typename T>
+// class Singleton;
 
 // TODO: Output to console or debugger at the same time.
 export class CORE_API Logger : public Singleton<Logger>

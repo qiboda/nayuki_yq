@@ -4,8 +4,9 @@
 
 export module core.math:helper;
 
-import glm_mod;
+import glm;
 import std;
+import core;
 
 export class CORE_API MathHelper
 {
@@ -13,18 +14,27 @@ export class CORE_API MathHelper
     // Returns random f32 in [0, 1).
     static f32 RandF()
     {
-        return static_cast<f32>( rand() ) / static_cast<f32>( RAND_MAX );
+        std::random_device rd;
+        std::mt19937 gen( rd() );
+        std::uniform_real_distribution<float> dist( 0.0f, 1.0f );
+        return dist( gen );
     }
 
     // Returns random f32 in [a, b).
     static f32 RandF( f32 a, f32 b )
     {
-        return a + RandF() * ( b - a );
+        std::random_device rd;
+        std::mt19937 gen( rd() );
+        std::uniform_real_distribution<float> dist( a, b );
+        return dist( gen );
     }
 
     static i32 Rand( i32 a, i32 b )
     {
-        return a + rand() % ( ( b - a ) + 1 );
+        std::random_device rd;
+        std::mt19937 gen( rd() );
+        std::uniform_int_distribution<i32> dist( a, b );
+        return dist( gen );
     }
 
     template <typename T>
@@ -61,8 +71,8 @@ export class CORE_API MathHelper
     //                                 radius * sinf(phi) * sinf(theta), 1.0f);
     // }
 
-    static glm::vec3 RandUnitVec3();
-    // static glm::vec3 RandHemisphereUnitVec3(glm::vec3 n);
+    static Vec3 RandUnitVec3();
+    // static vec3 RandHemisphereUnitVec3(glm::vec3 n);
 
     static const f32 Infinity;
     static const f32 Pi;

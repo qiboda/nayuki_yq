@@ -4,7 +4,7 @@ module;
 
 export module async_compute_task_pool;
 
-import stdexec_mod;
+import stdexec;
 
 export class TASK_API AsyncComputeTaskPool
 {

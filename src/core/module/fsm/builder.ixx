@@ -4,7 +4,7 @@ module;
 
 export module core.fsm:builder;
 
-import core.fsm:interface;
+import :interface;
 
 import std;
 import core.misc;

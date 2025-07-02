@@ -1,6 +1,6 @@
 export module core.delegate:interface;
 
-import core.delegate:delegate;
+import :delegate;
 
 export template <typename... TArgs>
 using MultipleDelegateDecl = MultipleDelegate<void, TArgs...>;

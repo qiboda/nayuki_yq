@@ -1,6 +1,8 @@
 export module core.misc:string;
 
 import core.container;
+import core;
+import std;
 
 namespace StringHelper
 {

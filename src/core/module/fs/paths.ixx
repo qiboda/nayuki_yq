@@ -1,12 +1,17 @@
-
 module;
 
 #include <module_export.h>
 #include "core/logger/log.h"
+#include <core/macro/macro.h>
 
 export module core.fs.paths;
 
 import core;
+import std;
+import core.logger;
+import core.global;
+import core.misc;
+import fmt;
 
 /**
  * @brief

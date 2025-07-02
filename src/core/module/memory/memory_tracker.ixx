@@ -1,13 +1,17 @@
-#pragma once
+module;
 
-#include "core/macro/macro.h"
 #include <module_export.h>
+#include "core/macro/macro.h"
 
 #include <tbb/concurrent_hash_map.h>
 
-import core;
+export module core.memory:memory_tracker;
 
-class CORE_API MemoryTracker
+import core;
+import fmt;
+import std;
+
+export class CORE_API MemoryTracker
 {
     friend fmt::formatter<MemoryTracker>;
 

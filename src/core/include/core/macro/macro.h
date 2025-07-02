@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include <cassert>
+
 #pragma region disable_warning
 
 // to remove unused variable warning

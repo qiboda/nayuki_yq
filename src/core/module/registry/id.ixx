@@ -6,12 +6,13 @@ export module core.registry;
 
 import core;
 import core.misc;
+import core.concepts;
 import std;
 
-template <typename T>
+export template <typename T>
 concept IsId = IsStrictDerivedConcept<struct CORE_API Id, T>;
 
-struct CORE_API Id
+export struct CORE_API Id
 {
     template <IsId TId, typename TBaseType>
     friend class IdRegistry;
@@ -39,7 +40,7 @@ struct CORE_API Id
     u32 mId = std::numeric_limits<u32>::max();
 };
 
-template <IsId TId, typename TBaseType>
+export template <IsId TId, typename TBaseType>
 class IdRegistry
 {
   public:
@@ -63,7 +64,7 @@ class IdRegistry
     static inline TId sId = TId();
 };
 
-template <IsId TId>
+export template <IsId TId>
 class IdGenerator
 {
   public:

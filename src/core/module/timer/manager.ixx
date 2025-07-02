@@ -1,20 +1,22 @@
-export module core.timer:timer_manager;
+module;
+
+#include <module_export.h>
+
+export module core.timer:manager;
 
 import std;
 import core;
 import core.misc;
 import core.delegate;
+import core.container;
 
-using TimerDelegate = SingleDelegateDecl<f32>;
+import :handle;
 
-enum class TimerState : u8
-{
-    None,
-    Active,
-    Paused
-};
+export using TimerDelegate = SingleDelegateDecl<>;
 
-struct TimerData
+export enum class TimerState : u8 { None, Active, Paused };
+
+export struct TimerData
 {
     constexpr TimerData()
     {
@@ -34,12 +36,12 @@ struct TimerData
     }
 };
 
-static const TimerData InvalidTimerData;
+export inline const TimerData InvalidTimerData;
 
 /**
  * TODO: add a check if the current frame has pass.
  */
-class CORE_API TimerManager : public Singleton<TimerManager>
+export class CORE_API TimerManager : public Singleton<TimerManager>
 {
   private:
     // make constructor protected access permission.

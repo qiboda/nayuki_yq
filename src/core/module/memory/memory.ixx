@@ -1,10 +1,13 @@
-#pragma once
+module;
 
-#include "core/memory/malloc.h"
+#include <module_export.h>
+
+export module core.memory:memory;
 
 import std;
+import :malloc;
 
-class Memory
+export class CORE_API Memory
 {
   public:
     static void Init()

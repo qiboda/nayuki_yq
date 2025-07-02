@@ -1,13 +1,16 @@
 ﻿// ***************************************************************************************
 // MathHelper.cpp by Frank Luna (C) 2011 All Rights Reserved.
 // ***************************************************************************************
+module;
+
+#include <cmath>
+
 module core.math;
 
-// import core.math;
 import std;
 import core;
+import glm;
 
-const f32 MathHelper::Infinity = FLT_MAX;
 const f32 MathHelper::Pi = 3.1415926535f;
 
 f32 MathHelper::AngleFromXY( f32 x, f32 y )
@@ -34,16 +37,16 @@ f32 MathHelper::AngleFromXY( f32 x, f32 y )
     return theta;
 }
 
-glm::vec3 MathHelper::RandUnitVec3()
+Vec3 MathHelper::RandUnitVec3()
 {
 
     // Keep trying until we get a point on/in the hemisphere.
     while ( true )
     {
         // Generate random point in the cube [-1,1]^3.
-        glm::vec3 v = glm::vec3( MathHelper::RandF( -1.0f, 1.0f ),
-                                 MathHelper::RandF( -1.0f, 1.0f ),
-                                 MathHelper::RandF( -1.0f, 1.0f ) );
+        Vec3 v = Vec3( MathHelper::RandF( -1.0f, 1.0f ),
+                       MathHelper::RandF( -1.0f, 1.0f ),
+                       MathHelper::RandF( -1.0f, 1.0f ) );
 
         // Ignore points outside the unit sphere in order to get an even
         // distribution over the unit sphere.  Otherwise points will clump more
@@ -54,7 +57,8 @@ glm::vec3 MathHelper::RandUnitVec3()
             continue;
         }
 
-        return glm::normalize( v );
+        // glm::
+        return normalize( v );
     }
 }
 

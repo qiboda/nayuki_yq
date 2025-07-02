@@ -4,12 +4,14 @@ module;
 
 export module core.fsm:fsm;
 
+import :interface;
+import :context;
+import :state;
+import :transition;
+
 import std;
 import core.misc;
-import core.fsm:interface;
-import core.fsm:context;
-import core.fsm:state;
-import core.fsm:transition;
+import core;
 
 export template <typename TState, typename TTransition, typename TFSMContext>
 class FSM : public FSMInterface, public NonCopyable
@@ -37,7 +39,7 @@ class FSM : public FSMInterface, public NonCopyable
   public:
     virtual bool Exec( std::shared_ptr<TFSMContext>& fsmContext )
     {
-        for ( size_t i = 0u; i < mTransitions.size(); ++i )
+        for ( usize i = 0u; i < mTransitions.size(); ++i )
         {
             if ( mTransitions.at( i ) )
             {

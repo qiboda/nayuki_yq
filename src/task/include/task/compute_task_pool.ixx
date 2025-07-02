@@ -4,7 +4,7 @@ module ;
 
 export module compute_task_pool;
 
-import stdexec_mod;
+import stdexec;
 
 namespace TaskPoolDetail
 {

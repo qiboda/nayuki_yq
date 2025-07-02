@@ -4,10 +4,10 @@ module;
 
 export module core.logger:category;
 
-import core;
+import core.type;
 import std;
 
-class CORE_API LoggerCategory
+export class CORE_API LoggerCategory
 {
   public:
     using Name = std::string;
@@ -41,3 +41,13 @@ class CORE_API LoggerCategory
     const Type mLoggerType;
     // #pragma warning(default : 4251)
 };
+
+export inline LoggerCategory SyncLoggerCategory( const std::string& name )
+{
+    return LoggerCategory( name, LoggerCategory::Type::Sync );
+}
+
+export inline LoggerCategory AsyncLoggerCategory( const std::string& name )
+{
+    return LoggerCategory( name, LoggerCategory::Type::Async );
+}

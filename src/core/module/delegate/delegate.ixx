@@ -4,7 +4,10 @@ module;
 
 export module core.delegate:delegate;
 
-import core.delegate:handle;
+import :handle;
+import :instance;
+
+import fmt;
 
 // To bind function: only need to same parameters and return value;
 // TReturnVal should be always void type.
@@ -12,7 +15,7 @@ export template <typename TReturnVal, typename... TArgs>
 class MultipleDelegate
 {
   public:
-    typedef DelegateInstance<TReturnVal, TArgs...>* DelegateInstanceType;
+    using DelegateInstanceType = DelegateInstance<TReturnVal, TArgs...>*;
 
   public:
 #pragma region ThreeFive

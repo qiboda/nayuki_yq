@@ -1,10 +1,14 @@
-
-#include "core/memory/malloc.h"
+module;
 
 #include "core/macro/macro.h"
-#include "core/memory/memory_tracker.h"
 #include <rpmalloc.h>
 #include <cstdlib>
+
+module core.memory;
+
+import :memory_tracker;
+import std;
+import core;
 
 std::thread::id MallocAllocator::sMainThreadId = std::this_thread::get_id();
 std::atomic<bool> MallocAllocator::sInitted = false;

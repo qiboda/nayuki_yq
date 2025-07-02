@@ -5,6 +5,7 @@ module;
 export module core.trait;
 
 import core;
+import std;
 
 export enum class FuncKind : u8 {
     Invalid,
@@ -99,7 +100,7 @@ export template <typename Func, usize Index>
 using FnDecayedParamType = typename FnTrait<Func>::template DecayedParam<Index>;
 
 export template <typename Func>
-static constexpr inline usize FnArgCount = FnTrait<Func>::ArgCount;
+constexpr inline usize FnArgCount = FnTrait<Func>::ArgCount;
 
 export template <typename Func, template <typename...> typename T>
 using ApplyFnParamsTo = typename FnTrait<Func>::template ApplyParamsTo<T>;

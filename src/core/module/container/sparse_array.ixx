@@ -10,7 +10,7 @@ class SparseArray
   public:
     SparseArray() = default;
 
-    SparseArray( size_t size )
+    SparseArray( usize size )
         : mDenseArray( size )
         , mSparseKeyArray( size )
     {
