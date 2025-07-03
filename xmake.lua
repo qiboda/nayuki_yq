@@ -22,6 +22,7 @@ end
 
 set_warnings("allextra", "error")
 set_languages("c17", "cxxlatest")
+set_policy("build.c++.modules", true)
 
 -- stdexec 需要下面两个选项来正确识别 C++ 标准版本。
 add_cxxflags("cl::/Zc:__cplusplus")
@@ -101,7 +102,7 @@ end
 includes("src")
 
 -- add examples
-includes("examples")
+-- includes("examples")
 
 -- 定义一个 rule
 rule("MetaForge")
