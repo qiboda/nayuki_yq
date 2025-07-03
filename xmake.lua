@@ -21,7 +21,7 @@ else
 end
 
 set_warnings("allextra", "error")
-set_languages("c17", "cxx23")
+set_languages("c17", "cxxlatest")
 
 -- stdexec 需要下面两个选项来正确识别 C++ 标准版本。
 add_cxxflags("cl::/Zc:__cplusplus")

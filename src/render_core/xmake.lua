@@ -6,6 +6,8 @@ target(module_name)
 
     set_group("libraries")
 
+    set_policy("build.c++.modules", true)
+
     -- modules
     add_files("src/impl/**.mpp", { kind = "source" })
     add_files("module/**.ixx", { public = true })

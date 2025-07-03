@@ -1,6 +1,6 @@
 #pragma once
 
-#include <core/core.h>
+import core;
 
 RENDER_CORE_API NY_LOG_CATEGORY_DECLARED( LogRenderCore )
 

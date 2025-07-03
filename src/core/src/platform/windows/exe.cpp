@@ -1,10 +1,14 @@
 #if defined( _WIN32 )
 
-#    include "core/platform/platform_exe.h"
-#    include "core/type_def.h"
+module;
+
 #    include <windows.h>
-#    include <iostream>
 #    include <filesystem>
+
+module core.platform.exe;
+
+import core;
+import std;
 
 FsPath PlatformExe::GetExePath()
 {

@@ -1,4 +1,4 @@
-module core.platform.memory:alloca;
+module;
 
 #if defined( _MSC_VER ) // MSVC
 #    include <malloc.h>
@@ -7,6 +7,8 @@ module core.platform.memory:alloca;
 #else
 #    error "alloca is not supported on this platform"
 #endif
+
+module core.platform.memory:alloca;
 
 void* PlatformMemory::Alloca( usize size )
 {

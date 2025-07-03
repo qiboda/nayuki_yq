@@ -1,5 +1,7 @@
 #if defined( __linux__ )
 
+module;
+
 #    include <unistd.h>
 
 module core.platform.memory:windows;

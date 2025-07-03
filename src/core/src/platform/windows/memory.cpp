@@ -1,11 +1,13 @@
 
 #if defined( _WIN32 )
 
-import core.platform.memory;
+module;
 
 #    include <Windows.h>
 #    include <sysinfoapi.h>
 #    include <core/compiler/diagnostic.h>
+
+module core.platform.memory;
 
 usize PlatformMemory::GetCacheLineSize()
 {
