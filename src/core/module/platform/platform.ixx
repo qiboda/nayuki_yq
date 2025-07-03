@@ -8,4 +8,4 @@ export module core.platform;
 
 import core.logger;
 
-export CORE_API NY_LOG_CATEGORY( LogPlatform )
+export CORE_API NY_LOG_CATEGORY( LogPlatform );
