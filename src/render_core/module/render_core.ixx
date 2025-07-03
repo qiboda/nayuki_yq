@@ -4,6 +4,7 @@ export module render_core;
 
 export import render_core.render_context;
 export import render_core.render_instance;
+export import render_core.device;
 export import render_core.camera;
 export import render_core.frame_buffer;
 export import render_core.swapchain;
