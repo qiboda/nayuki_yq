@@ -2,7 +2,7 @@
 
 #include <inja/inja.hpp>
 
-#include <core/fs/paths.h>
+import core.fs.path;
 
 class META_FORGE_API TmplRender
 {

@@ -1,6 +1,7 @@
 
 #include "meta_forge/command_list_parser.h"
-#include <core/fs/paths.h>
+
+import core.fs.path;
 
 // 定义参数
 static llvm::cl::OptionCategory ToolCategory( "options" );

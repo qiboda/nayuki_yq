@@ -1,7 +1,8 @@
 #pragma once
 
 #include <meta_forge/meta_forge.h>
-#include <core/core.h>
+
+import core;
 
 class META_FORGE_API CommandListParser
 {

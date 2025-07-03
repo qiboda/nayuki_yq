@@ -1,10 +1,9 @@
 module;
 
-#include <core/core.h>
-
 export module io_task_pool;
 
 import stdexec;
+import core;
 
 export class TASK_API IOTaskPool
 {

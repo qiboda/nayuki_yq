@@ -6,7 +6,7 @@ target(module_name)
 
     set_group("libraries")
 
-    -- set_toolchains("mingw@llvm-mingw")
+    set_policy("build.c++.modules", true)
 
     -- modules
     add_files("src/impl/**.mpp", { kind = "source" })

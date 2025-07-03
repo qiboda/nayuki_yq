@@ -18,6 +18,10 @@ target(module_name)
     -- 因为libllvm仅仅支持 MT
     set_runtimes("MT")
 
+    -- modules
+    add_files("src/impl/**.mpp", { kind = "source" })
+    add_files("module/**.ixx", { public = true })
+
     add_files("src/**.cpp")
     add_includedirs("include", { public = true })
     add_headerfiles("include/**.h", { public = true })

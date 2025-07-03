@@ -1,6 +1,8 @@
-#pragma once
+module;
 
-#include "core/core.h"
+export module meta_forge.phase;
+
+import core;
 
 enum class ForgePhase : u8
 {

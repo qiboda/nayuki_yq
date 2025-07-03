@@ -2,8 +2,8 @@
 #include "meta_forge/forge_phase.h"
 #include <meta_forge/forge.h>
 
-#include "core/core.h"
-#include <core/fs/paths.h>
+import core;
+import core.fs.path;
 
 #include <meta_forge/collector/struct_attribute_collector.h>
 #include <meta_forge/collector/class_attribute_collector.h>

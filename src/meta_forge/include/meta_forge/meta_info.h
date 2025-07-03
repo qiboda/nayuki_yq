@@ -1,6 +1,6 @@
 #pragma once
 
-#include <core/core.h>
+import core;
 
 enum class ContextPathType : u8
 {
