@@ -2,9 +2,9 @@ module;
 
 #include <module_export.h>
 
-export module core.misc:iraii;
+export module core.misc.iraii;
 
-import :non_copyable;
+import core.misc.non_copyable;
 
 export class CORE_API IRAII : public NonCopyable
 {

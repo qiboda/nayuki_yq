@@ -1,8 +1,9 @@
 module;
 
 #include <core/macro/macro.h>
+#include <cassert>
 
-export module core.timer:handle;
+export module core.timer.handle;
 
 import core;
 import std;

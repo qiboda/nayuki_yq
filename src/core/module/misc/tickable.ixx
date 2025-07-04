@@ -2,7 +2,7 @@ module;
 
 #include <module_export.h>
 
-export module core.misc:tickable;
+export module core.misc.tickable;
 
 export class CORE_API ITickable
 {

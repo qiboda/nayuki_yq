@@ -1,6 +1,6 @@
 export module core.container;
 
-export import :heap;
-export import :sparse_array;
-export import :small_vector;
-export import :fixed_string;
+export import core.container.heap;
+export import core.container.sparse_array;
+export import core.container.small_vector;
+export import core.container.fixed_string;

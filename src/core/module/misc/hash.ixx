@@ -1,5 +1,4 @@
-
-export module core.misc:hash;
+export module core.misc.hash;
 
 import std;
 

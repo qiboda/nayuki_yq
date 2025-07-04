@@ -1,4 +1,4 @@
 export module core.logger;
 
-export import :category;
-export import :logger;
+export import core.logger.category;
+export import core.logger.logger;

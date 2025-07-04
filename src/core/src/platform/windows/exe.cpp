@@ -1,6 +1,6 @@
-#if defined( _WIN32 )
-
 module;
+
+#if defined( _WIN32 )
 
 #    include <windows.h>
 #    include <filesystem>

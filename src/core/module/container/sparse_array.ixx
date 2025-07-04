@@ -1,4 +1,4 @@
-export module core.container:sparse_array;
+export module core.container.sparse_array;
 
 import core;
 import std;

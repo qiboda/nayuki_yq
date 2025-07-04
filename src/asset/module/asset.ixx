@@ -5,7 +5,6 @@ module;
 
 export module asset;
 
-import core;
-import core.logger;
+import core.logger.category;
 
-ASSET_API NY_LOG_CATEGORY( LogAsset )
+export ASSET_API NY_LOG_CATEGORY( LogAsset )

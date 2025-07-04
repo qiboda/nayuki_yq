@@ -1,6 +1,7 @@
 module;
 
 #include <core/macro/macro.h>
+#include <cassert>
 
 export module core.delegate:delegate;
 

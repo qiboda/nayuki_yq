@@ -28,7 +28,7 @@ class FSM : public FSMInterface, public NonCopyable
   public:
     static FSMId GetFSMId_S()
     {
-        return FSMId( STRINGIFY( FSM ) );
+        return FSMId( NY_STRINGIFY( FSM ) );
     }
 
     virtual FSMId GetFSMId() const override

@@ -1,8 +1,8 @@
-﻿module;
+module;
 
 #include <module_export.h>
 
-export module core.timer:game_timer;
+export module core.timer.game_timer;
 
 import core;
 import std;

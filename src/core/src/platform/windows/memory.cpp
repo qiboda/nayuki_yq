@@ -1,7 +1,6 @@
+module;
 
 #if defined( _WIN32 )
-
-module;
 
 #    include <Windows.h>
 #    include <sysinfoapi.h>

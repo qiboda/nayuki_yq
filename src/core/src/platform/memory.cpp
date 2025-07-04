@@ -8,7 +8,7 @@ module;
 #    error "alloca is not supported on this platform"
 #endif
 
-module core.platform.memory:alloca;
+module core.platform.memory;
 
 void* PlatformMemory::Alloca( usize size )
 {

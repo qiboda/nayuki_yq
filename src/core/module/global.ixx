@@ -5,6 +5,6 @@ module;
 
 export module core.global;
 
-import core.logger;
+import core.logger.category;
 
 export CORE_API NY_LOG_CATEGORY( LogCore );

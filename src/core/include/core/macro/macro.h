@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#include <cassert>
-
 #pragma region disable_warning
 
 // to remove unused variable warning
@@ -97,18 +95,18 @@
 
 #pragma region stringify
 
-#ifndef STRINGIFY_INNER
-#    define STRINGIFY_INNER( Name ) #Name
+#ifndef NY_STRINGIFY_INNER
+#    define NY_STRINGIFY_INNER( Name ) #Name
 #endif
-#ifndef STRINGIFY
-#    define STRINGIFY( Name ) STRINGIFY_INNER( Name )
+#ifndef NY_STRINGIFY
+#    define NY_STRINGIFY( Name ) NY_STRINGIFY_INNER( Name )
 #endif
 
 #pragma endregion stringify
 
-#pragma region JOIN
+#pragma region NY_JOIN
 // 宏拼接工具
-#define JOIN_IMPL( x, y ) x##y
-#define JOIN( x, y ) JOIN_IMPL( x, y )
+#define NY_JOIN_IMPL( x, y ) x##y
+#define NY_JOIN( x, y ) NY_JOIN_IMPL( x, y )
 
-#pragma endregion JOIN
+#pragma endregion NY_JOIN

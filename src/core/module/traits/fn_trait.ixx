@@ -18,7 +18,7 @@ export enum class FuncKind : u8 {
     MethodPtr,
 };
 
-export struct ECS_API FnInfo
+export struct CORE_API FnInfo
 {
     virtual ~FnInfo() = default;
 };

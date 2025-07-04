@@ -1,4 +1,4 @@
-export module core.container:fixed_string;
+export module core.container.fixed_string;
 
 import std;
 import core;

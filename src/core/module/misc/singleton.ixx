@@ -1,4 +1,4 @@
-﻿export module core.misc:singleton;
+export module core.misc.singleton;
 
 /// \brief Singleton template class
 /// \note: 需要friend声明以及前置声明，具体例子见 `Logger` class
@@ -37,5 +37,8 @@ class Singleton
         return &GetInstance();
     }
 
-    static inline T instance;
+    static T instance;
 };
+
+export template <typename T>
+T Singleton<T>::instance;

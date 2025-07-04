@@ -1,4 +1,4 @@
-export module core.misc:path;
+export module core.misc.path;
 
 import core;
 

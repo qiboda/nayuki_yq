@@ -2,7 +2,7 @@ module;
 
 #include <module_export.h>
 
-export module core.logger:category;
+export module core.logger.category;
 
 import core.type;
 import std;

@@ -2,6 +2,7 @@ module;
 
 #include <module_export.h>
 #include "core/macro/macro.h"
+#include <cassert>
 
 #include <tbb/concurrent_hash_map.h>
 

@@ -2,7 +2,7 @@ module;
 
 #include <module_export.h>
 
-export module core.timer:manager;
+export module core.timer.manager;
 
 import std;
 import core;
@@ -10,7 +10,7 @@ import core.misc;
 import core.delegate;
 import core.container;
 
-import :handle;
+import core.timer.handle;
 
 export using TimerDelegate = SingleDelegateDecl<>;
 

@@ -1,8 +1,8 @@
-export module core.container:small_vector;
+export module core.container.small_vector;
 
 import core;
 import std;
-import core.misc;
+import core.misc.non_copyable;
 
 export template <typename T, usize N>
 class SmallVector : public NonCopyable

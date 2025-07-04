@@ -1,6 +1,6 @@
-export module core.misc:string;
+export module core.misc.string;
 
-import core.container;
+import core.container.small_vector;
 import core;
 import std;
 

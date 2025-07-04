@@ -1,16 +1,16 @@
 module;
 
-#include <module_export.h>
+#include <cassert>
 #include "core/logger/log.h"
 #include <core/macro/macro.h>
+#include <module_export.h>
 
 export module core.fs.paths;
 
 import core;
 import std;
-import core.logger;
+import core.logger.logger;
 import core.global;
-import core.misc;
 import fmt;
 
 /**
@@ -58,9 +58,9 @@ export class CORE_API Paths
             dir = dir.parent_path();
             if ( dir == dir.root_path() )
             {
-                NY_LOG_CRITICAL( LogCore,
-                                 "Error: Cannot find engine folder from executable path: {}",
-                                 exePath.string() );
+                // NY_LOG_CRITICAL( LogCore,
+                //                  "Error: Cannot find engine folder from executable path: {}",
+                //                  exePath.string() );
                 return FsPath();
             }
         }

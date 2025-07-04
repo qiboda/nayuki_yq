@@ -3,6 +3,7 @@ module;
 #include "core/macro/macro.h"
 #include <rpmalloc.h>
 #include <cstdlib>
+#include <cassert>
 
 module core.memory;
 

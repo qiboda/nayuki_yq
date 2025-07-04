@@ -2,7 +2,7 @@ module;
 
 #include <core/macro/macro.h>
 
-export module core.container:heap;
+export module core.container.heap;
 
 import std;
 import core;

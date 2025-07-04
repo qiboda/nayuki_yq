@@ -7,13 +7,28 @@ module;
 
 #include <module_export.h>
 
-export module core.logger:logger;
+#ifdef DEBUG
+#    define SPDLOG_DEBUG_ON
+#    define SPDLOG_TRACE_ON
+#endif // !DEBUG
+
+#ifdef _WIN32
+#    ifndef SPDLOG_WCHAR_TO_UTF8_SUPPORT
+#        define SPDLOG_WCHAR_TO_UTF8_SUPPORT
+#    endif // !SPDLOG_WCHAR_TO_UTF8_SUPPORT
+#endif
+
+#include <spdlog/async.h>
+#include <spdlog/async_logger.h>
+#include <spdlog/sinks/ansicolor_sink.h>
+#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/spdlog.h>
+
+export module core.logger.logger;
 
 import core.type;
-import core.misc;
-import spdlog;
-
-import :category;
+import core.misc.singleton;
+import std;
 
 // // 添加这个前置声明，避免 clangd 警告报错
 // template <typename T>
@@ -33,7 +48,7 @@ export class CORE_API Logger : public Singleton<Logger>
 
   public:
     // Register and create a logger.
-    void RegisterCategory( const LoggerCategory& loggerCategory );
+    void RegisterCategory( const class LoggerCategory& loggerCategory );
 
     std::shared_ptr<spdlog::logger> Get( const LoggerCategory& loggerCategory );
 

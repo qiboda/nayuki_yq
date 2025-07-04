@@ -1,4 +1,4 @@
-export module core.misc:flag_enum;
+export module core.misc.flag_enum;
 
 import std;
 

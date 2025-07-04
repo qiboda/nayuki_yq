@@ -2,7 +2,7 @@ module;
 
 #include <module_export.h>
 
-export module core.misc:non_copyable;
+export module core.misc.non_copyable;
 
 export class CORE_API NonCopyable
 {
