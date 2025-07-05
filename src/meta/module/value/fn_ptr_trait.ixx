@@ -1,11 +1,13 @@
 module;
 
 #include <module_export.h>
+#include <core/macro/macro.h>
 // #include <core/logger/log.h>
 // #include <fmt/format.h>
 
 export module meta.value.fn_ptr_trait;
 
+import std;
 import core;
 import meta;
 import core.logger.logger;
@@ -41,6 +43,7 @@ struct FnPtrTrait : std::false_type, public FnPtrInfo
 
     virtual std::any Invoke( FnParamValues&& params ) const override
     {
+        UNUSED_VARS(params);
         return {};
     }
 };

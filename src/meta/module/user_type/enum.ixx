@@ -5,6 +5,7 @@ module;
 
 export module meta.user_type.enum_type;
 
+import std;
 import core;
 import meta.type_base;
 import meta.user_type.ns;

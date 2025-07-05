@@ -4,6 +4,7 @@ module;
 
 export module meta.user_type.struct_type;
 
+import std;
 import core;
 import meta.type_id;
 import meta.type_base;

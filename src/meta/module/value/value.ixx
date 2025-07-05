@@ -15,9 +15,9 @@ export struct META_API ValueStorage
     // 存储值的实际数据
     void* mData;
     // 存储值的大小
-    size_t mSize;
+    usize mSize;
     // 存储值的对齐方式
-    size_t mAlignment;
+    usize mAlignment;
 };
 
 /**

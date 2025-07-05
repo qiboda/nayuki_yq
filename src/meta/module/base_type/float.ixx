@@ -5,6 +5,7 @@ module;
 export module meta.base_type.float_type;
 
 import meta.base_type.base_type;
+import meta.type_base;
 import core;
 
 export class META_API Float : public BaseType

@@ -4,6 +4,7 @@ module;
 
 export module meta.type_base;
 
+import std;
 import core;
 import meta.type_id;
 

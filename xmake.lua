@@ -35,6 +35,9 @@ add_cxxflags("cl::/Zc:preprocessor")
 -- 检查toolchains是msvc还是clang, 可能得到nil
 -- if get_config("toolchain") == "msvc"
 
+
+add_cxxflags("clang::-fPIC")
+
 add_cxxflags("cl::/utf-8")
 -- 检测到有类型没有dll导出，但是被用在了dll接口中时报警告。
 -- 由于标准库也会报警，太烦人了。禁用。

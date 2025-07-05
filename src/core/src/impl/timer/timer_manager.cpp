@@ -1,4 +1,4 @@
-module core.timer;
+module core.timer.manager;
 
 import core.type;
 import std;
@@ -123,7 +123,7 @@ void TimerManager::ActiveTimer( const TimerHandle& timerHandle )
     }
 }
 
-inline const TimerData& TimerManager::GetTimerData( const TimerHandle& timerHandle ) const
+const TimerData& TimerManager::GetTimerData( const TimerHandle& timerHandle ) const
 {
     if ( timerHandle.IsValid() )
     {
@@ -136,7 +136,7 @@ inline const TimerData& TimerManager::GetTimerData( const TimerHandle& timerHand
     return InvalidTimerData;
 }
 
-inline TimerData& TimerManager::GetTimerData( const TimerHandle& timerHandle )
+TimerData& TimerManager::GetTimerData( const TimerHandle& timerHandle )
 {
     return const_cast<TimerData&>( std::as_const( *this ).GetTimerData( timerHandle ) );
 }

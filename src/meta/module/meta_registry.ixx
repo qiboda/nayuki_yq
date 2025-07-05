@@ -10,10 +10,14 @@ import std;
 import core;
 import core.registry;
 import meta.user_type.class_type;
+import meta.user_type.enum_type;
 import meta.user_type.define;
+import meta.user_type.ns;
+import meta.user_type.property;
+import meta.value.method;
+import meta.value.function;
 import meta.type_id;
 import meta.type_base;
-import meta.user_type.ns;
 import meta.type_manager;
 
 export class META_API ClassRegistry

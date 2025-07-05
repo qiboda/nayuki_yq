@@ -4,6 +4,7 @@
 import std;
 import meta.meta_registry;
 import meta.type_manager;
+import meta.user_type.ns;
 import meta.user_type.class_type;
 
 class TypeClassRegistryTest : public ::testing::Test

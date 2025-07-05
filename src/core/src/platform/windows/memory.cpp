@@ -1,4 +1,6 @@
+#if not defined( __clang__ )
 module;
+#endif
 
 #if defined( _WIN32 )
 

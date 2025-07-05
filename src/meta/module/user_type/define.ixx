@@ -5,6 +5,7 @@ module;
 
 export module meta.user_type.define;
 
+import std;
 import core;
 import core.misc.flag_enum;
 

@@ -5,6 +5,7 @@ module;
 export module meta.value.method;
 
 import core;
+import std;
 
 import meta.user_type.define;
 import meta.value.fn_ptr_trait;
