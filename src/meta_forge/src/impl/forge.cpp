@@ -29,12 +29,12 @@ class FilteringCompilationDatabase : public clang::tooling::CompilationDatabase
     {
         auto Commands = InnerDB.getCompileCommands( FilePath );
 
-        mClangCompileCommands[FilePath.str()].resize( Commands.size() );
+        // mClangCompileCommands[FilePath.str()].resize( Commands.size() );
 
-        for ( i32 j = 0; j < Commands.size(); ++j )
+        for ( usize j = 0; j < Commands.size(); ++j )
         {
-            auto& ClangCommand = mClangCompileCommands[FilePath.str()][j];
-            ClangCommand.clear();
+            // auto& ClangCommand = mClangCompileCommands[FilePath.str()][j];
+            // ClangCommand.clear();
             auto& Command = Commands[j];
 
             std::vector<std::string> Filtered;
@@ -55,13 +55,13 @@ class FilteringCompilationDatabase : public clang::tooling::CompilationDatabase
                 if ( Arg == "/std:c++latest" )
                 {
                     // 可能是clang的c++20
-                    ClangCommand.push_back( "-std=c++20" );
+                    // ClangCommand.push_back( "-std=c++20" );
                     continue;
                 }
                 if ( Arg == "/reference" )
                 {
-                    const auto& RefFile = Command.CommandLine[i + 1];
-                    ClangCommand.push_back( "-fmodule-file=" + RefFile );
+                    // const auto& RefFile = Command.CommandLine[i + 1];
+                    // ClangCommand.push_back( "-fmodule-file=" + RefFile );
                     i += 1;
                     continue;
                 }
@@ -82,13 +82,13 @@ class FilteringCompilationDatabase : public clang::tooling::CompilationDatabase
         return InnerDB.getAllCompileCommands(); // 可选：也做过滤
     }
 
-    mutable std::map<std::string, std::vector<std::vector<std::string>>> mClangCompileCommands;
+    // mutable std::map<std::string, std::vector<std::vector<std::string>>> mClangCompileCommands;
 
   private:
     CompilationDatabase& InnerDB;
 };
 
-void Forge::Init( int argc, const char** argv )
+void Forge::Init( usize argc, const char** argv )
 {
     this->mArgc = argc;
     this->mArgv = argv;
@@ -128,7 +128,8 @@ void Forge::RunParseCommands()
 void Forge::RunRunTools()
 {
     // 定义参数
-    auto commandListParser = CommandListParser::create( mArgc, mArgv );
+    i32 argc = static_cast<i32>( mArgc );
+    auto commandListParser = CommandListParser::create( argc, mArgv );
     if ( !commandListParser )
     {
         llvm::errs() << commandListParser.takeError();
@@ -145,24 +146,27 @@ void Forge::RunRunTools()
         clang::tooling::getInsertArgumentAdjuster( "-fsyntax-only", clang::tooling::ArgumentInsertPosition::BEGIN ) );
     // Tool.appendArgumentsAdjuster(
     //     getInsertArgumentAdjuster( "-Wno-everything", clang::tooling::ArgumentInsertPosition::END ) );
-    Tool.appendArgumentsAdjuster(
-        getInsertArgumentAdjuster( { "-###", "-v", "-fmodule-file=core=build/.gens/core_tests/windows/x64/release/rules/bmi/cache/interfaces/dba42005/core.ifc" }, clang::tooling::ArgumentInsertPosition::END ) );
+    Tool.appendArgumentsAdjuster( getInsertArgumentAdjuster(
+        { "-###",
+          "-v",
+          "-fmodule-file=core=build/.gens/core_tests/windows/x64/release/rules/bmi/cache/interfaces/dba42005/core.ifc" },
+        clang::tooling::ArgumentInsertPosition::END ) );
 
     for ( auto& file : sourceFiles )
     {
         compilations.getCompileCommands( file );
-        auto& clangCompileCommands = compilations.mClangCompileCommands[file];
-        for ( usize i = 0; i < clangCompileCommands.size(); ++i )
-        {
-            const auto& command = clangCompileCommands[i];
-            for ( usize j = 0; j < command.size(); ++j )
-            {
-                const auto& arg = command[j];
-                std::cout << "Command[" << i << "][" << j << "]: " << arg << std::endl;
-            }
-            Tool.appendArgumentsAdjuster(
-                clang::tooling::getInsertArgumentAdjuster( command, clang::tooling::ArgumentInsertPosition::BEGIN ) );
-        }
+        // auto& clangCompileCommands = compilations.mClangCompileCommands[file];
+        // for ( usize i = 0; i < clangCompileCommands.size(); ++i )
+        // {
+            // const auto& command = clangCompileCommands[i];
+            // for ( usize j = 0; j < command.size(); ++j )
+            // {
+            //     const auto& arg = command[j];
+            //     std::cout << "Command[" << i << "][" << j << "]: " << arg << std::endl;
+            // }
+        //     Tool.appendArgumentsAdjuster(
+        //         clang::tooling::getInsertArgumentAdjuster( command, clang::tooling::ArgumentInsertPosition::BEGIN ) );
+        // }
     }
     // 添加 - isystem 参数
     // clang::tooling::ArgumentsAdjuster AddIsystem = getInsertArgumentAdjuster(

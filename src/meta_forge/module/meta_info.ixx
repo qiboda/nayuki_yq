@@ -4,6 +4,7 @@ module;
 
 export module meta_forge.meta_info;
 
+import std;
 import core.misc.hash;
 import core;
 
@@ -36,7 +37,7 @@ struct std::hash<ContextPathType>
 
 export inline bool Has( ContextPathType self, ContextPathType type )
 {
-    return ( static_cast<uint8_t>( self ) & static_cast<uint8_t>( type ) ) != 0;
+    return ( static_cast<u8>( self ) & static_cast<u8>( type ) ) != 0;
 }
 
 export struct META_FORGE_API ContextPath
@@ -107,7 +108,7 @@ export enum class TypeQualifier : u32 {
     IsConstexpr = 1 << 4,
 };
 
-export enum class VariableType : uint8_t {
+export enum class VariableType : u8 {
     None = 0,
     LVRef = 1,
     RVRef = 2,
@@ -116,7 +117,7 @@ export enum class VariableType : uint8_t {
 
 export struct META_FORGE_API MetaIdGenerator
 {
-    using MetaIdType = uint32_t;
+    using MetaIdType = u32;
 
     /**
      * 0 是无效Id。

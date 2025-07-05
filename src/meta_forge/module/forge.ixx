@@ -6,6 +6,7 @@ export module meta_forge.forge;
 
 import meta_forge.meta_info;
 import core;
+import std;
 import meta_forge.forge_phase;
 import meta_forge.command_list_parser;
 
@@ -16,7 +17,7 @@ export class META_FORGE_API Forge
     {
     }
 
-    void Init( int argc, const char** argv );
+    void Init( usize argc, const char** argv );
 
     void Clear()
     {
@@ -36,10 +37,10 @@ export class META_FORGE_API Forge
 
   protected:
     ForgePhase mPhase = ForgePhase::None;
-    i32 mArgc = 0;
+    usize mArgc = 0;
     const char** mArgv = nullptr;
 
-    std::shared_ptr<struct MetaInfoManager> mMetaInfoManager;
+    std::shared_ptr<MetaInfoManager> mMetaInfoManager;
 
-    class CommandListParser* mCommandListParser = nullptr;
+    CommandListParser* mCommandListParser = nullptr;
 };
