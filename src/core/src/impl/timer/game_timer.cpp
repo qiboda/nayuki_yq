@@ -4,7 +4,7 @@
 
 module;
 
-module core.timer;
+module core.timer.game_timer;
 
 import core;
 import std;

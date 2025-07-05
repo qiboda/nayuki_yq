@@ -1,6 +1,7 @@
 export module core.fsm.instance;
 
 import core.fsm.builder;
+import core.fsm.interface;
 
 import core.misc.non_copyable;
 import std;

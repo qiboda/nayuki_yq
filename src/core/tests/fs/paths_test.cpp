@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+import std;
 import core;
 import core.fs.paths;
 import core.platform.exe;

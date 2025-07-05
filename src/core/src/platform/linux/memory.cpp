@@ -4,7 +4,7 @@ module;
 
 #    include <unistd.h>
 
-module core.platform.memory:windows;
+module core.platform.memory;
 
 import core;
 

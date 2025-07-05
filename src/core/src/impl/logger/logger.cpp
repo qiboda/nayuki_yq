@@ -25,7 +25,7 @@ module;
 #include <core/macro/macro.h>
 #include <cstdlib>
 
-module core.logger;
+module core.logger.logger;
 
 import core.logger.category;
 
