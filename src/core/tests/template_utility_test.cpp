@@ -2,6 +2,7 @@
 
 import core;
 import core.template_utility;
+
 // #include <core/template_utility.h>
 
 class TemplateUtilityTest : public ::testing::Test
@@ -29,6 +30,6 @@ TEST_F( TemplateUtilityTest, IsSharedPtr )
     std::shared_ptr<int> sp = std::make_shared<int>();
     ASSERT_TRUE( is_shared_ptr<decltype( sp )>::value );
     ASSERT_TRUE( is_shared_ptr_v<decltype( sp )> );
-    ASSERT_FALSE( is_shared_ptr<int *>::value );
+    ASSERT_FALSE( is_shared_ptr<int*>::value );
     ASSERT_FALSE( is_shared_ptr_v<std::weak_ptr<double>> );
 }

@@ -20,6 +20,9 @@ else
     set_toolchains("clang")
 end
 
+-- 因为目前llvm只支持MT，所以暂时设置成MT
+set_runtimes("MT")
+
 set_warnings("allextra", "error")
 set_languages("c17", "cxxlatest")
 set_policy("build.c++.modules", true)

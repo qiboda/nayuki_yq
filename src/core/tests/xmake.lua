@@ -7,7 +7,7 @@ target("core_tests")
     set_group("tests")
 
     -- 默认情况下不编译
-    set_default(false)
+    set_default(true)
 
     add_packages("gtest")
     add_deps("core")

@@ -6,6 +6,7 @@ export module core.delegate:instance;
 
 import std;
 import :handle;
+
 // import core.delegate:delegate;
 
 export template <typename TReturnVal, typename... TArgs>

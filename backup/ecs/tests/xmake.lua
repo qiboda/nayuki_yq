@@ -7,7 +7,7 @@ target("ecs_tests")
     set_group("tests")
 
     --默认情况下不编译
-    set_default(false)
+    set_default(true)
 
     --添加本地target依赖
     add_packages("gtest")

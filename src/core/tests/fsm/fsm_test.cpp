@@ -19,8 +19,14 @@ enum class SkillStateId : u8
 class SkillFSMContext : public FSMContext
 {
   public:
-    SkillFSMContext() : FSMContext() {}
-    virtual ~SkillFSMContext() {}
+    SkillFSMContext()
+        : FSMContext()
+    {
+    }
+
+    virtual ~SkillFSMContext()
+    {
+    }
 
   public:
     SkillStateId mCurStateId = SkillStateId::Spell;
@@ -29,8 +35,13 @@ class SkillFSMContext : public FSMContext
 class SkillState : public State<SkillStateId, SkillFSMContext>
 {
   public:
-    SkillState() {}
-    virtual ~SkillState() override {}
+    SkillState()
+    {
+    }
+
+    virtual ~SkillState() override
+    {
+    }
 
   private:
 };
@@ -38,26 +49,59 @@ class SkillState : public State<SkillStateId, SkillFSMContext>
 class SkillState_Spell : public SkillState
 {
   public:
-    SkillState_Spell() : SkillState() {}
-    virtual ~SkillState_Spell() override {}
+    SkillState_Spell()
+        : SkillState()
+    {
+    }
+
+    virtual ~SkillState_Spell() override
+    {
+    }
 
   public:
     using SkillState::GetStateId;
-    static SkillStateId GetStateId_S() { return SkillStateId::Spell; }
+
+    static SkillStateId GetStateId_S()
+    {
+        return SkillStateId::Spell;
+    }
 
   public:
-    virtual void OnUpdate( std::shared_ptr<SkillFSMContext> &fsmContext, f32 DeltaSeconds ) override
+    virtual void OnUpdate( std::shared_ptr<SkillFSMContext>& fsmContext, f32 DeltaSeconds ) override
     {
         UNUSED_VARS( fsmContext );
         UNUSED_VARS( DeltaSeconds );
     }
 
-    virtual void OnEnterPre( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
-    virtual void OnEnter( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
-    virtual void OnEnterPost( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
-    virtual void OnLeavePre( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
-    virtual void OnLeave( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
-    virtual void OnLeavePost( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
+    virtual void OnEnterPre( std::shared_ptr<SkillFSMContext>& fsmContext ) override
+    {
+        UNUSED_VARS( fsmContext );
+    }
+
+    virtual void OnEnter( std::shared_ptr<SkillFSMContext>& fsmContext ) override
+    {
+        UNUSED_VARS( fsmContext );
+    }
+
+    virtual void OnEnterPost( std::shared_ptr<SkillFSMContext>& fsmContext ) override
+    {
+        UNUSED_VARS( fsmContext );
+    }
+
+    virtual void OnLeavePre( std::shared_ptr<SkillFSMContext>& fsmContext ) override
+    {
+        UNUSED_VARS( fsmContext );
+    }
+
+    virtual void OnLeave( std::shared_ptr<SkillFSMContext>& fsmContext ) override
+    {
+        UNUSED_VARS( fsmContext );
+    }
+
+    virtual void OnLeavePost( std::shared_ptr<SkillFSMContext>& fsmContext ) override
+    {
+        UNUSED_VARS( fsmContext );
+    }
 
   private:
 };
@@ -65,26 +109,59 @@ class SkillState_Spell : public SkillState
 class SkillState_Cast : public SkillState
 {
   public:
-    SkillState_Cast() : SkillState() {}
-    virtual ~SkillState_Cast() override {}
+    SkillState_Cast()
+        : SkillState()
+    {
+    }
+
+    virtual ~SkillState_Cast() override
+    {
+    }
 
   public:
     using SkillState::GetStateId;
-    static SkillStateId GetStateId_S() { return SkillStateId::Cast; }
+
+    static SkillStateId GetStateId_S()
+    {
+        return SkillStateId::Cast;
+    }
 
   public:
-    virtual void OnUpdate( std::shared_ptr<SkillFSMContext> &fsmContext, f32 DeltaSeconds ) override
+    virtual void OnUpdate( std::shared_ptr<SkillFSMContext>& fsmContext, f32 DeltaSeconds ) override
     {
         UNUSED_VARS( fsmContext );
         UNUSED_VARS( DeltaSeconds );
     }
 
-    virtual void OnEnterPre( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
-    virtual void OnEnter( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
-    virtual void OnEnterPost( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
-    virtual void OnLeavePre( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
-    virtual void OnLeave( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
-    virtual void OnLeavePost( std::shared_ptr<SkillFSMContext> &fsmContext ) override { UNUSED_VARS( fsmContext ); }
+    virtual void OnEnterPre( std::shared_ptr<SkillFSMContext>& fsmContext ) override
+    {
+        UNUSED_VARS( fsmContext );
+    }
+
+    virtual void OnEnter( std::shared_ptr<SkillFSMContext>& fsmContext ) override
+    {
+        UNUSED_VARS( fsmContext );
+    }
+
+    virtual void OnEnterPost( std::shared_ptr<SkillFSMContext>& fsmContext ) override
+    {
+        UNUSED_VARS( fsmContext );
+    }
+
+    virtual void OnLeavePre( std::shared_ptr<SkillFSMContext>& fsmContext ) override
+    {
+        UNUSED_VARS( fsmContext );
+    }
+
+    virtual void OnLeave( std::shared_ptr<SkillFSMContext>& fsmContext ) override
+    {
+        UNUSED_VARS( fsmContext );
+    }
+
+    virtual void OnLeavePost( std::shared_ptr<SkillFSMContext>& fsmContext ) override
+    {
+        UNUSED_VARS( fsmContext );
+    }
 
   private:
 };
@@ -102,31 +179,51 @@ class SkillTransition : public Transition<SkillTransitionId, SkillStateId, Skill
     using Super = Transition<SkillTransitionId, SkillStateId, SkillFSMContext>;
 
   public:
-    SkillTransition() : Super() {}
-    SkillTransition( SkillStateId enterStateId, SkillStateId leaveStateId ) : Super( enterStateId, leaveStateId ) {}
-    virtual ~SkillTransition() override {}
+    SkillTransition()
+        : Super()
+    {
+    }
+
+    SkillTransition( SkillStateId enterStateId, SkillStateId leaveStateId )
+        : Super( enterStateId, leaveStateId )
+    {
+    }
+
+    virtual ~SkillTransition() override
+    {
+    }
 };
 
 class SkillTransition_Spell2Cast : public SkillTransition
 {
   public:
-    SkillTransition_Spell2Cast() : SkillTransition() {}
+    SkillTransition_Spell2Cast()
+        : SkillTransition()
+    {
+    }
+
     SkillTransition_Spell2Cast( SkillStateId enterStateId, SkillStateId leaveStateId )
         : SkillTransition( enterStateId, leaveStateId )
     {
     }
-    virtual ~SkillTransition_Spell2Cast() override {}
+
+    virtual ~SkillTransition_Spell2Cast() override
+    {
+    }
 
   public:
-    virtual SkillTransitionId GetTransitionId() const override { return SkillTransitionId::Spell2Cast; }
+    virtual SkillTransitionId GetTransitionId() const override
+    {
+        return SkillTransitionId::Spell2Cast;
+    }
 
   public:
-    virtual void StartTransition( std::shared_ptr<SkillFSMContext> &fsmContext ) override
+    virtual void StartTransition( std::shared_ptr<SkillFSMContext>& fsmContext ) override
     {
         EndTransition( fsmContext );
     }
 
-    virtual void EndTransition( std::shared_ptr<SkillFSMContext> &fsmContext ) override
+    virtual void EndTransition( std::shared_ptr<SkillFSMContext>& fsmContext ) override
     {
         if ( fsmContext )
         {
@@ -137,7 +234,7 @@ class SkillTransition_Spell2Cast : public SkillTransition
   public:
     // TODO: How to solve same transition but diff enterState/leaveState
     // question.
-    virtual bool CanTransition( std::shared_ptr<SkillFSMContext> &fsmContext ) override
+    virtual bool CanTransition( std::shared_ptr<SkillFSMContext>& fsmContext ) override
     {
         if ( fsmContext && fsmContext->mCurStateId == mEnterStateId )
         {
@@ -152,23 +249,33 @@ class SkillTransition_Spell2Cast : public SkillTransition
 class SkillTransition_Cast2Spell : public SkillTransition
 {
   public:
-    SkillTransition_Cast2Spell() : SkillTransition() {}
+    SkillTransition_Cast2Spell()
+        : SkillTransition()
+    {
+    }
+
     SkillTransition_Cast2Spell( SkillStateId enterStateId, SkillStateId leaveStateId )
         : SkillTransition( enterStateId, leaveStateId )
     {
     }
-    virtual ~SkillTransition_Cast2Spell() override {}
+
+    virtual ~SkillTransition_Cast2Spell() override
+    {
+    }
 
   public:
-    virtual SkillTransitionId GetTransitionId() const override { return SkillTransitionId::Cast2Spell; }
+    virtual SkillTransitionId GetTransitionId() const override
+    {
+        return SkillTransitionId::Cast2Spell;
+    }
 
   public:
-    virtual void StartTransition( std::shared_ptr<SkillFSMContext> &fsmContext ) override
+    virtual void StartTransition( std::shared_ptr<SkillFSMContext>& fsmContext ) override
     {
         EndTransition( fsmContext );
     }
 
-    virtual void EndTransition( std::shared_ptr<SkillFSMContext> &fsmContext ) override
+    virtual void EndTransition( std::shared_ptr<SkillFSMContext>& fsmContext ) override
     {
         if ( fsmContext )
         {
@@ -179,7 +286,7 @@ class SkillTransition_Cast2Spell : public SkillTransition
   public:
     // TODO: How to solve same transition but diff enterState/leaveState
     // question.
-    virtual bool CanTransition( std::shared_ptr<SkillFSMContext> &fsmContext ) override
+    virtual bool CanTransition( std::shared_ptr<SkillFSMContext>& fsmContext ) override
     {
         if ( fsmContext && fsmContext->mCurStateId == mEnterStateId )
         {
@@ -197,12 +304,22 @@ class SkillFSM : public FSM<SkillState, SkillTransition, SkillFSMContext>
     using Super = FSM<SkillState, SkillTransition, SkillFSMContext>;
 
   public:
-    SkillFSM() : Super() {}
-    virtual ~SkillFSM() override {}
+    SkillFSM()
+        : Super()
+    {
+    }
+
+    virtual ~SkillFSM() override
+    {
+    }
 
   public:
     using Super::GetFSMId;
-    static FSMId GetFSMId_S() { return FSMId( NY_STRINGIFY( SKillFSM ) ); }
+
+    static FSMId GetFSMId_S()
+    {
+        return FSMId( NY_STRINGIFY( SKillFSM ) );
+    }
 
   public:
     virtual void Build() override
@@ -216,7 +333,10 @@ class SkillFSM : public FSM<SkillState, SkillTransition, SkillFSMContext>
                                                                               SkillState_Cast::GetStateId_S() ) );
     }
 
-    virtual bool Exec( std::shared_ptr<SkillFSMContext> &fsmContext ) override { return Super::Exec( fsmContext ); }
+    virtual bool Exec( std::shared_ptr<SkillFSMContext>& fsmContext ) override
+    {
+        return Super::Exec( fsmContext );
+    }
 
   private:
 };
@@ -224,11 +344,21 @@ class SkillFSM : public FSM<SkillState, SkillTransition, SkillFSMContext>
 class FSMTest : public ::testing::Test
 {
   protected:
-    FSMTest() {}
-    ~FSMTest() override {}
+    FSMTest()
+    {
+    }
 
-    void SetUp() override {}
-    void TearDown() override {}
+    ~FSMTest() override
+    {
+    }
+
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
 
   protected:
     FSMInstance<SkillFSMContext, SkillFSM> skillFSMInstance;

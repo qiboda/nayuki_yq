@@ -25,8 +25,12 @@ class DelegateTest : public ::testing::Test
 
 TEST_F( DelegateTest, MultipleDelegateOnce )
 {
-    MultipleDelegate<void, std::string &> delegate;
-    delegate.Add( []( std::string &str ) { str.append( "add" ); } );
+    MultipleDelegate<void, std::string&> delegate;
+    delegate.Add(
+        []( std::string& str )
+        {
+            str.append( "add" );
+        } );
     std::string str( "add" );
     delegate.Broadcast( str );
     ASSERT_EQ( str, "addadd" );
@@ -34,9 +38,17 @@ TEST_F( DelegateTest, MultipleDelegateOnce )
 
 TEST_F( DelegateTest, MutipleDelegateAddOrderExec )
 {
-    MultipleDelegate<void, std::string &> delegate;
-    DelegateHandle Handle1 = delegate.Add( []( std::string &str ) { str.append( "aadd" ); } );
-    DelegateHandle Handle2 = delegate.Add( []( std::string &str ) { str.append( "add" ); } );
+    MultipleDelegate<void, std::string&> delegate;
+    DelegateHandle Handle1 = delegate.Add(
+        []( std::string& str )
+        {
+            str.append( "aadd" );
+        } );
+    DelegateHandle Handle2 = delegate.Add(
+        []( std::string& str )
+        {
+            str.append( "add" );
+        } );
     std::string str( "add" );
     ASSERT_TRUE( delegate.Remove( Handle1 ) );
     delegate.Broadcast( str );
@@ -46,7 +58,7 @@ TEST_F( DelegateTest, MutipleDelegateAddOrderExec )
 class A
 {
   public:
-    void addStr( std::string &str )
+    void addStr( std::string& str )
     {
         str.append( "app" );
     }
@@ -55,7 +67,7 @@ class A
 TEST_F( DelegateTest, MutipleDelegateObject )
 {
     A a;
-    MultipleDelegate<void, std::string &> delegate;
+    MultipleDelegate<void, std::string&> delegate;
     DelegateHandle Handle = delegate.AddMem( &A::addStr, &a );
     std::string str( "add" );
     delegate.Broadcast( str );
@@ -65,7 +77,7 @@ TEST_F( DelegateTest, MutipleDelegateObject )
 TEST_F( DelegateTest, DelegateSPObject )
 {
     std::shared_ptr<A> a = std::make_shared<A>();
-    MultipleDelegate<void, std::string &> delegate;
+    MultipleDelegate<void, std::string&> delegate;
     DelegateHandle Handle = delegate.AddSP( &A::addStr, a );
     std::string str( "add" );
     delegate.Broadcast( str );
@@ -137,7 +149,10 @@ TEST_F( DelegateTest, SingleDelegateUnbindAndInvoking )
 TEST_F( DelegateTest, DelegateMove )
 {
     SingleDelegate<void> delegate1;
-    delegate1.Bind( []() {} );
+    delegate1.Bind(
+        []()
+        {
+        } );
     SingleDelegate<void> delegate2( std::move( delegate1 ) );
 
     ASSERT_DEATH( delegate1.Execute(), "" );

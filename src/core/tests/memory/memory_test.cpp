@@ -45,7 +45,7 @@ TEST_F( MemoryTest, TestCount )
     EXPECT_EQ( MemoryTracker::GetTotalAllocatedMemoryCount(), 0 );
     EXPECT_EQ( MemoryTracker::GetCurrentAllocatedMemoryCount(), 0 );
 
-    int *a = new int( 0 );
+    int* a = new int( 0 );
 
     EXPECT_EQ( MemoryTracker::GetTotalAllocatedMemoryCount(), 1 );
     EXPECT_EQ( MemoryTracker::GetCurrentAllocatedMemoryCount(), 1 );

@@ -7,11 +7,21 @@ import std;
 class GameTimerTest : public ::testing::Test
 {
   protected:
-    GameTimerTest() {}
-    ~GameTimerTest() override {}
+    GameTimerTest()
+    {
+    }
 
-    void SetUp() override {}
-    void TearDown() override {}
+    ~GameTimerTest() override
+    {
+    }
+
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
 
     GameTimer gameTimer;
 };

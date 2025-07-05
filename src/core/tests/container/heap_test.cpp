@@ -6,11 +6,21 @@ import core.container.heap;
 class HeapTest : public ::testing::Test
 {
   protected:
-    HeapTest() {}
-    ~HeapTest() override {}
+    HeapTest()
+    {
+    }
 
-    void SetUp() override {}
-    void TearDown() override {}
+    ~HeapTest() override
+    {
+    }
+
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
 };
 
 TEST_F( HeapTest, RemoveMaxHeapElem )

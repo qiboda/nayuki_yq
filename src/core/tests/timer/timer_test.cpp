@@ -6,18 +6,32 @@ import core.type;
 class TypeIdTest : public ::testing::Test
 {
   protected:
-    TypeIdTest() {}
-    ~TypeIdTest() override {}
+    TypeIdTest()
+    {
+    }
 
-    void SetUp() override {}
-    void TearDown() override {}
+    ~TypeIdTest() override
+    {
+    }
+
+    void SetUp() override
+    {
+    }
+
+    void TearDown() override
+    {
+    }
 };
 
 TEST_F( TypeIdTest, TimerMultipleExecute )
 {
     i32 i = 0;
     TimerDelegate AddOne;
-    AddOne.Bind( [&i]() { i++; } );
+    AddOne.Bind(
+        [&i]()
+        {
+            i++;
+        } );
     TimerManager::GetInstance().SetTimer( 1, std::move( AddOne ), true );
 
     TimerManager::GetInstance().Tick( 79.7f );

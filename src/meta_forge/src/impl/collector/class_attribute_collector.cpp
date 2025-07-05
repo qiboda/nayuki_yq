@@ -1,0 +1,2 @@
+
+module meta_forge.class_attribute_collector;
