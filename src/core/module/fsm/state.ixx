@@ -1,10 +1,10 @@
 module;
 
-export module core.fsm:state;
+export module core.fsm.state;
 
 import std;
 import core;
-import core.misc;
+import core.misc.non_copyable;
 
 export template <typename TStateId, typename TFSMContext>
 class State : public NonCopyable

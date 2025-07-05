@@ -1,6 +1,5 @@
 module;
 
-#include <cassert>
 #include "core/logger/log.h"
 #include <core/macro/macro.h>
 #include <module_export.h>

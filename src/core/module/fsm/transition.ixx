@@ -1,10 +1,10 @@
-export module core.fsm:transition;
+export module core.fsm.transition;
 
-import core.misc;
+import core.misc.non_copyable;
 import std;
 import core;
 
-import :context;
+import core.fsm.context;
 
 // TODO: add transiiton interval and transition priority.
 export template <typename TTransitionId, typename TStateId, typename TFSMContext>

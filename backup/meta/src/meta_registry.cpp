@@ -1,2 +1,0 @@
-
-#include "meta/meta_registry.h"

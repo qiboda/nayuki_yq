@@ -1,4 +1,4 @@
-export module core.concepts:derived;
+export module core.concepts.derived;
 
 import std;
 

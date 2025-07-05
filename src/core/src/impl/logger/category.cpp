@@ -1,7 +1,6 @@
 module;
 
 #include <core/macro/macro.h>
-#include <cassert>
 
 module core.logger.category;
 

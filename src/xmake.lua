@@ -5,10 +5,13 @@ add_requires("stdexec", { configs = { shared = true }, debug = true })
 add_requires("imgui", { configs = { shared = true}, debug = true })
 
 -- external = true -> /external:I to refer to the header file path
-add_requires("glfw", "glm", "stb", "fmt", "rpmalloc", {
-    debug = true,
-    external = true,
+add_requires("glfw", "glm", "stb", "rpmalloc", {
+    -- debug = true,
+    -- external = true,
 })
+
+add_requires("fmt")
+
 add_requires("shaderc", { configs = { shared = false }, debug = true })
 add_requires("tbb", { configs = { shared = true }, debug = true})
 add_requires("tracy", { configs = { shared = true, manual_lifetime = true, delayed_init = true }, debug = true})

@@ -2,14 +2,14 @@ module;
 
 #include <module_export.h>
 
-export module core.fsm:builder;
+export module core.fsm.builder;
 
-import :interface;
+import core.fsm.interface;
 
 import std;
-import core.misc;
+import core.misc.singleton;
 
-class CORE_API FSMBuilder : public Singleton<FSMBuilder>
+export class CORE_API FSMBuilder : public Singleton<FSMBuilder>
 {
   public:
     template <typename TFSM>

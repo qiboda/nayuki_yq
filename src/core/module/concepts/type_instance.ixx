@@ -1,4 +1,4 @@
-export module core.concepts:type_instance;
+export module core.concepts.type_instance;
 
 import std;
 

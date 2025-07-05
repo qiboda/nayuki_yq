@@ -13,7 +13,6 @@
         if ( bool( expr ) == false )                                                                                   \
         {                                                                                                              \
             std::cerr << fmt::format( msg, ##__VA_ARGS__ ) << std::endl;                                               \
-            assert( expr );                                                                                            \
         }
 #endif // !NY_PRE_CONDITION
 
@@ -22,7 +21,6 @@
         if ( bool( expr ) == false )                                                                                   \
         {                                                                                                              \
             std::cerr << fmt::format( msg, ##__VA_ARGS__ ) << std::endl;                                               \
-            assert( expr );                                                                                            \
         }
 #endif // !NY_POST_CONDITION
 
@@ -31,7 +29,6 @@
         if ( bool( expr ) == false )                                                                                   \
         {                                                                                                              \
             std::cerr << "Check failed: " << #expr << std::endl;                                                       \
-            assert( expr );                                                                                            \
         }
 #endif // !NY_ASSERT
 
@@ -41,7 +38,6 @@
         if ( bool( expr ) == false )                                                                                   \
         {                                                                                                              \
             std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " << fmt::format( msg, ##__VA_ARGS__ ) << std::endl; \
-            assert( expr );                                                                                            \
         }
 #endif // !NY_ASSERT_MSG_MSG
 
@@ -50,7 +46,6 @@
         if constexpr ( bool( expr ) == false )                                                                         \
         {                                                                                                              \
             std::cerr << "[" << __FILE__ << ":" << __LINE__ << "] " << fmt::format( msg, ##__VA_ARGS__ ) << std::endl; \
-            assert( expr );                                                                                            \
         }
 #endif // !NY_ASSERT_MSG_MSG
 

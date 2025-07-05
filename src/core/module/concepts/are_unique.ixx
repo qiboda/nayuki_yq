@@ -1,4 +1,4 @@
-export module core.concepts:are_unique;
+export module core.concepts.are_unique;
 
 import std;
 

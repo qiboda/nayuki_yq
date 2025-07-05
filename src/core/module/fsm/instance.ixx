@@ -1,8 +1,8 @@
-export module core.fsm:instance;
+export module core.fsm.instance;
 
-import :builder;
+import core.fsm.builder;
 
-import core.misc;
+import core.misc.non_copyable;
 import std;
 
 export template <typename TFSMContext, typename TFSM>

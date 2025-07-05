@@ -1,4 +1,4 @@
-export module core.concepts:tuple;
+export module core.concepts.tuple;
 
 import core;
 import std;

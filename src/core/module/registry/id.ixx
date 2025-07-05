@@ -6,7 +6,7 @@ export module core.registry;
 
 import core;
 import core.misc;
-import core.concepts;
+import core.concepts.derived;
 import std;
 
 export template <typename T>
@@ -21,7 +21,9 @@ export struct CORE_API Id
     friend class IdGenerator;
 
   public:
-    Id();
+    Id()
+    {
+    }
 
     friend auto operator<=>( const Id& lhs, const Id& rhs ) = default;
 

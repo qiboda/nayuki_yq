@@ -2,7 +2,7 @@ module;
 
 #include <module_export.h>
 
-export module core.fsm:interface;
+export module core.fsm.interface;
 
 import std;
 

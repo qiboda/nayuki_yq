@@ -6,9 +6,9 @@ export module core.timer.manager;
 
 import std;
 import core;
-import core.misc;
+import core.misc.singleton;
 import core.delegate;
-import core.container;
+import core.container.heap;
 
 import core.timer.handle;
 

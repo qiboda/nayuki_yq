@@ -2,7 +2,7 @@ module_name = "core"
 module_name_macro = "CORE"
 
 target(module_name)
-    set_kind("shared")
+    set_kind("static")
 
     set_group("libraries")
 

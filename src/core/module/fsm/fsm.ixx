@@ -2,15 +2,15 @@ module;
 
 #include <core/macro/macro.h>
 
-export module core.fsm:fsm;
+export module core.fsm.fsm;
 
-import :interface;
-import :context;
-import :state;
-import :transition;
+import core.fsm.interface;
+import core.fsm.context;
+import core.fsm.state;
+import core.fsm.transition;
 
 import std;
-import core.misc;
+import core.misc.non_copyable;
 import core;
 
 export template <typename TState, typename TTransition, typename TFSMContext>
