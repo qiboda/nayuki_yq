@@ -47,11 +47,14 @@ void ModuleInfoManager::GenerateCompileCommands( const std::string_view targetNa
                                            targetInfo->mTargetFlags.get().begin(),
                                            targetInfo->mTargetFlags.get().end() );
 
-        for ( const auto& require : *ixxFileInfo.mRequires.get() )
+        if ( ixxFileInfo.mRequires.get() )
         {
-            // todo:ixxFileInfo.mSourcePath 应该替换为pcm文件路径
-            command.mArguments.value().push_back( "-fmodule-file=" + require.mLogicalName.get() + "=" +
-                                                  ixxFileInfo.mSourcePath.get() );
+            for ( const auto& require : *ixxFileInfo.mRequires.get() )
+            {
+                // todo:ixxFileInfo.mSourcePath 应该替换为pcm文件路径
+                command.mArguments.value().push_back( "-fmodule-file=" + require.mLogicalName.get() + "=" +
+                                                      ixxFileInfo.mSourcePath.get() );
+            }
         }
 
         command.mArguments.value().push_back( ixxFileInfo.mSourcePath.get() );
@@ -62,6 +65,21 @@ void ModuleInfoManager::GenerateCompileCommands( const std::string_view targetNa
 
 void ModuleInfoManager::BuildOnePcmFile( const std::string& logicalName, const FsPath& buildBasePath )
 {
+    if ( logicalName == "std" )
+    {
+        std::string path = buildBasePath / "std.pcm";
+        if ( std::filesystem::exists( path ) == false )
+        {
+            // 不每次编译，提前编译好，放在对应位置上。
+            return;
+            // clang -Wno-reserved-module-identifier -std=c++26 -x c++-module --precompile -fmodule-output=std.pcm -o std.pcm /usr/include/c++/15.1.1/bits/std.cc
+            std::string cache = std::string( "-fmodules-cache-path=" ) + ( buildBasePath / "modules_cache" ).string();
+            std::system( ( std::string( "clang -Wno-reserved-module-identifier -std=c++26 -fmodules -x c++-module " ) + cache +
+                           std::string( " --precompile /usr/include/c++/15.1.1/bits/std.cc -o " ) + path + std::string(" -fmodule-output=") + path )
+                             .c_str() );
+        }
+        return;
+    }
     LogicalInfo& logicalInfo = mLogicalInfoMap.find( logicalName )->second;
 
     for ( const auto& requiredLogicalName : logicalInfo.mRequireLogicalNames )
@@ -79,37 +97,53 @@ void ModuleInfoManager::BuildOnePcmFile( const std::string& logicalName, const F
     commandArgs.push_back( "clang++" );
     commandArgs.push_back( "--precompile" );
     commandArgs.push_back( "-fmodules" );
+    commandArgs.push_back( std::string( "-fmodules-cache-path=" ) + ( buildBasePath / "modules_cache" ).string() );
+
     commandArgs.push_back( "-x" );
     commandArgs.push_back( "c++-module" );
     commandArgs.insert( commandArgs.end(),
                         targetInfo->mTargetFlags.get().begin(),
                         targetInfo->mTargetFlags.get().end() );
+    // todo: 这只是直接的依赖，还需要添加间接的依赖
     for ( const auto& requiredLogicalName : logicalInfo.mRequireLogicalNames )
     {
-        LogicalInfo& requiredLogicalInfo = mLogicalInfoMap.find( requiredLogicalName )->second;
-        std::string requiredFile =
-            buildBasePath / requiredLogicalInfo.mTargetName / (requiredLogicalInfo.mLogicalName + ".pcm");
-        commandArgs.push_back( "-fmodule-file=" + requiredLogicalName + "=" + requiredFile );
+        if ( requiredLogicalName == "std" )
+        {
+            std::string requiredFile = buildBasePath / "std.pcm";
+            commandArgs.push_back( "-fmodule-file=std=" + requiredFile );
+        }
+        else
+        {
+            LogicalInfo& requiredLogicalInfo = mLogicalInfoMap.find( requiredLogicalName )->second;
+            std::string requiredFile =
+                buildBasePath / requiredLogicalInfo.mTargetName / ( requiredLogicalInfo.mLogicalName + ".pcm" );
+            commandArgs.push_back( "-fmodule-file=" + requiredLogicalName + "=" + requiredFile );
+        }
     }
+    std::string outputFile = buildBasePath / logicalInfo.mTargetName / ( logicalInfo.mLogicalName + ".pcm" );
+    commandArgs.push_back( std::string("-fmodule-output=") + outputFile );
     commandArgs.push_back( "-o" );
-    std::string outputFile = buildBasePath / logicalInfo.mTargetName / (logicalInfo.mLogicalName + ".pcm");
     commandArgs.push_back( outputFile );
 
-    commandArgs.push_back( logicalInfo.mSourcePath );
+    commandArgs.push_back( FsPath( mModuleInfo.mProjectPath.value() ) / logicalInfo.mSourcePath );
 
-    // 执行编译命令
-    NY_LOG_INFO( LogMetaForge, "Building PCM file: {}", outputFile );
-    i32 result = std::system( fmt::format( "{}", fmt::join( commandArgs, " " ) ).c_str() );
-    if ( result != 0 )
+    if ( std::filesystem::exists( outputFile ) == false )
     {
-        NY_LOG_ERROR( LogMetaForge, "Failed to build PCM file: {}", logicalInfo.mSourcePath );
-        return;
+        // 执行编译命令
+        auto cmd = fmt::format( "{}", fmt::join( commandArgs, " " ) );
+        NY_LOG_INFO( LogMetaForge, "Building PCM file: {}", cmd );
+        i32 result = std::system( cmd.c_str() );
+        if ( result != 0 )
+        {
+            NY_LOG_ERROR( LogMetaForge, "Failed to build PCM file: {}", logicalInfo.mSourcePath );
+            return;
+        }
     }
 }
 
 void ModuleInfoManager::BuildPcmFiles( const std::string_view targetName )
 {
-    FsPath buildBasePath = FsPath(mModuleInfo.mProjectPath.value()) / ".nayuki_yq" / "build";
+    FsPath buildBasePath = FsPath( mModuleInfo.mProjectPath.value() ) / ".nayuki" / "build";
 
     const TargetInfo* targetInfo = GetTargetInfo( targetName );
     if ( targetInfo == nullptr )
@@ -135,9 +169,12 @@ void ModuleInfoManager::CacheModuleInfo()
             logicalInfo.mTargetName = target.mTargetName.get();
             logicalInfo.mLogicalName = ixxFileInfo.mLogicalName.get();
             logicalInfo.mSourcePath = ixxFileInfo.mSourcePath.get();
-            for ( const auto& require : *ixxFileInfo.mRequires.value() )
+            if ( ixxFileInfo.mRequires.value() )
             {
-                logicalInfo.mRequireLogicalNames.push_back( require.mLogicalName.get() );
+                for ( const auto& require : *ixxFileInfo.mRequires.value() )
+                {
+                    logicalInfo.mRequireLogicalNames.push_back( require.mLogicalName.get() );
+                }
             }
             mLogicalInfoMap.emplace( ixxFileInfo.mLogicalName.get(), logicalInfo );
         }

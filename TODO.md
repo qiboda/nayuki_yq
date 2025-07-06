@@ -71,3 +71,14 @@ e.pcm /home/skwy/repos/nayuki_yq/src/core/module/misc/non_copyable.ixx
 meta_forge内部步骤
     1. 加载compile args。
     2. 生成compile_commands.
+
+
+
+
+
+
+    "/usr/sbin/clang", "-c", "-Qunused-arguments", "-m64", -std=c++26", "-x", "c++-module", "--precompile", "-Wno-include-angled-in-module-purview", "-Wno-reserved-module-identifier", "-Wno-deprecated-declarations", "-fmodule-output=build/.gens/meta_core/linux/x86_64/release/rules/bmi/cache/interfaces/6a0fc0f6/std.pcm", "-o", "build/.gens/meta_core/linux/x86_64/release/rules/bmi/cache/interfaces/6a0fc0f6/std.pcm", "/usr/include/c++/15.1.1/bits/std.cc"
+
+
+
+    "/usr/sbin/clang", "-c", -std=c++26", "-x", "c++-module", "--precompile", "-fmodule-output=std.pcm", "-o", "std.pcm", "/usr/include/c++/15.1.1/bits/std.cc"
