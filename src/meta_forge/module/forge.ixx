@@ -4,10 +4,10 @@ module;
 
 export module meta_forge.forge;
 
+import std;
+import core;
 import meta_forge.meta_info;
 import meta_forge.module_info;
-import core;
-import std;
 import meta_forge.forge_phase;
 import meta_forge.command_list_parser;
 
@@ -45,8 +45,8 @@ export class META_FORGE_API Forge
     usize mArgc = 0;
     const char** mArgv = nullptr;
 
-    std::shared_ptr<MetaInfoManager> mMetaInfoManager;
-    std::shared_ptr<ModuleInfoManager> mModuleInfoManager;
+    std::shared_ptr<MetaInfoManager> mMetaInfoManager = nullptr;
+    std::shared_ptr<ModuleInfoManager> mModuleInfoManager = nullptr;
 
     CommandListParser* mCommandListParser = nullptr;
 };

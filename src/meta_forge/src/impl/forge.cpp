@@ -5,19 +5,19 @@ module;
 module meta_forge.forge;
 
 import meta_forge.meta_info;
+import meta_forge.module_info;
 import meta_forge.decl_context_utils;
 import meta_forge.data_generator;
 import meta_forge.tmpl.render;
 import meta_forge.struct_attribute_collector;
 import meta_forge.class_attribute_collector;
 import meta_forge.command_list_parser;
-import meta_forge.module_info;
 
-import core;
 import std;
+import core;
+import meta_forge;
 import core.fs.paths;
 import core.misc.path;
-import meta_forge;
 
 class FilteringCompilationDatabase : public clang::tooling::CompilationDatabase
 {
