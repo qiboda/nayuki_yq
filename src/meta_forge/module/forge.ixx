@@ -5,6 +5,7 @@ module;
 export module meta_forge.forge;
 
 import meta_forge.meta_info;
+import meta_forge.module_info;
 import core;
 import std;
 import meta_forge.forge_phase;
@@ -27,6 +28,10 @@ export class META_FORGE_API Forge
     void RunPhase( ForgePhase phase );
 
   protected:
+    void LoadCompileArgs();
+
+    void RunGenerateCompileCommands();
+
     void RunParseCommands();
 
     void RunRunTools();
@@ -41,6 +46,7 @@ export class META_FORGE_API Forge
     const char** mArgv = nullptr;
 
     std::shared_ptr<MetaInfoManager> mMetaInfoManager;
+    std::shared_ptr<ModuleInfoManager> mModuleInfoManager;
 
     CommandListParser* mCommandListParser = nullptr;
 };

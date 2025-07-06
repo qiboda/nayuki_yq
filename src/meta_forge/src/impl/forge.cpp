@@ -11,11 +11,13 @@ import meta_forge.tmpl.render;
 import meta_forge.struct_attribute_collector;
 import meta_forge.class_attribute_collector;
 import meta_forge.command_list_parser;
+import meta_forge.module_info;
 
 import core;
 import std;
 import core.fs.paths;
 import core.misc.path;
+import meta_forge;
 
 class FilteringCompilationDatabase : public clang::tooling::CompilationDatabase
 {
@@ -103,8 +105,23 @@ void Forge::RunPhase( ForgePhase phase )
     {
     case ForgePhase::None:
         break;
+    case ForgePhase::LoadCompileArgs:
+        LoadCompileArgs();
+        break;
     case ForgePhase::ParseCommands:
         RunParseCommands();
+        break;
+    case ForgePhase::BuildPcmFiles:
+        if ( mModuleInfoManager )
+        {
+            std::string targetName = mCommandListParser->GetTargetName();
+            mModuleInfoManager->CacheModuleInfo();
+            mModuleInfoManager->BuildPcmFiles( targetName );
+        }
+        RunPhase( ForgePhase::GenerateCompileCommands );
+        break;
+    case ForgePhase::GenerateCompileCommands:
+        RunGenerateCompileCommands();
         break;
     case ForgePhase::RunTools:
         RunRunTools();
@@ -122,11 +139,6 @@ void Forge::RunPhase( ForgePhase phase )
 
 void Forge::RunParseCommands()
 {
-    RunPhase( ForgePhase::RunTools );
-}
-
-void Forge::RunRunTools()
-{
     // 定义参数
     i32 argc = static_cast<i32>( mArgc );
     auto commandListParser = CommandListParser::create( argc, mArgv );
@@ -138,91 +150,127 @@ void Forge::RunRunTools()
 
     mCommandListParser = &commandListParser.get();
 
-    auto compilations = FilteringCompilationDatabase( mCommandListParser->getCompilations() );
-    auto sourceFiles = mCommandListParser->getSourcePathList();
+    if ( mModuleInfoManager )
+    {
+        if ( mModuleInfoManager->TargetCanMeta( mCommandListParser->GetTargetName() ) == false )
+        {
+            return;
+        }
+    }
+    RunPhase( ForgePhase::BuildPcmFiles );
+}
 
-    clang::tooling::ClangTool Tool( compilations, sourceFiles );
-    Tool.appendArgumentsAdjuster(
-        clang::tooling::getInsertArgumentAdjuster( "-fsyntax-only", clang::tooling::ArgumentInsertPosition::BEGIN ) );
+void Forge::LoadCompileArgs()
+{
+    std::ifstream file( Paths::EngineFolder() / ".nayuki/compile_args.json" );
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+    std::string content = buffer.str();
+
+    auto moduleInfo = rfl::json::read<ModuleInfo>( content ).value();
+    mModuleInfoManager = std::make_shared<ModuleInfoManager>();
+    mModuleInfoManager->SetModuleInfo( moduleInfo );
+
+    RunPhase( ForgePhase::ParseCommands );
+}
+
+void Forge::RunGenerateCompileCommands()
+{
+    // auto sourceFiles = mCommandListParser->getSourcePathList();
+    // 扫描指定模块的文件。
+}
+
+void Forge::RunRunTools()
+{
+    // auto compilations = FilteringCompilationDatabase( mCommandListParser->getCompilations() );
+    // auto sourceFiles = mCommandListParser->getSourcePathList();
+
+    // clang::tooling::ClangTool Tool( compilations, sourceFiles );
+    // Tool.appendArgumentsAdjuster(
+    //     clang::tooling::getInsertArgumentAdjuster( "-fsyntax-only", clang::tooling::ArgumentInsertPosition::BEGIN )
+    //     );
     // Tool.appendArgumentsAdjuster(
     //     getInsertArgumentAdjuster( "-Wno-everything", clang::tooling::ArgumentInsertPosition::END ) );
-    Tool.appendArgumentsAdjuster( getInsertArgumentAdjuster(
-        { "-###",
-          "-v",
-          "-fmodule-file=core=build/.gens/core_tests/windows/x64/release/rules/bmi/cache/interfaces/dba42005/core.ifc" },
-        clang::tooling::ArgumentInsertPosition::END ) );
+    // Tool.appendArgumentsAdjuster( getInsertArgumentAdjuster(
+    //     {
+    //         "-###",
+    //         "-v",
+    //         // "-L/home/skwy/.xmake/packages/l/libllvm/19.1.7/407a7eaa7d504e6b993031c21199dfbf/lib",
+    //     },
+    //     //
+    //     "-fmodule-file=core=build/.gens/core_tests/windows/x64/release/rules/bmi/cache/interfaces/dba42005/core.ifc"
+    //     //   },
+    //     clang::tooling::ArgumentInsertPosition::END ) );
 
-    for ( auto& file : sourceFiles )
-    {
-        compilations.getCompileCommands( file );
-        // auto& clangCompileCommands = compilations.mClangCompileCommands[file];
-        // for ( usize i = 0; i < clangCompileCommands.size(); ++i )
-        // {
-            // const auto& command = clangCompileCommands[i];
-            // for ( usize j = 0; j < command.size(); ++j )
-            // {
-            //     const auto& arg = command[j];
-            //     std::cout << "Command[" << i << "][" << j << "]: " << arg << std::endl;
-            // }
-        //     Tool.appendArgumentsAdjuster(
-        //         clang::tooling::getInsertArgumentAdjuster( command, clang::tooling::ArgumentInsertPosition::BEGIN ) );
-        // }
-    }
-    // 添加 - isystem 参数
-    // clang::tooling::ArgumentsAdjuster AddIsystem = getInsertArgumentAdjuster(
-    //     { "-isystem",
-    //       "/usr/include/c++/15.1.1",
-    //       "-isystem",
-    //       "/usr/include/c++/15.1.1/x86_64-pc-linux-gnu",
-    //       "-isystem",
-    //       "/usr/include/c++/15.1.1/backward",
-    //       "-isystem",
-    //       "/usr/lib/clang/20/include",
-    //       "-isystem",
-    //       "/usr/local/include",
-    //       "-isystem",
-    //       "/usr/include",
-    //       "-march=sapphirerapids",
-    //       //  "-Xclang",
-    //       //  "-ast-dump",
-    //       "-ftime-report",
-    //       //  "-ftime-trace=tract.json",
-    //       "-I/home/skwy/repos/nayuki_yq/build/.objs/meta_forge/linux/x86_64/release/src/meta_forge/include/meta_forge/cxx/",
-    //       "-include",
-    //       "meta_forge/meta_forge.h",
-    //       "-fmodules",
-    //       "-fmodules-cache-path=./modules-cache" },
-    //     clang::tooling::ArgumentInsertPosition::BEGIN );
+    // for ( auto& file : sourceFiles )
+    // {
+    //     compilations.getCompileCommands( file );
+    //     // auto& clangCompileCommands = compilations.mClangCompileCommands[file];
+    //     // for ( usize i = 0; i < clangCompileCommands.size(); ++i )
+    //     // {
+    //     // const auto& command = clangCompileCommands[i];
+    //     // for ( usize j = 0; j < command.size(); ++j )
+    //     // {
+    //     //     const auto& arg = command[j];
+    //     //     std::cout << "Command[" << i << "][" << j << "]: " << arg << std::endl;
+    //     // }
+    //     //     Tool.appendArgumentsAdjuster(
+    //     //         clang::tooling::getInsertArgumentAdjuster( command, clang::tooling::ArgumentInsertPosition::BEGIN
+    //     //         ) );
+    //     // }
+    // }
+    // // 添加 - isystem 参数
+    // clang::tooling::ArgumentsAdjuster AddIsystem =
+    //     getInsertArgumentAdjuster( { "-isystem",
+    //                                  "/usr/include/c++/15.1.1",
+    //                                  "-isystem",
+    //                                  "/usr/include/c++/15.1.1/x86_64-pc-linux-gnu",
+    //                                  "-isystem",
+    //                                  "/usr/include/c++/15.1.1/backward",
+    //                                  "-isystem",
+    //                                  "/usr/lib/clang/20/include",
+    //                                  "-isystem",
+    //                                  "/usr/local/include",
+    //                                  "-isystem",
+    //                                  "/usr/include",
+    //                                  "-march=sapphirerapids",
+    //                                  //  "-Xclang",
+    //                                  //  "-ast-dump",
+    //                                  "-ftime-report",
+    //                                  //  "-ftime-trace=tract.json",
+    //                                  "-fmodules",
+    //                                  "-fmodules-cache-path=./modules-cache" },
+    //                                clang::tooling::ArgumentInsertPosition::BEGIN );
 
     // Tool.appendArgumentsAdjuster( AddIsystem );
 
-    clang::ast_matchers::MatchFinder Finder;
-    StructAttributeCollector StructHandler;
-    Finder.addMatcher( StructMatcher, &StructHandler );
-    ClassAttributeCollector ClassHandler( mMetaInfoManager );
-    Finder.addMatcher( ClassMatcher, &ClassHandler );
+    // clang::ast_matchers::MatchFinder Finder;
+    // StructAttributeCollector StructHandler;
+    // Finder.addMatcher( StructMatcher, &StructHandler );
+    // ClassAttributeCollector ClassHandler( mMetaInfoManager );
+    // Finder.addMatcher( ClassMatcher, &ClassHandler );
 
-    Tool.setPrintErrorMessage( true ); // 显示错误信息
-    Tool.run( clang::tooling::newFrontendActionFactory( &Finder ).get() );
+    // Tool.setPrintErrorMessage( true ); // 显示错误信息
+    // Tool.run( clang::tooling::newFrontendActionFactory( &Finder ).get() );
 
-    RunPhase( ForgePhase::GenerateData );
+    // RunPhase( ForgePhase::GenerateData );
 }
 
 void Forge::RunGenerateData()
 {
     const std::string json_string = rfl::json::write( *mMetaInfoManager, rfl::json::pretty );
 
-    FsPath moduleAbsFolder = std::filesystem::absolute( mCommandListParser->GetModuleFolder() );
-    FsPath engineFolder = Paths::EngineFolder();
+    // FsPath moduleAbsFolder = std::filesystem::absolute( mCommandListParser->GetModuleFolder() );
+    // FsPath engineFolder = Paths::EngineFolder();
 
-    FsPath moduleSubFolder = PathHelper::RemoveCommonPrefix( moduleAbsFolder, engineFolder );
-    FsPath generatedPath = engineFolder / "build" / "generated" / moduleSubFolder;
+    // FsPath moduleSubFolder = PathHelper::RemoveCommonPrefix( moduleAbsFolder, engineFolder );
+    // FsPath generatedPath = engineFolder / "build" / "generated" / moduleSubFolder;
 
-    std::ofstream file( generatedPath / "data" / "meta_info.json" );
-    file << json_string;
-    file.close();
+    // std::ofstream file( generatedPath / "data" / "meta_info.json" );
+    // file << json_string;
+    // file.close();
 
-    RunPhase( ForgePhase::RenderTemplate );
+    // RunPhase( ForgePhase::RenderTemplate );
 }
 
 void Forge::RunRenderTemplate()

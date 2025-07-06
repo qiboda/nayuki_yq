@@ -44,3 +44,30 @@ https://github.com/Ubpa/UDRefl
 
 
 向下转型，有运行时反射，可以根据反射来判断。
+
+需要 include 路径以及预定义宏。
+
+clang++ --precompile -std=c++23 -fmodules -x c++-module -o non_copyable.pcm -I/home/skwy/repos/nayuki_yq/build/generated -fmodule-file=core.misc.singleton=/home/skwy/repos/nayuki_yq/singleton.pcm /home/skwy/repos/nayuki_yq/src/core/module/misc/non_copyable.ixx
+
+
+clang-scan-deps --format=p1689 -- clang++ --precompile -std=c++23 -I/home/skwy/repos/nayuki_yq/build/generated/ -fmodules -x c++-module -o non_copyabl
+e.pcm /home/skwy/repos/nayuki_yq/src/core/module/misc/non_copyable.ixx
+
+只能生成一个模块的.meta子模块，来对类型做补充。
+1. 那么怎么访问类型的私有方法和变量呢？
+    新增一个文件，同一个实现模块中处理。
+2. 如何避免因为导入了不存在的module，而无法生成compile_commands.json 文件。
+    提前创建好空文件，等待元数据解析后写入正确内容。
+
+导出声明模块只能有一个，但是实现模块可以有多个。
+
+外部步骤
+1. 生成compile_args.
+2. 生成compile_commands
+
+构建
+1. 构建meta_forge
+2. 构建其他模块时，运行meta_forge
+meta_forge内部步骤
+    1. 加载compile args。
+    2. 生成compile_commands.

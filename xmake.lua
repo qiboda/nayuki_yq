@@ -21,7 +21,7 @@ else
 end
 
 -- 因为目前llvm只支持MT，所以暂时设置成MT
-set_runtimes("MT")
+-- set_runtimes("MT")
 
 set_warnings("allextra", "error")
 set_languages("c17", "cxxlatest")
@@ -111,9 +111,9 @@ includes("src")
 -- includes("examples")
 
 -- 定义一个 rule
-rule("MetaForge")
-    add_deps("meta_forge")
-    before_build(function (target)
-        -- os.exec("xmake run meta_forge --module_folder " .. target:targetdir())
-        -- 你可以把 echo 换成你要执行的其他命令
-    end)
+-- rule("MetaForge")
+--     add_deps("meta")
+--     before_build(function (target)
+--         os.exec("xmake run meta_forge " .. target:name())
+--         -- 你可以把 echo 换成你要执行的其他命令
+--     end)

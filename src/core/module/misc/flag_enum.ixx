@@ -15,7 +15,7 @@ export template <typename E>
 concept IsFlagEnumConcept = IsFlagEnumValue<E>;
 
 // 位或
-template <IsFlagEnumConcept E>
+export template <IsFlagEnumConcept E>
 constexpr E operator|( E lhs, E rhs )
 {
     using U = std::underlying_type_t<E>;
@@ -23,7 +23,7 @@ constexpr E operator|( E lhs, E rhs )
 }
 
 // 位与
-template <IsFlagEnumConcept E>
+export template <IsFlagEnumConcept E>
 constexpr E operator&( E lhs, E rhs )
 {
     using U = std::underlying_type_t<E>;
@@ -31,7 +31,7 @@ constexpr E operator&( E lhs, E rhs )
 }
 
 // 位异或
-template <IsFlagEnumConcept E>
+export template <IsFlagEnumConcept E>
 constexpr E operator^( E lhs, E rhs )
 {
     using U = std::underlying_type_t<E>;
@@ -39,7 +39,7 @@ constexpr E operator^( E lhs, E rhs )
 }
 
 // 取反
-template <IsFlagEnumConcept E>
+export template <IsFlagEnumConcept E>
 constexpr E operator~( E e )
 {
     using U = std::underlying_type_t<E>;
@@ -47,7 +47,7 @@ constexpr E operator~( E e )
 }
 
 // 或等
-template <IsFlagEnumConcept E>
+export template <IsFlagEnumConcept E>
 constexpr E& operator|=( E& lhs, E rhs )
 {
     lhs = lhs | rhs;
@@ -55,7 +55,7 @@ constexpr E& operator|=( E& lhs, E rhs )
 }
 
 // 与等
-template <IsFlagEnumConcept E>
+export template <IsFlagEnumConcept E>
 constexpr E& operator&=( E& lhs, E rhs )
 {
     lhs = lhs & rhs;
@@ -63,7 +63,7 @@ constexpr E& operator&=( E& lhs, E rhs )
 }
 
 // 异或等
-template <IsFlagEnumConcept E>
+export template <IsFlagEnumConcept E>
 constexpr E& operator^=( E& lhs, E rhs )
 {
     lhs = lhs ^ rhs;

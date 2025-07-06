@@ -28,6 +28,8 @@ target(module_name)
     add_deps("meta_core")
     add_deps("core")
 
+    add_rpathdirs("/home/skwy/repos/nayuki_yq/build/linux/x86_64/release")
+
     after_build(function (target)
         for _, pkg in pairs(target:pkgs()) do
             local installdir = pkg:installdir()
