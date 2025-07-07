@@ -160,14 +160,23 @@ void ModuleInfoManager::GenerateCompileCommands( const std::string_view targetNa
             }
             else
             {
-                command.mArguments.value().push_back( "-fmodule-file=" + logicalName + "=" +
-                                                      ( mBuildBasePath / ( it->second.mLogicalName + ".pcm" ) ).string() );
+                command.mArguments.value().push_back(
+                    "-fmodule-file=" + logicalName + "=" +
+                    ( mBuildBasePath / ( it->second.mLogicalName + ".pcm" ) ).string() );
             }
         }
 
         command.mArguments.value().push_back( ixxFileInfo.mSourcePath.get() );
 
         compileCommands.push_back( command );
+    }
+
+    const std::string jsonString = rfl::json::write( compileCommands );
+
+    std::ofstream out( mBuildBasePath / "compile_commands.json" );
+    if ( out )
+    {
+        out << jsonString;
     }
 }
 
