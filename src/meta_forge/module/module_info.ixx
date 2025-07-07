@@ -10,7 +10,6 @@ module;
 
 export module meta_forge.module_info;
 
-
 import core.misc.non_copyable;
 import core;
 
@@ -106,7 +105,9 @@ export class ModuleInfoManager : public NonCopyable
     }
 
     void BuildPcmFiles( const std::string_view targetName );
-    void BuildOnePcmFile( const std::string& logicalName, const FsPath& buildBasePath );
+
+    std::vector<std::string>
+    BuildOnePcmFile( const std::string& logicalName, const FsPath& buildBasePath, const TargetInfo* targetInfo );
 
     void GenerateCompileCommands( const std::string_view targetName );
 
