@@ -28,6 +28,7 @@ module;
 module core.logger.logger;
 
 import core.logger.category;
+import core.fs.paths;
 
 #pragma region Logger
 
@@ -79,8 +80,11 @@ std::shared_ptr<spdlog::logger> Logger::CreateSyncLogger( const LoggerCategory& 
             console_sink->set_level( spdlog::level::warn );
         }
 
+        // Paths::ManuallyUpdateEngineFolder();
+        FsPath savedFolder = Paths::EngineSavedFolder();
         auto file_sink =
-            std::make_shared<spdlog::sinks::basic_file_sink_mt>( "./" + loggerCategory.GetName() + ".log", true );
+            std::make_shared<spdlog::sinks::basic_file_sink_mt>( savedFolder / "logs" / ( loggerCategory.GetName() + ".log" ),
+                                                                 true );
         if ( file_sink )
         {
             file_sink->set_level( spdlog::level::trace );

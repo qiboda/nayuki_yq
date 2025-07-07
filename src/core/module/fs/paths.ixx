@@ -6,6 +6,8 @@ module;
 
 export module core.fs.paths;
 
+import core.platform.exe;
+
 import core;
 import std;
 import core.logger.logger;
@@ -23,22 +25,37 @@ export class CORE_API Paths
   public:
     static FsPath EngineFolder()
     {
+        static FsPath sEngineFolder = ParseEngineFolder( PlatformExe::GetExePath() );
         return sEngineFolder;
     }
 
     static FsPath EngineAssetFolder()
     {
-        return sEngineFolder / "assets";
+        return EngineFolder() / "assets";
+    }
+
+    static FsPath EngineSavedFolder()
+    {
+        return EngineFolder() / "saved";
     }
 
     static FsPath EngineConfigFolder()
     {
-        return sEngineFolder / "config";
+        return EngineFolder() / "config";
     }
 
     static FsPath EnginePluginFolder()
     {
-        return sEngineFolder / "plugins";
+        return EngineFolder() / "plugins";
+    }
+
+    /**
+     * @brief
+     * 当在sEngineFolder 未初始化时使用，可以手动初始化，然后使用其他路径函数。
+     */
+    static void ManuallyUpdateEngineFolder()
+    {
+        EngineFolder();
     }
 
   protected:
@@ -57,21 +74,10 @@ export class CORE_API Paths
             dir = dir.parent_path();
             if ( dir == dir.root_path() )
             {
-                // NY_LOG_CRITICAL( LogCore,
-                //                  "Error: Cannot find engine folder from executable path: {}",
-                //                  exePath.string() );
                 return FsPath();
             }
         }
 
         return dir;
     }
-
-    static void SetEngineFolder( const FsPath& path )
-    {
-        sEngineFolder = path;
-    }
-
-  protected:
-    static FsPath sEngineFolder;
 };
