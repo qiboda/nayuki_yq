@@ -177,7 +177,11 @@ void Forge::LoadCompileArgs()
 void Forge::RunGenerateCompileCommands()
 {
     // auto sourceFiles = mCommandListParser->getSourcePathList();
-    // 扫描指定模块的文件。
+    if ( mModuleInfoManager )
+    {
+        std::string targetName = mCommandListParser->GetTargetName();
+        mModuleInfoManager->GenerateCompileCommands( targetName );
+    }
 }
 
 void Forge::RunRunTools()

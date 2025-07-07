@@ -147,13 +147,21 @@ void ModuleInfoManager::GenerateCompileCommands( const std::string_view targetNa
                                            targetInfo->mTargetFlags.get().begin(),
                                            targetInfo->mTargetFlags.get().end() );
 
-        if ( ixxFileInfo.mRequires.get() )
+        std::vector<std::string> outRequiredLogicalNames;
+        GetAllRequiredLogicalNames( ixxFileInfo.mLogicalName.get(), outRequiredLogicalNames );
+        for ( const auto& logicalName : outRequiredLogicalNames )
         {
-            for ( const auto& require : *ixxFileInfo.mRequires.get() )
+            // todo:ixxFileInfo.mSourcePath 应该替换为pcm文件路径
+            auto it = mLogicalInfoMap.find( logicalName );
+            if ( it->second.mLogicalName == "std" )
             {
-                // todo:ixxFileInfo.mSourcePath 应该替换为pcm文件路径
-                command.mArguments.value().push_back( "-fmodule-file=" + require.mLogicalName.get() + "=" +
-                                                      ixxFileInfo.mSourcePath.get() );
+                command.mArguments.value().push_back( "-fmodule-file=" + logicalName + "=" +
+                                                      ( mBuildBasePath / "std.pcm" ).string() );
+            }
+            else
+            {
+                command.mArguments.value().push_back( "-fmodule-file=" + logicalName + "=" +
+                                                      ( mBuildBasePath / ( it->second.mLogicalName + ".pcm" ) ).string() );
             }
         }
 
@@ -164,12 +172,11 @@ void ModuleInfoManager::GenerateCompileCommands( const std::string_view targetNa
 }
 
 std::vector<std::string> ModuleInfoManager::BuildOnePcmFile( const std::string& logicalName,
-                                                             const FsPath& buildBasePath,
                                                              const TargetInfo* targetInfo )
 {
     if ( logicalName == "std" )
     {
-        PcmCommands pcmCommands( buildBasePath, mModuleInfo.mProjectPath.get() );
+        PcmCommands pcmCommands( mBuildBasePath, mModuleInfo.mProjectPath.get() );
         pcmCommands.AddTargetFlags( targetInfo );
         pcmCommands.SetStdFile();
         pcmCommands.Execute();
@@ -180,11 +187,11 @@ std::vector<std::string> ModuleInfoManager::BuildOnePcmFile( const std::string& 
     std::vector<std::string> allRequiredLogicalNames;
     for ( const auto& requiredLogicalName : logicalInfo.mRequireLogicalNames )
     {
-        auto indirect = BuildOnePcmFile( requiredLogicalName, buildBasePath, targetInfo );
+        auto indirect = BuildOnePcmFile( requiredLogicalName, targetInfo );
         allRequiredLogicalNames.insert( allRequiredLogicalNames.end(), indirect.begin(), indirect.end() );
     }
 
-    PcmCommands pcmCommands( buildBasePath, mModuleInfo.mProjectPath.get() );
+    PcmCommands pcmCommands( mBuildBasePath, mModuleInfo.mProjectPath.get() );
     pcmCommands.AddTargetFlags( targetInfo );
 
     // 添加直接依赖
@@ -202,8 +209,6 @@ std::vector<std::string> ModuleInfoManager::BuildOnePcmFile( const std::string& 
 
 void ModuleInfoManager::BuildPcmFiles( const std::string_view targetName )
 {
-    FsPath buildBasePath = FsPath( mModuleInfo.mProjectPath.value() ) / ".nayuki" / "build";
-
     const TargetInfo* targetInfo = GetTargetInfo( targetName );
     if ( targetInfo == nullptr )
     {
@@ -214,7 +219,24 @@ void ModuleInfoManager::BuildPcmFiles( const std::string_view targetName )
     for ( const auto& ixxFileInfo : targetInfo->mIxxFilesInfos.get() )
     {
         std::string logicalName = ixxFileInfo.mLogicalName.get();
-        BuildOnePcmFile( logicalName, buildBasePath, targetInfo );
+        BuildOnePcmFile( logicalName, targetInfo );
+    }
+}
+
+void ModuleInfoManager::GetAllRequiredLogicalNames( const std::string& logicalName,
+                                                    std::vector<std::string>& outRequiredLogicalNames ) const
+{
+    const auto it = mLogicalInfoMap.find( logicalName );
+    if ( it != mLogicalInfoMap.end() )
+    {
+        const auto& requireLogicalNames = it->second.mRequireLogicalNames;
+        for ( const auto& requireLogicalName : requireLogicalNames )
+        {
+            GetAllRequiredLogicalNames( requireLogicalName, outRequiredLogicalNames );
+        }
+        outRequiredLogicalNames.insert( outRequiredLogicalNames.end(),
+                                        requireLogicalNames.begin(),
+                                        requireLogicalNames.end() );
     }
 }
 

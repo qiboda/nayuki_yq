@@ -6,8 +6,6 @@ module;
 
 export module core.fs.paths;
 
-import core.platform.exe;
-
 import core;
 import std;
 import core.logger.logger;
@@ -23,11 +21,7 @@ import fmt;
 export class CORE_API Paths
 {
   public:
-    static FsPath EngineFolder()
-    {
-        static FsPath sEngineFolder = ParseEngineFolder( PlatformExe::GetExePath() );
-        return sEngineFolder;
-    }
+    static FsPath EngineFolder();
 
     static FsPath EngineAssetFolder()
     {

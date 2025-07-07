@@ -60,6 +60,8 @@ export class ModuleInfoManager : public NonCopyable
     void SetModuleInfo( const ModuleInfo& info )
     {
         mModuleInfo = info;
+
+        mBuildBasePath = FsPath( mModuleInfo.mProjectPath.value() ) / ".nayuki" / "build";
     }
 
     const ModuleInfo& GetModuleInfo() const
@@ -107,14 +109,18 @@ export class ModuleInfoManager : public NonCopyable
     void BuildPcmFiles( const std::string_view targetName );
 
     std::vector<std::string>
-    BuildOnePcmFile( const std::string& logicalName, const FsPath& buildBasePath, const TargetInfo* targetInfo );
+    BuildOnePcmFile( const std::string& logicalName, const TargetInfo* targetInfo );
 
     void GenerateCompileCommands( const std::string_view targetName );
+
+    void GetAllRequiredLogicalNames( const std::string& logicalName,
+                                     std::vector<std::string>& outRequiredLogicalNames ) const;
 
     void CacheModuleInfo();
 
   private:
     ModuleInfo mModuleInfo;
+    FsPath mBuildBasePath;
 
     std::map<std::string, LogicalInfo> mLogicalInfoMap;
 };
