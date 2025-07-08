@@ -1,6 +1,7 @@
 module;
 
 #include <meta_forge/meta_forge.h>
+#include <core/logger/log.h>
 
 module meta_forge.forge;
 
@@ -18,6 +19,7 @@ import core;
 import meta_forge;
 import core.fs.paths;
 import core.misc.path;
+import core.logger.logger;
 
 class FilteringCompilationDatabase : public clang::tooling::CompilationDatabase
 {
@@ -182,17 +184,38 @@ void Forge::RunGenerateCompileCommands()
         std::string targetName = mCommandListParser->GetTargetName();
         mModuleInfoManager->GenerateCompileCommands( targetName );
     }
+
+    RunPhase( ForgePhase::RunTools );
 }
 
 void Forge::RunRunTools()
 {
-    // auto compilations = FilteringCompilationDatabase( mCommandListParser->getCompilations() );
-    // auto sourceFiles = mCommandListParser->getSourcePathList();
+    if ( mModuleInfoManager == nullptr )
+    {
+        return;
+    }
 
-    // clang::tooling::ClangTool Tool( compilations, sourceFiles );
-    // Tool.appendArgumentsAdjuster(
-    //     clang::tooling::getInsertArgumentAdjuster( "-fsyntax-only", clang::tooling::ArgumentInsertPosition::BEGIN )
-    //     );
+    const FsPath ccPath = mModuleInfoManager->GetCompileCommandsPath();
+
+    std::string errorMsg;
+    std::unique_ptr<clang::tooling::CompilationDatabase> compilations =
+        clang::tooling::JSONCompilationDatabase::loadFromFile( ccPath.string(),
+                                                               errorMsg,
+                                                               clang::tooling::JSONCommandLineSyntax::AutoDetect );
+    if ( errorMsg.empty() == false )
+    {
+        NY_LOG_ERROR( LogMetaForge,
+                      "Load compile commands from '{}' fail: {}",
+                      ccPath.parent_path().string(),
+                      errorMsg );
+        return;
+    }
+
+    auto filteringCompilations = FilteringCompilationDatabase( *compilations );
+    std::string targetName = mCommandListParser->GetTargetName();
+    auto ixxFiles = mModuleInfoManager->GetTargetAllIxxFiles( targetName );
+
+    clang::tooling::ClangTool Tool( filteringCompilations, ixxFiles );
     // Tool.appendArgumentsAdjuster(
     //     getInsertArgumentAdjuster( "-Wno-everything", clang::tooling::ArgumentInsertPosition::END ) );
     // Tool.appendArgumentsAdjuster( getInsertArgumentAdjuster(
@@ -201,29 +224,9 @@ void Forge::RunRunTools()
     //         "-v",
     //         // "-L/home/skwy/.xmake/packages/l/libllvm/19.1.7/407a7eaa7d504e6b993031c21199dfbf/lib",
     //     },
-    //     //
-    //     "-fmodule-file=core=build/.gens/core_tests/windows/x64/release/rules/bmi/cache/interfaces/dba42005/core.ifc"
-    //     //   },
     //     clang::tooling::ArgumentInsertPosition::END ) );
 
-    // for ( auto& file : sourceFiles )
-    // {
-    //     compilations.getCompileCommands( file );
-    //     // auto& clangCompileCommands = compilations.mClangCompileCommands[file];
-    //     // for ( usize i = 0; i < clangCompileCommands.size(); ++i )
-    //     // {
-    //     // const auto& command = clangCompileCommands[i];
-    //     // for ( usize j = 0; j < command.size(); ++j )
-    //     // {
-    //     //     const auto& arg = command[j];
-    //     //     std::cout << "Command[" << i << "][" << j << "]: " << arg << std::endl;
-    //     // }
-    //     //     Tool.appendArgumentsAdjuster(
-    //     //         clang::tooling::getInsertArgumentAdjuster( command, clang::tooling::ArgumentInsertPosition::BEGIN
-    //     //         ) );
-    //     // }
-    // }
-    // // 添加 - isystem 参数
+    // 添加 - isystem 参数
     // clang::tooling::ArgumentsAdjuster AddIsystem =
     //     getInsertArgumentAdjuster( { "-isystem",
     //                                  "/usr/include/c++/15.1.1",
@@ -248,33 +251,41 @@ void Forge::RunRunTools()
 
     // Tool.appendArgumentsAdjuster( AddIsystem );
 
-    // clang::ast_matchers::MatchFinder Finder;
-    // StructAttributeCollector StructHandler;
-    // Finder.addMatcher( StructMatcher, &StructHandler );
-    // ClassAttributeCollector ClassHandler( mMetaInfoManager );
-    // Finder.addMatcher( ClassMatcher, &ClassHandler );
+    clang::ast_matchers::MatchFinder Finder;
+    StructAttributeCollector StructHandler;
+    Finder.addMatcher( StructMatcher, &StructHandler );
+    ClassAttributeCollector ClassHandler( mMetaInfoManager );
+    Finder.addMatcher( ClassMatcher, &ClassHandler );
 
-    // Tool.setPrintErrorMessage( true ); // 显示错误信息
-    // Tool.run( clang::tooling::newFrontendActionFactory( &Finder ).get() );
+    Tool.setPrintErrorMessage( true ); // 显示错误信息
+    Tool.run( clang::tooling::newFrontendActionFactory( &Finder ).get() );
 
-    // RunPhase( ForgePhase::GenerateData );
+    RunPhase( ForgePhase::GenerateData );
 }
 
 void Forge::RunGenerateData()
 {
     const std::string json_string = rfl::json::write( *mMetaInfoManager, rfl::json::pretty );
 
-    // FsPath moduleAbsFolder = std::filesystem::absolute( mCommandListParser->GetModuleFolder() );
-    // FsPath engineFolder = Paths::EngineFolder();
+    std::string targetName = mCommandListParser->GetTargetName();
+    FsPath engineFolder = Paths::EngineFolder();
+    FsPath generatedPath = engineFolder / ".nayuki" / "generated" / targetName;
 
-    // FsPath moduleSubFolder = PathHelper::RemoveCommonPrefix( moduleAbsFolder, engineFolder );
-    // FsPath generatedPath = engineFolder / "build" / "generated" / moduleSubFolder;
+    FsPath dataPath = generatedPath / "data";
+    NY_LOG_INFO( LogMetaForge, "Generate Data path: {}", dataPath.string() );
 
-    // std::ofstream file( generatedPath / "data" / "meta_info.json" );
-    // file << json_string;
-    // file.close();
+    if ( std::filesystem::exists( dataPath ) == false )
+    {
+        std::filesystem::create_directories( dataPath );
+    }
 
-    // RunPhase( ForgePhase::RenderTemplate );
+    std::ofstream file( dataPath / "meta_info.json" );
+    file << json_string;
+    file.close();
+
+    NY_LOG_INFO( LogMetaForge, "Generate Data content: {}", json_string );
+
+    RunPhase( ForgePhase::RenderTemplate );
 }
 
 void Forge::RunRenderTemplate()

@@ -26,3 +26,4 @@ target(module_name)
     -- set_strip("all")
 
     add_deps("core")
+    add_deps("meta_core")

@@ -6,6 +6,11 @@ module;
 #include <fmt/core.h>
 #include <fmt/ranges.h>
 
+#include "clang/Tooling/Tooling.h"
+#include "clang/Frontend/FrontendActions.h"
+#include "clang/Basic/FileManager.h"
+#include "llvm/Support/VirtualFileSystem.h"
+
 module meta_forge.module_info;
 
 import std;
@@ -34,17 +39,31 @@ struct PcmCommands
 
         mCommands.push_back( "clang++" );
         mCommands.push_back( "--precompile" );
+        mCommands.push_back( "-###" );
+        mCommands.push_back( "-v" );
         mCommands.push_back( "-fmodules" );
+        mCommands.push_back( "-x" );
+        mCommands.push_back( "c++-module" );
         mCommands.push_back( std::string( "-fmodules-cache-path=" ) + ( buildBasePath / "modules_cache" ).string() );
+
+        mCommands.push_back( "-isystem" );
+        mCommands.push_back( "/usr/include/c++/15.1.1" );
+        mCommands.push_back( "-isystem" );
+        mCommands.push_back( "/usr/include/c++/15.1.1/x86_64-pc-linux-gnu" );
+        mCommands.push_back( "-isystem" );
+        mCommands.push_back( "/usr/include/c++/15.1.1/backward" );
+        mCommands.push_back( "-isystem" );
+        mCommands.push_back( "/usr/lib/clang/20/include" );
+        mCommands.push_back( "-isystem" );
+        mCommands.push_back( "/usr/local/include" );
+        mCommands.push_back( "-isystem" );
+        mCommands.push_back( "/usr/include" );
 
         mCommands.push_back( "-working-directory" );
         mCommands.push_back( projectPath.string() );
 
         // 避免隐式的重复构建标准库中的模块
         // mCommands.push_back( "-fno-implicit-modules" );
-
-        mCommands.push_back( "-x" );
-        mCommands.push_back( "c++-module" );
     }
 
     void AddTargetFlags( const TargetInfo* targetInfo )
@@ -108,14 +127,22 @@ struct PcmCommands
                 std::filesystem::create_directories( mOutputFile.parent_path() );
             }
 
+            auto FS = llvm::vfs::getRealFileSystem();
+            clang::FileSystemOptions FO;
+            auto FileMgr = new clang::FileManager( FO, FS );
+
             // 执行编译命令
             auto cmd = fmt::format( "{}", fmt::join( mCommands, " " ) );
             NY_LOG_INFO( LogMetaForge, "Building PCM file: {} {}", mOutputFile.string(), cmd );
-            i32 result = std::system( cmd.c_str() );
-            if ( result != 0 )
-            {
-                NY_LOG_ERROR( LogMetaForge, "Failed to build PCM file: {}", mOutputFile.string() );
-            }
+            // i32 result = std::system( cmd.c_str() );
+            clang::tooling::ToolInvocation Invocation( mCommands,
+                                                       std::make_unique<clang::GenerateModuleInterfaceAction>(),
+                                                       FileMgr );
+            Invocation.run();
+            // if ( result != 0 )
+            // {
+            //     NY_LOG_ERROR( LogMetaForge, "Failed to build PCM file: {}", mOutputFile.string() );
+            // }
         }
     }
 };
@@ -141,28 +168,46 @@ void ModuleInfoManager::GenerateCompileCommands( const std::string_view targetNa
 
         // Add the compile arguments
         command.mArguments.value().push_back( "clang" );
-        command.mArguments.value().push_back( "-c1" );
+        // command.mArguments.value().push_back( "-c1" );
+        command.mArguments.value().push_back( "-fsyntax-only" );
+        // mCommands.push_back( "--precompile" );
+        command.mArguments.value().push_back( "-fmodules" );
+        command.mArguments.value().push_back( "-x" );
+        command.mArguments.value().push_back( "c++-module" );
         command.mArguments.value().push_back( "-fsyntax-only" );
         command.mArguments.value().insert( command.mArguments.value().end(),
                                            targetInfo->mTargetFlags.get().begin(),
                                            targetInfo->mTargetFlags.get().end() );
+
+        command.mArguments.value().push_back( "-isystem" );
+        command.mArguments.value().push_back( "/usr/include/c++/15.1.1" );
+        command.mArguments.value().push_back( "-isystem" );
+        command.mArguments.value().push_back( "/usr/include/c++/15.1.1/x86_64-pc-linux-gnu" );
+        command.mArguments.value().push_back( "-isystem" );
+        command.mArguments.value().push_back( "/usr/include/c++/15.1.1/backward" );
+        command.mArguments.value().push_back( "-isystem" );
+        command.mArguments.value().push_back( "/usr/lib/clang/20/include" );
+        command.mArguments.value().push_back( "-isystem" );
+        command.mArguments.value().push_back( "/usr/local/include" );
+        command.mArguments.value().push_back( "-isystem" );
+        command.mArguments.value().push_back( "/usr/include" );
 
         std::vector<std::string> outRequiredLogicalNames;
         GetAllRequiredLogicalNames( ixxFileInfo.mLogicalName.get(), outRequiredLogicalNames );
         for ( const auto& logicalName : outRequiredLogicalNames )
         {
             // todo:ixxFileInfo.mSourcePath 应该替换为pcm文件路径
-            auto it = mLogicalInfoMap.find( logicalName );
-            if ( it->second.mLogicalName == "std" )
+            if ( logicalName == "std" )
             {
                 command.mArguments.value().push_back( "-fmodule-file=" + logicalName + "=" +
                                                       ( mBuildBasePath / "std.pcm" ).string() );
             }
             else
             {
+                auto it = mLogicalInfoMap.find( logicalName );
                 command.mArguments.value().push_back(
                     "-fmodule-file=" + logicalName + "=" +
-                    ( mBuildBasePath / ( it->second.mLogicalName + ".pcm" ) ).string() );
+                    ( mBuildBasePath / it->second.mTargetName / ( it->second.mLogicalName + ".pcm" ) ).string() );
             }
         }
 
@@ -172,8 +217,7 @@ void ModuleInfoManager::GenerateCompileCommands( const std::string_view targetNa
     }
 
     const std::string jsonString = rfl::json::write( compileCommands );
-
-    std::ofstream out( mBuildBasePath / "compile_commands.json" );
+    std::ofstream out( GetCompileCommandsPath() );
     if ( out )
     {
         out << jsonString;

@@ -70,7 +70,7 @@ export class ModuleInfoManager : public NonCopyable
     }
 
   public:
-    bool HasTarget( std::string_view targetName ) const
+    bool HasTarget( const std::string_view targetName ) const
     {
         for ( const auto& target : mModuleInfo.mTargets.get() )
         {
@@ -82,7 +82,7 @@ export class ModuleInfoManager : public NonCopyable
         return false;
     }
 
-    bool TargetCanMeta( std::string_view targetName ) const
+    bool TargetCanMeta( const std::string_view targetName ) const
     {
         for ( const auto& target : mModuleInfo.mTargets.get() )
         {
@@ -94,7 +94,7 @@ export class ModuleInfoManager : public NonCopyable
         return false;
     }
 
-    const TargetInfo* GetTargetInfo( std::string_view targetName ) const
+    const TargetInfo* GetTargetInfo( const std::string_view targetName ) const
     {
         for ( const auto& target : mModuleInfo.mTargets.get() )
         {
@@ -106,10 +106,30 @@ export class ModuleInfoManager : public NonCopyable
         return nullptr;
     }
 
+    std::vector<std::string> GetTargetAllIxxFiles( const std::string_view targetName )
+    {
+        auto projectPath = mModuleInfo.mProjectPath.get();
+
+        std::vector<std::string> ixxFilePaths;
+        const TargetInfo* targetInfo = GetTargetInfo( targetName );
+        if ( targetInfo )
+        {
+            for ( auto& ixx : targetInfo->mIxxFilesInfos.get() )
+            {
+                ixxFilePaths.push_back( ( projectPath / FsPath( ixx.mSourcePath.get() ) ).string() );
+            }
+        }
+        return ixxFilePaths;
+    }
+
+    const FsPath GetCompileCommandsPath() const
+    {
+        return mBuildBasePath / "compile_commands.json";
+    }
+
     void BuildPcmFiles( const std::string_view targetName );
 
-    std::vector<std::string>
-    BuildOnePcmFile( const std::string& logicalName, const TargetInfo* targetInfo );
+    std::vector<std::string> BuildOnePcmFile( const std::string& logicalName, const TargetInfo* targetInfo );
 
     void GenerateCompileCommands( const std::string_view targetName );
 
