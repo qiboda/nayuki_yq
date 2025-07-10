@@ -44,28 +44,30 @@ function main()
                 if #json_out["rules"] > 1 then
                     print("Warning: More than one rule found for " .. ixx)
                 end
-                if #json_out["rules"][1]["provides"] > 1 then
-                    print("Warning: More than one provide found for " .. ixx)
-                end
-                ixxfile_info = {
-                    source_path = ixx,
-                    logical_name = json_out["rules"][1]["provides"][1]["logical-name"],
-                    requires = json_out["rules"][1].requires,
-                }
-                table.insert(all_ixxfiles_info, ixxfile_info)
-
-                if is_can_meta then
-                    -- 新的logical_name
-                    local logical_meta_module_name = ixxfile_info.logical_name .. ".meta"
-                    local target_path = project.directory() .. "/" .. ".nayuki/generated/".. target:name()
-                    local logical_meta_path = target_path .. "/module/" .. logical_meta_module_name .. ".ixx"
-                    local logical_impl_path = target_path .. "/impl/" .. ixxfile_info.logical_name .. ".cpp"
-
-                    if os.isfile(logical_meta_path) == false then
-                        io.writefile(logical_meta_path, "export module " .. logical_meta_module_name .. ";\n")
+                if json_out["rules"][1]["provides"] ~= nil then
+                    if #json_out["rules"][1]["provides"] > 1 then
+                        print("Warning: More than one provide found for " .. ixx)
                     end
-                    if os.isfile(logical_impl_path) == false then
-                        io.writefile(logical_impl_path, "module " .. ixxfile_info.logical_name .. ";\n")
+                    ixxfile_info = {
+                        source_path = ixx,
+                        logical_name = json_out["rules"][1]["provides"][1]["logical-name"],
+                        requires = json_out["rules"][1].requires,
+                    }
+                    table.insert(all_ixxfiles_info, ixxfile_info)
+
+                    if is_can_meta then
+                        -- 新的logical_name
+                        local logical_meta_module_name = ixxfile_info.logical_name .. ".meta"
+                        local target_path = project.directory() .. "/" .. ".nayuki/generated/".. target:name()
+                        local logical_meta_path = target_path .. "/module/" .. logical_meta_module_name .. ".ixx"
+                        local logical_impl_path = target_path .. "/impl/" .. ixxfile_info.logical_name .. ".cpp"
+
+                        if os.isfile(logical_meta_path) == false then
+                            io.writefile(logical_meta_path, "export module " .. logical_meta_module_name .. ";\n")
+                        end
+                        if os.isfile(logical_impl_path) == false then
+                            io.writefile(logical_impl_path, "module " .. ixxfile_info.logical_name .. ";\n")
+                        end
                     end
                 end
             end
