@@ -21,77 +21,6 @@ import core.fs.paths;
 import core.misc.path;
 import core.logger.logger;
 
-class FilteringCompilationDatabase : public clang::tooling::CompilationDatabase
-{
-  public:
-    FilteringCompilationDatabase( CompilationDatabase& Inner )
-        : InnerDB( Inner )
-    {
-    }
-
-    std::vector<clang::tooling::CompileCommand> getCompileCommands( llvm::StringRef FilePath ) const override
-    {
-        auto Commands = InnerDB.getCompileCommands( FilePath );
-
-        // mClangCompileCommands[FilePath.str()].resize( Commands.size() );
-
-        for ( usize j = 0; j < Commands.size(); ++j )
-        {
-            // auto& ClangCommand = mClangCompileCommands[FilePath.str()][j];
-            // ClangCommand.clear();
-            auto& Command = Commands[j];
-
-            std::vector<std::string> Filtered;
-            for ( usize i = 0; i < Command.CommandLine.size(); ++i )
-            {
-                const auto& Arg = Command.CommandLine[i];
-                if ( Arg == "/W4" )
-                    continue;
-                // 不编译
-                if ( Arg == "/c" )
-                    continue;
-                if ( Arg.find( "/Fobuild" ) != std::string::npos )
-                    continue;
-                if ( Arg == "/WX" )
-                    continue;
-                if ( Arg == "/Zc:preprocessor" )
-                    continue;
-                if ( Arg == "/std:c++latest" )
-                {
-                    // 可能是clang的c++20
-                    // ClangCommand.push_back( "-std=c++20" );
-                    continue;
-                }
-                if ( Arg == "/reference" )
-                {
-                    // const auto& RefFile = Command.CommandLine[i + 1];
-                    // ClangCommand.push_back( "-fmodule-file=" + RefFile );
-                    i += 1;
-                    continue;
-                }
-                Filtered.push_back( Arg );
-            }
-            Command.CommandLine = std::move( Filtered );
-        }
-        return Commands;
-    }
-
-    std::vector<std::string> getAllFiles() const override
-    {
-        return InnerDB.getAllFiles();
-    }
-
-    std::vector<clang::tooling::CompileCommand> getAllCompileCommands() const override
-    {
-        return InnerDB.getAllCompileCommands(); // 可选：也做过滤
-    }
-
-    // mutable std::map<std::string, std::vector<std::vector<std::string>>> mClangCompileCommands;
-
-  private:
-    CompilationDatabase& InnerDB;
-};
-
 void Forge::Init( usize argc, const char** argv )
 {
     this->mArgc = argc;
@@ -211,11 +140,10 @@ void Forge::RunRunTools()
         return;
     }
 
-    auto filteringCompilations = FilteringCompilationDatabase( *compilations );
     std::string targetName = mCommandListParser->GetTargetName();
     auto ixxFiles = mModuleInfoManager->GetTargetAllIxxFiles( targetName );
 
-    clang::tooling::ClangTool Tool( filteringCompilations, ixxFiles );
+    clang::tooling::ClangTool Tool( *compilations, ixxFiles );
     // Tool.appendArgumentsAdjuster(
     //     getInsertArgumentAdjuster( "-Wno-everything", clang::tooling::ArgumentInsertPosition::END ) );
     // Tool.appendArgumentsAdjuster( getInsertArgumentAdjuster(
