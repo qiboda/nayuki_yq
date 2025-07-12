@@ -1,15 +1,16 @@
 module;
 
-import core;
+#include "module_export.h"
 
-export module async_compute_task_pool;
+export module io_task_pool;
 
 import stdexec;
+import core;
 
-export class TASK_API AsyncComputeTaskPool
+export class TASK_API IOTaskPool
 {
   public:
-    AsyncComputeTaskPool()
+    IOTaskPool()
         : mStaticThreadPool( 8 )
         , mScheduler( mStaticThreadPool.get_scheduler() )
     {

@@ -1,3 +1,5 @@
+module;
+
 #include <module_export.h>
 
 export module task_manager;

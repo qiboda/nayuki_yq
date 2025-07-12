@@ -1,9 +1,11 @@
 module ;
 
-import core;
+#include "module_export.h"
 
 export module compute_task_pool;
 
+import std;
+import core;
 import stdexec;
 
 namespace TaskPoolDetail
