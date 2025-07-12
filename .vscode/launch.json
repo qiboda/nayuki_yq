@@ -25,6 +25,19 @@
                 // "${workspaceFolder}/examples/exp"
             ],
             "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Launch linux core_tests",
+            "program": "xmake",
+            "args": [
+                "run",
+                "core_tests"
+                // "--compilations=${workspaceFolder}/.vscode/",
+                // "${workspaceFolder}/examples/exp"
+            ],
+            "cwd": "${workspaceFolder}"
         }
     ]
 }

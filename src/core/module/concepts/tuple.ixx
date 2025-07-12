@@ -10,7 +10,7 @@ import std;
  * @tparam Tuple tuple类型
  * @tparam Elem 元素类型
  */
-template <typename Tuple, typename Elem>
+export template <typename Tuple, typename Elem>
 struct TupleIndexTrait;
 
 export template <typename... T, typename Elem>
@@ -54,7 +54,7 @@ concept IsInTupleConcept = IsInTuple<Tuple, Elem>;
 /**
  * @brief 检测是否一个Tuple是另一个Tuple的子集。
  */
-template <typename Tuple, typename SubTuple>
+export template <typename Tuple, typename SubTuple>
 struct TupleSubsetTrait;
 
 export template <typename... T, typename... U>
@@ -74,7 +74,7 @@ inline constexpr std::vector<usize> TupleSubsetIndex = TupleSubsetTrait<Tuple, S
 
 #pragma region TupleFilterType
 
-template <typename TTuple1, typename TTuple2>
+export template <typename TTuple1, typename TTuple2>
 struct TupleCat;
 
 export template <typename... T1, typename... T2>
@@ -86,31 +86,31 @@ struct TupleCat<std::tuple<T1...>, std::tuple<T2...>>
 export template <typename TTuple1, typename TTuple2>
 using TupleCatType = TupleCat<TTuple1, TTuple2>::Type;
 
-template <template <typename> typename TFilter, typename... T>
+export template <template <typename> typename TFilter, typename... T>
 struct TypePackFilter;
 
-template <template <typename> typename TFilter, typename... Ts>
+export template <template <typename> typename TFilter, typename... Ts>
 using TypePackFilterType = TypePackFilter<TFilter, Ts...>::Type;
 
-template <template <typename> typename TFilter>
+export template <template <typename> typename TFilter>
 struct TypePackFilter<TFilter>
 {
     using Type = std::tuple<>;
 };
 
-template <template <typename> typename TFilter, typename T>
+export template <template <typename> typename TFilter, typename T>
 struct TypePackFilter<TFilter, T>
 {
     using Type = std::conditional_t<TFilter<std::decay_t<T>>::Value, std::tuple<T>, std::tuple<>>;
 };
 
-template <template <typename> typename TFilter, typename T, typename... Ts>
+export template <template <typename> typename TFilter, typename T, typename... Ts>
 struct TypePackFilter<TFilter, T, Ts...>
 {
     using Type = TupleCatType<TypePackFilterType<TFilter, T>, TypePackFilterType<TFilter, Ts...>>;
 };
 
-template <template <typename> typename TFilter, typename TTuple>
+export template <template <typename> typename TFilter, typename TTuple>
 struct TupleFilter;
 
 export template <template <typename> typename TFilter, typename... T>
@@ -126,7 +126,7 @@ using TupleFilterType = TupleFilter<TFilter, TTuple>::Type;
 
 #pragma region TupleApply
 
-template <typename TTuple>
+export template <typename TTuple>
 struct TupleApply;
 
 export template <typename... T>

@@ -7,7 +7,9 @@ target("core_tests")
     set_group("tests")
 
     -- 默认情况下不编译
-    set_default(true)
+    set_default(false)
+
+    add_rpathdirs("@loader_path")
 
     add_packages("gtest")
     add_deps("core")

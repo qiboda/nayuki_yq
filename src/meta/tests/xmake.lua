@@ -11,9 +11,12 @@ target("meta_tests")
     set_group("tests")
 
     --默认情况下不编译
-    set_default(true)
+    set_default(false)
 
     add_packages("gtest")
+
+    -- 指定二进制执行文件路径作为运行s时查询路径
+    add_rpathdirs("@loader_path")
 
     --添加本地target依赖
     add_deps("core")

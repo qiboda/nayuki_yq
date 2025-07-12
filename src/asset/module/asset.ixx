@@ -11,9 +11,9 @@ import core;
 
 export ASSET_API NY_LOG_CATEGORY( LogAsset );
 
-class CLASS(a class a) A
+class CLASS( a class a ) A
 {
   public:
-    PROPERTY(alksjdf)
+    PROPERTY( alksjdf )
     i32 k;
 };

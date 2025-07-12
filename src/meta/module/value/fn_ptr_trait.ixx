@@ -43,7 +43,7 @@ struct FnPtrTrait : std::false_type, public FnPtrInfo
 
     virtual std::any Invoke( FnParamValues&& params ) const override
     {
-        UNUSED_VARS(params);
+        UNUSED_VARS( params );
         return {};
     }
 };

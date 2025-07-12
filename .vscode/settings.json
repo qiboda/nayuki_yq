@@ -24,6 +24,7 @@
         "intrin",
         "ipairs",
         "IRAII",
+        "iregistry",
         "IWYU",
         "ixxfile",
         "ixxfiles",
