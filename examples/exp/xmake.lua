@@ -4,7 +4,9 @@ target("exp")
     set_kind("binary")
     add_files("**.cpp")
 
-    set_default(false)
+    -- set_default(false)
     set_group("examples")
 
     add_deps("core")
+
+    set_policy("build.c++.modules", true)

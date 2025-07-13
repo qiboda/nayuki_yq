@@ -1,10 +1,12 @@
--- set_languages("c++23")
+set_languages("c++23")
 
--- target("box_app")
---     set_kind("binary")
---     add_files("**.cpp")
+target("box_app")
+    set_kind("binary")
+    add_files("**.cpp")
 
---     set_default(false)
---     set_group("examples")
+    -- set_default(false)
+    set_group("examples")
 
---     add_deps("core")
+    add_deps("core")
+
+    set_policy("build.c++.modules", true)

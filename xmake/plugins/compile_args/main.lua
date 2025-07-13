@@ -35,11 +35,14 @@ function main()
 
             is_can_meta = can_meta(target)
 
+            local target_path = project.directory() .. "/" .. ".nayuki/generated/".. target:name()
+
             all_ixxfiles_info = {}
             json.mark_as_array(all_ixxfiles_info)
             local base_cmd = "clang-scan-deps --format=p1689 -- clang++ --precompile -fmodules -x c++-module"
             for _, ixx in ipairs(ixxfiles) do
                 local out = os.iorunv(base_cmd .. " " .. os.args(flags) .. " " .. ixx)
+
                 local json_out = json.decode(out) -- 解析输出的 JSON
                 if #json_out["rules"] > 1 then
                     print("Warning: More than one rule found for " .. ixx)
@@ -55,10 +58,11 @@ function main()
                     }
                     table.insert(all_ixxfiles_info, ixxfile_info)
 
+                    io.writefile(target_path .. "/scan/" .. ixxfile_info.logical_name .. ".scan.json", out);
+
                     if is_can_meta then
                         -- 新的logical_name
                         local logical_meta_module_name = ixxfile_info.logical_name .. ".meta"
-                        local target_path = project.directory() .. "/" .. ".nayuki/generated/".. target:name()
                         local logical_meta_path = target_path .. "/module/" .. logical_meta_module_name .. ".ixx"
                         local logical_impl_path = target_path .. "/impl/" .. ixxfile_info.logical_name .. ".cpp"
 

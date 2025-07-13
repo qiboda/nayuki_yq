@@ -523,3 +523,8 @@
 //     psoDesc.DSVFormat = mDepthStencilFormat;
 //     NY_ASSERT_MSG_HR( md3dDevice->CreateGraphicsPipelineState( &psoDesc, IID_PPV_ARGS( &mPSO ) ) );
 // }
+
+void main()
+{
+    return;
+}
