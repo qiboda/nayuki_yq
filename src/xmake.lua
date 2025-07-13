@@ -8,7 +8,7 @@ add_requires("imgui", { configs = { shared = true}, debug = true })
 add_requires("glfw", "glm", "stb", "rpmalloc", {})
 
 add_requires("fmt")
-add_requires("glm", { configs = { modules = true }, debug = true })
+add_requires("glm", { configs = { modules = true }, system = false, debug = true })
 
 add_requires("shaderc", { configs = { shared = false }, debug = true })
 add_requires("tbb", { configs = { shared = true }, debug = true})

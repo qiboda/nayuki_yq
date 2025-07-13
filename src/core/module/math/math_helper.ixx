@@ -71,7 +71,7 @@ export class CORE_API MathHelper
     //                                 radius * sinf(phi) * sinf(theta), 1.0f);
     // }
 
-    static Vec3 RandUnitVec3();
+    static glm::vec3 RandUnitVec3();
     // static vec3 RandHemisphereUnitVec3(glm::vec3 n);
 
     static const f32 Infinity;

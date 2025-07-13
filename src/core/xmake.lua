@@ -21,6 +21,8 @@ target(module_name)
     -- 启用dll export
     add_defines(module_name_macro .. "_EXPORTS")
 
+    add_defines("GLM_FORCE_DEPTH_ZERO_TO_ONE")
+
     -- include 自动生成的文件。public 意味着依赖这个 target 的其他 target 也会使用这个 includedirs。
     local gen_dir = path.join(os.projectdir(), "build", "generated")
     add_includedirs(gen_dir, { public = true })

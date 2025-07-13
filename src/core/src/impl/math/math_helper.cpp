@@ -37,14 +37,14 @@ f32 MathHelper::AngleFromXY( f32 x, f32 y )
     return theta;
 }
 
-Vec3 MathHelper::RandUnitVec3()
+glm::vec3 MathHelper::RandUnitVec3()
 {
 
     // Keep trying until we get a point on/in the hemisphere.
     while ( true )
     {
         // Generate random point in the cube [-1,1]^3.
-        Vec3 v = Vec3( MathHelper::RandF( -1.0f, 1.0f ),
+        glm::vec3 v = glm::vec3( MathHelper::RandF( -1.0f, 1.0f ),
                        MathHelper::RandF( -1.0f, 1.0f ),
                        MathHelper::RandF( -1.0f, 1.0f ) );
 
@@ -57,8 +57,7 @@ Vec3 MathHelper::RandUnitVec3()
             continue;
         }
 
-        // glm::
-        return normalize( v );
+        return glm::normalize( v );
     }
 }
 
