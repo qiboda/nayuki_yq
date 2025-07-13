@@ -2,6 +2,7 @@
 
 // #include <cstdlib>
 #include <cassert>
+#include <fmt/format.h>
 
 #pragma region disable_warning
 

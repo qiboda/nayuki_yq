@@ -12,6 +12,8 @@ target(module_name)
 
     set_group("binary")
 
+    set_default(false)
+
     -- modules
     add_files("module/**.ixx", { public = true })
     add_files("src/**.cpp")
