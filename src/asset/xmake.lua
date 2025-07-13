@@ -13,7 +13,7 @@ target(module_name)
     add_includedirs("include", { public = true })
     add_headerfiles("include/**.h", { public = true })
 
-    add_includedirs(os.projectdir() ..  "/.nayuki_yq/generated/".. module_name .. "/module", { public = true })
+    -- add_includedirs(os.projectdir() ..  "/.nayuki_yq/generated/".. module_name .. "/module", { public = true })
 
     -- local pheader_file = path.join("include", module_name, module_name .. ".h");
     --  set_pcxxheader(pheader_file)

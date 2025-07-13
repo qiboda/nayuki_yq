@@ -9,8 +9,8 @@ target(module_name)
 
     add_files("module/**.ixx", { public = true })
     add_files("src/**.cpp")
-    add_includedirs("include", { public = true })
-    add_headerfiles("include/**.h", { public = true })
+    -- add_includedirs("include", { public = true })
+    -- add_headerfiles("include/**.h", { public = true })
 
     -- local pheader_file = path.join("include", module_name, module_name .. ".h");
     -- set_pcxxheader(pheader_file)
