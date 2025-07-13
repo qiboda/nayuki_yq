@@ -1,14 +1,23 @@
 
-#pragma once
+module;
 
+#include "module_export.h"
+#include <render_core/render_core.h>
 #include <memory>
-#include <nayuki_yq/nayuki_yq.h>
+
+export module nayuki.application;
+
+import core;
+import core.memory;
+import core.misc.iraii;
 import render_core.window;
-import render_core.instance;
+import render_core.render_instance;
+import nayuki;
+
 // #include <render_core/window.h>
 // #include <render_core/instance.h>
 
-class NAYUKI_YQ_API Application : public IRAII
+export class NAYUKI_API Application : public IRAII
 {
   public:
     Application();

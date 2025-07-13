@@ -1,7 +1,11 @@
-#include <memory>
-#include <nayuki_yq/nayuki_yq.h>
+module;
 
-#include <nayuki_yq/application.h>
+#include <memory>
+
+module nayuki.application;
+
+// import std;
+import nayuki;
 
 Application::Application()
 {

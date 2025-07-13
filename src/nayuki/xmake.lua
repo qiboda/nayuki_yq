@@ -1,6 +1,6 @@
 
-module_name = "nayuki_yq"
-module_name_macro = "NAYUKI_YQ"
+module_name = "nayuki"
+module_name_macro = "NAYUKI"
 
 target(module_name)
     set_kind("shared")
@@ -9,9 +9,10 @@ target(module_name)
 
     set_policy("build.c++.modules", true)
 
+    add_files("module/**.ixx", { public = true })
     add_files("src/**.cpp")
     add_includedirs("include", { public = true })
-    add_headerfiles("include/**.h", { public = true })
+    -- add_headerfiles("include/**.h", { public = true })
 
     --  set_pcxxheader("include/".. module_name .. "/" .. module_name .. ".h")
 
