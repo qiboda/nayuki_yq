@@ -38,6 +38,8 @@ add_cxxflags("cl::/Zc:preprocessor")
 
 add_cxxflags("clang::-fPIC")
 
+-- 允许宏在module之前
+add_cxxflags("cl::/Wv:18")
 add_cxxflags("cl::/utf-8")
 -- 检测到有类型没有dll导出，但是被用在了dll接口中时报警告。
 -- 由于标准库也会报警，太烦人了。禁用。

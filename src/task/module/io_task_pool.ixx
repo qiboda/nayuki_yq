@@ -1,10 +1,10 @@
 module;
 
 #include "module_export.h"
+#include <exec/static_thread_pool.hpp>
 
 export module io_task_pool;
 
-import stdexec;
 import core;
 
 export class TASK_API IOTaskPool
@@ -17,6 +17,6 @@ export class TASK_API IOTaskPool
     }
 
   protected:
-    static_thread_pool mStaticThreadPool;
-    static_thread_pool::scheduler mScheduler;
+    exec::static_thread_pool mStaticThreadPool;
+    exec::static_thread_pool::scheduler mScheduler;
 };

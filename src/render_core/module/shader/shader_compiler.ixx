@@ -10,7 +10,7 @@ export module render_core.shader_compiler;
 import render_core;
 import core.misc.iraii;
 import core.misc.singleton;
-import core.logger;
+import core.logger.logger;
 import core;
 import std;
 

@@ -1,12 +1,12 @@
-module ;
+module;
 
 #include "module_export.h"
+#include <exec/static_thread_pool.hpp>
 
 export module compute_task_pool;
 
 import std;
 import core;
-import stdexec;
 
 namespace TaskPoolDetail
 {
@@ -29,24 +29,24 @@ export class TASK_API ComputeTaskPool
     }
 
   public:
-    sender auto Schedule()
+    stdexec::sender auto Schedule()
     {
-        return schedule( mScheduler );
+        return stdexec::schedule( mScheduler );
     }
 
     template <typename Func>
-    sender auto Then( Func&& func )
+    stdexec::sender auto Then( Func&& func )
     {
-        return schedule( mScheduler ) | then( func );
+        return stdexec::schedule( mScheduler ) | stdexec::then( func );
     }
 
     template <typename... Func>
-    sender auto WhenAll( Func&&... func )
+    stdexec::sender auto WhenAll( Func&&... func )
     {
-        return schedule( mScheduler ) | when_all( func... );
+        return stdexec::schedule( mScheduler ) | stdexec::when_all( func... );
     }
 
   protected:
-    static_thread_pool mStaticThreadPool;
-    static_thread_pool::scheduler mScheduler;
+    exec::static_thread_pool mStaticThreadPool;
+    exec::static_thread_pool::scheduler mScheduler;
 };

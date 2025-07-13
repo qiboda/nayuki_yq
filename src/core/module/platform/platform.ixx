@@ -6,6 +6,6 @@ module;
 
 export module core.platform;
 
-import core.logger;
+import core.logger.category;
 
 export CORE_API NY_LOG_CATEGORY( LogPlatform )

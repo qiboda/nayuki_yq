@@ -1,4 +1,4 @@
-#if not defined( __clang__ )
+#ifdef _MSC_VER
 module;
 #endif
 

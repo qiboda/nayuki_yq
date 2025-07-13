@@ -1,11 +1,11 @@
 module;
 
 #include "module_export.h"
+#include <exec/static_thread_pool.hpp>
 
 export module async_compute_task_pool;
 
 import core;
-import stdexec;
 
 export class TASK_API AsyncComputeTaskPool
 {
@@ -17,6 +17,6 @@ export class TASK_API AsyncComputeTaskPool
     }
 
   protected:
-    static_thread_pool mStaticThreadPool;
-    static_thread_pool::scheduler mScheduler;
+    exec::static_thread_pool mStaticThreadPool;
+    exec::static_thread_pool::scheduler mScheduler;
 };
