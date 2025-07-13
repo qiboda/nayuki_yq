@@ -25,8 +25,6 @@ export struct CORE_API Id
     {
     }
 
-    friend auto operator<=>( const Id& lhs, const Id& rhs ) = default;
-
     u32 Index() const
     {
         return mId;
@@ -41,6 +39,11 @@ export struct CORE_API Id
   protected:
     u32 mId = std::numeric_limits<u32>::max();
 };
+
+export auto operator<=>( const Id& lhs, const Id& rhs )
+{
+    return lhs.Index() <=> rhs.Index();
+}
 
 export template <IsId TId, typename TBaseType>
 class IdRegistry

@@ -15,18 +15,17 @@ export struct ECS_API SystemId : public Id
 
   public:
     static const SystemId Invalid;
-
-  public:
-    friend bool operator==( const SystemId& lhs, const SystemId& rhs )
-    {
-        return lhs.mId == rhs.mId;
-    }
-
-    friend bool operator<( const SystemId& lhs, const SystemId& rhs )
-    {
-        return lhs.mId < rhs.mId;
-    }
 };
+
+export ECS_API inline bool operator==( const SystemId& lhs, const SystemId& rhs )
+{
+    return lhs.Index() == rhs.Index();
+}
+
+export ECS_API inline auto operator<=>( const SystemId& lhs, const SystemId& rhs )
+{
+    return lhs.Index() <=> rhs.Index();
+}
 
 template <>
 struct std::hash<SystemId>

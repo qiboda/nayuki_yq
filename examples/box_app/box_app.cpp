@@ -524,7 +524,7 @@
 //     NY_ASSERT_MSG_HR( md3dDevice->CreateGraphicsPipelineState( &psoDesc, IID_PPV_ARGS( &mPSO ) ) );
 // }
 
-void main()
+int main()
 {
-    return;
+    return 0; // This is just a placeholder to avoid compilation errors.
 }

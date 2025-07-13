@@ -113,4 +113,4 @@ concept IsEntityConcept = IsEntityValue<T>;
 
 export using Entity = BasicEntity<u32>;
 
-export const Entity InvalidEntity = Entity( 0, 0 );
+export ECS_API inline const Entity InvalidEntity = Entity( 0, 0 );

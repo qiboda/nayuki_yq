@@ -12,6 +12,16 @@ export struct META_API TypeId : public Id
     TypeId() = default;
 };
 
+export META_API inline auto operator<=>( const TypeId& lhs, const TypeId& rhs )
+{
+    return lhs.Index() <=> rhs.Index();
+}
+
+export META_API inline bool operator==( const TypeId& lhs, const TypeId& rhs )
+{
+    return lhs.Index() == rhs.Index();
+}
+
 export struct META_API TypeIdGenerator : public IdGenerator<TypeId>
 {
     template <typename TType>

@@ -25,8 +25,18 @@ concept IsSystemSetConcept = IsSystemSet<T>;
 
 export struct ECS_API SystemSetId : public Id
 {
-    friend bool operator==( const SystemSetId& lhs, const SystemSetId& rhs ) = default;
 };
+
+export ECS_API inline bool operator==( const SystemSetId& lhs, const SystemSetId& rhs )
+{
+    return lhs.Index() == rhs.Index();
+}
+
+export ECS_API inline auto operator<=>( const SystemSetId& lhs, const SystemSetId& rhs )
+{
+    return lhs.Index() <=> rhs.Index();
+}
+
 
 template <>
 struct std::hash<SystemSetId>

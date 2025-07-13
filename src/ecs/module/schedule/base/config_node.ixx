@@ -17,15 +17,19 @@ export class ECS_API ScheduleNode
 {
 };
 
-export struct ScheduleNodeId : public Id
+export struct ECS_API ScheduleNodeId : public Id
 {
-    friend bool operator==( const ScheduleNodeId& lhs, const ScheduleNodeId& rhs ) = default;
-
-    friend bool operator<( const ScheduleNodeId& lhs, const ScheduleNodeId& rhs )
-    {
-        return lhs.Index() < rhs.Index();
-    }
 };
+
+export ECS_API inline auto operator<=>( const ScheduleNodeId& lhs, const ScheduleNodeId& rhs )
+{
+    return lhs.Index() <=> rhs.Index();
+}
+
+export ECS_API inline bool operator==( const ScheduleNodeId& lhs, const ScheduleNodeId& rhs )
+{
+    return lhs.Index() == rhs.Index();
+}
 
 export template <>
 struct std::hash<ScheduleNodeId>

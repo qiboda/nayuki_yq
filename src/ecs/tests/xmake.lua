@@ -11,6 +11,8 @@ target("ecs_tests")
 
     --添加本地target依赖
     add_packages("gtest")
+
+    add_deps("core")
     add_deps("ecs")
 
     if get_config("toolchain") == "clang" then

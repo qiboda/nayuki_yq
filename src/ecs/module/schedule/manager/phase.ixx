@@ -23,13 +23,19 @@ concept IsSchedulePhase = IsStrictDerivedConcept<PhaseBase, T>;
 
 export struct ECS_API PhaseId : public Id
 {
-    friend auto operator<=>( const PhaseId& lhs, const PhaseId& rhs )
-    {
-        return lhs.mId <=> rhs.mId;
-    }
 };
 
-template <>
+export ECS_API inline auto operator<=>( const PhaseId& lhs, const PhaseId& rhs )
+{
+    return lhs.Index() <=> rhs.Index();
+}
+
+export ECS_API inline bool operator==( const PhaseId& lhs, const PhaseId& rhs )
+{
+    return lhs.Index() == rhs.Index();
+}
+
+export template <>
 struct std::hash<PhaseId>
 {
     usize operator()( const PhaseId& id ) const

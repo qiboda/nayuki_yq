@@ -15,18 +15,17 @@ import std;
 
 export struct ECS_API ComponentId : public Id
 {
-  public:
-    // 会隐式生成 != 比较操作。
-    friend bool operator==( const ComponentId& lhs, const ComponentId& rhs )
-    {
-        return lhs.mId == rhs.mId;
-    }
-
-    bool operator<( const ComponentId& other ) const
-    {
-        return mId < other.mId;
-    }
 };
+
+export ECS_API inline bool operator==( const ComponentId& lhs, const ComponentId& rhs )
+{
+    return lhs.Index() == rhs.Index();
+}
+
+export ECS_API inline auto operator<=>( const ComponentId& lhs, const ComponentId& rhs )
+{
+    return lhs.Index() <=> rhs.Index();
+}
 
 template <>
 struct std::hash<ComponentId>
