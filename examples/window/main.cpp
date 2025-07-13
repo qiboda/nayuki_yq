@@ -1,4 +1,4 @@
-#include "nayuki_yq/application.h"
+import nayuki.application;
 
 int main()
 {

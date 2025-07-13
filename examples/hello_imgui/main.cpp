@@ -1,4 +1,4 @@
-#include "nayuki_yq/application.h"
+import nayuki.application;
 
 #include "imgui.h"
 // #include "imgui_impl_glfw.h"

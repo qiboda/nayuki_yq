@@ -8,5 +8,5 @@ target("hello_imgui")
 
     add_packages("imgui")
 
-    add_deps("nayuki_yq")
+    add_deps("nayuki")
     add_deps("render_core")

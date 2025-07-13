@@ -1,8 +1,9 @@
 #include "core/macro/macro.h"
-#include "core/type_def.h"
-#include <coroutine>
-#include <iostream>
-#include <filesystem>
+import core.type;
+import std;
+// #include <coroutine>
+// #include <iostream>
+// #include <filesystem>
 
 // 一个简单的 Awaitable 类型
 // 对 co_await 的控制。

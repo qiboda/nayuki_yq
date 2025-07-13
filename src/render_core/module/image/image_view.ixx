@@ -14,8 +14,13 @@ import core.misc.iraii;
 export class RENDER_CORE_API ImageView : public IRAII
 {
   public:
-    ImageView();
-    virtual ~ImageView() override;
+    ImageView()
+    {
+    }
+
+    virtual ~ImageView() override
+    {
+    }
 
     virtual void Initialize() override
     {

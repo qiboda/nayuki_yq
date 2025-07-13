@@ -1,8 +1,8 @@
 #include <iostream>
 #include <stdexec/execution.hpp>
-#include "core/type_def.h"
 #include "exec/static_thread_pool.hpp"
 #include <exec/task.hpp>
+import core.type;
 
 using namespace stdexec;
 

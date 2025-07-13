@@ -108,7 +108,7 @@ end
 includes("src")
 
 -- add examples
--- includes("examples")
+includes("examples")
 
 -- 定义一个 rule
 -- rule("MetaForge")

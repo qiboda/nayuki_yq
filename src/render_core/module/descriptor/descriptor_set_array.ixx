@@ -17,8 +17,13 @@ import std;
 export class RENDER_CORE_API DescriptorSetArray : public IRAII
 {
   public:
-    DescriptorSetArray();
-    virtual ~DescriptorSetArray() override;
+    DescriptorSetArray()
+    {
+    }
+
+    virtual ~DescriptorSetArray() override
+    {
+    }
 
   public:
     virtual void Initialize() override

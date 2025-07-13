@@ -6,5 +6,5 @@ target("window")
     set_default(false)
     set_group("examples")
 
-    add_deps("nayuki_yq")
+    add_deps("nayuki")
     add_deps("render_core")

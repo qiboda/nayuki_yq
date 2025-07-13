@@ -19,8 +19,13 @@ export class RENDER_CORE_API RenderContext : public Singleton<RenderContext>, pu
     friend class Singleton<RenderContext>;
 
   public:
-    RenderContext();
-    virtual ~RenderContext() override;
+    RenderContext()
+    {
+    }
+
+    virtual ~RenderContext() override
+    {
+    }
 
   public:
     SharedRenderInstance mRenderInstance;
