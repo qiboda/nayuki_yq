@@ -37,8 +37,8 @@ class Singleton
         return &GetInstance();
     }
 
-    static T instance;
+    static inline T instance;
 };
 
-export template <typename T>
-T Singleton<T>::instance;
+// export template <typename T>
+// T Singleton<T>::instance;
