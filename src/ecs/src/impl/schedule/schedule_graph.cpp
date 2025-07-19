@@ -127,16 +127,6 @@ void ScheduleGraph::BuildDependencyGraph()
     }
 }
 
-void ScheduleGraph::SetScheduleBase( std::shared_ptr<class ScheduleBase> schedule )
-{
-    mSchedule = schedule;
-}
-
-void ScheduleGraph::Initialize()
-{
-    mSystemManager = std::make_shared<SystemManager>();
-}
-
 void ScheduleGraph::CleanUp()
 {
 }

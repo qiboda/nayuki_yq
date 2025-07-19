@@ -42,16 +42,13 @@ export class ECS_API SystemManager : public NonCopyable
         return sNullISystem;
     }
 
-    void RunSystem( Registry* registry )
+    void RunSystem( Registry* registry, SystemId systemId )
     {
-        for ( auto& system : mSystems )
+        const auto& system = GetSystem( systemId );
+        if ( system )
         {
-            system.second->Run( registry );
+            system->Run( registry );
         }
-    }
-
-    void BuildSystemGraph()
-    {
     }
 
   protected:

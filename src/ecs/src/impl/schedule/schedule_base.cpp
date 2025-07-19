@@ -1,3 +1,7 @@
+module;
+
+#include "core/macro/macro.h"
+
 module ecs;
 
 import :schedule_graph;
@@ -18,12 +22,18 @@ void ScheduleBase::AddSystemSetNodeConfig( ScheduleSystemSetNodeConfig&& config 
     mScheduleGraph->AddSystemSetNodeConfig( std::move( config ) );
 }
 
-void ScheduleBase::Initialize()
+void ScheduleBase::Init( Registry* registry )
 {
-    mScheduleGraph->SetScheduleBase( shared_from_this() );
-    mScheduleGraph->Initialize();
+    UNUSED_VARS( registry );
+    mScheduleGraph->Init( shared_from_this() );
 }
 
-void ScheduleBase::CleanUp()
+void ScheduleBase::BeforeRun( Registry* registry )
 {
+    mScheduleGraph->BeforeRun( registry );
+}
+
+void ScheduleBase::Run( Registry* registry )
+{
+    mScheduleGraph->Run( registry );
 }

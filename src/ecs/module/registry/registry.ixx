@@ -12,6 +12,7 @@ import std;
 import :archetype_manager;
 import :entity_manager;
 import :schedule_manager;
+import :schedule_phase;
 
 // 实体，组件的管理类。等价于 ECS 中的 World
 export class ECS_API Registry
@@ -59,6 +60,25 @@ export class ECS_API Registry
     std::shared_ptr<CommandManager> GetCommandManager()
     {
         return mCommandManager;
+    }
+
+  public:
+    template <IsSchedulePhase T>
+    void AddSystem( class ScheduleSystemNodeConfig&& config )
+    {
+        mScheduleManager->AddSystemNodeConfig<T>( std::move( config ) );
+    }
+
+    /// 添加一个系统集节点配置到调度图中。
+    template <IsSchedulePhase T>
+    void AddSystemSet( class ScheduleSystemSetNodeConfig&& config )
+    {
+        mScheduleManager->AddSystemSetNodeConfig<T>( std::move( config ) );
+    }
+
+    void Run()
+    {
+        mScheduleManager->Run( this );
     }
 
   public:

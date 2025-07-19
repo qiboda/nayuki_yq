@@ -53,7 +53,7 @@ class System : public ISystem
     {
         using ArgsTypeTuple = FnParamsTypeTuple<Func>;
         constexpr usize kArgsCount = std::tuple_size_v<ArgsTypeTuple>;
-        static_assert( kArgsCount > 0 );
+        // static_assert( kArgsCount > 0 );
         SetSystemFunc( func, std::make_index_sequence<kArgsCount>{} );
     }
 
@@ -89,11 +89,20 @@ class System : public ISystem
         {
             using ParamsTypeTuple = FnDecayedParamsTypeTuple<Func>;
 
-            ParamsTypeTuple tuple = std::make_tuple(
-                ( FnDecayedParamType<Func, Index>::From( registry, &mSystemState.template GetParamState<Index>() ),
-                  ... ) );
-            // 将第Index个SystemParam构造出值
-            std::apply( func, tuple );
+            if constexpr ( std::tuple_size_v<ParamsTypeTuple> == 0 )
+            {
+                UNUSED_VARS( this );
+                ParamsTypeTuple tuple = std::make_tuple();
+                std::apply( func, tuple );
+            }
+            else
+            {
+                ParamsTypeTuple tuple = std::make_tuple(
+                    FnDecayedParamType<Func, Index>::From( registry,
+                                                           &mSystemState.template GetParamState<Index>() )... );
+                // 将第Index个SystemParam构造出值
+                std::apply( func, tuple );
+            }
         };
     }
 

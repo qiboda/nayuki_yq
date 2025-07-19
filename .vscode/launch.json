@@ -38,6 +38,19 @@
                 // "${workspaceFolder}/examples/exp"
             ],
             "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Launch linux ecs_start",
+            "program": "${workspaceFolder}/build/linux/x86_64/debug/ecs_start",
+            "args": [
+                // "run",
+                // "ecs_start"
+                // "--compilations=${workspaceFolder}/.vscode/",
+                // "${workspaceFolder}/examples/exp"
+            ],
+            "cwd": "${workspaceFolder}"
         }
     ]
 }

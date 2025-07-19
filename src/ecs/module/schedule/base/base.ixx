@@ -8,19 +8,17 @@ export module ecs:schedule_base;
 
 import core;
 import std;
-import core.misc.iraii;
+import core.misc.non_copyable;
 
 /// 多个schedule，支持组成一个图，但是不支持嵌套。
-export class ECS_API ScheduleBase : public std::enable_shared_from_this<ScheduleBase>, public IRAII
+export class ECS_API ScheduleBase : public std::enable_shared_from_this<ScheduleBase>, public NonCopyable
 {
   public:
     ScheduleBase();
     virtual ~ScheduleBase() = default;
 
   public:
-    virtual void Initialize() override;
-
-    virtual void CleanUp() override;
+    void Init(class Registry* registry);
 
   public:
     /// 添加一个系统节点配置到调度图中。
@@ -39,9 +37,9 @@ export class ECS_API ScheduleBase : public std::enable_shared_from_this<Schedule
         return mScheduleGraph;
     }
 
-    virtual void Run()
-    {
-    }
+    void BeforeRun( class Registry* registry );
+
+    virtual void Run( class Registry* registry );
 
   protected:
     std::shared_ptr<class ScheduleGraph> mScheduleGraph = nullptr;

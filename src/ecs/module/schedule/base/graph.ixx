@@ -1,15 +1,12 @@
 module;
 
 #include "module_export.h"
+#include <core/macro/macro.h>
 
 export module ecs:schedule_graph;
 
 import :schedule_config_node;
 import :schedule_system_set;
-// import :forward;
-// import :node_config_cache;
-// import :schedule_system_node_config;
-// import :schedule_system_set_node_config;
 
 import ecs.graph;
 import :system_manager;
@@ -18,9 +15,9 @@ import :system_id;
 
 import std;
 import core.type;
-import core.misc.iraii;
+import core.misc.non_copyable;
 
-export class ECS_API ScheduleGraph : public IRAII
+export class ECS_API ScheduleGraph : public NonCopyable
 {
   public:
     ScheduleGraph();
@@ -29,11 +26,14 @@ export class ECS_API ScheduleGraph : public IRAII
     {
     }
 
-    void SetScheduleBase( std::shared_ptr<class ScheduleBase> schedule );
-
   public:
-    virtual void Initialize() override;
-    virtual void CleanUp() override;
+    void Init( std::shared_ptr<class ScheduleBase> schedule )
+    {
+        mSchedule = schedule;
+        mSystemManager = std::make_shared<SystemManager>();
+    }
+
+    void CleanUp();
 
   public:
 #pragma region Config
@@ -93,6 +93,34 @@ export class ECS_API ScheduleGraph : public IRAII
     bool CheckDependencyGraphValid();
 
     const Topology<ScheduleNodeId>& GetTopology();
+
+    void BeforeRun( Registry* registry )
+    {
+        UNUSED_VARS( registry );
+        ApplyNodeConfigs();
+        BuildGraph();
+    }
+
+    void Run( Registry* registry )
+    {
+        auto topology = GetTopology();
+        for ( usize i = 0; i < topology.LayerNum(); ++i )
+        {
+            auto& layer = topology.GetLayer( i );
+            for ( auto&& systemNodeId : layer )
+            {
+                auto it = mAllNodes.find( systemNodeId );
+                if ( it != mAllNodes.end() )
+                {
+                    auto& nodeVariant = it->second;
+
+                    auto& systemNode = nodeVariant.Get<ScheduleSystemNode>();
+                    auto systemId = systemNode.GetSystemId();
+                    mSystemManager->RunSystem( registry, systemId );
+                }
+            }
+        }
+    }
 
   protected:
     std::vector<ScheduleNodeId> FindAllSystemNodesInSystemSet( ScheduleNodeId systemSetNodeId );

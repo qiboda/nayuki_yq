@@ -1,6 +1,7 @@
 module;
 
 #include "module_export.h"
+#include <core/macro/macro.h>
 
 export module ecs:feature_manager;
 
@@ -17,7 +18,7 @@ export class ECS_API FeatureManager
     void AddedFeature( T&& feature )
     {
         FeatureId id = FeatureRegistry::Get<T>();
-        auto ret = mFeatures.emplace( { id, std::forward<IFeature>( feature ) } );
+        auto ret = mFeatures.emplace( id, std::forward<T>( feature ) );
         NY_ASSERT_MSG( ret.second, "Can not insert same feature!" );
     }
 

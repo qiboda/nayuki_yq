@@ -1,6 +1,7 @@
 module;
 
 #include "module_export.h"
+#include <core/macro/macro.h>
 #include <fmt/format.h>
 
 export module ecs:schedule_manager;
@@ -27,6 +28,30 @@ export class ECS_API ScheduleManager : public std::enable_shared_from_this<Sched
         return mScheduleGraph;
     }
 
+    /// 添加一个系统节点配置到调度图中。
+    template <IsSchedulePhase T>
+    void AddSystemNodeConfig( class ScheduleSystemNodeConfig&& config )
+    {
+        if ( mPhaseScheduleMap.find( PhaseIdRegistry::Get<T>() ) == mPhaseScheduleMap.end() )
+        {
+            auto schedule = std::make_shared<ScheduleBase>();
+            mPhaseScheduleMap[PhaseIdRegistry::Get<T>()] = schedule;
+        }
+        mPhaseScheduleMap[PhaseIdRegistry::Get<T>()]->AddSystemNodeConfig( std::move( config ) );
+    }
+
+    /// 添加一个系统集节点配置到调度图中。
+    template <IsSchedulePhase T>
+    void AddSystemSetNodeConfig( class ScheduleSystemSetNodeConfig&& config )
+    {
+        if ( mPhaseScheduleMap.find( PhaseIdRegistry::Get<T>() ) == mPhaseScheduleMap.end() )
+        {
+            auto schedule = std::make_shared<ScheduleBase>();
+            mPhaseScheduleMap[PhaseIdRegistry::Get<T>()] = schedule;
+        }
+        mPhaseScheduleMap[PhaseIdRegistry::Get<T>()]->AddSystemSetNodeConfig( std::move( config ) );
+    }
+
     void ApplyPhaseConfigures();
 
     void BuildGraph()
@@ -34,17 +59,43 @@ export class ECS_API ScheduleManager : public std::enable_shared_from_this<Sched
         mScheduleGraph.TopSort();
     }
 
-    void CreateScheduleInstance()
+    void BeforeRun( Registry* registry )
     {
-        auto topology = mScheduleGraph.GetTopology();
-        for ( usize i = 0; i < topology.LayerNum(); ++i )
+        ApplyPhaseConfigures();
+        BuildGraph();
+        for ( auto&& [phaseId, schedule] : mPhaseScheduleMap )
         {
-            auto& layer = topology.GetLayer( i );
-            for ( auto&& phaseId : layer )
+            UNUSED_VARS( phaseId );
+            if ( schedule )
             {
-                auto phaseInfo = mScheduleGraph.GetNode( phaseId );
-                auto schedule = std::make_shared<ScheduleBase>();
-                mPhaseScheduleMap[phaseInfo.mId] = schedule;
+                schedule->Init( registry );
+                schedule->BeforeRun( registry );
+            }
+        }
+    }
+
+  public:
+    void Run( Registry* registry )
+    {
+        BeforeRun( registry );
+        while ( true )
+        {
+            auto topology = mScheduleGraph.GetTopology();
+            for ( usize i = 0; i < topology.LayerNum(); ++i )
+            {
+                auto& layer = topology.GetLayer( i );
+                for ( auto&& phaseId : layer )
+                {
+                    auto phaseScheduleIt = mPhaseScheduleMap.find( phaseId );
+                    if ( phaseScheduleIt != mPhaseScheduleMap.end() )
+                    {
+                        auto schedule = phaseScheduleIt->second;
+                        if ( schedule )
+                        {
+                            schedule->Run( registry );
+                        }
+                    }
+                }
             }
         }
     }

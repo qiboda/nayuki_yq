@@ -43,6 +43,16 @@ export struct ECS_API FeatureId : public Id
 {
 };
 
+export inline bool operator==( const FeatureId& lhs, const FeatureId& rhs )
+{
+    return lhs.Index() == rhs.Index();
+}
+
+export inline auto operator<=>( const FeatureId& lhs, const FeatureId& rhs )
+{
+    return lhs.Index() <=> rhs.Index();
+}
+
 export template <>
 struct ECS_API std::hash<FeatureId>
 {
