@@ -1,5 +1,5 @@
 
-module ecs.features.set;
+module ecs;
 
 IFeatureSet::IFeatureSet()
 {

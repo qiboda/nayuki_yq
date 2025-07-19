@@ -1,7 +1,7 @@
 
-module ecs.archetype.archetype;
+module ecs;
 
-import ecs.components.component;
+import std;
 
 Archetype::Archetype()
 {

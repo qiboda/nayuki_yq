@@ -1,5 +1,5 @@
 
-module ecs.systems.manager;
+module ecs;
 
 SystemManager::SystemManager()
 {

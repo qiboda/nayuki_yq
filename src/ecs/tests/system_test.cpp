@@ -2,12 +2,7 @@
 #include "core/macro/macro.h"
 
 import std;
-import ecs.systems.params.local;
-import ecs.systems.manager;
-import ecs.systems.params;
-import ecs.systems.id;
-import ecs.systems.concepts;
-import ecs.registry;
+import ecs;
 import core;
 import core.trait;
 
@@ -102,7 +97,7 @@ TEST_F( SystemTest, LocalParamTest )
     SystemId id = sm.AddSystem( &SystemTest::TestLocal );
 
     {
-        sm.RunSystem( registry.mRegistryContext );
+        sm.RunSystem( &registry );
         const auto& system = sm.GetSystem( id );
         const auto& systemDc = system->Downcast( &SystemTest::TestLocal );
         const auto& systemState = systemDc->GetSystemState();
@@ -111,7 +106,7 @@ TEST_F( SystemTest, LocalParamTest )
     }
 
     {
-        sm.RunSystem( registry.mRegistryContext );
+        sm.RunSystem( &registry );
         const auto& system = sm.GetSystem( id );
         const auto& systemDc = system->Downcast( &SystemTest::TestLocal );
         const auto& systemState = systemDc->GetSystemState();

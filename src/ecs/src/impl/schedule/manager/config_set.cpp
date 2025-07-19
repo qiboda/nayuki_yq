@@ -1,5 +1,5 @@
 
-module ecs.schedule.manager;
+module ecs;
 
 import std;
 

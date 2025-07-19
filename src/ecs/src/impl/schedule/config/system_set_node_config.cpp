@@ -1,5 +1,5 @@
 
-module ecs.schedule;
+module ecs;
 
 import std;
 

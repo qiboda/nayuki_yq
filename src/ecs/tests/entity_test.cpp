@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
-import ecs.entity.entity;
+import std;
+import ecs;
 import core.type;
 
 class EntityTest : public ::testing::Test

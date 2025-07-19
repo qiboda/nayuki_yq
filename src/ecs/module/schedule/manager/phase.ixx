@@ -5,7 +5,7 @@ module;
 #include "core/macro/macro.h"
 #include <fmt/format.h>
 
-export module ecs.schedule.manager:phase;
+export module ecs:schedule_phase;
 
 import core.container.small_vector;
 import core.misc;
@@ -36,7 +36,7 @@ export ECS_API inline bool operator==( const PhaseId& lhs, const PhaseId& rhs )
 }
 
 export template <>
-struct std::hash<PhaseId>
+struct ECS_API std::hash<PhaseId>
 {
     usize operator()( const PhaseId& id ) const
     {

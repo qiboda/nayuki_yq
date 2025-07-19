@@ -1,7 +1,7 @@
 
--- if has_config("test") then
-add_requires("gtest", { configs = { gtest_build_tests = false } })
---end
+-- -- if has_config("test") then
+-- add_requires("gtest", { configs = { gtest_build_tests = false } })
+-- --end
 
 target("meta_tests")
     set_kind("binary")

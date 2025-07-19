@@ -1,2 +1,2 @@
 
-module ecs.archetype.define;
+module ecs;

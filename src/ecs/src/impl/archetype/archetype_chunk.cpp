@@ -1,2 +1,2 @@
 
-module ecs.archetype.chunk;
+module ecs;

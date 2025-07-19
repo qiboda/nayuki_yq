@@ -2,9 +2,9 @@ module;
 
 #include "module_export.h"
 
-export module ecs.entity.entity;
+export module ecs:entity;
 
-import ecs.components.component;
+import :component;
 
 import std;
 import core;
@@ -87,7 +87,7 @@ bool operator==( const BasicEntity<T>& lhs, const BasicEntity<T>& rhs )
 /// std::unordered_map 的 Key 需要重载hash函数
 export template <typename T>
     requires std::unsigned_integral<T>
-struct std::hash<BasicEntity<T>>
+struct ECS_API std::hash<BasicEntity<T>>
 {
     size_t operator()( const BasicEntity<T>& entity ) const
     {

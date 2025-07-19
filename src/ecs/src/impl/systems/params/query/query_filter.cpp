@@ -1,5 +1,5 @@
 
-module ecs.systems.params.query.filter;
+module ecs;
 
 QueryFilter::QueryFilter()
 {

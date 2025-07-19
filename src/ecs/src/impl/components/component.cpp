@@ -1,5 +1,5 @@
 
-module ecs.components.component;
+module ecs;
 
 Component::Component()
 {

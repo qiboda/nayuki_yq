@@ -8,7 +8,7 @@ import std;
 import core;
 import meta.type_id;
 
-export enum class TypeKind : u8 {
+export enum class META_API TypeKind : u8 {
     None,
     // 基本类型
     Base,

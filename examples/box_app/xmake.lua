@@ -9,4 +9,4 @@ target("box_app")
 
     add_deps("core")
 
-    set_policy("build.c++.modules", true)
+    -- set_policy("build.c++.modules", true)

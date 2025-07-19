@@ -2,9 +2,9 @@ module;
 
 #include "module_export.h"
 
-export module ecs.schedule.manager:phase_config_set;
+export module ecs:schedule_phase_config_set;
 
-import :phase_config;
+import :schedule_phase_config;
 
 import std;
 

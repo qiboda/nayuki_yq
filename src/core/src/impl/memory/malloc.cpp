@@ -10,8 +10,8 @@ import :memory_tracker;
 import std;
 import core;
 
-std::thread::id MallocAllocator::sMainThreadId = std::this_thread::get_id();
-std::atomic<bool> MallocAllocator::sInitted = false;
+// std::thread::id MallocAllocator::sMainThreadId = std::this_thread::get_id();
+// std::atomic<bool> MallocAllocator::sInitted = false;
 
 void MallocAllocator::Init()
 {

@@ -1,2 +1,2 @@
 
-import ecs.commands;
+import ecs;

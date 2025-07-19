@@ -1,9 +1,10 @@
 
-module ecs.commands.system;
-import ecs.registry;
+module ecs;
+
+import :command;
 
 Commands Commands::From( Registry* registry, State& state )
 {
-    state.Init( registry->mRegistryContext, registry->mCommandManager );
+    state.Init( registry, registry->GetCommandManager() );
     return Commands( state );
 }

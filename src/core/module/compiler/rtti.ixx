@@ -6,6 +6,8 @@ module;
 
 export module core.compiler.rtti;
 
+import std;
+
 /**
  * @brief 仅用于Debug
  */

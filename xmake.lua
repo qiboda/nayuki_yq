@@ -22,10 +22,15 @@ end
 
 -- 因为目前llvm只支持MT，所以暂时设置成MT
 -- set_runtimes("MT")
+-- 使用libc++_shared
+set_runtimes("c++_shared")
+add_links("c++abi")
 
 set_warnings("allextra", "error")
 set_languages("c17", "cxxlatest")
 set_policy("build.c++.modules", true)
+
+-- set_cxxstl("libc++")
 
 -- stdexec 需要下面两个选项来正确识别 C++ 标准版本。
 add_cxxflags("cl::/Zc:__cplusplus")
@@ -37,6 +42,8 @@ add_cxxflags("cl::/Zc:preprocessor")
 
 
 add_cxxflags("clang::-fPIC")
+-- 使用libc++作为C++标准库
+-- add_cxxflags("clang::-stdlib=libc++")
 
 -- 允许宏在module之前
 add_cxxflags("cl::/Wv:18")

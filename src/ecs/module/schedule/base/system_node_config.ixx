@@ -3,14 +3,14 @@ module;
 #include "module_export.h"
 #include <memory>
 
-export module ecs.schedule:system_node_config;
+export module ecs:schedule_system_node_config;
 
-import :config_node;
-import :system_set;
+import :schedule_config_node;
+import :schedule_system_set;
 import :schedule_graph;
-import :base;
-import ecs.schedule.graph;
-import ecs.systems.concepts;
+import :schedule_base;
+import ecs.graph;
+import :system_concepts;
 // import std;
 
 /**

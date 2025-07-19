@@ -1,2 +1,2 @@
 
-module ecs.systems.state;
+module ecs;

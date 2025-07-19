@@ -1,5 +1,5 @@
 
-module ecs.features.manager;
+module ecs;
 
 FeatureManager::FeatureManager()
 {

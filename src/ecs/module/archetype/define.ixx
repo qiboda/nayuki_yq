@@ -2,7 +2,7 @@ module;
 
 #include "module_export.h"
 
-export module ecs.archetype.define;
+export module ecs:archetype_define;
 
 import core;
 

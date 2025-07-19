@@ -2,9 +2,9 @@ module;
 
 #include "module_export.h"
 
-export module ecs.schedule.tarjan_graph;
+export module ecs.tarjan_graph;
 
-import ecs.schedule.graph;
+import ecs.graph;
 import std;
 import core;
 

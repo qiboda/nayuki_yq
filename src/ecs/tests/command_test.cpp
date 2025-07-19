@@ -1,12 +1,6 @@
 #include <gtest/gtest.h>
 
-import ecs.commands;
-import ecs.commands.system;
-
-import ecs.registry;
-import ecs.entity.manager;
-import ecs.entity.entity;
-import ecs.components.component;
+import ecs;
 import core.type;
 
 class CommandTest : public ::testing::Test
@@ -36,7 +30,7 @@ TEST_F( CommandTest, CreateEntity )
     k.a = 0;
 
     // clang-format off
-    RegistryCommand::Get( mRegistry->mRegistryContext, mRegistry->mCommandManager )
+    RegistryCommand::Get( mRegistry, mRegistry->GetCommandManager() )
         ->Entity()
             ->Destroy( InvalidEntity )
         ->Entity()

@@ -1,4 +1,4 @@
-export module ecs.schedule:forward;
+export module ecs:schedule_forward;
 
 export struct NodeConfigCache;
 export class ScheduleSystemNodeConfig;

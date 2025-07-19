@@ -1,2 +1,2 @@
 
-module ecs.systems.params.query;
+module ecs;

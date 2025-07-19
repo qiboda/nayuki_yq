@@ -1,7 +1,7 @@
 
-module ecs.commands;
+module ecs;
 
-import :entity_command;
+// import :entity_command;
 import std;
 
 std::shared_ptr<EntityCommand> RegistryCommand::Entity()

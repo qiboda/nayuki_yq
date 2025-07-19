@@ -25,3 +25,4 @@ target(module_name)
     add_packages("vulkansdk", { public = true})
 
     add_deps("core")
+    add_deps("ecs")

@@ -3,26 +3,44 @@ module;
 #include "module_export.h"
 #include "core/macro/macro.h"
 
-export module ecs.archetype.archetype;
+export module ecs:archetype;
 
 import core.type;
-import ecs.entity.entity;
-import ecs.components.info;
-import ecs.components.concepts;
-import ecs.archetype.define;
-import ecs.archetype.chunk;
+import :entity;
+import :component_info;
+import :component_concepts;
+import :archetype_define;
+import :archetype_chunk;
 import core.misc.range;
+import core.misc.non_copyable;
 
 import std;
 
 // 组件id组合
-export class ECS_API Archetype
+export class ECS_API Archetype : public NonCopyable
 {
   public:
     using ChunkIterator = typename std::vector<ArchetypeChunk>::iterator;
 
   public:
     Archetype();
+
+    Archetype( Archetype&& other ) noexcept
+    {
+        mComponentIdSet = std::move( other.mComponentIdSet );
+        mArchetypeChunks = std::move( other.mArchetypeChunks );
+        mComponentMemoryInfos = std::move( other.mComponentMemoryInfos );
+        MaxEntityNum = other.MaxEntityNum;
+    }
+
+    Archetype& operator=( Archetype&& other ) noexcept
+    {
+        mComponentIdSet = std::move( other.mComponentIdSet );
+        mArchetypeChunks = std::move( other.mArchetypeChunks );
+        mComponentMemoryInfos = std::move( other.mComponentMemoryInfos );
+        MaxEntityNum = other.MaxEntityNum;
+        return *this;
+    }
 
   public:
     inline void AddEntity( Entity entity )

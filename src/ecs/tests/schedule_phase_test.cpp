@@ -1,9 +1,8 @@
 
 #include <gtest/gtest.h>
 
-import ecs.registry;
-import ecs.schedule;
-import ecs.schedule.manager;
+import ecs;
+import ecs.default_phase;
 
 class SchedulePhaseTest : public ::testing::Test
 {
@@ -35,9 +34,9 @@ TEST_F( SchedulePhaseTest, PhaseGraph )
                                  .Before<LastPhase>()
                                  .Chain()
                                  .Build() );
-    registry.mRegistryContext->GetScheduleManager()->ApplyPhaseConfigures();
-    registry.mRegistryContext->GetScheduleManager()->BuildGraph();
-    auto graph = registry.mRegistryContext->GetScheduleManager()->GetScheduleGraph();
+    registry.GetScheduleManager()->ApplyPhaseConfigures();
+    registry.GetScheduleManager()->BuildGraph();
+    auto graph = registry.GetScheduleManager()->GetScheduleGraph();
     auto topology = graph.GetTopology();
     EXPECT_EQ( topology.LayerNum(), 4 );
     EXPECT_EQ( topology.GetLayer( 0 ).size(), 1 );

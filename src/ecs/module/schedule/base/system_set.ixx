@@ -2,7 +2,7 @@ module;
 
 #include "module_export.h"
 
-export module ecs.schedule:system_set;
+export module ecs:schedule_system_set;
 
 import std;
 import core;
@@ -38,8 +38,8 @@ export ECS_API inline auto operator<=>( const SystemSetId& lhs, const SystemSetI
 }
 
 
-template <>
-struct std::hash<SystemSetId>
+export template <>
+struct ECS_API std::hash<SystemSetId>
 {
     usize operator()( const SystemSetId& id ) const
     {

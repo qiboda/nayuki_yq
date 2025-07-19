@@ -2,18 +2,16 @@ module;
 
 #include "module_export.h"
 
-export module ecs.registry;
+export module ecs:registry;
 
-import ecs.commands;
+import :feature_manager;
+import :command_manager;
 
 import core;
 import std;
-import ecs.archetype.manager;
-import ecs.entity.manager;
-import ecs.features.manager;
-import ecs.features.feature;
-import ecs.schedule.manager;
-import ecs.registry.icontext;
+import :archetype_manager;
+import :entity_manager;
+import :schedule_manager;
 
 // 实体，组件的管理类。等价于 ECS 中的 World
 export class ECS_API Registry
@@ -35,12 +33,39 @@ export class ECS_API Registry
   public:
     void ConfigurePhase( PhaseConfigure&& configure )
     {
-        mRegistryContext->GetScheduleManager()->ConfigSchedulePhase( std::forward<PhaseConfigure>( configure ) );
+        mScheduleManager->ConfigSchedulePhase( std::forward<PhaseConfigure>( configure ) );
+    }
+
+    std::shared_ptr<ArchetypeManager> GetArchetypeManager()
+    {
+        return mArchetypeManager;
+    }
+
+    std::shared_ptr<EntityManager> GetEntityManager()
+    {
+        return mEntityManager;
+    }
+
+    std::shared_ptr<ScheduleManager> GetScheduleManager()
+    {
+        return mScheduleManager;
+    }
+
+    std::shared_ptr<FeatureManager> GetFeatureManager()
+    {
+        return mFeatureManager;
+    }
+
+    std::shared_ptr<CommandManager> GetCommandManager()
+    {
+        return mCommandManager;
     }
 
   public:
-    IRegistryContext* mRegistryContext = nullptr;
+    std::shared_ptr<EntityManager> mEntityManager = nullptr;
+    std::shared_ptr<ArchetypeManager> mArchetypeManager = nullptr;
+    std::shared_ptr<ScheduleManager> mScheduleManager = nullptr;
 
-    FeatureManager* mFeatureManager = nullptr;
-    CommandManager* mCommandManager = nullptr;
+    std::shared_ptr<FeatureManager> mFeatureManager = nullptr;
+    std::shared_ptr<CommandManager> mCommandManager = nullptr;
 };

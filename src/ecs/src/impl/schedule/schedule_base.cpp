@@ -1,4 +1,4 @@
-module ecs.schedule;
+module ecs;
 
 import :schedule_graph;
 import std;

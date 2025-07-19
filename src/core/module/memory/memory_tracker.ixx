@@ -96,6 +96,19 @@ export class CORE_API MemoryTracker
         return mMemorySizeCountMap;
     }
 
+    static void Reset()
+    {
+        GetTotalAllocatedMemoryCount() = 0;
+        GetTotalFreeMemoryCount() = 0;
+        GetCurrentAllocatedMemoryCount() = 0;
+
+        GetTotalMemorySize() = 0;
+        GetTotalFreeMemorySize() = 0;
+        GetCurrentMemorySize() = 0;
+
+        GetMemorySizeCountMap().clear();
+    }
+
     static std::string ToString()
     {
         return fmt::format(

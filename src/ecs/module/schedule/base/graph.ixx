@@ -2,19 +2,19 @@ module;
 
 #include "module_export.h"
 
-export module ecs.schedule:schedule_graph;
+export module ecs:schedule_graph;
 
-import :config_node;
-import :system_set;
+import :schedule_config_node;
+import :schedule_system_set;
 // import :forward;
 // import :node_config_cache;
-// import :system_node_config;
-// import :system_set_node_config;
+// import :schedule_system_node_config;
+// import :schedule_system_set_node_config;
 
-import ecs.schedule.graph;
-import ecs.systems.manager;
-import ecs.systems.concepts;
-import ecs.systems.id;
+import ecs.graph;
+import :system_manager;
+import :system_concepts;
+import :system_id;
 
 import std;
 import core.type;

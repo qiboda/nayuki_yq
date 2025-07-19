@@ -1,5 +1,5 @@
 
-module ecs.commands;
+module ecs;
 
 CommandQueue::CommandQueue()
 {

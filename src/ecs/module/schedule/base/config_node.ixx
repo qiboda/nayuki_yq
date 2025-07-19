@@ -2,16 +2,16 @@ module;
 
 #include "module_export.h"
 
-export module ecs.schedule:config_node;
+export module ecs:schedule_config_node;
 
-import :system_set;
+import :schedule_system_set;
 
 import std;
 import core.registry;
 import core.container.small_vector;
 import core.misc.non_copyable;
 import core.type;
-import ecs.systems.id;
+import :system_id;
 
 export class ECS_API ScheduleNode
 {
@@ -32,7 +32,7 @@ export ECS_API inline bool operator==( const ScheduleNodeId& lhs, const Schedule
 }
 
 export template <>
-struct std::hash<ScheduleNodeId>
+struct ECS_API std::hash<ScheduleNodeId>
 {
     usize operator()( const ScheduleNodeId& id ) const
     {

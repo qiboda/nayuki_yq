@@ -1,5 +1,5 @@
 
-module ecs.archetype.manager;
+module ecs;
 
 ArchetypeManager::ArchetypeManager()
 {

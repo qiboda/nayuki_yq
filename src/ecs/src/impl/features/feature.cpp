@@ -1,5 +1,5 @@
 
-module ecs.features.feature;
+module ecs;
 
 IFeature::IFeature()
 {

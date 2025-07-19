@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 
-import ecs.components.info;
-import ecs.components.component;
+import ecs;
 
 class ComponentIdSetTest : public ::testing::Test
 {

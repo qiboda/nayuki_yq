@@ -3,12 +3,11 @@ module;
 #include <core/macro/macro.h>
 #include <fmt/format.h>
 
-module ecs.schedule;
+module ecs;
 
-import ecs.schedule.graph;
-import ecs.schedule.tarjan_graph;
+import ecs.graph;
+import ecs.tarjan_graph;
 
-import ecs.systems.manager;
 import core.type;
 import std;
 

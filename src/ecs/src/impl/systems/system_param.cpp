@@ -1,5 +1,5 @@
 
-module ecs.systems.params;
+module ecs;
 
 SystemParam::SystemParam()
 {

@@ -1,2 +1,2 @@
 
-module ecs.systems.params.local;
+module ecs;

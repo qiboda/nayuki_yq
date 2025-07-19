@@ -1,21 +1,21 @@
-module ecs.commands;
+module ecs;
 
-import :registry_command;
-import :manager;
-import :entity_instance_command;
+// import :registry_command;
+// import :command_manager;
+// import :entity_instance_command;
+
+// import :entity_manager;
+// import :entity;
 
 import std;
-import ecs.entity.manager;
-import ecs.registry.icontext;
-import ecs.entity.entity;
 
-void CreateEntityCommandBuffer::Execute( IRegistryContext* registry )
+void CreateEntityCommandBuffer::Execute( Registry* registry )
 {
     registry->GetEntityManager()->AddEntity( mEntity );
     registry->GetArchetypeManager()->CreateEntity( mEntity );
 }
 
-void DestroyEntityCommandBuffer::Execute( IRegistryContext* registry )
+void DestroyEntityCommandBuffer::Execute( Registry* registry )
 {
     registry->GetEntityManager()->RemoveEntity( mEntity );
     registry->GetArchetypeManager()->DestroyEntity( mEntity );

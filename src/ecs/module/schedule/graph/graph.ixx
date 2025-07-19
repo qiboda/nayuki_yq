@@ -4,7 +4,7 @@ module;
 #include <core/macro/macro.h>
 #include <fmt/format.h>
 
-export module ecs.schedule.graph;
+export module ecs.graph;
 
 import core;
 import std;

@@ -4,7 +4,7 @@ module;
 
 #include "module_export.h"
 
-export module ecs.schedule:base;
+export module ecs:schedule_base;
 
 import core;
 import std;

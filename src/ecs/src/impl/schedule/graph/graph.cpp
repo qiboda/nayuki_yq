@@ -1,2 +1,2 @@
 
-import ecs.schedule.graph;
+import ecs.graph;

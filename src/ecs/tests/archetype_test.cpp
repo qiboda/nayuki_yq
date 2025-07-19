@@ -1,11 +1,6 @@
 #include <gtest/gtest.h>
 
-import ecs.components.component;
-import ecs.components.info;
-import ecs.archetype.chunk;
-import ecs.archetype.archetype;
-import ecs.entity.entity;
-import ecs.entity.manager;
+import ecs;
 import core.type;
 
 class ArchetypeTest : public ::testing::Test

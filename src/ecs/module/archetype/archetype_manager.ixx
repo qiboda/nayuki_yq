@@ -3,15 +3,15 @@ module;
 #include "module_export.h"
 #include "core/macro/macro.h"
 
-export module ecs.archetype.manager;
+export module ecs:archetype_manager;
 
 import core.type;
-import ecs.archetype.archetype;
-import ecs.components.info;
-import ecs.components.concepts;
-import ecs.entity.entity;
-import ecs.systems.params.query.data;
-import ecs.systems.params.query.filter;
+import :archetype;
+import :component_info;
+import :component_concepts;
+import :entity;
+import :system_param_query_data;
+import :system_param_query_filter;
 
 import std;
 
@@ -41,7 +41,7 @@ export class ECS_API ArchetypeManager
             Archetype archetype;
             archetype.Init( ComponentTypeRegistry::GetComponentIdSet<Entity>() );
             archetype.AddEntity( entity );
-            mArchetypes.push_back( archetype );
+            mArchetypes.push_back( std::move( archetype ) );
             mEntityArchetypeMap.emplace( entity, archetypeIndex );
 
             mComponentIdsArchetypeMap.emplace( ComponentIdSet(), archetypeIndex );
@@ -91,7 +91,7 @@ export class ECS_API ArchetypeManager
 
                 newArchetype.AddEntityComponents( &archetype, entity, std::forward<T>( component )... );
 
-                mArchetypes.push_back( newArchetype );
+                mArchetypes.push_back( std::move( newArchetype ) );
                 mEntityArchetypeMap.emplace( entity, archetypeIndex );
                 mComponentIdsArchetypeMap.emplace( componentIdSet, archetypeIndex );
             }
@@ -131,7 +131,7 @@ export class ECS_API ArchetypeManager
 
                 newArchetype.RemoveEntityComponents( &archetype, entity, component... );
 
-                mArchetypes.push_back( newArchetype );
+                mArchetypes.push_back( std::move( newArchetype ) );
                 mEntityArchetypeMap.emplace( entity, archetypeIndex );
                 mComponentIdsArchetypeMap.emplace( componentIdSet, archetypeIndex );
             }

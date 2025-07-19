@@ -3,15 +3,15 @@ module;
 #include "module_export.h"
 #include <oneapi/tbb/concurrent_hash_map.h>
 
-export module ecs.entity.manager;
+export module ecs:entity_manager;
 
 import core.container.sparse_array;
 import core.misc.non_copyable;
 
 import std;
 import core.type;
-import ecs.entity.entity;
-import ecs.components.info;
+import :entity;
+import :component_info;
 
 export class ECS_API EntityManager : public NonCopyable
 {

@@ -1,2 +1,2 @@
 
-module ecs.entity.manager;
+module ecs;

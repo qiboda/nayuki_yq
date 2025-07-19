@@ -9,8 +9,8 @@ import std;
 
 export class CORE_API MallocAllocator
 {
-    static std::thread::id sMainThreadId;
-    static std::atomic<bool> sInitted;
+    static inline std::thread::id sMainThreadId = std::this_thread::get_id();
+    static inline std::atomic<bool> sInitted = false;
 
   public:
     static void Init();

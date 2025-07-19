@@ -13,10 +13,28 @@ import core.misc.iraii;
 import render_core.render_instance;
 import render_core.render_window;
 import core;
+import ecs;
 
-export class RENDER_CORE_API Window : public IRenderWindow, public IRAII, public ITickable
+export struct RENDER_CORE_API Window : public Component
 {
+  // RawWindow* window;
+};
 
+
+// void UpdateWindow(Query<&Window> query)
+// {
+//   for (auto& [window] : query)
+//   {
+//     if (window->window && window->window->ShouldClose())
+//     {
+//       window->window->CloseWindow();
+//     }
+//   }
+//     glfwPollEvents();
+// }
+
+export class RENDER_CORE_API RawWindow : public IRenderWindow, public IRAII, public ITickable
+{
   public:
     static void Init()
     {
@@ -29,9 +47,9 @@ export class RENDER_CORE_API Window : public IRenderWindow, public IRAII, public
     }
 
   public:
-    Window();
+    RawWindow();
 
-    virtual ~Window() override
+    virtual ~RawWindow() override
     {
         CleanUp();
     }

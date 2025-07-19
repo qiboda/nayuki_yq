@@ -2,10 +2,10 @@ module;
 
 #include "module_export.h"
 
-export module ecs.schedule.manager:phase_config;
+export module ecs:schedule_phase_config;
 
-import :phase;
-import :manager;
+import :schedule_phase;
+import :schedule_manager;
 import core.container;
 
 export struct ECS_API PhaseConfigure

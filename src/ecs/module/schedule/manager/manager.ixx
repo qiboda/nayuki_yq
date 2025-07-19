@@ -3,14 +3,12 @@ module;
 #include "module_export.h"
 #include <fmt/format.h>
 
-export module ecs.schedule.manager:manager;
+export module ecs:schedule_manager;
 
-import :phase;
-// import :phase_config;
-// import :phase_config_set;
-// import :phase_default;
+import :schedule_phase;
+import :schedule_base;
 
-import ecs.schedule.graph;
+import ecs.graph;
 import std;
 
 export class ECS_API ScheduleManager : public std::enable_shared_from_this<ScheduleManager>
@@ -34,6 +32,21 @@ export class ECS_API ScheduleManager : public std::enable_shared_from_this<Sched
     void BuildGraph()
     {
         mScheduleGraph.TopSort();
+    }
+
+    void CreateScheduleInstance()
+    {
+        auto topology = mScheduleGraph.GetTopology();
+        for ( usize i = 0; i < topology.LayerNum(); ++i )
+        {
+            auto& layer = topology.GetLayer( i );
+            for ( auto&& phaseId : layer )
+            {
+                auto phaseInfo = mScheduleGraph.GetNode( phaseId );
+                auto schedule = std::make_shared<ScheduleBase>();
+                mPhaseScheduleMap[phaseInfo.mId] = schedule;
+            }
+        }
     }
 
     template <IsSchedulePhase T>
@@ -64,4 +77,5 @@ export class ECS_API ScheduleManager : public std::enable_shared_from_this<Sched
     std::shared_ptr<class PhaseConfigSet> mPhaseConfigSet;
 
     Graph<PhaseId, PhaseInfo> mScheduleGraph;
+    std::map<PhaseId, std::shared_ptr<ScheduleBase>> mPhaseScheduleMap;
 };

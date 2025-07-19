@@ -1,8 +1,7 @@
 
-module ecs.schedule.manager;
+module ecs;
 
 import std;
-import :manager;
 
 void PhaseConfigure::Apply( std::shared_ptr<ScheduleManager> scheduleManager )
 {

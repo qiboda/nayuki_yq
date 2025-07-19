@@ -1,8 +1,8 @@
 
-module ecs.schedule.manager;
+module ecs;
 
-import :phase_config;
-import :phase_config_set;
+// import :schedule_phase_config;
+// import :schedule_phase_config_set;
 
 import std;
 import core.type;

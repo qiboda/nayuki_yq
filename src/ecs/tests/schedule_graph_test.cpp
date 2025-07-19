@@ -1,11 +1,9 @@
 #include <gtest/gtest.h>
 
-import ecs.components.component;
-import ecs.schedule.graph;
-import ecs.schedule.tarjan_graph;
-import ecs.schedule;
-import ecs.schedule.manager;
-import ecs.systems.params.query;
+import ecs.graph;
+import ecs.tarjan_graph;
+import ecs;
+import ecs.default_phase;
 
 import core.misc.range;
 import std;

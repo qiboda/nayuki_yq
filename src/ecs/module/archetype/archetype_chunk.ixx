@@ -3,34 +3,58 @@ module;
 #include "module_export.h"
 #include <core/macro/macro.h>
 
-export module ecs.archetype.chunk;
+export module ecs:archetype_chunk;
 
 import std;
 import core;
 import core.concepts.tuple;
 import core.misc.range;
+import core.misc.non_copyable;
 import core.memory;
 
-import ecs.components.concepts;
-import ecs.components.component;
-import ecs.archetype.define;
-import ecs.entity.entity;
+import :component_concepts;
+import :component;
+import :archetype_define;
+import :entity;
 
 // 对齐到 64 bit，对齐到缓存行大小，避免触发缓存一致性机制（MESI协议）[“伪共享”（False Sharing）]
-export class ECS_API ArchetypeChunk
+export class ECS_API ArchetypeChunk: public NonCopyable
 {
   public:
     explicit ArchetypeChunk( usize MaxEntityNum, usize memorySize = 16 * 1024 )
         : MaxEntityNum( MaxEntityNum )
     {
-        // std::cout << "ArchetypeChunk::ArchetypeChunk " << memorySize << std::endl;
+        std::cout << "ArchetypeChunk::ArchetypeChunk " << memorySize << " " << this << std::endl;
         mArchetypeComponentData = new u8[memorySize]();
+    }
+
+    ArchetypeChunk( const ArchetypeChunk& ) = delete;
+    ArchetypeChunk& operator=( const ArchetypeChunk& ) = delete;
+
+    ArchetypeChunk( ArchetypeChunk&& other )
+    {
+        mArchetypeComponentData = other.mArchetypeComponentData;
+        other.mArchetypeComponentData = nullptr;
+
+        mEntities = std::move( other.mEntities );
+        MaxEntityNum = other.MaxEntityNum;
+    }
+
+    ArchetypeChunk& operator=( ArchetypeChunk&& other )
+    {
+        mArchetypeComponentData = other.mArchetypeComponentData;
+        other.mArchetypeComponentData = nullptr;
+
+        mEntities = std::move( other.mEntities );
+        MaxEntityNum = other.MaxEntityNum;
+        return *this;
     }
 
     ~ArchetypeChunk()
     {
         if ( mArchetypeComponentData )
         {
+            std::cout << "ArchetypeChunk::ArchetypeChunk destroy" << this << std::endl;
             delete[] mArchetypeComponentData;
         }
     }

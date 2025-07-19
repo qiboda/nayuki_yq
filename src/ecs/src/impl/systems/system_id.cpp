@@ -1,5 +1,7 @@
 
-module ecs.systems.id;
+module ecs;
+
+import std;
 
 const SystemId SystemId::Invalid = SystemId();
 

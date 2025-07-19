@@ -2,14 +2,14 @@ module;
 
 #include "module_export.h"
 
-export module ecs.schedule:system_set_node_config;
+export module ecs:schedule_system_set_node_config;
 
-import :base;
-import :config_node;
+import :schedule_base;
+import :schedule_config_node;
 import :schedule_graph;
 
-import ecs.schedule.graph;
-import ecs.systems.concepts;
+import ecs.graph;
+import :system_concepts;
 import std;
 
 export class ECS_API ScheduleSystemSetNodeConfig

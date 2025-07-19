@@ -2,10 +2,10 @@ module;
 
 #include "module_export.h"
 
-export module ecs.schedule:node_config_cache;
+export module ecs:schedule_node_config_cache;
 
-import :system_node_config;
-import :system_set_node_config;
+import :schedule_system_node_config;
+import :schedule_system_set_node_config;
 import std;
 
 export struct ECS_API NodeConfigCache

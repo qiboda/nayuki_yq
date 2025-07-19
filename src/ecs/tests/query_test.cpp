@@ -2,15 +2,7 @@
 
 import std;
 import core.type;
-import ecs.commands;
-import ecs.components.component;
-import ecs.components.info;
-import ecs.entity.entity;
-import ecs.systems.params;
-import ecs.systems.params.query;
-import ecs.systems.params.query.param_resolver;
-import ecs.systems.params.query.data;
-import ecs.registry;
+import ecs;
 
 class QueryTest : public ::testing::Test
 {
@@ -109,17 +101,17 @@ TEST_F( QueryTest, QuerySingleComponent )
     componentA.i = 3;
 
     // clang-format off
-    RegistryCommand::Get( registry.mRegistryContext, registry.mCommandManager )
+    RegistryCommand::Get( &registry, registry.GetCommandManager() )
         ->Entity()
             ->Create()
                 ->AddComponent( std::move( componentA ) );
     // clang-format on
 
-    registry.mCommandManager->ExecuteCommands( registry.mRegistryContext );
+    registry.GetCommandManager()->ExecuteCommands( &registry );
 
     QueryState<ComponentA&> queryState;
-    queryState.Init( registry.mRegistryContext );
-    Query<ComponentA&> query = Query<ComponentA&>::From( registry.mRegistryContext, &queryState );
+    queryState.Init( &registry );
+    Query<ComponentA&> query = Query<ComponentA&>::From( &registry, &queryState );
 
     usize count = 0;
     for ( auto [a] : query )

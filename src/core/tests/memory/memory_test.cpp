@@ -42,6 +42,8 @@ TEST_F( MemoryTest, TestCount )
     Memory::Init();
     Memory::ThreadInit();
 
+    MemoryTracker::Reset();
+
     EXPECT_EQ( MemoryTracker::GetTotalAllocatedMemoryCount(), 0 );
     EXPECT_EQ( MemoryTracker::GetCurrentAllocatedMemoryCount(), 0 );
 
@@ -54,6 +56,51 @@ TEST_F( MemoryTest, TestCount )
     a = nullptr;
 
     EXPECT_EQ( MemoryTracker::GetTotalAllocatedMemoryCount(), 1 );
+    EXPECT_EQ( MemoryTracker::GetCurrentAllocatedMemoryCount(), 0 );
+
+    Memory::ThreadShutdown();
+    Memory::Shutdown();
+}
+
+TEST_F( MemoryTest, TestArrayCount )
+{
+    Memory::Init();
+    Memory::ThreadInit();
+
+    MemoryTracker::Reset();
+
+    EXPECT_EQ( MemoryTracker::GetTotalAllocatedMemoryCount(), 0 );
+    EXPECT_EQ( MemoryTracker::GetCurrentAllocatedMemoryCount(), 0 );
+
+    int* a = new int( 0 );
+
+    EXPECT_EQ( MemoryTracker::GetTotalAllocatedMemoryCount(), 1 );
+    EXPECT_EQ( MemoryTracker::GetCurrentAllocatedMemoryCount(), 1 );
+
+    delete a;
+    a = nullptr;
+
+    EXPECT_EQ( MemoryTracker::GetTotalAllocatedMemoryCount(), 1 );
+    EXPECT_EQ( MemoryTracker::GetCurrentAllocatedMemoryCount(), 0 );
+
+    Memory::ThreadShutdown();
+    Memory::Shutdown();
+
+    Memory::Init();
+    Memory::ThreadInit();
+
+    EXPECT_EQ( MemoryTracker::GetTotalAllocatedMemoryCount(), 1 );
+    EXPECT_EQ( MemoryTracker::GetCurrentAllocatedMemoryCount(), 0 );
+
+    int* b = new int[3]();
+
+    EXPECT_EQ( MemoryTracker::GetTotalAllocatedMemoryCount(), 2 );
+    EXPECT_EQ( MemoryTracker::GetCurrentAllocatedMemoryCount(), 1 );
+
+    delete[] b;
+    b = nullptr;
+
+    EXPECT_EQ( MemoryTracker::GetTotalAllocatedMemoryCount(), 2 );
     EXPECT_EQ( MemoryTracker::GetCurrentAllocatedMemoryCount(), 0 );
 
     Memory::ThreadShutdown();
