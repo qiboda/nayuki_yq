@@ -24,7 +24,7 @@ export class ECS_API DefaultPhaseFeature : public IFeature
     virtual void Build( Registry* registry ) override
     {
         registry->ConfigurePhase(
-            PhaseConfigure::Create<FirstPhase, PreUpdatePhase, UpdatePhase, PostUpdatePhase, LastPhase>()
+            PhaseConfigure::Create<StartupPhase, FirstPhase, PreUpdatePhase, UpdatePhase, PostUpdatePhase, LastPhase>()
                 .Chain()
                 .Build() );
     }

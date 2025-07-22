@@ -86,6 +86,20 @@ export class ECS_API ScheduleManager : public std::enable_shared_from_this<Sched
                 auto& layer = topology.GetLayer( i );
                 for ( auto&& phaseId : layer )
                 {
+                    PhaseInfo& info = mScheduleGraph.GetNode( phaseId );
+                    if ( info.mUpdateType == PhaseUpdateType::Once )
+                    {
+                        // 仅仅更新一次
+                        if ( info.mIsUpdated == true )
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            info.mIsUpdated = true;
+                        }
+                    }
+
                     auto phaseScheduleIt = mPhaseScheduleMap.find( phaseId );
                     if ( phaseScheduleIt != mPhaseScheduleMap.end() )
                     {
@@ -104,7 +118,11 @@ export class ECS_API ScheduleManager : public std::enable_shared_from_this<Sched
     PhaseId AddPhaseInConfig()
     {
         PhaseId id = PhaseIdRegistry::Get<T>();
-        mScheduleGraph.AddNode( id, PhaseInfo{ .mId = id, .mName = fmt::format( "{}", T{} ) } );
+        mScheduleGraph.AddNode( id,
+                                PhaseInfo{ .mId = id,
+                                           .mName = fmt::format( "{}", T{} ),
+                                           .mUpdateType = T::GetUpdateType(),
+                                           .mIsUpdated = false } );
         return id;
     }
 

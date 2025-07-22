@@ -11,6 +11,10 @@ import ecs;
 
 export struct ECS_API StartupPhase : public PhaseBase
 {
+    static PhaseUpdateType GetUpdateType()
+    {
+        return PhaseUpdateType::Once;
+    }
 };
 NAME_FORMATTER( StartupPhase )
 

@@ -13,8 +13,17 @@ import core.concepts.derived;
 import core.registry;
 import core;
 
+export enum class ECS_API PhaseUpdateType : u8 {
+    Always,
+    Once,
+};
+
 export struct ECS_API PhaseBase
 {
+    static PhaseUpdateType GetUpdateType()
+    {
+        return PhaseUpdateType::Always;
+    }
 };
 NAME_FORMATTER( PhaseBase )
 
@@ -52,6 +61,8 @@ export struct ECS_API PhaseInfo
 {
     PhaseId mId;
     std::string mName;
+    PhaseUpdateType mUpdateType = PhaseUpdateType::Always;
+    bool mIsUpdated = false;
 };
 
 export using PhaseIdChainType = SmallVector<PhaseId, 8>;

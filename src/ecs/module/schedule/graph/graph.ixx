@@ -64,6 +64,11 @@ class Graph
         return mNodes.find( id )->second;
     }
 
+    TNode& GetNode( TNodeId id )
+    {
+        return mNodes.find( id )->second;
+    }
+
     void AddEdge( TNodeId out, TNodeId in )
     {
         mEdges.insert( { out, in } );
