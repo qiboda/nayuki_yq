@@ -12,7 +12,6 @@ import std;
 import core;
 import :entity;
 
-
 export class ECS_API CreateEntityCommandBuffer : public CommandBufferBase
 {
   public:

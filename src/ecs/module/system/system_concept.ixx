@@ -17,13 +17,13 @@ struct AllSystemParamsWrapper
 };
 
 /**
- * @brief 
+ * @brief
  * 先允许零个参数的函数作为 System 。
  */
 export template <typename Func>
 inline constexpr bool IsSystem = std::same_as<FnReturnType<Func>, void>
-                            // && FnArgCount<Func> > 0
-                            && ApplyFnParamsTo<Func, AllSystemParamsWrapper>::value;
+                                 // && FnArgCount<Func> > 0
+                                 && ApplyFnParamsTo<Func, AllSystemParamsWrapper>::value;
 
 export template <typename Func>
 concept IsSystemConcept = IsSystem<Func>;

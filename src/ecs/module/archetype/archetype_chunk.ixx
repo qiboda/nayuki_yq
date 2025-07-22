@@ -18,7 +18,7 @@ import :archetype_define;
 import :entity;
 
 // 对齐到 64 bit，对齐到缓存行大小，避免触发缓存一致性机制（MESI协议）[“伪共享”（False Sharing）]
-export class ECS_API ArchetypeChunk: public NonCopyable
+export class ECS_API ArchetypeChunk : public NonCopyable
 {
   public:
     explicit ArchetypeChunk( usize MaxEntityNum, usize memorySize = 16 * 1024 )

@@ -17,9 +17,8 @@ import ecs;
 
 export struct RENDER_CORE_API Window : public Component
 {
-  // RawWindow* window;
+    // RawWindow* window;
 };
-
 
 // void UpdateWindow(Query<&Window> query)
 // {

@@ -18,7 +18,7 @@ export class ECS_API ScheduleBase : public std::enable_shared_from_this<Schedule
     virtual ~ScheduleBase() = default;
 
   public:
-    void Init(class Registry* registry);
+    void Init( class Registry* registry );
 
   public:
     /// 添加一个系统节点配置到调度图中。

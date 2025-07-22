@@ -45,8 +45,8 @@ glm::vec3 MathHelper::RandUnitVec3()
     {
         // Generate random point in the cube [-1,1]^3.
         glm::vec3 v = glm::vec3( MathHelper::RandF( -1.0f, 1.0f ),
-                       MathHelper::RandF( -1.0f, 1.0f ),
-                       MathHelper::RandF( -1.0f, 1.0f ) );
+                                 MathHelper::RandF( -1.0f, 1.0f ),
+                                 MathHelper::RandF( -1.0f, 1.0f ) );
 
         // Ignore points outside the unit sphere in order to get an even
         // distribution over the unit sphere.  Otherwise points will clump more

@@ -82,10 +82,10 @@ TEST_F( ScheduleGraphTest, TarjanTest )
     auto SCCs = tarjan.GetSCCs();
     for ( auto vv : enumerate( SCCs ) )
     {
-        for ( auto v : std::get<1>(vv) )
+        for ( auto v : std::get<1>( vv ) )
         {
             auto node = graph.GetNode( v );
-            std::cout << std::get<0>(vv) << " " << node << std::endl;
+            std::cout << std::get<0>( vv ) << " " << node << std::endl;
         }
     }
 

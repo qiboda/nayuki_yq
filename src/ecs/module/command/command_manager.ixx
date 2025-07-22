@@ -4,7 +4,6 @@ module;
 
 export module ecs:command_manager;
 
-
 import :command;
 import :command_queue;
 

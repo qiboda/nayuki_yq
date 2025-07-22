@@ -37,7 +37,6 @@ export ECS_API inline auto operator<=>( const SystemSetId& lhs, const SystemSetI
     return lhs.Index() <=> rhs.Index();
 }
 
-
 export template <>
 struct ECS_API std::hash<SystemSetId>
 {

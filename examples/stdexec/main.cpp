@@ -27,20 +27,22 @@ auto main() -> int
     scheduler auto sch = ctx.get_scheduler(); // 1
 
     sender auto begin = schedule( sch ); // 2
-    sender auto hi_again = then(                                           // 3
-    begin,                                                               // 3
-    [] {                                                                 // 3
-      std::cout << "Hello world! Have an int.\n";                        // 3
-      return 13;                                                         // 3
-    });                                                                  // 3
+    sender auto hi_again = then(         // 3
+        begin,                           // 3
+        []
+        {                                               // 3
+            std::cout << "Hello world! Have an int.\n"; // 3
+            return 13;                                  // 3
+        } );                                            // 3
 
     auto [i] = sync_wait( std::move( hi_again ) ).value(); // 5
     std::cout << "Result: " << i << std::endl;
 
-    sender auto ano = schedule( sch ) | then([] {                                                                 // 3
-      std::cout << "Hello world! Have an int.\n";                        // 3
-      return 13;                                                         // 3
-    });                                                                  // 3
+    sender auto ano = schedule( sch ) | then( []
+                                              {                                               // 3
+                                                  std::cout << "Hello world! Have an int.\n"; // 3
+                                                  return 13;                                  // 3
+                                              } );                                            // 3
 
     auto [k] = sync_wait( std::move( ano ) ).value(); // 5
     std::cout << "Result: " << k << std::endl;
