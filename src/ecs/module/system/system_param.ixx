@@ -12,6 +12,9 @@ export class ECS_API SystemParam
 {
   public:
     SystemParam();
+
+    // 子类需要实现此方法
+    // static Commands From( Registry* registry, State& state );
 };
 
 #pragma region SystemParam

@@ -17,31 +17,69 @@ import ecs;
 
 export struct RENDER_CORE_API Window : public Component
 {
-    // RawWindow* window;
+    RawWindow* mWindow = nullptr;
+
+    Window()
+    {
+        mWindow = new RawWindow();
+        mWindow->Initialize();
+    }
+
+    ~Window() override
+    {
+        if ( mWindow )
+        {
+            mWindow->CleanUp();
+            delete mWindow;
+            mWindow = nullptr;
+        }
+    }
 };
 
-// void UpdateWindow(Query<&Window> query)
-// {
-//   for (auto& [window] : query)
-//   {
-//     if (window->window && window->window->ShouldClose())
-//     {
-//       window->window->CloseWindow();
-//     }
-//   }
-//     glfwPollEvents();
-// }
+void StartupWindow( Commands& commands )
+{
+    // clang-format off
+    commands()
+        ->Entity()
+            ->Create()
+                ->AddComponent(std::move( Window() ) );
+    // clang-format on
+
+    glfwInit();
+}
+
+void UpdateWindow( Query<&Window> query )
+{
+    for ( auto& [window] : query )
+    {
+        if ( window->mWindow && window->mWindow->ShouldClose() )
+        {
+            window->mWindow->CloseWindow();
+            // todo: 删除window，同时，发送通知事件。
+        }
+    }
+    glfwPollEvents();
+}
+
+struct WindowFeature : public IFeature
+{
+    virtual void Build( Registry* registry ) override
+    {
+        registry->AddSystem<StartupPhase>( ScheduleSystemNodeConfig::Create( &StartupWindow ).Build() );
+        registry->AddSystem<FirstPhase>( ScheduleSystemNodeConfig::Create( &UpdateWindow ).Build() );
+    }
+};
 
 export class RENDER_CORE_API RawWindow : public IRenderWindow, public IRAII, public ITickable
 {
   public:
     static void Init()
     {
-        glfwInit();
     }
 
     static void Terminate()
     {
+        // todo: 需要在所有window删除后，再调用
         glfwTerminate();
     }
 
@@ -73,15 +111,6 @@ export class RENDER_CORE_API RawWindow : public IRenderWindow, public IRAII, pub
     {
         glfwDestroyWindow( mWindow );
         mWindow = nullptr;
-    }
-
-    virtual void Tick( float deltaTime ) override
-    {
-        UNUSED_VARS( deltaTime );
-        if ( mWindow )
-        {
-            glfwPollEvents();
-        }
     }
 
   public:
